@@ -198,7 +198,9 @@ body { position: relative; min-height: 100vh; }
 }
 .gx-thumb__tag svg { width: 10px; height: 10px; fill: currentColor; }
 
-.gx-detail { display: grid; gap: var(--s-5); align-content: start; }
+/* The last track takes the slack, so the action row lands on the same
+   baseline as the bottom of the gallery however tall the copy runs. */
+.gx-detail { display: grid; gap: var(--s-5); grid-template-rows: auto auto 1fr; }
 .gx-detail__row { display: grid; gap: var(--s-5) var(--s-6); grid-template-columns: minmax(190px, 1fr) minmax(220px, 1.1fr); }
 .gx-name { font-size: var(--t-lg); margin-block: 2px 0; }
 .gx-alt { font-size: var(--t-sm); color: var(--ink-muted); }
@@ -221,8 +223,9 @@ body { position: relative; min-height: 100vh; }
    own direction so the bidi pass leaves "30 ml" alone. */
 .gx-panel .cat-size, .gx-panel .cat-specs .num { direction: ltr; }
 .gx-actions {
-  display: flex; flex-wrap: wrap; gap: var(--s-3);
-  padding-block-start: var(--s-4); border-block-start: var(--border-w) solid var(--line);
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s-3);
+  align-self: end; padding-block-start: var(--s-4);
+  border-block-start: var(--border-w) solid var(--line);
 }
 .gx-add svg, .gx-close svg { width: 16px; height: 16px; fill: currentColor; }
 .gx-add[aria-pressed="true"] { background: var(--ok); }

@@ -817,7 +817,7 @@ html, body { height: 100%; overflow: hidden; }
 }
 .ps-grid > .cat-card {
   display: grid;
-  grid-template-columns: minmax(66px, 31%) minmax(0, 1fr);
+  grid-template-columns: minmax(70px, 37%) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) auto;
   gap: var(--s-2);
   padding: var(--s-2);
@@ -826,14 +826,17 @@ html, body { height: 100%; overflow: hidden; }
   border-block-end: var(--border-w) solid var(--line);
   min-width: 0; overflow: hidden;
 }
-.ps-cut {
+/* The kit sizes a mounted host to fill its box; a catalogue cut keeps
+   its own proportion instead, so the whole object stays in the frame. */
+.ps-grid .ps-cut {
   position: relative; grid-row: span 2; align-self: start;
-  aspect-ratio: var(--ratio-media);
+  height: auto; aspect-ratio: var(--ratio-media);
   background: var(--surface-alt);
   border: var(--border-w) solid var(--line-strong);
 }
 .ps-cut img, .ps-cut canvas { filter: grayscale(1) contrast(1.08); }
-.ps-cut .ck-cue { font-size: 10px; padding: 2px 6px; }
+.ps-cut .ck-cue { font-size: 9px; padding: 1px 5px; gap: 3px; inset-block-end: 4px; inset-inline-start: 4px; }
+.ps-cut .ck-cue svg { width: 9px; height: 9px; }
 
 .ps-cell__text { min-width: 0; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 3px; }
 .ps-cell__title { display: flex; align-items: baseline; gap: var(--s-2); flex-wrap: wrap; }

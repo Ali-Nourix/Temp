@@ -254,10 +254,13 @@ body { background: var(--bg); }
 .mg-note { margin: 0; font-size: var(--t-xs); color: var(--ink-faint); }
 
 /* ── colophon ────────────────────────────────────────────── */
+/* Black meets black where the closing cell ends, so the rule between them
+   inverts too: the page is ruled at 2px throughout, either way up. */
 .mg-foot {
   display: grid; gap: var(--s-5);
-  padding: var(--s-7) var(--mg-inset);
+  padding: var(--s-6) var(--mg-inset) var(--s-7);
   background: var(--ink); color: var(--bg);
+  border-block-start: var(--border-w-strong) solid var(--bg);
   --focus: var(--bg);
 }
 .mg-foot h2 { font-family: var(--mg-display); font-size: var(--t-md); }
@@ -273,7 +276,9 @@ body { background: var(--bg); }
   .mg-meta { grid-template-columns: repeat(4, 1fr); }
   .mg-meta > div:nth-child(odd) { border-inline-start: var(--border-w) solid var(--line); }
   .mg-meta > div:first-child { border-inline-start: 0; }
-  .mg-foot { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mg-foot { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .mg-foot > * + * { padding-inline-start: var(--s-5); border-inline-start: var(--border-w) solid var(--ink-muted); }
+  .mg-foot > * { padding-inline-end: var(--s-5); }
 }
 @media (min-width: 900px) {
   :root { --mg-inset: var(--s-4); }

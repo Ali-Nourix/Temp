@@ -774,7 +774,7 @@
   var pad = function (n) { return (n < 10 ? '0' : '') + n; };
 
   function money(n) {
-    var sep = lang === 'fa' ? '٬' : ',';   /* Arabic thousands separator */
+    var sep = lang === 'fa' ? '\u066C' : ',';   /* Arabic thousands separator */
     return num(String(n).replace(/\B(?=(\d{3})+(?!\d))/g, sep));
   }
 
@@ -782,23 +782,23 @@
      tatweel and harakat all collapse — so «كاپشن» typed with an Arabic kaf,
      and «۷۵۰» typed in Persian digits, each still find their product. */
   var FOLD = [
-    [/[يى]/g, 'ی'],               /* Arabic yeh, alef maksura → ی */
-    [/ك/g, 'ک'],                       /* Arabic kaf → ک */
-    [/[آأإ]/g, 'ا'],         /* alef with madda or hamza → ا */
-    [/[ةۀ]/g, 'ه'],               /* teh marbuta, heh with hamza → ه */
-    [/ؤ/g, 'و'],                       /* waw with hamza → و */
-    [/[​-‏ـً-ْ]/g, '']  /* zero-widths, tatweel, harakat */
+    [/[\u064A\u0649]/g, '\u06CC'],               /* Arabic yeh, alef maksura → ی */
+    [/\u0643/g, '\u06A9'],                       /* Arabic kaf → ک */
+    [/[\u0622\u0623\u0625]/g, '\u0627'],         /* alef with madda or hamza → ا */
+    [/[\u0629\u06C0]/g, '\u0647'],               /* teh marbuta, heh with hamza → ه */
+    [/\u0624/g, '\u0648'],                       /* waw with hamza → و */
+    [/[\u200B-\u200F\u0640\u064B-\u0652]/g, '']  /* zero-widths, tatweel, harakat */
   ];
   function fold(s) {
     var out = String(s);
     FOLD.forEach(function (rule) { out = out.replace(rule[0], rule[1]); });
     return out
-      .replace(/[۰-۹]/g, function (d) { return String.fromCharCode(d.charCodeAt(0) - 0x06F0 + 48); })
-      .replace(/[٠-٩]/g, function (d) { return String.fromCharCode(d.charCodeAt(0) - 0x0660 + 48); })
+      .replace(/[\u06F0-\u06F9]/g, function (d) { return String.fromCharCode(d.charCodeAt(0) - 0x06F0 + 48); })
+      .replace(/[\u0660-\u0669]/g, function (d) { return String.fromCharCode(d.charCodeAt(0) - 0x0660 + 48); })
       .toLowerCase().replace(/\s+/g, ' ').trim();
   }
   /* A second, punctuation-free pass so "zbt01" finds ZB-T01. */
-  function slug(s) { return fold(s).replace(/[^a-z0-9؀-ۿ]+/g, ''); }
+  function slug(s) { return fold(s).replace(/[^a-z0-9\u0600-\u06FF]+/g, ''); }
 
   function catOf(id) {
     for (var i = 0; i < CATS.length; i++) if (CATS[i].id === id) return CATS[i];
