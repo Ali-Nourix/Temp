@@ -52,9 +52,16 @@ body { overflow-wrap: break-word; }
 .sp-cart { position: relative; }
 .sp-cart__n {
   min-width: 22px; height: 22px; padding-inline: 6px; border-radius: var(--radius-pill);
-  display: inline-grid; place-items: center; background: var(--on-accent); color: var(--accent);
+  display: inline-grid; place-items: center; background: var(--accent); color: var(--on-accent);
   font-family: var(--font-num); font-size: var(--t-xs);
 }
+.sp-cart__n[hidden] { display: none; }
+
+/* a band of warp threads — the first thing on any loom */
+.sp-warp { display: block; height: 26px; color: var(--line); }
+.sp-warp svg { width: 100%; height: 100%; }
+.sp-warp line { stroke: currentColor; stroke-width: 1; }
+.sp-warp line.is-accent { stroke: var(--accent); }
 
 /* ── cover ──────────────────────────────────────────────── */
 .sp-cover {
@@ -170,7 +177,14 @@ body { overflow-wrap: break-word; }
   position: sticky; inset-block-start: var(--sp-top); align-self: start;
   display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-4);
 }
+.sp-stage__foot {
+  grid-column: 2; grid-row: 2; display: flex; flex-wrap: wrap; gap: var(--s-3);
+  align-items: baseline; font-size: var(--t-xs); color: var(--ink-faint);
+}
+.sp-stage__ch { color: var(--accent); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; }
+.sp-stage__hint { margin-inline-start: auto; }
 .sp-deck {
+  grid-column: 2; grid-row: 1;
   position: relative; height: var(--sp-deck-h); overflow: hidden;
   background: var(--surface); border: var(--border-w) solid var(--sp-rule);
   border-radius: var(--radius-card); box-shadow: var(--shadow-2);
@@ -193,7 +207,7 @@ body { overflow-wrap: break-word; }
 .sp-plate__media { position: relative; overflow: hidden; }
 
 /* ── chapter progress rail ──────────────────────────────── */
-.sp-rail { position: relative; width: var(--tap-min); }
+.sp-rail { grid-column: 1; grid-row: 1; position: relative; width: var(--tap-min); }
 .sp-rail::before {
   content: ""; position: absolute; inset-block: 22px;
   inset-inline-start: calc(var(--tap-min) / 2 - 1px); width: 2px;
@@ -383,6 +397,8 @@ body { overflow-wrap: break-word; }
       </figure>
     </section>
 
+    <div class="sp-warp" id="sp-warp" aria-hidden="true"></div>
+
     <section class="sp-note" id="sp-note" aria-label="کارگاه" data-i-label="workshop"></section>
 
   </div>
@@ -470,6 +486,7 @@ body { overflow-wrap: break-word; }
     remove:       { fa: 'برداشتن از فهرست', en: 'Remove from the list' },
     toman:        { fa: 'تومان', en: 'toman' },
     points:       { fa: 'نقطه‌ی بررسی', en: 'inspection points' },
+    stageHint:    { fa: 'تصویر را باز کنید تا نقطه‌ها را ببینید', en: 'Open the image to reach the points' },
     goStep:       { fa: 'رفتن به', en: 'Go to' },
     railLabel:    { fa: 'پیشرفتِ فصل', en: 'Chapter progress' },
     empty:        { fa: 'هنوز چیزی انتخاب نکرده‌اید. زیرِ هر قطعه، «افزودن به استعلام» را بزنید تا اینجا جمع شود.', en: 'Nothing chosen yet. Use “Add to inquiry” under any piece and it collects here.' },
@@ -873,6 +890,7 @@ body { overflow-wrap: break-word; }
 
   function renderList() {
     countEl.textContent = digits(list.length);
+    countEl.hidden = list.length === 0;
     sumEl.textContent = money(list.reduce(function (s, p) { return s + p.price; }, 0));
     addButtons.forEach(function (b) { b.sync(); });
 
@@ -964,6 +982,21 @@ body { overflow-wrap: break-word; }
   document.getElementById('sp-cover-art').src =
     K.image('sepidar-cover', { w: 900, h: 1125, subject: 'textile', palette: 'warm', t: 0.32 });
 
+  /* The warp is the only part of a loom you see before the work starts;
+     it makes an honest rule between the cover and the catalogue. */
+  (function warp() {
+    var rand = K.rng('sepidar-warp');
+    var count = 180, lines = '';
+    for (var i = 0; i < count; i++) {
+      var x = ((i + 0.5) / count * 100).toFixed(3) + '%';
+      var accent = rand() > 0.93;
+      lines += '<line x1="' + x + '" y1="0" x2="' + x + '" y2="100%"' +
+        (accent ? ' class="is-accent"' : '') +
+        ' opacity="' + (accent ? 0.8 : 0.3 + rand() * 0.5).toFixed(2) + '"/>';
+    }
+    document.getElementById('sp-warp').innerHTML = '<svg preserveAspectRatio="none">' + lines + '</svg>';
+  })();
+
   var noteHost = document.getElementById('sp-note');
   [['loom', 1], ['vat', 2], ['needle', 3]].forEach(function (pair) {
     var item = el('div', 'sp-note__item');
@@ -1026,8 +1059,16 @@ body { overflow-wrap: break-word; }
     rail.innerHTML = '<span class="sp-rail__fill"></span>';
     var ticks = el('ol', 'sp-rail__ticks');
     rail.appendChild(ticks);
-    bind(function () { rail.setAttribute('aria-label', t('railLabel')); });
-    stage.appendChild(rail); stage.appendChild(deck);
+    var stageFoot = el('div', 'sp-stage__foot');
+    var stageCh = el('span', 'sp-stage__ch');
+    var stageHint = el('span', 'sp-stage__hint');
+    stageFoot.appendChild(stageCh); stageFoot.appendChild(stageHint);
+    bind(function () {
+      rail.setAttribute('aria-label', t('railLabel'));
+      stageCh.textContent = c[lang].title;
+      stageHint.textContent = t('stageHint');
+    });
+    stage.appendChild(rail); stage.appendChild(deck); stage.appendChild(stageFoot);
     scroll.appendChild(track); scroll.appendChild(stage);
     page.appendChild(scroll);
 
@@ -1225,11 +1266,12 @@ body { overflow-wrap: break-word; }
   function setActive(ch, i) {
     if (ch.active === i) return;
     ch.active = i;
+    var pinned = ch.scroll.dataset.mode === 'pinned';
     ch.steps.forEach(function (s, j) {
       var on = j === i;
-      s.el.dataset.on = on ? 'true' : 'false';
-      s.plate.dataset.on = on ? 'true' : 'false';
-      s.plate.inert = !on && ch.scroll.dataset.mode === 'pinned';
+      s.el.dataset.on = on || !pinned ? 'true' : 'false';
+      s.plate.dataset.on = on || !pinned ? 'true' : 'false';
+      s.plate.inert = pinned && !on;
       s.tick.setAttribute('aria-current', on ? 'true' : 'false');
     });
   }

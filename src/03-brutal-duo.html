@@ -764,6 +764,7 @@
   var query = '';
   var picked = [];
   var media = {};            /* sku -> descriptors, so "details" reopens the same set */
+  var HALF = 6;              /* the mid-list divider sits after this many cells */
   var lastFocus = null;
 
   var $ = function (id) { return document.getElementById(id); };
@@ -881,9 +882,9 @@
       cell.hidden = !ok;
       if (ok) shown++;
     });
-    $('count').innerHTML = lang === 'fa'
-      ? '<span>' + t('resultLabel') + '</span><span><b class="zb-fig">' + num(shown) + '</b> ' + t('ofTotal') + ' <b class="zb-fig">' + num(PRODUCTS.length) + '</b></span>'
-      : '<span>' + t('resultLabel') + '</span><span><b class="zb-fig">' + shown + '</b> ' + t('ofTotal') + ' <b class="zb-fig">' + PRODUCTS.length + '</b></span>';
+    $('count').innerHTML = '<span>' + t('resultLabel') + '</span><span>' +
+      '<b class="zb-fig">' + num(shown) + '</b> ' + t('ofTotal') +
+      ' <b class="zb-fig">' + num(PRODUCTS.length) + '</b></span>';
     $('empty').hidden = shown > 0;
     $('grid').hidden = shown === 0;
     /* The divider marks the middle of the whole catalog, so it only means
@@ -939,8 +940,6 @@
     el.querySelector('[data-act="add"]').addEventListener('click', function () { toggle(p.id); });
     return el;
   }
-
-  var HALF = 6;   /* where the mid-list divider goes, in an unfiltered grid */
 
   function renderGrid() {
     var grid = $('grid');

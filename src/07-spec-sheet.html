@@ -44,7 +44,7 @@ body { font-size: var(--t-sm); }
 }
 .sp-tagline { font-size: var(--t-xs); color: var(--ink-muted); line-height: 1.5; }
 
-.sp-block { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; }
+.sp-block { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) 1.5fr; margin: 0; }
 .sp-block > div {
   display: flex; flex-direction: column; justify-content: center; gap: 2px; min-width: 0;
   padding: var(--s-2) var(--s-3); border-inline-end: var(--border-w) solid var(--line);
@@ -158,11 +158,13 @@ body { font-size: var(--t-sm); }
   display: inline-flex; align-items: center; gap: var(--s-2);
   width: 100%; min-height: var(--tap-min); padding: 0 var(--s-3);
   font: inherit; font-size: var(--t-xs); font-weight: var(--w-medium);
-  text-transform: uppercase; letter-spacing: var(--tracking-en-caps);
-  color: var(--ink-muted); background: none; border: 0; cursor: pointer;
+  letter-spacing: var(--tracking-en); color: var(--ink-muted);
+  background: none; border: 0; cursor: pointer;
   transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
 }
 .sp-sort:hover { color: var(--ink); background: var(--surface); }
+.sp-sort__l { display: inline-flex; align-items: baseline; gap: var(--s-1); }
+.sp-unit { font-size: var(--t-xs); color: var(--ink-faint); }
 .sp-t th[aria-sort] .sp-sort { color: var(--accent); }
 .sp-caret {
   display: block; opacity: 0;
@@ -172,9 +174,15 @@ body { font-size: var(--t-sm); }
 .sp-t th[aria-sort="descending"] .sp-caret { transform: rotate(180deg); }
 .sp-th-plain {
   display: block; padding: 0 var(--s-3); line-height: var(--tap-min);
-  font-size: var(--t-xs); color: var(--ink-faint);
-  text-transform: uppercase; letter-spacing: var(--tracking-en-caps);
+  font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--tracking-en);
 }
+
+/* Digits line up on their ones place, which is the physical right edge in
+   either writing direction — so this one alignment is deliberately not
+   logical. */
+.sp-t .sp-num { text-align: right; }
+.sp-t th.sp-num .sp-sort { justify-content: flex-end; }
+:root[dir="rtl"] .sp-t th.sp-num .sp-sort { justify-content: flex-start; }
 
 .sp-row { background: var(--surface); transition: background var(--dur-fast) var(--ease-out); }
 .sp-row:hover { background: var(--surface-alt); }
@@ -209,7 +217,6 @@ body { font-size: var(--t-sm); }
 .sp-dim { font-family: var(--font-num); font-size: var(--t-xs); white-space: nowrap; }
 .sp-price { font-family: var(--font-num); font-size: var(--t-sm); white-space: nowrap; }
 .sp-price__u { margin-inline-start: var(--s-1); font-size: var(--t-xs); color: var(--ink-faint); }
-.sp-end { text-align: end; }
 
 .sp-stock { display: inline-flex; align-items: center; gap: var(--s-2); font-size: var(--t-xs); white-space: nowrap; }
 .sp-dot { width: 7px; height: 7px; flex: none; background: currentColor; }
@@ -287,6 +294,12 @@ body { font-size: var(--t-sm); }
 .sp-dlg {
   display: grid; grid-template-rows: auto minmax(0, 1fr); gap: var(--s-3);
   max-height: 86vh; padding: var(--s-5); overflow: hidden;
+}
+@media (min-width: 760px) {
+  /* ds-core centres .cat-dialog with the `translate` property *and* a
+     keyframe `transform`; the two compose, so the dialog lands a full
+     width and height off. Centring is left to the keyframe alone. */
+  .sp-dlg { translate: none; transform: translate(-50%, -50%); }
 }
 .sp-dlg__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
 .sp-dlg__title { font-size: var(--t-md); }
@@ -589,12 +602,14 @@ body { font-size: var(--t-sm); }
     colImg:     ['نما', 'View'],
     colCode:    ['کد', 'Code'],
     colName:    ['نام قطعه', 'Part'],
-    colMat:     ['جنس و پرداخت', 'Material & finish'],
-    colDim:     ['ابعاد mm', 'Dimensions mm'],
-    colWeight:  ['وزن g', 'Weight g'],
+    colMat:     ['جنس و پرداخت', 'Material and finish'],
+    colDim:     ['ابعاد', 'Dimensions'],
+    colWeight:  ['وزن', 'Weight'],
     colPrice:   ['قیمت', 'Price'],
     colStock:   ['موجودی', 'Stock'],
     colAdd:     ['افزودن', 'Add'],
+    uMm:        ['mm', 'mm'],
+    uG:         ['g', 'g'],
     sortAsc:    ['مرتب‌سازی صعودی', 'Sort ascending'],
     sortDesc:   ['مرتب‌سازی نزولی', 'Sort descending'],
     emptyT:     ['قطعه‌ای با این فیلترها پیدا نشد', 'No part matches these filters'],
@@ -849,7 +864,14 @@ body { font-size: var(--t-sm); }
 
   /* ── helpers ──────────────────────────────────────────── */
 
-  function t(key) { return S[key][L]; }
+  /* A Latin run sitting inside a Persian sentence — "آلومینیوم 6063-T6",
+     "مرکز پیچ 450 mm" — is reordered by the bidi algorithm because the
+     spaces and hyphens inside it are neutral. Wrapping each run in an
+     isolate keeps it intact. No effect on a Latin-only string. */
+  var LATIN_RUN = /[A-Za-z0-9Ø][A-Za-z0-9Ø.,\/×–\-+±°≤≥µ ]*[A-Za-z0-9Ø]|[A-Za-z0-9Ø]/g;
+  function isolate(s) { return s.replace(LATIN_RUN, '⁦$&⁩'); }
+
+  function t(key) { return isolate(S[key][L]); }
   function lang() { return L === 0 ? 'fa' : 'en'; }
   function num(v) { return L === 0 ? K.toFa(String(v)) : String(v); }
 
@@ -860,7 +882,7 @@ body { font-size: var(--t-sm); }
 
   function optLabel(facet, value) {
     var list = FACETS[facet].opts;
-    for (var i = 0; i < list.length; i++) if (list[i][0] === value) return list[i][1 + L];
+    for (var i = 0; i < list.length; i++) if (list[i][0] === value) return isolate(list[i][1 + L]);
     return value;
   }
   function matLabel(m) { return optLabel('mat', m); }
@@ -901,7 +923,7 @@ body { font-size: var(--t-sm); }
   function media(a) {
     var hot = a.hot.map(function (h) {
       var copy = L === 0 ? h.fa : h.en;
-      return { x: h.x, y: h.y, title: copy[0], body: copy[1] };
+      return { x: h.x, y: h.y, title: isolate(copy[0]), body: isolate(copy[1]) };
     });
     return K.defaultMedia(a.code, hot, { subject: a.subject, palette: a.palette });
   }
@@ -926,9 +948,9 @@ body { font-size: var(--t-sm); }
     { key: 'code',   label: 'colCode',   sort: function (a) { return a.code; } },
     { key: 'name',   label: 'colName',   sort: function (a) { return a.name[L]; } },
     { key: 'mat',    label: 'colMat',    sort: function (a) { return matLabel(a.mat); } },
-    { key: 'dim',    label: 'colDim',    sort: function (a) { return a.size; } },
-    { key: 'weight', label: 'colWeight', sort: function (a) { return a.weight; } },
-    { key: 'price',  label: 'colPrice',  sort: function (a) { return a.price; } },
+    { key: 'dim',    label: 'colDim',    unit: 'uMm', sort: function (a) { return a.size; } },
+    { key: 'weight', label: 'colWeight', unit: 'uG', numeric: true, sort: function (a) { return a.weight; } },
+    { key: 'price',  label: 'colPrice',  unit: 'toman', numeric: true, sort: function (a) { return a.price; } },
     { key: 'stock',  label: 'colStock',  sort: function (a) { return STOCK_RANK[a.stock]; } }
   ];
 
@@ -1101,11 +1123,18 @@ body { font-size: var(--t-sm); }
     });
 
     COLUMNS.forEach(function (col) {
-      var th = el('th', '', { scope: 'col', 'data-col': col.key });
+      var th = el('th', col.numeric ? 'sp-num' : '', { scope: 'col', 'data-col': col.key });
       var btn = el('button', 'sp-sort', { type: 'button' });
+      var label = el('span', 'sp-sort__l');
       var span = el('span');
       span.setAttribute('data-i', col.label);
-      btn.appendChild(span);
+      label.appendChild(span);
+      if (col.unit) {
+        var unit = el('span', 'sp-unit');
+        unit.setAttribute('data-i', col.unit);
+        label.appendChild(unit);
+      }
+      btn.appendChild(label);
       var caret = el('span', 'sp-caret');
       caret.innerHTML = icon(ICON.caret, 11);
       btn.appendChild(caret);
@@ -1160,10 +1189,11 @@ body { font-size: var(--t-sm); }
     return btn;
   }
 
-  function priceCell(a) {
-    var span = el('span', 'sp-price num');
-    span.appendChild(document.createTextNode(price(a.price)));
-    span.appendChild(text('span', 'sp-price__u', t('toman')));
+  /* The table names the currency once, in the column header; a card has no
+     header to carry it. */
+  function priceCell(a, withUnit) {
+    var span = text('span', 'sp-price num', price(a.price));
+    if (withUnit) span.appendChild(text('span', 'sp-price__u', t('toman')));
     return span;
   }
 
@@ -1202,11 +1232,11 @@ body { font-size: var(--t-sm); }
     tdDim.appendChild(text('span', 'sp-dim num', a.dim));
     tr.appendChild(tdDim);
 
-    var tdWeight = el('td', 'sp-end');
+    var tdWeight = el('td', 'sp-num');
     tdWeight.appendChild(text('span', 'sp-dim num', String(a.weight)));
     tr.appendChild(tdWeight);
 
-    parts.price = el('td', 'sp-end');
+    parts.price = el('td', 'sp-num');
     tr.appendChild(parts.price);
 
     parts.stock = el('td');

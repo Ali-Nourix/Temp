@@ -282,6 +282,10 @@ body { position: relative; min-height: 100vh; }
   .gx-bar__gap { display: none; }
   .gx-bar { flex-wrap: wrap; row-gap: var(--s-2); }
   .gx-search { flex: 1 1 100%; order: 1; }
+  /* Two columns still read as a catalogue on a phone; one reads as a feed. */
+  .gx-grid { --col-min: 148px; gap: var(--s-3); }
+  .gx-face { padding: var(--s-2); }
+  .gx-filters { margin-inline-start: 0; }
 }
 
 @media print {
@@ -1314,8 +1318,11 @@ body { position: relative; min-height: 100vh; }
     }
   }
 
-  /* Escape unwinds one layer at a time; Tab stays inside the open sheet. */
+  /* Escape unwinds one layer at a time; Tab stays inside the open sheet.
+     The kit's viewer is the outermost layer and handles its own keys, but
+     it binds later than this listener, so defer to it explicitly. */
   document.addEventListener('keydown', function (e) {
+    if (document.querySelector('.ck-viewer')) return;
     if (e.key === 'Escape' && !sheet.hidden) { e.preventDefault(); openSheet(false); return; }
     if (e.key === 'Escape' && current) {
       e.preventDefault();

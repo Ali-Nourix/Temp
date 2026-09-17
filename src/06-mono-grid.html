@@ -29,7 +29,11 @@
 
 body { background: var(--bg); }
 .mg-fig { font-family: var(--mg-num); font-variant-numeric: tabular-nums; }
-.mg-caps { letter-spacing: var(--mg-caps); text-transform: uppercase; }
+/* One small label, used wherever a field needs naming. */
+.mg-seg__label, .mg-meta dt, .mg-sum__k, .mg-foot dt {
+  font-size: var(--t-xs); color: var(--ink-faint);
+  letter-spacing: var(--mg-caps); text-transform: uppercase;
+}
 
 .mg-skip {
   position: absolute; inset-block-start: 0; inset-inline-start: -9999px; z-index: 60;
@@ -66,7 +70,6 @@ body { background: var(--bg); }
 .mg-meta { display: grid; grid-template-columns: repeat(2, 1fr); margin: 0; border-block-start: var(--border-w) solid var(--line); }
 .mg-meta > div { padding: var(--s-3) var(--mg-inset); border-inline-start: var(--border-w) solid var(--line); }
 .mg-meta > div:nth-child(odd) { border-inline-start: 0; }
-.mg-meta dt { font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--mg-caps); text-transform: uppercase; }
 .mg-meta dd { margin: 0; font-family: var(--mg-display); font-size: var(--t-base); }
 
 /* ── toolbar ─────────────────────────────────────────────── */
@@ -82,7 +85,6 @@ body { background: var(--bg); }
   margin-inline-end: auto;
 }
 .mg-seg { display: flex; align-items: center; gap: var(--s-2); }
-.mg-seg__label { font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--mg-caps); text-transform: uppercase; }
 .mg-seg__set { display: flex; border: var(--border-w) solid var(--line-strong); }
 .mg-seg__set > button {
   min-height: var(--tap-min); min-width: var(--tap-min); padding: 0 var(--s-3);
@@ -236,6 +238,7 @@ body { background: var(--bg); }
 .mg-row { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto; gap: var(--s-3); align-items: center;
   padding: var(--s-3) var(--mg-inset); border-block-end: var(--border-w) solid var(--ink-muted); }
 .mg-row img { width: 44px; aspect-ratio: 1; object-fit: cover; }
+.mg-row__id { display: grid; gap: 2px; }
 .mg-row__name { font-family: var(--mg-display); font-size: var(--t-sm); line-height: var(--lh-fa-tight); }
 .mg-row__code { font-family: var(--font-num); font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); color: var(--ink-faint); }
 .mg-row__price { font-family: var(--mg-num); font-size: var(--t-sm); font-variant-numeric: tabular-nums; }
@@ -244,7 +247,6 @@ body { background: var(--bg); }
 .mg-empty b { display: block; margin-block-end: var(--s-2); font-family: var(--mg-display); font-size: var(--t-base); font-weight: var(--w-regular); color: var(--bg); }
 .mg-panel__foot { padding: var(--s-4) var(--mg-inset) var(--s-5); border-block-start: var(--border-w) solid var(--ink-muted); display: grid; gap: var(--s-3); }
 .mg-sum { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-3); }
-.mg-sum__k { font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--mg-caps); text-transform: uppercase; }
 .mg-sum__v { font-family: var(--mg-num); font-size: var(--t-lg); font-variant-numeric: tabular-nums; }
 .mg-send { min-height: var(--tap-min); padding: 0 var(--s-5); font: inherit;
   background: var(--bg); color: var(--ink); border: var(--border-w) solid var(--bg); cursor: pointer;
@@ -264,7 +266,6 @@ body { background: var(--bg); }
   --focus: var(--bg);
 }
 .mg-foot h2 { font-family: var(--mg-display); font-size: var(--t-md); }
-.mg-foot dt { font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--mg-caps); text-transform: uppercase; }
 .mg-foot dd { margin: 0 0 var(--s-2); font-size: var(--t-sm); }
 .mg-foot__word { font-family: var(--font-en-display); font-weight: var(--w-black); font-size: var(--t-xl); letter-spacing: var(--tracking-en-caps); line-height: var(--lh-en-tight); }
 .mg-print { justify-self: start; min-height: var(--tap-min); padding: 0 var(--s-4); font: inherit; font-size: var(--t-sm);
@@ -407,7 +408,7 @@ body { background: var(--bg); }
   <ul class="mg-list" id="mg-list"></ul>
   <div class="mg-panel__foot">
     <div class="mg-sum">
-      <span class="mg-sum__k"><span data-i18n="total">جمع</span> · <span id="mg-sum-n"></span></span>
+      <span class="mg-sum__k"><span data-i18n="total">جمع</span> <span id="mg-sum-n"></span></span>
       <span class="mg-sum__v" id="mg-sum-v"></span>
     </div>
     <button type="button" class="mg-send" id="mg-send" data-i18n="send">ارسال درخواست</button>
@@ -452,7 +453,7 @@ body { background: var(--bg); }
       byName: 'نام', byPrice: 'قیمت',
       inquiry: 'استعلام قیمت',
       unit: 'تومان',
-      detail: 'جزئیات', video: 'ویدیو', spin: 'چرخش ۳۶۰',
+      video: 'ویدیو', spin: 'چرخش ۳۶۰',
       add: 'افزودن به استعلام', added: 'برداشتن از استعلام',
       remove: 'حذف از استعلام', close: 'بستن',
       emptyTitle: 'فهرست خالی است.',
@@ -485,7 +486,7 @@ body { background: var(--bg); }
       byName: 'Name', byPrice: 'Price',
       inquiry: 'Price inquiry',
       unit: 'Toman',
-      detail: 'Details', video: 'Video', spin: '360 spin',
+      video: 'Video', spin: '360 spin',
       add: 'Add to the inquiry', added: 'Remove from the inquiry',
       remove: 'Remove from the inquiry', close: 'Close',
       emptyTitle: 'The list is empty.',
@@ -881,9 +882,8 @@ body { background: var(--bg); }
   }
 
   /* The grid closes flush at every density: the last cell takes whatever the
-     product cells left over in the final row. */
-  /* Narrow viewports fold the chosen density down, so the effective column
-     count comes from the resolved property rather than from the control. */
+     product cells left over in the final row. Narrow viewports fold the chosen
+     density down, so the count comes from the resolved property, not the control. */
   function fitEnd() {
     var cols = Number(getComputedStyle(grid).getPropertyValue('--mg-cols')) || Number(grid.dataset.cols);
     var rest = P.length % cols;
@@ -917,14 +917,18 @@ body { background: var(--bg); }
     renderList();
   }
 
-  function renderList() {
-    var lang = state.lang;
-    var chosen = state.picked.map(function (sku) {
+  function chosen() {
+    return state.picked.map(function (sku) {
       return P.filter(function (p) { return p.sku === sku; })[0];
     });
+  }
+
+  function renderList() {
+    var lang = state.lang;
+    var rows = chosen();
     list.innerHTML = '';
 
-    if (!chosen.length) {
+    if (!rows.length) {
       var empty = document.createElement('li');
       empty.className = 'mg-empty';
       empty.innerHTML = '<b></b><span></span>';
@@ -934,13 +938,13 @@ body { background: var(--bg); }
     }
 
     var total = 0;
-    chosen.forEach(function (p) {
+    rows.forEach(function (p) {
       total += p.price;
       var row = document.createElement('li');
       row.className = 'mg-row';
       row.innerHTML =
         '<img alt="" src="' + CatalogKit.image(p.sku + '-a', { w: 160, h: 200, subject: p.subject, palette: PALETTE }) + '">' +
-        '<span><span class="mg-row__name"></span><br><span class="mg-row__code"></span></span>' +
+        '<span class="mg-row__id"><span class="mg-row__name"></span><span class="mg-row__code"></span></span>' +
         '<span class="mg-row__price"></span>' +
         '<button type="button" class="mg-x">' + ICON.minus + '</button>';
       row.querySelector('.mg-row__name').textContent = p.name[lang];
@@ -952,9 +956,9 @@ body { background: var(--bg); }
       list.appendChild(row);
     });
 
-    sumN.textContent = fig(chosen.length) + ' ' + t('pieces');
+    sumN.textContent = fig(rows.length) + ' ' + t('pieces');
     sumV.textContent = fig(total) + ' ' + t('unit');
-    sendBtn.disabled = !chosen.length;
+    sendBtn.disabled = !rows.length;
   }
 
   function openPanel() {
@@ -1052,6 +1056,17 @@ body { background: var(--bg); }
   closeBtn.innerHTML = ICON.close;
   closeBtn.addEventListener('click', closePanel);
   scrim.addEventListener('click', closePanel);
+
+  /* Nothing here can take an order, so the list leaves as a letter the
+     workshop can answer. */
+  sendBtn.addEventListener('click', function () {
+    var body = chosen().map(function (p) {
+      return p.sku + ' — ' + p.name[state.lang] + ' — ' + fig(p.price) + ' ' + t('unit');
+    }).join('\n');
+    window.location.href = 'mailto:salam@manzar.example'
+      + '?subject=' + encodeURIComponent(t('inquiry') + ' — ' + t('folioSeries'))
+      + '&body=' + encodeURIComponent(body);
+  });
 
   /* The panel is modal, so Escape and Tab are handled inside it — the viewer
      keeps its own keys and the two never fight over the document. */

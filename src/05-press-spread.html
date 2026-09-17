@@ -186,6 +186,7 @@ html, body { height: 100%; overflow: hidden; }
   border-block-end: var(--border-w-strong) solid var(--line-strong);
 }
 .ps-sect h2 { font-size: var(--t-lg); line-height: var(--lh-fa-tight); }
+.ps-sect__unit { display: block; margin-block-start: var(--s-1); font-size: var(--t-xs); color: var(--ink-faint); }
 
 /* ── product grid ─────────────────────────────────────────── */
 .ps-grid {
@@ -222,14 +223,11 @@ html, body { height: 100%; overflow: hidden; }
   font-size: var(--t-sm); line-height: var(--lh-fa-tight); font-weight: var(--w-bold);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
 }
-.ps-cell__alt {
-  display: flex; align-items: baseline; gap: var(--s-2);
-  font-size: var(--t-xs); line-height: 1.3; color: var(--ink-muted);
+.ps-cell__code {
+  font-size: var(--t-xs); line-height: 1.3; color: var(--ink-faint);
+  letter-spacing: var(--tracking-en); text-align: start;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.ps-cell__alt > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ps-cell__alt .cat-sku { flex: none; }
-.ps-cell__alt[dir="ltr"] { font-family: var(--font-en-ui); letter-spacing: var(--tracking-en); }
-.ps-cell__alt[dir="rtl"] { font-family: var(--font-fa-display); letter-spacing: var(--tracking-fa); }
 .ps-cell__line {
   font-size: var(--t-xs); line-height: 1.4; color: var(--ink-muted);
   margin: 0; max-width: none;
@@ -245,9 +243,7 @@ html, body { height: 100%; overflow: hidden; }
   padding-block-start: var(--s-1);
   border-block-start: var(--border-w) solid var(--line);
 }
-.ps-cell__foot .cat-price { font-size: var(--t-sm); gap: var(--s-1); flex: 1; min-width: 0; }
-.ps-cell__foot .cat-price__unit { font-family: var(--font-fa-ui); }
-[dir="ltr"] .ps-cell__foot .cat-price__unit { font-family: var(--font-en-ui); }
+.ps-cell__foot .cat-price { font-size: var(--t-sm); flex: 1; min-width: 0; white-space: nowrap; }
 .ps-add { flex: none; }
 .ps-add[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .ps-add svg { width: 16px; height: 16px; fill: currentColor; }
@@ -428,6 +424,7 @@ html, body { height: 100%; overflow: hidden; }
       },
 
       unit: 'تومان',
+      priceNote: 'بها به تومان، بدون مالیات',
       add: 'افزودن به برگهٔ استعلام',
       remove: 'برداشتن از برگهٔ استعلام',
       more: 'یکی بیشتر',
@@ -513,6 +510,7 @@ html, body { height: 100%; overflow: hidden; }
       },
 
       unit: 'toman',
+      priceNote: 'Prices in toman, tax not included',
       add: 'Add to the inquiry sheet',
       remove: 'Remove from the inquiry sheet',
       more: 'One more',
@@ -561,7 +559,7 @@ html, body { height: 100%; overflow: hidden; }
 
   var PRODUCTS = [
     {
-      sku: 'AW-2140', section: 'wear', subject: 'textile', palette: 'ink', price: 4250000, sale: false,
+      sku: 'AW-2140', model: 'ZAGROS', section: 'wear', subject: 'textile', palette: 'ink', price: 4250000, sale: false,
       fa: {
         name: 'کاپشن کار ضدآب زاگرس',
         line: 'آستر گرم و درزهای جوش‌خورده، برای کار بیرونی نیم‌سال دوم.',
@@ -584,7 +582,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'AW-2215', section: 'wear', subject: 'textile', palette: 'stone', price: 3690000, sale: true,
+      sku: 'AW-2215', model: 'ATASHKAR', section: 'wear', subject: 'textile', palette: 'stone', price: 3690000, sale: true,
       fa: {
         name: 'سرهمی جوشکاری آتشکار',
         line: 'پنبهٔ ضد شعله با پوشش ثابت و جیب‌های درزدار برای کار بالای سر.',
@@ -607,7 +605,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'AW-1806', section: 'wear', subject: 'textile', palette: 'ink', price: 1840000, sale: false,
+      sku: 'AW-1806', model: 'ALBORZ', section: 'wear', subject: 'textile', palette: 'ink', price: 1840000, sale: false,
       fa: {
         name: 'شلوار کار شش‌جیب البرز',
         line: 'کتان کجراه سنگین با جیب ابزار کناری و زانوی دولا.',
@@ -630,7 +628,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'SF-3050', section: 'wear', subject: 'shoe', palette: 'stone', price: 5950000, sale: false,
+      sku: 'SF-3050', model: 'SAHAND', section: 'wear', subject: 'shoe', palette: 'stone', price: 5950000, sale: false,
       fa: {
         name: 'پوتین ایمنی پنجه‌فولادی سهند',
         line: 'چرم گاوی روغن‌خورده با زیرهٔ دو تزریق ضد لغزش.',
@@ -653,7 +651,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'HT-4012', section: 'tools', subject: 'bottle', palette: 'ink', price: 1320000, sale: false,
+      sku: 'HT-4012', model: 'PULAD', section: 'tools', subject: 'bottle', palette: 'ink', price: 1320000, sale: false,
       fa: {
         name: 'آچار فرانسه ۱۲ اینچ پولاد',
         line: 'فک فولاد کروم‌وانادیوم با پیچ تنظیم روان.',
@@ -676,7 +674,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'HT-5216', section: 'tools', subject: 'bag', palette: 'stone', price: 2170000, sale: false,
+      sku: 'HT-5216', model: 'BARBAR', section: 'tools', subject: 'bag', palette: 'stone', price: 2170000, sale: false,
       fa: {
         name: 'جعبه‌ابزار برزنتی ۱۶ اینچ باربر',
         line: 'برزنت روکش‌دار با کف پلاستیکی سخت و چهارده جیب.',
@@ -699,7 +697,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'HT-6015', section: 'tools', subject: 'watch', palette: 'ink', price: 980000, sale: true,
+      sku: 'HT-6015', model: 'DEQAT', section: 'tools', subject: 'watch', palette: 'ink', price: 980000, sale: true,
       fa: {
         name: 'کولیس ورنیه ۱۵۰ میلی‌متر دقت',
         line: 'فولاد زنگ‌نزن سخت‌کاری‌شده با ورنیهٔ ۰٫۰۲ میلی‌متر.',
@@ -722,7 +720,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'HT-7125', section: 'tools', subject: 'chair', palette: 'stone', price: 6400000, sale: false,
+      sku: 'HT-7125', model: 'ARSAN', section: 'tools', subject: 'chair', palette: 'stone', price: 6400000, sale: false,
       fa: {
         name: 'گیرهٔ رومیزی ۱۲۵ میلی‌متر ارسن',
         line: 'بدنهٔ چدن خاکستری با فک تعویض‌پذیر و سندان پشت.',
@@ -745,7 +743,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'SF-2201', section: 'safety', subject: 'vase', palette: 'ink', price: 590000, sale: false,
+      sku: 'SF-2201', model: 'TAV', section: 'safety', subject: 'vase', palette: 'ink', price: 590000, sale: false,
       fa: {
         name: 'کلاه ایمنی چهاربنده تاو',
         line: 'پوستهٔ ABS با کلاهک چهاربنده و تنظیم چرخشی پشت سر.',
@@ -768,7 +766,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'SF-1408', section: 'safety', subject: 'bag', palette: 'stone', price: 480000, sale: false,
+      sku: 'SF-1408', model: 'SHOLE', section: 'safety', subject: 'bag', palette: 'stone', price: 480000, sale: false,
       fa: {
         name: 'دستکش جوشکاری چرم بزی شعله',
         line: 'کف چرم بزی و ساق چرم گاوی با آستر پنبه.',
@@ -791,7 +789,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'EL-8020', section: 'safety', subject: 'lamp', palette: 'ink', price: 2850000, sale: false,
+      sku: 'EL-8020', model: 'MAHTAB', section: 'safety', subject: 'lamp', palette: 'ink', price: 2850000, sale: false,
       fa: {
         name: 'چراغ کارگاهی شارژی ۲۰ وات مهتاب',
         line: 'بدنهٔ آلومینیمی با آهن‌ربا و قلاب، شارژ USB-C.',
@@ -814,7 +812,7 @@ html, body { height: 100%; overflow: hidden; }
       }
     },
     {
-      sku: 'SF-1102', section: 'safety', subject: 'watch', palette: 'stone', price: 320000, sale: true,
+      sku: 'SF-1102', model: 'DID', section: 'safety', subject: 'watch', palette: 'stone', price: 320000, sale: true,
       fa: {
         name: 'عینک ایمنی ضد خش دید',
         line: 'عدسی پلی‌کربنات یک‌تکه با پوشش ضد بخار و ضد خش.',
@@ -988,10 +986,7 @@ html, body { height: 100%; overflow: hidden; }
           h('h3', { class: 'ps-cell__name', text: c.name }),
           p.sale ? h('span', { class: 'ps-sale', text: fa() ? 'حراج فصل' : 'Sale' }) : null
         ),
-        h('div', { class: 'ps-cell__alt', dir: fa() ? 'ltr' : 'rtl' },
-          h('span', { text: (fa() ? p.en : p.fa).name }),
-          h('span', { class: 'cat-sku num', dir: 'ltr', text: p.sku })
-        ),
+        h('div', { class: 'ps-cell__code num', dir: 'ltr', text: p.model + ' \u00B7 ' + p.sku }),
         h('p', { class: 'ps-cell__line', text: c.line }),
         h('dl', { class: 'ps-specs' }, c.specs.map(function (spec) {
           return h('div', { class: 'ps-lead' },
@@ -1002,10 +997,7 @@ html, body { height: 100%; overflow: hidden; }
         }))
       ),
       h('div', { class: 'ps-cell__foot' },
-        h('div', { class: 'cat-price' },
-          h('span', { class: 'num', text: num(p.price) }),
-          h('span', { class: 'cat-price__unit', text: L().unit })
-        ),
+        h('div', { class: 'cat-price' }, h('span', { class: 'num', text: num(p.price) })),
         add
       )
     );
@@ -1015,7 +1007,10 @@ html, body { height: 100%; overflow: hidden; }
     var section = L().sections[key];
     return page(folio, side, section.name, [
       h('div', { class: 'ps-sect' },
-        h('h2', { text: section.name }),
+        h('div', {},
+          h('h2', { text: section.name }),
+          h('span', { class: 'ps-sect__unit', text: L().priceNote })
+        ),
         h('div', { class: 'ps-cols' }, h('p', { text: section.stand }))
       ),
       h('div', { class: 'cat-grid cat-grid--press ps-grid' },

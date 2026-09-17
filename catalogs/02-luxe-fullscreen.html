@@ -980,7 +980,12 @@ a:hover { color: var(--ink); }
   /* ── inquiry dialog ─────────────────────────── */
 
   .lx-dialog { border: var(--border-w) solid var(--line-strong); }
-  @media (min-width: 760px) { .lx-dialog { width: min(720px, 92vw); } }
+  /* cat-pop's keyframes re-apply the centring translate that .cat-dialog
+     already carries, which lands the sheet in the corner. A plain fade
+     keeps the centring and suits the slow motion of this theme. */
+  @media (min-width: 760px) {
+    .lx-dialog { width: min(720px, 92vw); animation: cat-fade var(--dur-page) var(--ease-inout) both; }
+  }
   .lx-dialog__head { display: grid; gap: var(--s-2); margin-block-end: var(--s-5); }
   .lx-dialog__head h2 { margin: 0; font-size: var(--t-xl); font-weight: var(--w-regular); }
   [dir="ltr"] .lx-dialog__head h2 { font-family: var(--font-en-display); }
@@ -1010,6 +1015,9 @@ a:hover { color: var(--ink); }
      the deeper surface so they read as chrome and not as lit artwork. */
   .ck-viewer, .ck-scrim { --surface: var(--bg); --surface-alt: var(--bg-alt); --line: var(--line-strong); }
   .ck-viewer .ck-vtop, .ck-viewer .ck-vbar { background: color-mix(in oklab, var(--bg) 92%, transparent); backdrop-filter: blur(6px); }
+  /* The viewer's captions are set in the numeral face and forced LTR, which
+     disjoints Persian; give them the Persian UI face while the page is RTL. */
+  [dir="rtl"] .ck-vsub { font-family: var(--font-fa-ui); direction: rtl; }
 
   .lx-skip {
     position: fixed; z-index: 50; inset-block-start: var(--s-3); inset-inline-start: var(--s-3);
