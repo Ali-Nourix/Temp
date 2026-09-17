@@ -1,0 +1,619 @@
+/* ============================================================
+   Catalog Design System — core tokens, 8 themes, components
+   Extracted from "سیستم طراحی کاتالوگ دیجیتال v1".
+   Fonts load from Google Fonts; every family has a system fallback,
+   so the file still renders offline.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,300..600;1,300..600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Manrope:wght@400;500;700;800&family=Markazi+Text:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..700&family=Noto+Kufi+Arabic:wght@400;500;700&family=Noto+Naskh+Arabic:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Space+Grotesk:wght@400;500;700&family=Vazirmatn:wght@300;400;500;700;900&display=swap');
+
+:root {
+  /* خانواده‌های پایه — تم‌ها این‌ها را روی نقش‌ها می‌نشانند */
+  --fam-vazir: "Vazirmatn", system-ui, sans-serif;
+  --fam-naskh: "Noto Naskh Arabic", "Vazirmatn", serif;
+  --fam-kufi: "Noto Kufi Arabic", "Vazirmatn", sans-serif;
+  --fam-markazi: "Markazi Text", "Noto Naskh Arabic", serif;
+  --fam-newsreader: "Newsreader", Georgia, serif;
+  --fam-cormorant: "Cormorant Garamond", Georgia, serif;
+  --fam-grotesk: "Space Grotesk", "Helvetica Neue", sans-serif;
+  --fam-archivo: "Archivo", "Helvetica Neue", sans-serif;
+  --fam-manrope: "Manrope", "Helvetica Neue", sans-serif;
+  --fam-sourceserif: "Source Serif 4", Georgia, serif;
+  --fam-plex: "IBM Plex Sans", "Helvetica Neue", sans-serif;
+  --fam-plexmono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* پالت پایه و نام‌های معنایی. مقدارها با oklch نوشته شده‌اند تا هم‌خانواده بمانند.
+   قاعده: هیچ کامپوننتی رنگ خام ننویسد — فقط نام معنایی. */
+:root {
+  /* خنثی‌های گرم (پیش‌فرض ادیتوریال) */
+  --n-00: oklch(0.99 0.004 85);
+  --n-05: oklch(0.975 0.005 85);
+  --n-10: oklch(0.945 0.006 85);
+  --n-20: oklch(0.90 0.007 85);
+  --n-30: oklch(0.80 0.008 85);
+  --n-50: oklch(0.62 0.009 85);
+  --n-70: oklch(0.44 0.010 85);
+  --n-85: oklch(0.28 0.010 80);
+  --n-95: oklch(0.17 0.010 80);
+  --n-100: oklch(0.12 0.008 80);
+
+  /* نقش‌های معنایی — تم پیش‌فرض: editorial */
+  --bg: var(--n-05);
+  --bg-alt: var(--n-00);
+  --surface: var(--n-00);
+  --surface-alt: var(--n-10);
+  --ink: var(--n-95);
+  --ink-muted: var(--n-70);
+  --ink-faint: var(--n-50);
+  --line: oklch(0.88 0.006 85);
+  --line-strong: var(--n-85);
+  --accent: oklch(0.52 0.12 42);
+  --accent-soft: oklch(0.94 0.03 42);
+  --on-accent: oklch(0.99 0.004 85);
+  --focus: oklch(0.55 0.15 250);
+  --overlay: oklch(0.17 0.01 80 / 0.55);
+
+  /* وضعیت‌ها — فقط همین سه؛ رنگ‌های معنایی بیشتری اضافه نکن */
+  --ok: oklch(0.55 0.10 150);
+  --warn: oklch(0.70 0.13 75);
+  --danger: oklch(0.53 0.15 25);
+}
+
+/* تایپوگرافی دوزبانه. دو محور جدا: fa (فارسی/RTL) و en (لاتین/LTR).
+   قاعده‌ی سخت: line-height فارسی همیشه بلندتر از لاتین؛ letter-spacing روی فارسی صفر. */
+:root {
+  --font-fa-display: var(--fam-vazir);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-newsreader);
+  --font-en-ui: var(--fam-grotesk);
+  --font-num: var(--fam-plexmono);
+
+  /* مقیاس سیال — یک مقیاس برای هر دو زبان */
+  --t-xs: clamp(0.72rem, 0.70rem + 0.15vw, 0.80rem);
+  --t-sm: clamp(0.82rem, 0.79rem + 0.2vw, 0.92rem);
+  --t-base: clamp(0.95rem, 0.90rem + 0.25vw, 1.06rem);
+  --t-md: clamp(1.10rem, 1.02rem + 0.4vw, 1.30rem);
+  --t-lg: clamp(1.35rem, 1.18rem + 0.8vw, 1.75rem);
+  --t-xl: clamp(1.75rem, 1.40rem + 1.6vw, 2.60rem);
+  --t-2xl: clamp(2.30rem, 1.70rem + 2.8vw, 3.80rem);
+  --t-3xl: clamp(3.00rem, 2.00rem + 4.6vw, 5.60rem);
+
+  --lh-fa-tight: 1.42;
+  --lh-fa-body: 1.85;
+  --lh-en-tight: 1.10;
+  --lh-en-body: 1.55;
+
+  --w-light: 300;
+  --w-regular: 400;
+  --w-medium: 500;
+  --w-bold: 700;
+  --w-black: 900;
+
+  --tracking-fa: 0;
+  --tracking-en: 0.01em;
+  --tracking-en-caps: 0.10em;
+
+  /* حداکثر عرض خط خوانا */
+  --measure-fa: 62ch;
+  --measure-en: 70ch;
+}
+
+/* فاصله، شبکه، گوشه، خط. مقیاس ۴ پایه اما مقدارهای واقعی طراحی — گرد نکن. */
+:root {
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+
+  --gutter: var(--s-5);
+  --page-pad: clamp(20px, 4vw, 72px);
+  --page-max: 1360px;
+  --col-min: 268px;          /* حداقل عرض کارت محصول در شبکه‌ی سیال */
+
+  --radius-none: 0px;
+  --radius-media: 2px;
+  --radius-card: 4px;
+  --radius-control: 4px;
+  --radius-pill: 999px;
+
+  --border-w: 1px;
+  --border-w-strong: 2px;
+
+  --shadow-1: 0 1px 2px oklch(0.17 0.01 80 / 0.06);
+  --shadow-2: 0 10px 30px -12px oklch(0.17 0.01 80 / 0.18);
+  --shadow-lift: 0 18px 44px -18px oklch(0.17 0.01 80 / 0.28);
+
+  --ratio-media: 4 / 5;      /* نسبت پیش‌فرض عکس محصول */
+  --ratio-cover: 3 / 4;      /* کاور کاتالوگ */
+  --ratio-spread: 3 / 2;     /* صفحه‌ی باز کاتالوگ */
+  --tap-min: 44px;           /* حداقل هدف لمسی — هرگز کمتر */
+}
+
+/* حرکت. هر انیمیشنی که می‌سازی باید از همین توکن‌ها استفاده کند.
+   قاعده: فقط transform و opacity انیمیت می‌شوند. width/height/top/left هرگز. */
+:root {
+  --dur-instant: 90ms;
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 420ms;
+  --dur-page: 560ms;
+
+  --ease-out: cubic-bezier(0.20, 0.80, 0.25, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft: cubic-bezier(0.34, 1.12, 0.64, 1);
+
+  --hover-lift: -2px;
+  --hover-media-scale: 1.03;
+  --press-scale: 0.985;
+  --stagger: 45ms;           /* فاصله‌ی ورود کارت‌های پشت‌سرهم؛ حداکثر ۸ کارت */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 1ms;
+    --dur-fast: 1ms;
+    --dur-base: 1ms;
+    --dur-slow: 1ms;
+    --dur-page: 1ms;
+    --hover-lift: 0px;
+    --hover-media-scale: 1;
+    --press-scale: 1;
+    --stagger: 0ms;
+  }
+}
+
+/* ۸ تم. یک تم = یک بار عوض کردن data-theme روی ریشه. هیچ کامپوننتی تم‌آگاه نیست.
+   استفاده: <div data-theme="luxe"> … </div>  یا  <html data-theme="spec"> */
+
+/* ۱. editorial — مینیمال مجله‌ای؛ فضای سفید زیاد، تایپ سریف لاتین، شبکه‌ی نامتقارن */
+[data-theme="editorial"] {
+  --bg: oklch(0.975 0.005 85);
+  --bg-alt: oklch(0.99 0.004 85);
+  --surface: oklch(0.99 0.004 85);
+  --surface-alt: oklch(0.945 0.006 85);
+  --ink: oklch(0.17 0.010 80);
+  --ink-muted: oklch(0.44 0.010 85);
+  --ink-faint: oklch(0.62 0.009 85);
+  --line: oklch(0.88 0.006 85);
+  --line-strong: oklch(0.28 0.010 80);
+  --accent: oklch(0.52 0.12 42);
+  --accent-soft: oklch(0.94 0.03 42);
+  --on-accent: oklch(0.99 0.004 85);
+  --font-fa-display: var(--fam-vazir);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-newsreader);
+  --font-en-ui: var(--fam-grotesk);
+  --radius-media: 2px; --radius-card: 3px; --radius-control: 3px;
+  --border-w: 1px;
+  --shadow-1: 0 1px 2px oklch(0.17 0.01 80 / 0.05);
+  --shadow-2: 0 12px 34px -16px oklch(0.17 0.01 80 / 0.16);
+  --gutter: 28px;
+}
+
+/* ۲. luxe — تیره و طلایی؛ کم‌نور، فاصله‌ی زیاد، حرکت کند */
+[data-theme="luxe"] {
+  --bg: oklch(0.16 0.012 60);
+  --bg-alt: oklch(0.21 0.014 60);
+  --surface: oklch(0.21 0.014 60);
+  --surface-alt: oklch(0.26 0.016 60);
+  --ink: oklch(0.96 0.010 85);
+  --ink-muted: oklch(0.78 0.014 85);
+  --ink-faint: oklch(0.62 0.014 85);
+  --line: oklch(0.34 0.016 70);
+  --line-strong: oklch(0.72 0.070 85);
+  --accent: oklch(0.79 0.098 85);
+  --accent-soft: oklch(0.30 0.030 85);
+  --on-accent: oklch(0.16 0.012 60);
+  --overlay: oklch(0.10 0.01 60 / 0.72);
+  --font-fa-display: var(--fam-markazi);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-cormorant);
+  --font-en-ui: var(--fam-grotesk);
+  --radius-media: 0px; --radius-card: 0px; --radius-control: 0px;
+  --border-w: 1px;
+  --shadow-1: none;
+  --shadow-2: 0 24px 60px -28px oklch(0 0 0 / 0.6);
+  --shadow-lift: 0 30px 70px -30px oklch(0 0 0 / 0.7);
+  --dur-base: 340ms; --dur-slow: 620ms; --dur-page: 820ms;
+  --hover-media-scale: 1.045;
+  --gutter: 40px;
+  --tracking-en-caps: 0.18em;
+}
+
+/* ۳. brutal — نئوبروتال؛ کنتراست بیشینه، حاشیه‌ی ضخیم، سایه‌ی سخت، حرکت تند */
+[data-theme="brutal"] {
+  --bg: oklch(0.985 0 0);
+  --bg-alt: oklch(0.93 0.14 100);
+  --surface: oklch(1 0 0);
+  --surface-alt: oklch(0.95 0.16 100);
+  --ink: oklch(0.13 0 0);
+  --ink-muted: oklch(0.33 0 0);
+  --ink-faint: oklch(0.50 0 0);
+  --line: oklch(0.13 0 0);
+  --line-strong: oklch(0.13 0 0);
+  --accent: oklch(0.55 0.21 25);
+  --accent-soft: oklch(0.93 0.14 100);
+  --on-accent: oklch(1 0 0);
+  --font-fa-display: var(--fam-kufi);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-archivo);
+  --font-en-ui: var(--fam-archivo);
+  --radius-media: 0px; --radius-card: 0px; --radius-control: 0px;
+  --border-w: 2px; --border-w-strong: 3px;
+  --shadow-1: 3px 3px 0 oklch(0.13 0 0);
+  --shadow-2: 6px 6px 0 oklch(0.13 0 0);
+  --shadow-lift: 9px 9px 0 oklch(0.13 0 0);
+  --dur-fast: 100ms; --dur-base: 140ms; --dur-slow: 220ms; --dur-page: 300ms;
+  --ease-out: cubic-bezier(0.2, 1, 0.3, 1);
+  --hover-lift: -3px; --hover-media-scale: 1;
+  --gutter: 20px;
+}
+
+/* ۴. glass — شیشه‌ای نرم؛ blur، لایه‌های شفاف، گوشه‌های نرم. blur فقط روی چیزی که واقعاً روی محتوا شنا می‌کند */
+[data-theme="glass"] {
+  --bg: oklch(0.96 0.012 250);
+  --bg-alt: oklch(0.98 0.008 250);
+  --surface: oklch(1 0 0 / 0.72);
+  --surface-alt: oklch(1 0 0 / 0.45);
+  --ink: oklch(0.24 0.020 260);
+  --ink-muted: oklch(0.48 0.018 260);
+  --ink-faint: oklch(0.63 0.016 260);
+  --line: oklch(0.55 0.02 260 / 0.18);
+  --line-strong: oklch(0.45 0.03 260 / 0.35);
+  --accent: oklch(0.58 0.105 255);
+  --accent-soft: oklch(0.92 0.035 255);
+  --on-accent: oklch(0.99 0.005 255);
+  --overlay: oklch(0.30 0.02 260 / 0.35);
+  --font-fa-display: var(--fam-vazir);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-manrope);
+  --font-en-ui: var(--fam-manrope);
+  --radius-media: 14px; --radius-card: 18px; --radius-control: 12px;
+  --border-w: 1px;
+  --shadow-1: 0 2px 10px -4px oklch(0.30 0.02 260 / 0.18);
+  --shadow-2: 0 20px 50px -22px oklch(0.30 0.02 260 / 0.28);
+  --shadow-lift: 0 26px 60px -24px oklch(0.30 0.02 260 / 0.34);
+  --ease-out: cubic-bezier(0.22, 0.9, 0.24, 1);
+  --gutter: 26px;
+}
+
+/* ۵. press — کاتالوگ چاپی کلاسیک؛ شبکه‌ی سخت، خطوط جداکننده، سریف، بدون سایه */
+[data-theme="press"] {
+  --bg: oklch(0.965 0.008 92);
+  --bg-alt: oklch(0.985 0.006 92);
+  --surface: oklch(0.985 0.006 92);
+  --surface-alt: oklch(0.935 0.010 92);
+  --ink: oklch(0.22 0.014 60);
+  --ink-muted: oklch(0.45 0.014 60);
+  --ink-faint: oklch(0.60 0.012 60);
+  --line: oklch(0.22 0.014 60 / 0.28);
+  --line-strong: oklch(0.22 0.014 60);
+  --accent: oklch(0.46 0.13 26);
+  --accent-soft: oklch(0.92 0.035 26);
+  --on-accent: oklch(0.985 0.006 92);
+  --font-fa-display: var(--fam-naskh);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-sourceserif);
+  --font-en-ui: var(--fam-sourceserif);
+  --radius-media: 0px; --radius-card: 0px; --radius-control: 0px;
+  --border-w: 1px;
+  --shadow-1: none; --shadow-2: none; --shadow-lift: none;
+  --hover-lift: 0px; --hover-media-scale: 1;
+  --gutter: 0px;
+}
+
+/* ۶. spec — صنعتی و جدول‌محور؛ داده اول، مونواسپیس برای اعداد، رنگ هشدار صنعتی */
+[data-theme="spec"] {
+  --bg: oklch(0.955 0.004 230);
+  --bg-alt: oklch(0.98 0.003 230);
+  --surface: oklch(0.99 0.002 230);
+  --surface-alt: oklch(0.93 0.006 230);
+  --ink: oklch(0.21 0.012 245);
+  --ink-muted: oklch(0.44 0.012 245);
+  --ink-faint: oklch(0.60 0.010 245);
+  --line: oklch(0.80 0.010 245);
+  --line-strong: oklch(0.35 0.014 245);
+  --accent: oklch(0.52 0.135 248);
+  --accent-soft: oklch(0.93 0.030 248);
+  --on-accent: oklch(0.99 0.002 230);
+  --warn: oklch(0.66 0.165 48);
+  --font-fa-display: var(--fam-vazir);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-plex);
+  --font-en-ui: var(--fam-plex);
+  --font-num: var(--fam-plexmono);
+  --radius-media: 2px; --radius-card: 2px; --radius-control: 2px;
+  --border-w: 1px;
+  --shadow-1: 0 1px 0 oklch(0.35 0.014 245 / 0.10);
+  --shadow-2: 0 8px 24px -14px oklch(0.35 0.014 245 / 0.25);
+  --dur-base: 180ms;
+  --hover-media-scale: 1;
+  --gutter: 16px;
+}
+
+/* ۷. craft — گرم و خاکی؛ کاغذ کرم، رنگ خاک رس، تایپ نرم */
+[data-theme="craft"] {
+  --bg: oklch(0.935 0.022 78);
+  --bg-alt: oklch(0.965 0.018 78);
+  --surface: oklch(0.965 0.018 78);
+  --surface-alt: oklch(0.895 0.028 76);
+  --ink: oklch(0.27 0.030 52);
+  --ink-muted: oklch(0.47 0.030 52);
+  --ink-faint: oklch(0.62 0.026 52);
+  --line: oklch(0.78 0.030 70);
+  --line-strong: oklch(0.42 0.034 52);
+  --accent: oklch(0.52 0.095 45);
+  --accent-soft: oklch(0.90 0.040 45);
+  --on-accent: oklch(0.975 0.015 78);
+  --font-fa-display: var(--fam-vazir);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-newsreader);
+  --font-en-ui: var(--fam-newsreader);
+  --radius-media: 6px; --radius-card: 10px; --radius-control: 8px;
+  --border-w: 1px;
+  --shadow-1: 0 1px 2px oklch(0.27 0.03 52 / 0.08);
+  --shadow-2: 0 14px 32px -18px oklch(0.27 0.03 52 / 0.22);
+  --ease-out: cubic-bezier(0.25, 0.9, 0.3, 1);
+  --gutter: 24px;
+}
+
+/* ۸. mono — تک‌رنگ سیاه‌وسفید؛ تایپ بزرگ، بدون رنگ تزئینی، آکسان = مرکب */
+[data-theme="mono"] {
+  --bg: oklch(1 0 0);
+  --bg-alt: oklch(0.96 0 0);
+  --surface: oklch(1 0 0);
+  --surface-alt: oklch(0.94 0 0);
+  --ink: oklch(0.11 0 0);
+  --ink-muted: oklch(0.38 0 0);
+  --ink-faint: oklch(0.56 0 0);
+  --line: oklch(0.80 0 0);
+  --line-strong: oklch(0.11 0 0);
+  --accent: oklch(0.11 0 0);
+  --accent-soft: oklch(0.94 0 0);
+  --on-accent: oklch(1 0 0);
+  --overlay: oklch(0.11 0 0 / 0.80);
+  --font-fa-display: var(--fam-kufi);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-archivo);
+  --font-en-ui: var(--fam-archivo);
+  --radius-media: 0px; --radius-card: 0px; --radius-control: 0px;
+  --border-w: 1px;
+  --shadow-1: none; --shadow-2: none; --shadow-lift: none;
+  --hover-media-scale: 1.02;
+  --gutter: 2px;
+  --tracking-en-caps: 0.14em;
+}
+
+/* پایه‌ی سند. کامپوننت نیست — ریست و قواعد سراسری. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-fa-ui);
+  font-size: var(--t-base);
+  line-height: var(--lh-fa-body);
+  letter-spacing: var(--tracking-fa);
+  font-variant-numeric: tabular-nums;
+  text-wrap: pretty;
+}
+[dir="ltr"], .en { font-family: var(--font-en-ui); line-height: var(--lh-en-body); letter-spacing: var(--tracking-en); }
+h1, h2, h3, h4 { margin: 0; font-family: var(--font-fa-display); line-height: var(--lh-fa-tight); font-weight: var(--w-bold); }
+[dir="ltr"] h1, [dir="ltr"] h2, [dir="ltr"] h3, .en h1, .en h2, .en h3 { font-family: var(--font-en-display); line-height: var(--lh-en-tight); }
+p { margin: 0 0 var(--s-4); max-width: var(--measure-fa); }
+img, svg, video { display: block; max-width: 100%; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: color var(--dur-fast) var(--ease-out); }
+a:hover { color: var(--ink); }
+:where(button, a, input, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+
+/* چاپ: کاتالوگ باید قابل چاپ باشد */
+@media print {
+  :root { --bg: #fff; --surface: #fff; --ink: #111; }
+  .no-print, .cat-toolbar, .cat-pagenav { display: none !important; }
+  .cat-grid { grid-template-columns: repeat(3, 1fr) !important; }
+  .cat-card { break-inside: avoid; box-shadow: none !important; }
+}
+
+/* لایه‌ی کامپوننت کاتالوگ. همه‌ی مقدارها از توکن می‌آیند؛ هیچ رنگ خامی اینجا نیست.
+   هر کامپوننت با پیشوند cat- و با یک ساختار ثابت. تم را عوض کن، این‌ها عوض می‌شوند. */
+
+/* ── چیدمان صفحه ─────────────────────────────── */
+.cat-page { max-width: var(--page-max); margin-inline: auto; padding-inline: var(--page-pad); }
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--col-min), 1fr));
+  gap: var(--gutter);
+}
+.cat-grid--press { gap: 0; border-block-start: var(--border-w) solid var(--line); }
+.cat-grid--press > .cat-card { border-inline-start: var(--border-w) solid var(--line); border-block-end: var(--border-w) solid var(--line); }
+
+/* ── کاور کاتالوگ ────────────────────────────── */
+.cat-cover {
+  position: relative; display: grid; align-content: end; gap: var(--s-3);
+  aspect-ratio: var(--ratio-cover); padding: var(--s-6);
+  background: var(--surface-alt); color: var(--ink);
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-card);
+  cursor: pointer; overflow: hidden;
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.cat-cover:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--shadow-lift); }
+.cat-cover:active { transform: scale(var(--press-scale)); }
+.cat-cover__kicker { font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--ink-muted); }
+.cat-cover__title { font-family: var(--font-fa-display); font-size: var(--t-xl); }
+
+/* ── کارت محصول ──────────────────────────────── */
+.cat-card {
+  position: relative; display: flex; flex-direction: column; gap: var(--s-3);
+  padding: var(--s-4); background: var(--surface);
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-card);
+  box-shadow: var(--shadow-1);
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+.cat-card:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--shadow-2); border-color: var(--line-strong); }
+.cat-card:active { transform: scale(var(--press-scale)); }
+.cat-card__media { position: relative; aspect-ratio: var(--ratio-media); overflow: hidden; border-radius: var(--radius-media); background: var(--surface-alt); }
+.cat-card__media > img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-out); }
+.cat-card:hover .cat-card__media > img { transform: scale(var(--hover-media-scale)); }
+.cat-card__name { font-family: var(--font-fa-display); font-size: var(--t-md); line-height: var(--lh-fa-tight); }
+.cat-card__name-en { font-family: var(--font-en-ui); font-size: var(--t-sm); color: var(--ink-muted); letter-spacing: var(--tracking-en); direction: ltr; text-align: start; }
+.cat-card__meta { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); margin-block-start: auto; }
+.cat-card__actions { position: absolute; inset-block-end: var(--s-4); inset-inline-start: var(--s-4); inset-inline-end: var(--s-4);
+  display: flex; gap: var(--s-2); opacity: 0; transform: translateY(6px);
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-card__actions, .cat-card:focus-within .cat-card__actions { opacity: 1; transform: none; }
+@media (hover: none) { .cat-card__actions { position: static; opacity: 1; transform: none; } }
+
+/* ── قیمت و کد ───────────────────────────────── */
+.cat-price { display: flex; align-items: baseline; gap: var(--s-2); font-family: var(--font-num); font-size: var(--t-md); }
+.cat-price__unit { font-size: var(--t-xs); color: var(--ink-muted); }
+.cat-sku { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); direction: ltr; }
+
+/* ── برچسب و تگ ──────────────────────────────── */
+.cat-badge { display: inline-flex; align-items: center; gap: var(--s-1); padding: 2px var(--s-2);
+  font-size: var(--t-xs); background: var(--accent-soft); color: var(--accent); border-radius: var(--radius-pill); }
+.cat-tag { display: inline-flex; align-items: center; min-height: 28px; padding: 0 var(--s-3);
+  font-size: var(--t-xs); color: var(--ink-muted); border: var(--border-w) solid var(--line); border-radius: var(--radius-pill); }
+
+/* ── دکمه ────────────────────────────────────── */
+.cat-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  min-height: var(--tap-min); padding: 0 var(--s-5); font: inherit; font-family: var(--font-fa-ui);
+  background: var(--accent); color: var(--on-accent);
+  border: var(--border-w) solid transparent; border-radius: var(--radius-control);
+  box-shadow: var(--shadow-1); cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.cat-btn:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--shadow-2); }
+.cat-btn:active { transform: scale(var(--press-scale)); box-shadow: var(--shadow-1); }
+.cat-btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
+.cat-btn--ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); box-shadow: none; }
+.cat-btn--quiet { background: var(--surface-alt); color: var(--ink); box-shadow: none; }
+.cat-btn--icon { min-width: var(--tap-min); padding: 0; }
+
+/* ── نوار ابزار و سوییچ زبان ─────────────────── */
+.cat-toolbar { position: sticky; inset-block-start: 0; z-index: 20;
+  display: flex; align-items: center; gap: var(--s-4); padding: var(--s-3) var(--page-pad);
+  background: var(--bg); border-block-end: var(--border-w) solid var(--line); }
+.cat-lang { display: inline-flex; border: var(--border-w) solid var(--line-strong); border-radius: var(--radius-pill); overflow: hidden; }
+.cat-lang > button { min-height: 36px; padding: 0 var(--s-4); font: inherit; background: transparent; color: var(--ink-muted); border: 0; cursor: pointer; }
+.cat-lang > button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+/* ── فیلتر و جست‌وجو ─────────────────────────── */
+.cat-filters { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.cat-chip { min-height: 36px; padding: 0 var(--s-4); font: inherit; font-size: var(--t-sm);
+  background: transparent; color: var(--ink-muted); border: var(--border-w) solid var(--line);
+  border-radius: var(--radius-pill); cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.cat-chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.cat-search { display: flex; align-items: center; gap: var(--s-2); min-height: var(--tap-min); padding: 0 var(--s-4);
+  background: var(--surface); border: var(--border-w) solid var(--line); border-radius: var(--radius-control); }
+.cat-search > input { flex: 1; min-width: 0; font: inherit; background: none; border: 0; color: var(--ink); }
+.cat-search > input::placeholder { color: var(--ink-faint); }
+
+/* ── گالری و زوم ─────────────────────────────── */
+.cat-gallery { display: grid; gap: var(--s-3); }
+.cat-gallery__stage { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--surface-alt); border-radius: var(--radius-media); cursor: zoom-in; }
+.cat-gallery__stage[data-zoom="on"] { cursor: zoom-out; }
+.cat-gallery__stage > img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-out); will-change: transform; }
+.cat-gallery__stage[data-zoom="on"] > img { transition-duration: var(--dur-base); }
+.cat-gallery__thumbs { display: flex; gap: var(--s-2); }
+.cat-thumb { width: 64px; aspect-ratio: 1; padding: 0; overflow: hidden; background: var(--surface-alt);
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-media); cursor: pointer; }
+.cat-thumb[aria-current="true"] { border-color: var(--line-strong); border-width: var(--border-w-strong); }
+
+/* ── انتخاب رنگ و سایز ──────────────────────── */
+.cat-swatches { display: flex; gap: var(--s-2); }
+.cat-swatch { width: var(--tap-min); height: var(--tap-min); padding: 3px; background: none;
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-pill); cursor: pointer; }
+.cat-swatch > span { display: block; width: 100%; height: 100%; border-radius: inherit; }
+.cat-swatch[aria-pressed="true"] { border-color: var(--line-strong); border-width: var(--border-w-strong); }
+.cat-sizes { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.cat-size { min-width: var(--tap-min); min-height: var(--tap-min); font: inherit; font-family: var(--font-num);
+  background: var(--surface); color: var(--ink); border: var(--border-w) solid var(--line);
+  border-radius: var(--radius-control); cursor: pointer; }
+.cat-size[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.cat-size[disabled] { color: var(--ink-faint); text-decoration: line-through; cursor: not-allowed; }
+
+/* ── جدول مشخصات ────────────────────────────── */
+.cat-specs { width: 100%; border-collapse: collapse; font-size: var(--t-sm); }
+.cat-specs th, .cat-specs td { padding: var(--s-3) var(--s-4); text-align: start; border-block-end: var(--border-w) solid var(--line); vertical-align: top; }
+.cat-specs th { width: 38%; color: var(--ink-muted); font-weight: var(--w-regular); }
+.cat-specs td { font-family: var(--font-num); }
+.cat-specs tr:hover { background: var(--surface-alt); }
+
+/* ── دیالوگ نمای سریع ───────────────────────── */
+.cat-scrim { position: fixed; inset: 0; z-index: 40; background: var(--overlay);
+  animation: cat-fade var(--dur-base) var(--ease-out) both; }
+.cat-dialog { position: fixed; z-index: 41; inset-inline: 0; inset-block-end: 0; max-height: 92vh; overflow: auto;
+  padding: var(--s-6); background: var(--surface); border-radius: var(--radius-card) var(--radius-card) 0 0;
+  animation: cat-sheet var(--dur-slow) var(--ease-out) both; }
+@media (min-width: 760px) {
+  .cat-dialog { inset: 50% auto auto 50%; translate: -50% -50%; width: min(1040px, 92vw);
+    border-radius: var(--radius-card); animation-name: cat-pop; }
+}
+
+/* ── لیست استعلام قیمت ──────────────────────── */
+.cat-inquiry { display: grid; gap: var(--s-3); }
+.cat-inquiry__row { display: grid; grid-template-columns: 56px 1fr auto; gap: var(--s-3); align-items: center;
+  padding: var(--s-3); background: var(--surface); border: var(--border-w) solid var(--line); border-radius: var(--radius-card); }
+.cat-inquiry__empty { padding: var(--s-7); text-align: center; color: var(--ink-faint);
+  border: var(--border-w) dashed var(--line); border-radius: var(--radius-card); }
+
+/* ── ورق‌زدن ────────────────────────────────── */
+.cat-pagenav { display: flex; align-items: center; justify-content: center; gap: var(--s-4); }
+.cat-pagenav__num { font-family: var(--font-num); font-size: var(--t-sm); color: var(--ink-muted); }
+.cat-spread { position: relative; aspect-ratio: var(--ratio-spread); overflow: hidden;
+  background: var(--surface); border: var(--border-w) solid var(--line); border-radius: var(--radius-card); perspective: 2000px; }
+
+/* ── جانگهدار عکس (وقتی عکس واقعی نیست) ─────── */
+.cat-ph { display: grid; place-items: center; width: 100%; height: 100%;
+  background-color: var(--surface-alt);
+  background-image: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 9px);
+  color: var(--ink-faint); font-family: var(--font-num); font-size: var(--t-xs); text-align: center; }
+
+/* ── اسکلت بارگذاری ────────────────────────── */
+.cat-skeleton { background: var(--surface-alt); border-radius: var(--radius-media);
+  animation: cat-pulse 1.4s var(--ease-inout) infinite; }
+
+/* انیمیشن‌های نام‌دار سیستم. هیچ انیمیشن تازه‌ای نساز — یکی از این‌ها را استفاده کن. */
+@keyframes cat-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cat-pop { from { opacity: 0; transform: translate(-50%, -50%) scale(0.965); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes cat-sheet { from { transform: translateY(14px); opacity: 0.6; } to { transform: none; opacity: 1; } }
+@keyframes cat-reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes cat-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+/* ورود پشت‌سرهم کارت‌ها: روی والد بگذار، حداکثر ۸ فرزند */
+.cat-stagger > * { animation: cat-reveal var(--dur-base) var(--ease-out) both; }
+.cat-stagger > *:nth-child(1) { animation-delay: calc(var(--stagger) * 0); }
+.cat-stagger > *:nth-child(2) { animation-delay: calc(var(--stagger) * 1); }
+.cat-stagger > *:nth-child(3) { animation-delay: calc(var(--stagger) * 2); }
+.cat-stagger > *:nth-child(4) { animation-delay: calc(var(--stagger) * 3); }
+.cat-stagger > *:nth-child(5) { animation-delay: calc(var(--stagger) * 4); }
+.cat-stagger > *:nth-child(6) { animation-delay: calc(var(--stagger) * 5); }
+.cat-stagger > *:nth-child(7) { animation-delay: calc(var(--stagger) * 6); }
+.cat-stagger > *:nth-child(8) { animation-delay: calc(var(--stagger) * 7); }
+.cat-stagger > *:nth-child(n + 9) { animation-delay: calc(var(--stagger) * 8); }
+
+/* ورق‌زدن: دو حالت. flip فقط در تم‌های press/luxe/editorial؛ در بقیه slide */
+.cat-flip-enter { animation: cat-flip-in var(--dur-page) var(--ease-inout) both; transform-origin: right center; }
+.cat-flip-exit { animation: cat-flip-out var(--dur-page) var(--ease-inout) both; transform-origin: right center; }
+[dir="ltr"] .cat-flip-enter, [dir="ltr"] .cat-flip-exit { transform-origin: left center; }
+@keyframes cat-flip-in { from { transform: rotateY(-38deg); opacity: 0.2; } to { transform: none; opacity: 1; } }
+@keyframes cat-flip-out { from { transform: none; opacity: 1; } to { transform: rotateY(38deg); opacity: 0; } }
+.cat-slide-enter { animation: cat-slide-in var(--dur-slow) var(--ease-out) both; }
+@keyframes cat-slide-in { from { transform: translateX(6%); opacity: 0; } to { transform: none; opacity: 1; } }
+[dir="ltr"] .cat-slide-enter { animation-name: cat-slide-in-ltr; }
+@keyframes cat-slide-in-ltr { from { transform: translateX(-6%); opacity: 0; } to { transform: none; opacity: 1; } }
+
