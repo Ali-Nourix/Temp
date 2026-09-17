@@ -1,0 +1,1387 @@
+<!doctype html>
+<html dir="rtl" lang="fa" data-theme="glass">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پرنیان — فهرست پوست و عطر</title>
+<link rel="stylesheet" href="../shared/ds-core.css">
+<style>
+/* ── category tints ───────────────────────────────────────
+   Four low-chroma hues, each mixed down from a system colour so the
+   page never introduces a colour of its own. Text stays on --ink. */
+[data-cat] {
+  --cat-glass: color-mix(in oklab, var(--cat-src) 11%, var(--surface));
+  --cat-edge: color-mix(in oklab, var(--cat-src) 26%, var(--line));
+  --cat-dot: color-mix(in oklab, var(--cat-src) 72%, var(--ink-faint));
+}
+[data-cat="all"] { --cat-src: var(--ink-faint); }
+[data-cat="scent"] { --cat-src: var(--danger); }
+[data-cat="skin"] { --cat-src: var(--warn); }
+[data-cat="bath"] { --cat-src: var(--ok); }
+[data-cat="home"] { --cat-src: var(--accent); }
+
+/* ── page frame ───────────────────────────────────────────
+   The light field the glass sits on: decorative, generated, and the
+   only reason translucency reads as glass. It spans the document
+   rather than the viewport so the tiles far down the page still have
+   colour behind them. */
+body { position: relative; min-height: 100vh; }
+.gx-aurora {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(1100px 760px at 90% 1%, color-mix(in oklab, var(--danger) 21%, transparent), transparent 70%),
+    radial-gradient(940px 640px at 2% 7%, color-mix(in oklab, var(--accent) 24%, transparent), transparent 68%),
+    radial-gradient(1000px 700px at 98% 40%, color-mix(in oklab, var(--warn) 18%, transparent), transparent 68%),
+    radial-gradient(1000px 700px at 0% 64%, color-mix(in oklab, var(--ok) 17%, transparent), transparent 68%),
+    radial-gradient(900px 620px at 76% 97%, color-mix(in oklab, var(--accent) 17%, transparent), transparent 70%);
+}
+.gx-skip {
+  position: fixed; z-index: 60; inset-block-start: var(--s-3); inset-inline-start: var(--s-3);
+  display: inline-flex; align-items: center; min-height: var(--tap-min); padding: 0 var(--s-4);
+  background: var(--surface); color: var(--ink); text-decoration: none;
+  border: var(--border-w) solid var(--line-strong); border-radius: var(--radius-control);
+  opacity: 0; transform: translateY(-260%);
+  transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+.gx-skip:focus-visible { opacity: 1; transform: none; }
+
+/* Persian digits have no glyphs in the monospace face; numerals written
+   in Persian take the UI family instead. */
+.gx-num { font-family: var(--font-fa-ui); font-variant-numeric: tabular-nums; }
+[dir="ltr"] .gx-num { font-family: var(--font-num); }
+.gx-eyebrow { font-size: var(--t-xs); color: var(--ink-faint); }
+[dir="ltr"] .gx-eyebrow { letter-spacing: var(--tracking-en-caps); text-transform: uppercase; }
+
+/* ── bar ──────────────────────────────────────────────── */
+.gx-bar {
+  background: color-mix(in oklab, var(--bg) 66%, transparent);
+  backdrop-filter: blur(18px) saturate(1.4);
+  border-block-end-color: var(--line);
+}
+.gx-mark { display: grid; gap: 1px; text-decoration: none; color: var(--ink); }
+.gx-mark__name {
+  font-family: var(--font-en-display); font-weight: var(--w-bold);
+  font-size: var(--t-base); letter-spacing: var(--tracking-en-caps); line-height: 1.2;
+}
+.gx-mark__sub { font-size: var(--t-xs); color: var(--ink-muted); line-height: 1.3; }
+.gx-bar__gap { flex: 1; }
+.gx-search { flex: 0 1 260px; background: color-mix(in oklab, var(--surface) 70%, transparent); }
+.gx-search svg { flex: none; width: 16px; height: 16px; fill: var(--ink-faint); }
+.gx-lang > button { min-height: var(--tap-min); }
+.gx-inq { padding-inline: var(--s-4); }
+.gx-inq svg { width: 17px; height: 17px; fill: currentColor; }
+.gx-inq__count {
+  display: grid; place-items: center; min-width: 24px; height: 24px; padding-inline: 6px;
+  font-size: var(--t-xs); background: var(--accent); color: var(--on-accent); border-radius: var(--radius-pill);
+}
+.gx-inq[data-empty="yes"] .gx-inq__count { background: var(--surface-alt); color: var(--ink-faint); }
+
+/* ── masthead ─────────────────────────────────────────── */
+.gx-mast {
+  display: grid; align-items: center; gap: var(--s-7);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  padding-block: clamp(var(--s-7), 6vw, var(--s-9)) var(--s-8);
+}
+.gx-mast__title { font-size: var(--t-3xl); font-weight: var(--w-black); line-height: 0.96; }
+.gx-mast__lede { margin-block: var(--s-4) 0; font-size: var(--t-md); color: var(--ink-muted); }
+.gx-facts { display: flex; flex-wrap: wrap; gap: var(--s-4) var(--s-7); margin-block-start: var(--s-6); }
+.gx-facts > div { display: grid; gap: 2px; }
+.gx-facts dd { margin: 0; font-size: var(--t-sm); }
+.gx-mast__kicker { margin-block-end: var(--s-3); }
+.gx-shelf { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); align-items: center; }
+.gx-shelf img {
+  width: 100%; aspect-ratio: var(--ratio-media); object-fit: cover;
+  border-radius: var(--radius-media); box-shadow: var(--shadow-2);
+}
+.gx-shelf img:nth-child(1) { transform: translateY(var(--s-5)) scale(0.94); }
+.gx-shelf img:nth-child(2) { transform: scale(1.06); box-shadow: var(--shadow-lift); }
+.gx-shelf img:nth-child(3) { transform: translateY(calc(var(--s-5) * -1)) scale(0.94); }
+
+/* ── section head ─────────────────────────────────────── */
+.gx-sec {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s-3) var(--s-5);
+  padding-block-end: var(--s-4); margin-block-end: var(--s-5);
+  border-block-end: var(--border-w) solid var(--line);
+}
+.gx-sec__title { font-size: var(--t-lg); }
+.gx-sec__note { margin: 0; font-size: var(--t-sm); color: var(--ink-faint); }
+.gx-filters { margin-inline-start: auto; }
+.gx-chip { display: inline-flex; align-items: center; gap: var(--s-2); min-height: var(--tap-min); }
+.gx-chip::before {
+  content: ""; width: 9px; height: 9px; border-radius: var(--radius-pill);
+  background: var(--cat-dot); flex: none;
+}
+
+/* ── grid and tile ────────────────────────────────────── */
+.gx-grid {
+  --col-min: 236px;
+  grid-auto-flow: row dense; align-items: start;
+  margin: 0; padding: 0; list-style: none;
+}
+.gx-cell { position: relative; }
+.gx-cell[data-open], .gx-cell[data-flip] { z-index: 3; }
+.gx-cell[data-open] { grid-column: 1 / -1; }
+.gx-cell[data-open] .gx-face { display: none; }
+
+.gx-face {
+  display: grid; gap: var(--s-3); width: 100%; padding: var(--s-3);
+  font: inherit; text-align: start; color: var(--ink);
+  background: var(--cat-glass);
+  border: var(--border-w) solid var(--cat-edge);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-1); cursor: pointer;
+  transition: transform var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out);
+}
+.gx-face:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--shadow-2); border-color: var(--line-strong); }
+.gx-face:active { transform: scale(var(--press-scale)); }
+/* Square, to match the gallery stage the tile expands into: the FLIP
+   then scales the media evenly instead of stretching it. */
+.gx-face__media {
+  position: relative; display: block; aspect-ratio: 1;
+  overflow: hidden; border-radius: var(--radius-media); background: var(--surface-alt);
+}
+.gx-face__media img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-out); }
+.gx-face:hover .gx-face__media img { transform: scale(var(--hover-media-scale)); }
+.gx-face__cue {
+  position: absolute; inset-block-end: var(--s-2); inset-inline-end: var(--s-2);
+  display: grid; place-items: center; width: 30px; height: 30px; border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--surface) 60%, transparent);
+  backdrop-filter: blur(6px); color: var(--ink);
+  opacity: 0; transform: translateY(4px);
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.gx-face__cue svg { width: 15px; height: 15px; fill: currentColor; }
+.gx-face:hover .gx-face__cue, .gx-face:focus-visible .gx-face__cue { opacity: 1; transform: none; }
+.gx-face__body { display: grid; gap: var(--s-2); padding-inline: var(--s-1); padding-block-end: var(--s-1); }
+.gx-face__name { font-family: var(--font-fa-display); font-size: var(--t-base); line-height: var(--lh-fa-tight); }
+[dir="ltr"] .gx-face__name { font-family: var(--font-en-display); line-height: var(--lh-en-tight); }
+.gx-face__meta { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-2); }
+.gx-face__sku { display: inline-flex; align-items: center; gap: var(--s-2); }
+.gx-face__sku::before {
+  content: ""; width: 7px; height: 7px; border-radius: var(--radius-pill);
+  background: var(--cat-dot); flex: none;
+}
+.gx-face__price { font-size: var(--t-sm); }
+
+/* ── expanded panel ───────────────────────────────────── */
+.gx-panel { position: relative; padding: clamp(var(--s-4), 1.8vw, var(--s-6)); }
+.gx-panel::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; border-radius: var(--radius-card);
+  background: var(--cat-glass);
+  border: var(--border-w) solid var(--cat-edge);
+  box-shadow: var(--shadow-lift);
+  animation: cat-fade var(--dur-base) var(--ease-out) both;
+}
+.gx-panel:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-card); }
+.gx-phead {
+  position: relative; z-index: 1;
+  display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--s-3) var(--s-5);
+  padding-block-end: var(--s-4); margin-block-end: var(--s-5);
+  border-block-end: var(--border-w) solid var(--cat-edge);
+}
+.gx-phead__meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-2) var(--s-3); margin-block-start: 2px; }
+.gx-phead .cat-price { align-self: center; margin-inline-start: auto; font-size: var(--t-lg); }
+.gx-panel__inner {
+  position: relative; z-index: 1;
+  display: grid; gap: var(--s-6) var(--s-7);
+  grid-template-columns: minmax(250px, 360px) minmax(0, 1fr);
+}
+.gx-gallery { align-self: start; }
+.gx-panel .cat-gallery__stage { box-shadow: var(--shadow-2); }
+.gx-thumb { position: relative; flex: 1; width: auto; }
+.gx-thumb__tag {
+  position: absolute; inset-block-end: 3px; inset-inline-end: 3px;
+  display: grid; place-items: center; width: 18px; height: 18px; border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--ink) 74%, transparent); color: var(--bg);
+}
+.gx-thumb__tag svg { width: 10px; height: 10px; fill: currentColor; }
+
+.gx-detail { display: grid; gap: var(--s-5); align-content: start; }
+.gx-detail__row { display: grid; gap: var(--s-5) var(--s-6); grid-template-columns: minmax(190px, 1fr) minmax(220px, 1.1fr); }
+.gx-name { font-size: var(--t-lg); margin-block: 2px 0; }
+.gx-alt { font-size: var(--t-sm); color: var(--ink-muted); }
+.gx-lede { margin: 0; font-size: var(--t-base); color: var(--ink-muted); }
+.gx-choices { display: grid; gap: var(--s-5); align-content: start; }
+.gx-opt { display: grid; gap: var(--s-3); align-content: start; }
+.gx-opt__label { font-size: var(--t-xs); color: var(--ink-faint); }
+/* Glass, wax and thread colours, each mixed down from a system colour. */
+.gx-sw--clear { background: color-mix(in oklab, var(--surface) 55%, var(--line)); }
+.gx-sw--amber { background: color-mix(in oklab, var(--warn) 62%, var(--ink)); }
+.gx-sw--rose { background: color-mix(in oklab, var(--danger) 48%, var(--surface)); }
+.gx-sw--sage { background: color-mix(in oklab, var(--ok) 52%, var(--surface)); }
+.gx-sw--cobalt { background: color-mix(in oklab, var(--accent) 58%, var(--ink)); }
+.gx-sw--smoke { background: color-mix(in oklab, var(--ink) 62%, var(--surface)); }
+.gx-panel .cat-specs { background: color-mix(in oklab, var(--surface) 45%, transparent); border-radius: var(--radius-control); }
+.gx-panel .cat-specs caption { padding: var(--s-2) var(--s-4); text-align: start; }
+.gx-panel .cat-specs td { font-family: inherit; }
+.gx-panel .cat-specs tr:last-child th, .gx-panel .cat-specs tr:last-child td { border-block-end: 0; }
+/* Sizes and codes are Latin even on the Persian page; give them their
+   own direction so the bidi pass leaves "30 ml" alone. */
+.gx-panel .cat-size, .gx-panel .cat-specs .num { direction: ltr; }
+.gx-actions {
+  display: flex; flex-wrap: wrap; gap: var(--s-3);
+  padding-block-start: var(--s-4); border-block-start: var(--border-w) solid var(--line);
+}
+.gx-add svg, .gx-close svg { width: 16px; height: 16px; fill: currentColor; }
+.gx-add[aria-pressed="true"] { background: var(--ok); }
+
+/* ── price-inquiry sheet ──────────────────────────────── */
+[dir="rtl"] { --gx-out: -1; }
+[dir="ltr"] { --gx-out: 1; }
+.gx-sheet {
+  position: fixed; z-index: 41; inset-block: 0; inset-inline-end: 0;
+  display: flex; flex-direction: column; width: min(420px, 94vw);
+  background: color-mix(in oklab, var(--surface) 82%, transparent);
+  backdrop-filter: blur(22px) saturate(1.4);
+  border-inline-start: var(--border-w) solid var(--line-strong);
+  box-shadow: var(--shadow-lift);
+  transform: translateX(calc(var(--gx-out) * 100%));
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.gx-sheet[data-open] { transform: none; }
+.gx-sheet[hidden] { display: none; }
+.gx-sheet__head {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
+  padding: var(--s-4) var(--s-5); border-block-end: var(--border-w) solid var(--line);
+}
+.gx-sheet__title { font-size: var(--t-md); }
+.gx-sheet__body { flex: 1; overflow: auto; padding: var(--s-5); }
+.gx-sheet__foot { display: grid; gap: var(--s-3); padding: var(--s-5); border-block-start: var(--border-w) solid var(--line); }
+.gx-sheet__sum { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-3); }
+.gx-sheet__note { margin: 0; font-size: var(--t-xs); color: var(--ink-faint); }
+.gx-sheet__status { margin: 0; min-height: 1.2em; font-size: var(--t-xs); color: var(--accent); }
+.gx-sheet .cat-inquiry { margin: 0; padding: 0; list-style: none; }
+.gx-row__thumb { width: 56px; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-media); }
+.gx-row__body { display: grid; gap: 2px; min-width: 0; }
+.gx-row__name { font-size: var(--t-sm); }
+.gx-row__opt { font-size: var(--t-xs); color: var(--ink-faint); }
+.gx-row__drop svg { width: 15px; height: 15px; fill: currentColor; }
+.gx-scrim { z-index: 40; backdrop-filter: blur(2px); }
+
+/* ── footer and empty state ───────────────────────────── */
+.gx-empty { margin-block: var(--s-8); text-align: center; color: var(--ink-faint); }
+.gx-foot {
+  display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-7);
+  margin-block-start: var(--s-9); padding-block: var(--s-6) var(--s-8);
+  border-block-start: var(--border-w) solid var(--line);
+  font-size: var(--t-sm); color: var(--ink-muted);
+}
+.gx-foot p { margin: 0; }
+
+@media (max-width: 900px) {
+  .gx-mast { grid-template-columns: 1fr; }
+  .gx-panel__inner, .gx-detail__row { grid-template-columns: 1fr; }
+  .gx-gallery { max-width: 340px; }
+}
+@media (max-width: 620px) {
+  .gx-bar__gap { display: none; }
+  .gx-bar { flex-wrap: wrap; row-gap: var(--s-2); }
+  .gx-search { flex: 1 1 100%; order: 1; }
+}
+
+@media print {
+  .gx-aurora, .gx-sheet, .gx-scrim, .gx-skip, .gx-bar, .gx-filters { display: none !important; }
+  .gx-face, .gx-panel::before { box-shadow: none; backdrop-filter: none; }
+  .gx-face__cue { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="gx-aurora" aria-hidden="true"></div>
+<a class="gx-skip" href="#catalog" data-t="skip">رفتن به فهرست محصولات</a>
+
+<header class="cat-toolbar gx-bar">
+  <a class="gx-mark" href="#catalog">
+    <span class="gx-mark__name">PARNIAN</span>
+    <span class="gx-mark__sub" data-t="brandSub">خانهٔ پوست و عطر</span>
+  </a>
+  <span class="gx-bar__gap"></span>
+  <label class="cat-search gx-search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2a8 8 0 105 14.3l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg>
+    <input id="gx-q" type="search" autocomplete="off" data-t-ph="searchPh" data-t-label="search">
+  </label>
+  <div class="cat-lang gx-lang" role="group" data-t-label="langGroup">
+    <button type="button" data-lang="fa" aria-pressed="true">فارسی</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button type="button" class="cat-btn cat-btn--quiet gx-inq" id="gx-inq" aria-expanded="false" aria-controls="gx-sheet" data-empty="yes">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v2H4V5zm0 6h16v2H4v-2zm0 6h10v2H4v-2z"/></svg>
+    <span data-t="inquiry">استعلام قیمت</span>
+    <span class="gx-inq__count gx-num" id="gx-count">۰</span>
+  </button>
+</header>
+
+<main>
+  <section class="cat-page gx-mast">
+    <div>
+      <p class="gx-eyebrow gx-mast__kicker">PARNIAN · TEHRAN · KASHAN</p>
+      <h1 class="gx-mast__title" data-t="mastTitle">پرنیان</h1>
+      <p class="gx-mast__lede" data-t="mastLede">دوازده فرمول کوچک از گیاهان ایرانی: گلاب قمصر، زعفران قائنات و بیدمشک شیراز. هر شیشه در کارگاه تهران پر، برچسب‌گذاری و شماره‌گذاری می‌شود.</p>
+      <dl class="gx-facts">
+        <div><dt class="gx-eyebrow" data-t="factEditionK">فهرست</dt><dd data-t="factEditionV">پاییز ۱۴۰۵</dd></div>
+        <div><dt class="gx-eyebrow" data-t="factItemsK">محصول</dt><dd class="gx-num" data-t="factItemsV">۱۲</dd></div>
+        <div><dt class="gx-eyebrow" data-t="factMakeK">ساخت</dt><dd data-t="factMakeV">دست‌ساز، در بچ‌های ۲۰۰تایی</dd></div>
+      </dl>
+    </div>
+    <div class="gx-shelf" id="gx-shelf" aria-hidden="true"></div>
+  </section>
+
+  <section class="cat-page" id="catalog">
+    <div class="gx-sec">
+      <div>
+        <h2 class="gx-sec__title" data-t="secTitle">فهرست محصولات</h2>
+        <p class="gx-sec__note" data-t="secNote">روی هر محصول بزنید تا همان‌جا باز شود.</p>
+      </div>
+      <div class="cat-filters gx-filters" id="gx-filters" role="group" data-t-label="filterGroup"></div>
+    </div>
+    <ul class="cat-grid gx-grid" id="gx-grid"></ul>
+    <p class="gx-empty" id="gx-none" hidden data-t="noResult">محصولی با این نشانی پیدا نشد.</p>
+  </section>
+
+  <footer class="cat-page gx-foot">
+    <p data-t="footAddr">کارگاه تهران — خیابان ویلا، پلاک ۳۲</p>
+    <p data-t="footHours">شنبه تا چهارشنبه، ۱۰ تا ۱۸</p>
+    <p data-t="footValid">قیمت‌ها تا پایان آذر ۱۴۰۵ معتبر است.</p>
+  </footer>
+</main>
+
+<div class="cat-scrim gx-scrim" id="gx-scrim" hidden></div>
+<aside class="gx-sheet" id="gx-sheet" role="dialog" aria-modal="true" aria-labelledby="gx-sheet-title" hidden>
+  <header class="gx-sheet__head">
+    <h2 class="gx-sheet__title" id="gx-sheet-title" data-t="inquiryTitle">فهرست استعلام</h2>
+    <button type="button" class="cat-btn cat-btn--quiet cat-btn--icon" id="gx-sheet-close" data-t-label="close">
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="width:17px;height:17px;fill:currentColor"><path d="M18.3 5.7l-1.4-1.4L12 9.2 7.1 4.3 5.7 5.7l4.9 4.9-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>
+    </button>
+  </header>
+  <div class="gx-sheet__body" id="gx-sheet-body"></div>
+  <footer class="gx-sheet__foot">
+    <div class="gx-sheet__sum">
+      <span class="gx-eyebrow" data-t="total">جمع تقریبی</span>
+      <span class="cat-price"><span class="gx-num" id="gx-total">۰</span><span class="cat-price__unit" data-t="unit">تومان</span></span>
+    </div>
+    <p class="gx-sheet__note" data-t="totalNote">قیمت نهایی پس از استعلام و بر اساس تعداد اعلام می‌شود.</p>
+    <button type="button" class="cat-btn" id="gx-copy" data-t="copy">کپی فهرست</button>
+    <p class="gx-sheet__status" id="gx-status" role="status" aria-live="polite"></p>
+  </footer>
+</aside>
+
+<script src="../shared/catalog-kit.js"></script>
+<script>
+(function () {
+  'use strict';
+  var K = window.CatalogKit;
+
+  /* ── icons ──────────────────────────────────────────── */
+  var ICON = {
+    expand: 'M7 10l5 5 5-5z',
+    zoom: 'M10 2a8 8 0 105.3 14l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12zm-1 2v3H6v2h3v3h2v-3h3V9h-3V6z',
+    play: 'M8 5v14l11-7z',
+    spin: 'M12 4V1L8 5l4 4V6a6 6 0 11-6 6H4a8 8 0 108-8z',
+    close: 'M18.3 5.7l-1.4-1.4L12 9.2 7.1 4.3 5.7 5.7l4.9 4.9-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z',
+    plus: 'M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z',
+    check: 'M9.6 16.2L4.8 11.4l1.4-1.4 3.4 3.4 8-8 1.4 1.4z',
+    drop: 'M9 3h6l1 2h4v2H4V5h4l1-2zM6 8h12l-1 13H7L6 8z'
+  };
+
+  function svg(name, size) {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"' + (size ? ' style="width:' + size + 'px;height:' + size + 'px;fill:currentColor"' : '') +
+      '><path d="' + ICON[name] + '"/></svg>';
+  }
+
+  /* ── strings ────────────────────────────────────────── */
+  var UI = {
+    fa: {
+      title: 'پرنیان — فهرست پوست و عطر',
+      brandSub: 'خانهٔ پوست و عطر',
+      skip: 'رفتن به فهرست محصولات',
+      search: 'جست‌وجو در فهرست',
+      searchPh: 'نام، کد یا رایحه',
+      langGroup: 'انتخاب زبان',
+      filterGroup: 'دسته‌بندی',
+      inquiry: 'استعلام قیمت',
+      inquiryTitle: 'فهرست استعلام',
+      mastTitle: 'پرنیان',
+      mastLede: 'دوازده فرمول کوچک از گیاهان ایرانی: گلاب قمصر، زعفران قائنات و بیدمشک شیراز. هر شیشه در کارگاه تهران پر، برچسب‌گذاری و شماره‌گذاری می‌شود.',
+      factEditionK: 'فهرست', factEditionV: 'پاییز ۱۴۰۵',
+      factItemsK: 'محصول', factItemsV: '۱۲',
+      factMakeK: 'ساخت', factMakeV: 'دست‌ساز، در بچ‌های ۲۰۰تایی',
+      secTitle: 'فهرست محصولات',
+      secNote: 'روی هر محصول بزنید تا همان‌جا باز شود.',
+      noResult: 'محصولی با این نشانی پیدا نشد.',
+      footAddr: 'کارگاه تهران — خیابان ویلا، پلاک ۳۲',
+      footHours: 'شنبه تا چهارشنبه، ۱۰ تا ۱۸',
+      footValid: 'قیمت‌ها تا پایان آذر ۱۴۰۵ معتبر است.',
+      all: 'همه',
+      cats: { scent: 'عطر', skin: 'مراقبت پوست', bath: 'آیین حمام', home: 'عطر خانه' },
+      open: 'باز کردن',
+      close: 'بستن',
+      closeItem: 'بستن این محصول',
+      gallery: 'تصویرهای محصول',
+      types: { photo: 'عکس', video: 'ویدیو', spin: 'چرخش ۳۶۰' },
+      specs: 'مشخصات',
+      sizeLabel: 'اندازه',
+      add: 'افزودن به استعلام',
+      inList: 'در فهرست استعلام',
+      remove: 'حذف از فهرست',
+      zoom: 'نمای نزدیک',
+      unit: 'تومان',
+      emptyList: 'فهرست استعلام خالی است. از هر محصول «افزودن به استعلام» را بزنید.',
+      total: 'جمع تقریبی',
+      totalNote: 'قیمت نهایی پس از استعلام و بر اساس تعداد اعلام می‌شود.',
+      copy: 'کپی فهرست',
+      copied: 'فهرست در حافظه کپی شد.',
+      copyFail: 'کپی انجام نشد؛ فهرست را دستی بردارید.'
+    },
+    en: {
+      title: 'Parnian — Skin & Scent Catalogue',
+      brandSub: 'House of skin & scent',
+      skip: 'Skip to the product list',
+      search: 'Search the catalogue',
+      searchPh: 'Name, code or note',
+      langGroup: 'Choose a language',
+      filterGroup: 'Category',
+      inquiry: 'Price inquiry',
+      inquiryTitle: 'Inquiry list',
+      mastTitle: 'PARNIAN',
+      mastLede: 'Twelve small formulas built on Iranian botanicals: Qamsar rose, Qaen saffron, Shiraz musk-willow. Every bottle is filled, labelled and numbered in the Tehran workshop.',
+      factEditionK: 'Edition', factEditionV: 'Autumn 2026',
+      factItemsK: 'Items', factItemsV: '12',
+      factMakeK: 'Made', factMakeV: 'By hand, in batches of 200',
+      secTitle: 'The catalogue',
+      secNote: 'Select a product to open it in place.',
+      noResult: 'Nothing in the catalogue matches that.',
+      footAddr: 'Tehran workshop — 32 Villa Street',
+      footHours: 'Saturday to Wednesday, 10:00–18:00',
+      footValid: 'Prices hold until the end of December 2026.',
+      all: 'All',
+      cats: { scent: 'Fragrance', skin: 'Skincare', bath: 'Bath ritual', home: 'Home scent' },
+      open: 'Open',
+      close: 'Close',
+      closeItem: 'Close this product',
+      gallery: 'Product images',
+      types: { photo: 'Photo', video: 'Video', spin: '360 spin' },
+      specs: 'Specifications',
+      sizeLabel: 'Size',
+      add: 'Add to inquiry',
+      inList: 'On the inquiry list',
+      remove: 'Remove from the list',
+      zoom: 'Look closer',
+      unit: 'toman',
+      emptyList: 'The inquiry list is empty. Use “Add to inquiry” on any product.',
+      total: 'Estimated total',
+      totalNote: 'Final pricing follows the inquiry and depends on quantity.',
+      copy: 'Copy the list',
+      copied: 'List copied to the clipboard.',
+      copyFail: 'Copy failed; take the list down by hand.'
+    }
+  };
+
+  var SWATCH = {
+    clear: { fa: 'شفاف', en: 'Clear' },
+    amber: { fa: 'کهربایی', en: 'Amber' },
+    rose: { fa: 'گلی', en: 'Rose' },
+    sage: { fa: 'سبز مریمی', en: 'Sage' },
+    cobalt: { fa: 'کبود', en: 'Cobalt' },
+    smoke: { fa: 'دودی', en: 'Smoke' }
+  };
+
+  /* ── catalogue ──────────────────────────────────────── */
+  var PRODUCTS = [
+    {
+      sku: 'PR-101', cat: 'scent', subject: 'bottle', palette: 'indigo', price: 2480000,
+      sw: ['cobalt', 'clear'], sizes: ['30 ml', '50 ml', '100 ml'], size: 1, out: [2],
+      fa: {
+        name: 'ادوپرفیوم نیلوفر', alt: 'Nilufar Eau de Parfum',
+        desc: 'نیلوفر آبی و زنبق روی پایه‌ای از سدر و مشک سفید؛ روی پوست خنک می‌ماند و شب‌های گرم را سبک می‌کند.',
+        swLabel: 'رنگ شیشه',
+        specs: [['خانوادهٔ بویایی', 'گلی — چوبی'], ['غلظت', '۲۰٪'], ['ماندگاری', '۷ تا ۹ ساعت']],
+        hs: [
+          { x: 50, y: 17, title: 'درپوش برنجی', body: 'برنج ماتِ پولیش‌نشده؛ با یک‌چهارم چرخش باز می‌شود.' },
+          { x: 50, y: 52, title: 'برچسب دست‌چاپ', body: 'چاپ سیلک روی کاغذ پنبه‌ای؛ شمارهٔ بچ زیر نام نوشته می‌شود.' },
+          { x: 33, y: 33, title: 'شیشهٔ کبود', body: 'رنگ شیشه نور را می‌گیرد تا رایحه دیرتر بپرد.' }
+        ]
+      },
+      en: {
+        name: 'Nilufar Eau de Parfum', alt: 'ادوپرفیوم نیلوفر',
+        desc: 'Water lily and iris over cedar and white musk — it stays cool on the skin and lightens warm evenings.',
+        swLabel: 'Glass colour',
+        specs: [['Family', 'Floral — woody'], ['Concentration', '20%'], ['Longevity', '7–9 hours']],
+        hs: [
+          { x: 50, y: 17, title: 'Brass cap', body: 'Unpolished matte brass; opens on a quarter turn.' },
+          { x: 50, y: 52, title: 'Hand-printed label', body: 'Silkscreen on cotton paper; the batch number sits under the name.' },
+          { x: 33, y: 33, title: 'Cobalt glass', body: 'Tinted glass keeps the light off the oils.' }
+        ]
+      }
+    },
+    {
+      sku: 'PR-102', cat: 'scent', subject: 'bottle', palette: 'sage', price: 2650000,
+      sw: ['sage', 'smoke'], sizes: ['30 ml', '50 ml', '100 ml'], size: 1, out: [],
+      fa: {
+        name: 'ادوپرفیوم سرو و کندر', alt: 'Sarv & Frankincense',
+        desc: 'کندر عمانی، برگ سرو و فلفل سیاه؛ خشک و رزینی، شبیه هوای باغ بعد از باران.',
+        swLabel: 'رنگ شیشه',
+        specs: [['خانوادهٔ بویایی', 'رزینی — چوبی'], ['غلظت', '۲۲٪'], ['ماندگاری', '۸ تا ۱۰ ساعت']],
+        hs: [
+          { x: 50, y: 17, title: 'درپوش چوب گردو', body: 'تراش‌خورده روی چرخ؛ رگه‌های هر درپوش یکتاست.' },
+          { x: 50, y: 53, title: 'نام روی برچسب', body: 'حروف‌چینی فارسی و لاتین با یک قلم، چاپ یک‌رنگ.' },
+          { x: 50, y: 67, title: 'ته شیشه', body: 'ته ضخیم شیشه را روی میز پایدار نگه می‌دارد.' }
+        ]
+      },
+      en: {
+        name: 'Sarv & Frankincense', alt: 'ادوپرفیوم سرو و کندر',
+        desc: 'Omani frankincense, cypress leaf and black pepper — dry and resinous, like a garden after rain.',
+        swLabel: 'Glass colour',
+        specs: [['Family', 'Resinous — woody'], ['Concentration', '22%'], ['Longevity', '8–10 hours']],
+        hs: [
+          { x: 50, y: 17, title: 'Walnut cap', body: 'Turned on a lathe; the grain of each cap is its own.' },
+          { x: 50, y: 53, title: 'The name plate', body: 'Persian and Latin set in one face, printed in a single colour.' },
+          { x: 50, y: 67, title: 'Thick base', body: 'A heavy base keeps the bottle steady on a shelf.' }
+        ]
+      }
+    },
+    {
+      sku: 'PR-103', cat: 'scent', subject: 'bottle', palette: 'rose', price: 1860000,
+      sw: ['rose', 'clear'], sizes: ['30 ml', '50 ml'], size: 0, out: [],
+      fa: {
+        name: 'ادوتویلت یاس شیراز', alt: 'Shiraz Jasmine',
+        desc: 'یاس امشی که ساعت اول صبح چیده می‌شود، با بهارنارنج و ردی از عسل.',
+        swLabel: 'رنگ شیشه',
+        specs: [['خانوادهٔ بویایی', 'گلی — شیرین'], ['غلظت', '۱۲٪'], ['ماندگاری', '۵ تا ۶ ساعت']],
+        hs: [
+          { x: 50, y: 18, title: 'پمپ اسپری', body: 'پاشش ریز؛ برای ادوتویلت سبک‌تر تنظیم شده است.' },
+          { x: 50, y: 52, title: 'سال برداشت', body: 'سال برداشت یاس کنار شمارهٔ بچ روی برچسب می‌آید.' },
+          { x: 67, y: 34, title: 'شیشهٔ صورتی', body: 'رنگ در خمیر شیشه است، نه روی آن؛ با شست‌وشو نمی‌رود.' }
+        ]
+      },
+      en: {
+        name: 'Shiraz Jasmine', alt: 'ادوتویلت یاس شیراز',
+        desc: 'Jasmine picked in the first hour of morning, with neroli and a trace of honey.',
+        swLabel: 'Glass colour',
+        specs: [['Family', 'Floral — sweet'], ['Concentration', '12%'], ['Longevity', '5–6 hours']],
+        hs: [
+          { x: 50, y: 18, title: 'Spray pump', body: 'A fine mist, set lighter for an eau de toilette.' },
+          { x: 50, y: 52, title: 'Harvest year', body: 'The jasmine harvest year sits beside the batch number.' },
+          { x: 67, y: 34, title: 'Pink glass', body: 'The colour is in the glass, not on it; washing never takes it off.' }
+        ]
+      }
+    },
+    {
+      sku: 'PR-104', cat: 'scent', subject: 'bottle', palette: 'amber', price: 980000,
+      sw: ['amber', 'smoke'], sizes: ['12 ml', '30 ml'], size: 0, out: [1],
+      fa: {
+        name: 'عطر روغنی بیدمشک', alt: 'Bidmeshk Oil Perfume',
+        desc: 'بیدمشک حل‌شده در روغن بادام شیرین؛ روی مچ می‌ماند و آرام باز می‌شود.',
+        swLabel: 'رنگ شیشه',
+        specs: [['پایه', 'روغن بادام شیرین'], ['غلظت', '۱۵٪'], ['ماندگاری', '۴ تا ۵ ساعت']],
+        hs: [
+          { x: 50, y: 18, title: 'ساچمهٔ رول', body: 'ساچمهٔ شیشه‌ای؛ برای شست‌وشو بیرون می‌آید.' },
+          { x: 50, y: 52, title: 'حجم کوچک', body: 'دوازده میلی‌لیتر، اندازهٔ جیب و کیف دستی.' },
+          { x: 34, y: 34, title: 'شیشهٔ کهربایی', body: 'روغن در شیشهٔ تیره دیرتر اکسید می‌شود.' }
+        ]
+      },
+      en: {
+        name: 'Bidmeshk Oil Perfume', alt: 'عطر روغنی بیدمشک',
+        desc: 'Musk willow dissolved in sweet almond oil — it stays on the wrist and opens slowly.',
+        swLabel: 'Glass colour',
+        specs: [['Base', 'Sweet almond oil'], ['Concentration', '15%'], ['Longevity', '4–5 hours']],
+        hs: [
+          { x: 50, y: 18, title: 'Roller ball', body: 'A glass ball; it lifts out for washing.' },
+          { x: 50, y: 52, title: 'Small format', body: 'Twelve millilitres — pocket and handbag size.' },
+          { x: 34, y: 34, title: 'Amber glass', body: 'Oil oxidises far slower behind dark glass.' }
+        ]
+      }
+    },
+    {
+      sku: 'SK-201', cat: 'skin', subject: 'bottle', palette: 'rose', price: 640000,
+      sw: ['clear', 'rose'], sizes: ['120 ml', '240 ml'], size: 0, out: [],
+      fa: {
+        name: 'تونر گلاب قمصر', alt: 'Qamsar Rose Toner',
+        desc: 'گلاب دوآتشهٔ قمصر بدون الکل افزوده؛ بعد از شست‌وشو روی پوست نمناک بپاشید.',
+        swLabel: 'رنگ شیشه',
+        specs: [['بافت', 'آبکی'], ['pH', 'pH 5.2'], ['حجم', '120 ml']],
+        hs: [
+          { x: 50, y: 18, title: 'سر اسپری', body: 'پاشش مه‌مانند؛ یک فشار تمام صورت را می‌پوشاند.' },
+          { x: 50, y: 52, title: 'تاریخ تقطیر', body: 'ماه تقطیر روی برچسب می‌آید؛ گلاب تازه بهتر است.' },
+          { x: 50, y: 66, title: 'بدنهٔ شیشه‌ای', body: 'شیشه است نه پلاستیک؛ پس از اتمام قابل پرکردن دوباره.' }
+        ]
+      },
+      en: {
+        name: 'Qamsar Rose Toner', alt: 'تونر گلاب قمصر',
+        desc: 'Double-distilled Qamsar rosewater with no added alcohol; mist onto damp skin after cleansing.',
+        swLabel: 'Glass colour',
+        specs: [['Texture', 'Watery'], ['pH', 'pH 5.2'], ['Volume', '120 ml']],
+        hs: [
+          { x: 50, y: 18, title: 'Mist head', body: 'A fine mist; one press covers the whole face.' },
+          { x: 50, y: 52, title: 'Distillation date', body: 'The month of distillation is printed on the label — fresher is better.' },
+          { x: 50, y: 66, title: 'Glass body', body: 'Glass, not plastic; refill it when it runs out.' }
+        ]
+      }
+    },
+    {
+      sku: 'SK-202', cat: 'skin', subject: 'bottle', palette: 'amber', price: 1350000,
+      sw: ['amber', 'clear'], sizes: ['20 ml', '30 ml'], size: 1, out: [],
+      fa: {
+        name: 'سرم زعفران قائنات', alt: 'Qaen Saffron Serum',
+        desc: 'عصارهٔ زعفران قائنات در روغن هستهٔ انگور؛ شب‌ها سه قطره برای تمام صورت کافی است.',
+        swLabel: 'رنگ شیشه',
+        specs: [['بافت', 'روغنی سبک'], ['زعفران', '۰٫۴٪'], ['حجم', '30 ml']],
+        hs: [
+          { x: 50, y: 18, title: 'قطره‌چکان شیشه‌ای', body: 'درجه‌بندی روی لوله؛ هر خط یک قطره است.' },
+          { x: 50, y: 52, title: 'شمارهٔ بچ', body: 'هر بچ از یک برداشت زعفران می‌آید و جدا شماره می‌خورد.' },
+          { x: 34, y: 33, title: 'رنگ طبیعی', body: 'رنگ کهربایی از خود زعفران است؛ رنگ افزوده ندارد.' }
+        ]
+      },
+      en: {
+        name: 'Qaen Saffron Serum', alt: 'سرم زعفران قائنات',
+        desc: 'Qaen saffron extract in grapeseed oil — three drops at night covers the whole face.',
+        swLabel: 'Glass colour',
+        specs: [['Texture', 'Light oil'], ['Saffron', '0.4%'], ['Volume', '30 ml']],
+        hs: [
+          { x: 50, y: 18, title: 'Glass dropper', body: 'The pipette is graduated; each line is one drop.' },
+          { x: 50, y: 52, title: 'Batch number', body: 'Each batch comes from a single saffron harvest and is numbered apart.' },
+          { x: 34, y: 33, title: 'Natural colour', body: 'The amber tone comes from the saffron itself — nothing is added.' }
+        ]
+      }
+    },
+    {
+      sku: 'SK-203', cat: 'skin', subject: 'vase', palette: 'clay', price: 890000,
+      sw: ['rose', 'smoke'], sizes: ['50 ml'], size: 0, out: [],
+      fa: {
+        name: 'کرم شب انار', alt: 'Pomegranate Night Cream',
+        desc: 'روغن هستهٔ انار و کرهٔ شی؛ غلیظ است و یک نخود برای تمام صورت بس است.',
+        swLabel: 'رنگ ظرف',
+        specs: [['بافت', 'غلیظ'], ['pH', 'pH 5.5'], ['حجم', '50 ml']],
+        hs: [
+          { x: 50, y: 20, title: 'در پیچی', body: 'واشر داخلی رطوبت کرم را نگه می‌دارد.' },
+          { x: 50, y: 45, title: 'ظرف سرامیکی', body: 'لعاب داخلی با روغن واکنش نمی‌دهد.' },
+          { x: 50, y: 63, title: 'ته پهن', body: 'روی قفسهٔ حمام نمی‌لغزد و واژگون نمی‌شود.' }
+        ]
+      },
+      en: {
+        name: 'Pomegranate Night Cream', alt: 'کرم شب انار',
+        desc: 'Pomegranate seed oil and shea butter — thick enough that a pea covers the whole face.',
+        swLabel: 'Jar colour',
+        specs: [['Texture', 'Thick'], ['pH', 'pH 5.5'], ['Volume', '50 ml']],
+        hs: [
+          { x: 50, y: 20, title: 'Screw lid', body: 'An inner gasket holds the moisture in the cream.' },
+          { x: 50, y: 45, title: 'Ceramic jar', body: 'The inner glaze does not react with the oils.' },
+          { x: 50, y: 63, title: 'Wide base', body: 'It does not slide or tip on a bathroom shelf.' }
+        ]
+      }
+    },
+    {
+      sku: 'SK-204', cat: 'skin', subject: 'vase', palette: 'sage', price: 420000,
+      sw: ['sage', 'amber'], sizes: ['15 ml', '30 ml'], size: 0, out: [],
+      fa: {
+        name: 'بالم مریم‌گلی و موم', alt: 'Sage & Beeswax Balm',
+        desc: 'موم زنبور و مریم‌گلی کوهی برای لب و آرنج؛ در سرما سفت می‌شود و با گرمای دست باز.',
+        swLabel: 'رنگ ظرف',
+        specs: [['بافت', 'جامد'], ['موم', '۲۸٪'], ['حجم', '15 ml']],
+        hs: [
+          { x: 50, y: 20, title: 'در فلزی', body: 'قوطی آلومینیومی سبک؛ در جیب جا می‌شود.' },
+          { x: 50, y: 45, title: 'سطح بالم', body: 'سطح مات است؛ براقی یعنی بالم یک‌بار آب شده.' },
+          { x: 50, y: 63, title: 'قوطی کوچک', body: 'پانزده میلی‌لیتر برای حدود سه ماه استفادهٔ روزانه.' }
+        ]
+      },
+      en: {
+        name: 'Sage & Beeswax Balm', alt: 'بالم مریم‌گلی و موم',
+        desc: 'Beeswax and mountain sage for lips and elbows; it firms in the cold and opens with the warmth of a hand.',
+        swLabel: 'Tin colour',
+        specs: [['Texture', 'Solid'], ['Beeswax', '28%'], ['Volume', '15 ml']],
+        hs: [
+          { x: 50, y: 20, title: 'Metal lid', body: 'A light aluminium tin that fits a pocket.' },
+          { x: 50, y: 45, title: 'Balm surface', body: 'The surface is matte; a shine means it has melted once.' },
+          { x: 50, y: 63, title: 'Small tin', body: 'Fifteen millilitres is about three months of daily use.' }
+        ]
+      }
+    },
+    {
+      sku: 'BT-301', cat: 'bath', subject: 'bottle', palette: 'warm', price: 720000,
+      sw: ['amber', 'clear'], sizes: ['200 ml', '500 ml'], size: 0, out: [1],
+      fa: {
+        name: 'روغن حمام هل و گل محمدی', alt: 'Cardamom & Rose Bath Oil',
+        desc: 'دو کلاهک در وان آب گرم؛ روغن کنجد و هل سبز، با بوی حمام‌های قدیمی کاشان.',
+        swLabel: 'رنگ شیشه',
+        specs: [['پایه', 'روغن کنجد'], ['بافت', 'روان'], ['حجم', '200 ml']],
+        hs: [
+          { x: 50, y: 17, title: 'کلاهک پیمانه‌ای', body: 'هر کلاهک ده میلی‌لیتر؛ برای یک وان دو تا کافی است.' },
+          { x: 50, y: 52, title: 'دستور مصرف', body: 'روی برچسب نوشته شده که روغن را زیر شیر آب بریزید، نه روی آب.' },
+          { x: 33, y: 33, title: 'بدنهٔ لغزان‌گیر', body: 'شیارهای عمودی شیشه را در دست خیس نگه می‌دارد.' }
+        ]
+      },
+      en: {
+        name: 'Cardamom & Rose Bath Oil', alt: 'روغن حمام هل و گل محمدی',
+        desc: 'Two capfuls in a hot bath — sesame oil and green cardamom, the smell of the old Kashan bathhouses.',
+        swLabel: 'Glass colour',
+        specs: [['Base', 'Sesame oil'], ['Texture', 'Fluid'], ['Volume', '200 ml']],
+        hs: [
+          { x: 50, y: 17, title: 'Measuring cap', body: 'Each cap holds ten millilitres; two is a full bath.' },
+          { x: 50, y: 52, title: 'How to use', body: 'The label says to pour under the running tap, not onto still water.' },
+          { x: 33, y: 33, title: 'Ribbed body', body: 'Vertical ribs keep the bottle in a wet hand.' }
+        ]
+      }
+    },
+    {
+      sku: 'BT-302', cat: 'bath', subject: 'textile', palette: 'stone', price: 310000,
+      sw: ['sage', 'rose'], sizes: ['18 × 12 cm', '24 × 14 cm'], size: 0, out: [],
+      fa: {
+        name: 'لیف ابریشم یزد', alt: 'Yazd Silk Mitt',
+        desc: 'بافت دستی کارگاه یزد؛ ابریشم خام روی تار پنبه‌ای، هرچه بیشتر بشویید نرم‌تر می‌شود.',
+        swLabel: 'رنگ نخ',
+        specs: [['جنس', 'ابریشم و پنبه'], ['بافت', 'دست‌باف'], ['اندازه', '18 × 12 cm']],
+        hs: [
+          { x: 50, y: 30, title: 'تار پنبه‌ای', body: 'تار پنبه است تا لیف بعد از خیس شدن شکلش را نگه دارد.' },
+          { x: 50, y: 48, title: 'پود ابریشم', body: 'ابریشم خام، رنگ‌نشده؛ زبری اولیه بعد از دو بار شست‌وشو می‌رود.' },
+          { x: 27, y: 66, title: 'لبهٔ دوخته', body: 'لبه دولا و دست‌دوز است تا ریش‌ریش نشود.' }
+        ]
+      },
+      en: {
+        name: 'Yazd Silk Mitt', alt: 'لیف ابریشم یزد',
+        desc: 'Hand-woven in a Yazd workshop — raw silk on a cotton warp; every wash softens it further.',
+        swLabel: 'Thread colour',
+        specs: [['Material', 'Silk and cotton'], ['Weave', 'Hand-woven'], ['Size', '18 × 12 cm']],
+        hs: [
+          { x: 50, y: 30, title: 'Cotton warp', body: 'The warp is cotton so the mitt holds its shape when wet.' },
+          { x: 50, y: 48, title: 'Silk weft', body: 'Raw, undyed silk; the first roughness goes after two washes.' },
+          { x: 27, y: 66, title: 'Stitched edge', body: 'The edge is folded twice and hand-stitched so it cannot fray.' }
+        ]
+      }
+    },
+    {
+      sku: 'HM-401', cat: 'home', subject: 'vase', palette: 'amber', price: 780000,
+      sw: ['amber', 'smoke'], sizes: ['90 g', '260 g'], size: 1, out: [],
+      fa: {
+        name: 'شمع کندر و کهربا', alt: 'Frankincense & Amber Candle',
+        desc: 'موم سویا با فتیلهٔ پنبه‌ای؛ بار اول دو ساعت روشن بگذارید تا سطح یکنواخت بسوزد.',
+        swLabel: 'رنگ موم',
+        specs: [['زمان سوختن', '۴۵ ساعت'], ['موم', 'سویا'], ['وزن', '260 g']],
+        hs: [
+          { x: 50, y: 20, title: 'فتیلهٔ پنبه‌ای', body: 'بدون هستهٔ فلزی؛ پیش از هر بار روشن کردن تا پنج میلی‌متر کوتاهش کنید.' },
+          { x: 50, y: 45, title: 'ظرف سفالی', body: 'بعد از تمام شدن شمع، ظرف را برای قلم و برس نگه دارید.' },
+          { x: 50, y: 63, title: 'ته ظرف', body: 'ته دوجداره است تا میز از گرما رد نیفتد.' }
+        ]
+      },
+      en: {
+        name: 'Frankincense & Amber Candle', alt: 'شمع کندر و کهربا',
+        desc: 'Soy wax on a cotton wick — burn it two hours the first time so the pool reaches the edge.',
+        swLabel: 'Wax colour',
+        specs: [['Burn time', '45 hours'], ['Wax', 'Soy'], ['Weight', '260 g']],
+        hs: [
+          { x: 50, y: 20, title: 'Cotton wick', body: 'No metal core; trim it to five millimetres before each burn.' },
+          { x: 50, y: 45, title: 'Earthenware vessel', body: 'When the candle is done, keep the vessel for pens and brushes.' },
+          { x: 50, y: 63, title: 'Double base', body: 'The base is double-walled so the heat never marks a table.' }
+        ]
+      }
+    },
+    {
+      sku: 'HM-402', cat: 'home', subject: 'lamp', palette: 'warm', price: 1120000,
+      sw: ['sage', 'smoke'], sizes: ['24 cm', '32 cm'], size: 0, out: [],
+      fa: {
+        name: 'چراغ عطر صندل', alt: 'Sandalwood Scent Lamp',
+        desc: 'کاسهٔ سفالی روی پایهٔ برنجی؛ چند قطره روغن صندل، کمی آب و یک شمع وارمر.',
+        swLabel: 'رنگ لعاب',
+        specs: [['جنس', 'سفال و برنج'], ['ارتفاع', '24 cm'], ['وزن', '640 g']],
+        hs: [
+          { x: 50, y: 30, title: 'کاسهٔ روغن', body: 'تا نیمه آب و سه قطره روغن؛ کاسه نباید خشک بسوزد.' },
+          { x: 50, y: 50, title: 'پایهٔ برنجی', body: 'برنج خام است و با گذر زمان تیره و کهنه می‌شود.' },
+          { x: 50, y: 66, title: 'محفظهٔ شمع', body: 'جای شمع وارمر استاندارد؛ از پهلو هوا می‌گیرد.' }
+        ]
+      },
+      en: {
+        name: 'Sandalwood Scent Lamp', alt: 'چراغ عطر صندل',
+        desc: 'An earthenware bowl on a brass stem — a few drops of sandalwood oil, a little water and one tealight.',
+        swLabel: 'Glaze',
+        specs: [['Material', 'Earthenware and brass'], ['Height', '24 cm'], ['Weight', '640 g']],
+        hs: [
+          { x: 50, y: 30, title: 'Oil bowl', body: 'Half water, three drops of oil; the bowl should never run dry.' },
+          { x: 50, y: 50, title: 'Brass stem', body: 'Raw brass — it darkens and ages with use.' },
+          { x: 50, y: 66, title: 'Tealight well', body: 'Takes a standard tealight and draws air from the side.' }
+        ]
+      }
+    }
+  ];
+
+  var CATS = ['scent', 'skin', 'bath', 'home'];
+
+  /* ── helpers ────────────────────────────────────────── */
+  function el(tag, cls, attrs) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (attrs) for (var k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  function group(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  /* Spec values written in Latin — sizes, codes, pH — keep the mono face;
+     anything carrying Arabic-script letters or digits takes the UI face. */
+  function isLatin(s) {
+    for (var i = 0; i < s.length; i++) {
+      var c = s.charCodeAt(i);
+      if (c >= 0x0600 && c <= 0x06ff) return false;
+    }
+    return true;
+  }
+  function reduced() { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+  var lang = 'fa';
+  function t() { return UI[lang]; }
+  function L(p) { return p[lang]; }
+  function money(n) { return lang === 'fa' ? K.toFa(group(n).replace(/,/g, '٬')) : group(n); }
+
+  /* ── build ──────────────────────────────────────────── */
+  var grid = document.getElementById('gx-grid');
+  var cards = PRODUCTS.map(build);
+  var current = null;
+  var inquiry = [];
+
+  function build(p) {
+    var card = { p: p, size: p.size, sw: 0, open: false };
+
+    var cell = el('li', 'gx-cell', { 'data-cat': p.cat });
+    var face = el('button', 'gx-face', {
+      type: 'button', id: 'face-' + p.sku,
+      'aria-expanded': 'false', 'aria-controls': 'panel-' + p.sku
+    });
+    var media = el('span', 'gx-face__media');
+    var poster = el('img', '', {
+      src: K.image(p.sku + '-a', { w: 560, h: 700, subject: p.subject, palette: p.palette }),
+      alt: '', loading: 'lazy'
+    });
+    var cue = el('span', 'gx-face__cue');
+    cue.innerHTML = svg('expand');
+    media.appendChild(poster);
+    media.appendChild(cue);
+
+    var body = el('span', 'gx-face__body');
+    var name = el('span', 'gx-face__name');
+    var meta = el('span', 'gx-face__meta');
+    var sku = el('span', 'cat-sku gx-face__sku');
+    sku.textContent = p.sku;
+    var price = el('span', 'gx-face__price gx-num');
+    meta.appendChild(sku);
+    meta.appendChild(price);
+    body.appendChild(name);
+    body.appendChild(meta);
+    face.appendChild(media);
+    face.appendChild(body);
+
+    var panel = el('section', 'gx-panel', {
+      id: 'panel-' + p.sku, tabindex: '-1', 'aria-labelledby': 'name-' + p.sku, hidden: ''
+    });
+    var inner = el('div', 'gx-panel__inner');
+
+    var gallery = el('div', 'cat-gallery gx-gallery', { role: 'group' });
+    var stage = el('div', 'cat-gallery__stage');
+    var thumbs = el('div', 'cat-gallery__thumbs');
+    gallery.appendChild(stage);
+    gallery.appendChild(thumbs);
+
+    var head = el('header', 'gx-phead');
+    var titles = el('div', 'gx-phead__titles');
+    var eyebrow = el('p', 'gx-eyebrow');
+    var h3 = el('h3', 'gx-name', { id: 'name-' + p.sku });
+    var alt = el('span', 'gx-alt');
+    var headSku = el('span', 'cat-sku');
+    headSku.textContent = p.sku;
+    var metaRow = el('div', 'gx-phead__meta');
+    metaRow.appendChild(alt);
+    metaRow.appendChild(headSku);
+    titles.appendChild(eyebrow);
+    titles.appendChild(h3);
+    titles.appendChild(metaRow);
+    var priceBox = el('div', 'cat-price');
+    var priceNum = el('span', 'gx-num');
+    var priceUnit = el('span', 'cat-price__unit');
+    priceBox.appendChild(priceNum);
+    priceBox.appendChild(priceUnit);
+    var close = el('button', 'cat-btn cat-btn--quiet cat-btn--icon gx-close', { type: 'button' });
+    close.innerHTML = svg('close');
+    head.appendChild(titles);
+    head.appendChild(priceBox);
+    head.appendChild(close);
+
+    var detail = el('div', 'gx-detail cat-stagger');
+    var lede = el('p', 'gx-lede');
+
+    var swLabel = el('span', 'gx-opt__label', { id: 'sw-' + p.sku });
+    var swatches = el('div', 'cat-swatches', { role: 'group', 'aria-labelledby': 'sw-' + p.sku });
+    var swBtns = p.sw.map(function (key, i) {
+      var b = el('button', 'cat-swatch', { type: 'button', 'aria-pressed': i === 0 ? 'true' : 'false' });
+      b.appendChild(el('span', 'gx-sw--' + key));
+      b.addEventListener('click', function () { card.sw = i; paintOptions(card); });
+      return b;
+    });
+    swBtns.forEach(function (b) { swatches.appendChild(b); });
+    var sizeLabel = el('span', 'gx-opt__label', { id: 'size-' + p.sku });
+    var sizes = el('div', 'cat-sizes', { role: 'group', 'aria-labelledby': 'size-' + p.sku });
+    var sizeBtns = p.sizes.map(function (s, i) {
+      var b = el('button', 'cat-size num', { type: 'button', 'aria-pressed': i === p.size ? 'true' : 'false' });
+      b.textContent = s;
+      if (p.out.indexOf(i) > -1) b.disabled = true;
+      b.addEventListener('click', function () { card.size = i; paintOptions(card); });
+      return b;
+    });
+    sizeBtns.forEach(function (b) { sizes.appendChild(b); });
+    var swGroup = el('div', 'gx-opt');
+    swGroup.appendChild(swLabel);
+    swGroup.appendChild(swatches);
+    var sizeGroup = el('div', 'gx-opt');
+    sizeGroup.appendChild(sizeLabel);
+    sizeGroup.appendChild(sizes);
+
+    var specCol = el('div');
+    var specs = el('table', 'cat-specs');
+    var caption = el('caption', 'gx-eyebrow');
+    specs.appendChild(caption);
+    var tbody = el('tbody');
+    specs.appendChild(tbody);
+    specCol.appendChild(specs);
+
+    var actions = el('div', 'gx-actions');
+    var add = el('button', 'cat-btn gx-add', { type: 'button', 'aria-pressed': 'false' });
+    var zoom = el('button', 'cat-btn cat-btn--ghost gx-zoom', { type: 'button' });
+    actions.appendChild(add);
+    actions.appendChild(zoom);
+
+    var row = el('div', 'gx-detail__row');
+    var choices = el('div', 'gx-choices');
+    choices.appendChild(swGroup);
+    choices.appendChild(sizeGroup);
+    row.appendChild(choices);
+    row.appendChild(specCol);
+
+    detail.appendChild(lede);
+    detail.appendChild(row);
+    detail.appendChild(actions);
+    inner.appendChild(gallery);
+    inner.appendChild(detail);
+    panel.appendChild(head);
+    panel.appendChild(inner);
+
+    var tile = el('article', 'gx-tile');
+    tile.appendChild(face);
+    tile.appendChild(panel);
+    cell.appendChild(tile);
+    grid.appendChild(cell);
+
+    face.addEventListener('click', function () { toggle(card); });
+    close.addEventListener('click', function () { setOpen(null); face.focus(); });
+    add.addEventListener('click', function () { toggleInquiry(card); });
+    zoom.addEventListener('click', function () {
+      K.open(card.media, { title: L(p).name, sku: p.sku }, lang, 0);
+    });
+
+    Object.assign(card, {
+      cell: cell, face: face, faceMedia: media, name: name, price: price,
+      panel: panel, gallery: gallery, stage: stage, thumbs: thumbs,
+      eyebrow: eyebrow, h3: h3, alt: alt, lede: lede, caption: caption, tbody: tbody,
+      swLabel: swLabel, swBtns: swBtns, sizeLabel: sizeLabel, sizeBtns: sizeBtns,
+      priceNum: priceNum, priceUnit: priceUnit, add: add, zoom: zoom, close: close
+    });
+    return card;
+  }
+
+  /* Language owns the media too: the viewer's labels and the hotspot copy
+     both come from the mount, so a switch re-mounts a fresh host. */
+  function mountMedia(card) {
+    var p = card.p;
+    var fresh = el('div', 'cat-gallery__stage');
+    card.stage.replaceWith(fresh);
+    card.stage = fresh;
+    card.media = K.mountMedia(
+      fresh,
+      K.defaultMedia(p.sku, L(p).hs, { subject: p.subject, palette: p.palette }),
+      { title: L(p).name, sku: p.sku },
+      lang
+    );
+    card.gallery.setAttribute('aria-label', t().gallery + ' — ' + L(p).name);
+
+    card.thumbs.innerHTML = '';
+    card.media.forEach(function (d, i) {
+      var b = el('button', 'cat-thumb gx-thumb', {
+        type: 'button', 'aria-label': t().types[d.type] + ' — ' + L(p).name
+      });
+      b.appendChild(el('img', '', { src: K.thumb(d), alt: '', loading: 'lazy' }));
+      var tag = el('span', 'gx-thumb__tag');
+      tag.innerHTML = svg(d.type === 'video' ? 'play' : d.type === 'spin' ? 'spin' : 'zoom');
+      b.appendChild(tag);
+      b.addEventListener('click', function () {
+        K.open(card.media, { title: L(p).name, sku: p.sku }, lang, i);
+      });
+      card.thumbs.appendChild(b);
+    });
+  }
+
+  function paintOptions(card) {
+    card.swBtns.forEach(function (b, i) { b.setAttribute('aria-pressed', String(i === card.sw)); });
+    card.sizeBtns.forEach(function (b, i) { b.setAttribute('aria-pressed', String(i === card.size)); });
+    if (inquiry.indexOf(card) > -1) renderSheet();
+  }
+
+  function paintCard(card) {
+    var p = card.p, s = L(p);
+    card.name.textContent = s.name;
+    card.price.textContent = money(p.price);
+    card.face.setAttribute('aria-label', s.name + ' — ' + (card.open ? t().closeItem : t().open));
+    card.eyebrow.textContent = t().cats[p.cat];
+    card.h3.textContent = s.name;
+    card.alt.textContent = s.alt;
+    card.alt.dir = lang === 'fa' ? 'ltr' : 'rtl';
+    card.lede.textContent = s.desc;
+    card.caption.textContent = t().specs;
+    card.tbody.innerHTML = '';
+    s.specs.forEach(function (row) {
+      var tr = el('tr');
+      var th = el('th', '', { scope: 'row' });
+      th.textContent = row[0];
+      var td = el('td');
+      if (isLatin(row[1])) {
+        var n = el('span', 'num');
+        n.textContent = row[1];
+        td.appendChild(n);
+      } else {
+        td.textContent = row[1];
+      }
+      tr.appendChild(th);
+      tr.appendChild(td);
+      card.tbody.appendChild(tr);
+    });
+    card.swLabel.textContent = s.swLabel;
+    card.swBtns.forEach(function (b, i) { b.setAttribute('aria-label', SWATCH[p.sw[i]][lang]); });
+    card.sizeLabel.textContent = t().sizeLabel;
+    card.priceNum.textContent = money(p.price);
+    card.priceUnit.textContent = t().unit;
+    card.zoom.textContent = t().zoom;
+    card.close.setAttribute('aria-label', t().closeItem);
+    paintAdd(card);
+    mountMedia(card);
+  }
+
+  function paintAdd(card) {
+    var on = inquiry.indexOf(card) > -1;
+    card.add.setAttribute('aria-pressed', String(on));
+    card.add.innerHTML = svg(on ? 'check' : 'plus', 16) + '<span></span>';
+    card.add.lastChild.textContent = on ? t().inList : t().add;
+  }
+
+  /* ── FLIP ───────────────────────────────────────────── */
+  function docRect(node) {
+    var r = node.getBoundingClientRect();
+    return { x: r.left + window.scrollX, y: r.top + window.scrollY, w: r.width, h: r.height };
+  }
+
+  function play(node, first, last, scale) {
+    var dx = first.x - last.x, dy = first.y - last.y;
+    var sx = scale && last.w ? first.w / last.w : 1;
+    var sy = scale && last.h ? first.h / last.h : 1;
+    if (!dx && !dy && sx === 1 && sy === 1) return;
+    var cell = node.closest('.gx-cell');
+    if (cell) cell.setAttribute('data-flip', '');
+    node.style.transformOrigin = 'top left';
+    node.style.transition = 'none';
+    node.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')';
+    node.getBoundingClientRect();
+    node.style.transition = 'transform var(--dur-slow) var(--ease-soft)';
+    node.style.transform = 'none';
+    node.addEventListener('transitionend', function done(e) {
+      if (e.propertyName !== 'transform') return;
+      node.removeEventListener('transitionend', done);
+      node.style.transition = '';
+      node.style.transform = '';
+      node.style.transformOrigin = '';
+      if (cell) cell.removeAttribute('data-flip');
+    });
+  }
+
+  /* One expansion at a time, so opening, closing and swapping are the same
+     move: measure everything, change state, then animate the gap. */
+  function setOpen(card) {
+    var prev = current;
+    if (prev === card) return;
+    clearEntrance();
+
+    var cells = cards.filter(shown).map(function (c) { return c.cell; });
+    var firsts = cells.map(docRect);
+    var growFrom = card && docRect(card.faceMedia);
+    var shrinkFrom = prev && docRect(prev.stage);
+
+    if (prev) state(prev, false);
+    if (card) state(card, true);
+    current = card;
+
+    if (!reduced()) {
+      var growTo = card && docRect(card.stage);
+      var shrinkTo = prev && docRect(prev.faceMedia);
+      var lasts = cells.map(docRect);
+      cells.forEach(function (c, i) {
+        if ((card && c === card.cell) || (prev && c === prev.cell)) return;
+        play(c, firsts[i], lasts[i], false);
+      });
+      if (prev) play(prev.faceMedia, shrinkFrom, shrinkTo, true);
+      if (card) play(card.stage, growFrom, growTo, true);
+    }
+  }
+
+  function state(card, open) {
+    card.open = open;
+    card.cell.toggleAttribute('data-open', open);
+    card.panel.hidden = !open;
+    card.face.setAttribute('aria-expanded', String(open));
+    card.face.setAttribute('aria-label', L(card.p).name + ' — ' + (open ? t().closeItem : t().open));
+  }
+
+  function toggle(card) {
+    var opening = current !== card;
+    setOpen(opening ? card : null);
+    if (opening) {
+      card.panel.focus({ preventScroll: true });
+      keepInView(card.cell);
+    } else {
+      card.face.focus();
+    }
+  }
+
+  function keepInView(cell) {
+    var bar = document.querySelector('.gx-bar').getBoundingClientRect().height;
+    var r = cell.getBoundingClientRect();
+    var over = r.top - bar - 16;
+    var under = r.bottom - window.innerHeight + 16;
+    var by = over < 0 ? over : under > 0 ? Math.min(under, over) : 0;
+    if (by) window.scrollBy({ top: by, behavior: reduced() ? 'auto' : 'smooth' });
+  }
+
+  /* The staggered entrance fills forwards, which would out-rank the inline
+     transform a FLIP writes; drop it before the first expansion. */
+  function clearEntrance() { grid.classList.remove('cat-stagger'); }
+
+  /* ── filtering ──────────────────────────────────────── */
+  var filter = 'all';
+  var query = '';
+  var none = document.getElementById('gx-none');
+
+  function shown(card) { return card.cell.style.display !== 'none'; }
+
+  function applyFilter() {
+    clearEntrance();
+    var q = query.trim().toLowerCase();
+    var hits = 0;
+    if (current && !matches(current)) setOpen(null);
+    cards.forEach(function (card) {
+      var on = matches(card);
+      card.cell.style.display = on ? '' : 'none';
+      if (on) hits++;
+    });
+    none.hidden = hits > 0;
+
+    function matches(card) {
+      if (filter !== 'all' && card.p.cat !== filter) return false;
+      if (!q) return true;
+      var s = L(card.p);
+      return (s.name + ' ' + s.alt + ' ' + s.desc + ' ' + card.p.sku).toLowerCase().indexOf(q) > -1;
+    }
+  }
+
+  var filters = document.getElementById('gx-filters');
+  var chips = ['all'].concat(CATS).map(function (key) {
+    var b = el('button', 'cat-chip gx-chip', {
+      type: 'button', 'data-cat': key, 'aria-pressed': key === 'all' ? 'true' : 'false'
+    });
+    b.appendChild(document.createTextNode(''));
+    b.addEventListener('click', function () {
+      filter = key;
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c.getAttribute('data-cat') === key)); });
+      applyFilter();
+    });
+    filters.appendChild(b);
+    return b;
+  });
+
+  document.getElementById('gx-q').addEventListener('input', function (e) {
+    query = e.target.value;
+    applyFilter();
+  });
+
+  /* ── price inquiry ──────────────────────────────────── */
+  var sheet = document.getElementById('gx-sheet');
+  var scrim = document.getElementById('gx-scrim');
+  var sheetBody = document.getElementById('gx-sheet-body');
+  var inqBtn = document.getElementById('gx-inq');
+  var countBox = document.getElementById('gx-count');
+  var totalBox = document.getElementById('gx-total');
+  var status = document.getElementById('gx-status');
+
+  function toggleInquiry(card) {
+    var i = inquiry.indexOf(card);
+    if (i > -1) inquiry.splice(i, 1); else inquiry.push(card);
+    paintAdd(card);
+    renderSheet();
+  }
+
+  function renderSheet() {
+    countBox.textContent = lang === 'fa' ? K.toFa(inquiry.length) : String(inquiry.length);
+    inqBtn.setAttribute('data-empty', inquiry.length ? 'no' : 'yes');
+    sheetBody.innerHTML = '';
+    if (!inquiry.length) {
+      var empty = el('p', 'cat-inquiry__empty');
+      empty.textContent = t().emptyList;
+      sheetBody.appendChild(empty);
+    } else {
+      var list = el('ul', 'cat-inquiry');
+      inquiry.forEach(function (card) {
+        var p = card.p, s = L(p);
+        var row = el('li', 'cat-inquiry__row');
+        row.appendChild(el('img', 'gx-row__thumb', { src: K.thumb(card.media[0]), alt: '' }));
+        var body = el('div', 'gx-row__body');
+        var name = el('span', 'gx-row__name');
+        name.textContent = s.name;
+        var opt = el('span', 'gx-row__opt');
+        opt.textContent = p.sku + ' · ' + p.sizes[card.size] + ' · ' + SWATCH[p.sw[card.sw]][lang];
+        body.appendChild(name);
+        body.appendChild(opt);
+        row.appendChild(body);
+        var drop = el('button', 'cat-btn cat-btn--quiet cat-btn--icon gx-row__drop', {
+          type: 'button', 'aria-label': t().remove + ' — ' + s.name
+        });
+        drop.innerHTML = svg('drop', 15);
+        drop.addEventListener('click', function () { toggleInquiry(card); });
+        row.appendChild(drop);
+        list.appendChild(row);
+      });
+      sheetBody.appendChild(list);
+    }
+    var total = inquiry.reduce(function (sum, card) { return sum + card.p.price; }, 0);
+    totalBox.textContent = money(total);
+    status.textContent = '';
+  }
+
+  function openSheet(open) {
+    if (open) {
+      sheet.hidden = false;
+      scrim.hidden = false;
+      sheet.getBoundingClientRect();
+      sheet.setAttribute('data-open', '');
+      inqBtn.setAttribute('aria-expanded', 'true');
+      document.getElementById('gx-sheet-close').focus();
+    } else {
+      sheet.removeAttribute('data-open');
+      scrim.hidden = true;
+      inqBtn.setAttribute('aria-expanded', 'false');
+      var hide = function () { sheet.hidden = true; };
+      if (reduced()) hide();
+      else sheet.addEventListener('transitionend', function done() {
+        sheet.removeEventListener('transitionend', done);
+        if (!sheet.hasAttribute('data-open')) hide();
+      });
+      inqBtn.focus();
+    }
+  }
+
+  inqBtn.addEventListener('click', function () { openSheet(sheet.hidden); });
+  document.getElementById('gx-sheet-close').addEventListener('click', function () { openSheet(false); });
+  scrim.addEventListener('click', function () { openSheet(false); });
+
+  document.getElementById('gx-copy').addEventListener('click', function () {
+    var lines = inquiry.map(function (card) {
+      var p = card.p;
+      return p.sku + ' · ' + L(p).name + ' · ' + p.sizes[card.size] + ' · ' + SWATCH[p.sw[card.sw]][lang];
+    });
+    var text = UI[lang].inquiryTitle + ' — PARNIAN\n' + lines.join('\n');
+    copy(text).then(function (ok) { status.textContent = ok ? t().copied : t().copyFail; });
+  });
+
+  function copy(text) {
+    if (navigator.clipboard) {
+      return navigator.clipboard.writeText(text).then(function () { return true; }, fallback);
+    }
+    return Promise.resolve(fallback());
+
+    function fallback() {
+      var area = el('textarea');
+      area.value = text;
+      area.setAttribute('aria-hidden', 'true');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      area.remove();
+      return ok;
+    }
+  }
+
+  /* Escape unwinds one layer at a time; Tab stays inside the open sheet. */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !sheet.hidden) { e.preventDefault(); openSheet(false); return; }
+    if (e.key === 'Escape' && current) {
+      e.preventDefault();
+      var card = current;
+      setOpen(null);
+      card.face.focus();
+      return;
+    }
+    if (e.key !== 'Tab' || sheet.hidden) return;
+    var focusable = sheet.querySelectorAll('button:not([disabled])');
+    if (!focusable.length) return;
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* ── language ───────────────────────────────────────── */
+  function applyLang(next) {
+    lang = next;
+    var root = document.documentElement;
+    root.lang = lang;
+    root.dir = lang === 'fa' ? 'rtl' : 'ltr';
+    document.title = t().title;
+
+    document.querySelectorAll('[data-t]').forEach(function (n) {
+      n.textContent = t()[n.getAttribute('data-t')];
+    });
+    document.querySelectorAll('[data-t-label]').forEach(function (n) {
+      n.setAttribute('aria-label', t()[n.getAttribute('data-t-label')]);
+    });
+    document.querySelectorAll('[data-t-ph]').forEach(function (n) {
+      n.setAttribute('placeholder', t()[n.getAttribute('data-t-ph')]);
+    });
+    document.querySelectorAll('[data-lang]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang));
+    });
+    chips.forEach(function (b) {
+      var key = b.getAttribute('data-cat');
+      b.lastChild.textContent = key === 'all' ? t().all : t().cats[key];
+    });
+    cards.forEach(paintCard);
+    renderSheet();
+    applyFilter();
+  }
+
+  document.querySelectorAll('[data-lang]').forEach(function (b) {
+    b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang')); });
+  });
+
+  /* ── start ──────────────────────────────────────────── */
+  var shelf = document.getElementById('gx-shelf');
+  ['PR-102-a', 'SK-202-a', 'HM-401-a'].forEach(function (seed, i) {
+    var p = PRODUCTS.filter(function (x) { return seed.indexOf(x.sku) === 0; })[0];
+    shelf.appendChild(el('img', '', {
+      src: K.image(seed, { w: 520, h: 650, subject: p.subject, palette: p.palette, t: i * 0.12 }),
+      alt: '', loading: i ? 'lazy' : 'eager'
+    }));
+  });
+
+  applyLang('fa');
+  grid.classList.add('cat-stagger');
+  var pending = cards.length;
+  grid.addEventListener('animationend', function done(e) {
+    if (e.animationName !== 'cat-reveal' || e.target.parentNode !== grid) return;
+    if (--pending > 0) return;
+    grid.removeEventListener('animationend', done);
+    clearEntrance();
+  });
+})();
+</script>
+</body>
+</html>

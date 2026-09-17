@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html dir="rtl" lang="fa" data-theme="editorial">
+<!doctype html>
+<html dir="rtl" lang="fa" data-theme="luxe">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>مکانیزم‌های رسانه — نمونه‌ی زنده</title>
-<meta name="description" content="زوم روی نقطه، نقطه‌های جزئیات، پخش ویدیو و چرخش ۳۶۰ — همان مکانیزمی که در هر هشت کاتالوگ کار می‌کند.">
+<title>زرنگار — مجموعهٔ شب‌چراغ</title>
 <style>
 /* inlined from shared/ds-core.css */
 /* ============================================================
@@ -629,126 +628,504 @@ a:hover { color: var(--ink); }
 
 </style>
 <style>
-  .mx-head {
-    display: grid; gap: var(--s-4);
-    padding: var(--s-8) var(--page-pad) var(--s-6);
-    border-block-end: var(--border-w) solid var(--line);
+  :root {
+    --lx-frame: clamp(12px, 1.9vw, 30px);
+    --lx-pad: clamp(24px, 5.2vw, 84px);
+    --lx-rail-w: clamp(52px, 6vw, 82px);
+    --lx-mast-h: 58px;
+    --lx-veil-x: to left;
+    --lx-slow: calc(var(--dur-page) * 2);
   }
-  .mx-kicker {
-    font-family: var(--font-num); font-size: var(--t-xs);
+  [dir="ltr"] { --lx-veil-x: to right; }
+
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    background: var(--bg);
+  }
+  /* The design system gives every <p> a reading measure; the paragraphs
+     used here as layout strips are not reading text. */
+  .lx-mast__mark, .lx-corner, .lx-cue, .lx-eyebrow, .lx-num, .lx-foot,
+  .lx-price, .lx-colophon, .lx-hero__kicker, .lx-hero__latin, .lx-hero__coll { max-width: none; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  /* ── fixed chrome ───────────────────────────── */
+
+  .lx-edge {
+    position: fixed; inset: var(--lx-frame); z-index: 30; pointer-events: none;
+    border: var(--border-w) solid color-mix(in oklab, var(--line) 70%, transparent);
+  }
+  .lx-edge span { position: absolute; width: 14px; height: 14px; border: var(--border-w) solid var(--accent); }
+  .lx-edge span:nth-child(1) { inset-block-start: -1px; inset-inline-start: -1px; border-inline-end: 0; border-block-end: 0; }
+  .lx-edge span:nth-child(2) { inset-block-start: -1px; inset-inline-end: -1px; border-inline-start: 0; border-block-end: 0; }
+  .lx-edge span:nth-child(3) { inset-block-end: -1px; inset-inline-start: -1px; border-inline-end: 0; border-block-start: 0; }
+  .lx-edge span:nth-child(4) { inset-block-end: -1px; inset-inline-end: -1px; border-inline-start: 0; border-block-start: 0; }
+
+  .lx-mast {
+    position: fixed; z-index: 34;
+    inset-block-start: var(--lx-frame); inset-inline: var(--lx-frame);
+    display: flex; align-items: center; gap: var(--s-5);
+    min-height: var(--lx-mast-h); padding-inline: clamp(14px, 2.4vw, 30px);
+    border-block-end: var(--border-w) solid color-mix(in oklab, var(--line) 70%, transparent);
+    background: linear-gradient(to bottom, color-mix(in oklab, var(--bg) 88%, transparent), color-mix(in oklab, var(--bg) 30%, transparent));
+    backdrop-filter: blur(6px);
+  }
+  .lx-mast__mark { display: flex; align-items: baseline; gap: var(--s-3); }
+  .lx-mast__mark b { font-family: var(--font-fa-display); font-size: var(--t-lg); font-weight: var(--w-medium); line-height: 1; }
+  [dir="ltr"] .lx-mast__mark b { font-family: var(--font-en-display); }
+  .lx-mast__mark i {
+    font-style: normal; font-family: var(--font-en-ui); font-size: var(--t-xs);
+    letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--accent);
+  }
+  .lx-mast__line { flex: 1; height: 1px; background: color-mix(in oklab, var(--line) 80%, transparent); }
+  .lx-mast__where { font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; }
+  @media (max-width: 720px) { .lx-mast__where { display: none; } }
+  .lx-mast .cat-lang { border-radius: 0; border-color: color-mix(in oklab, var(--line-strong) 60%, transparent); }
+  .lx-mast .cat-lang > button { min-height: 34px; font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; }
+  .lx-mast .cat-lang > button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+
+  /* ── side rail ──────────────────────────────── */
+
+  .lx-rail {
+    position: fixed; z-index: 35;
+    inset-inline-end: calc(var(--lx-frame) + var(--s-4));
+    inset-block-start: 50%; translate: 0 -50%;
+    width: var(--lx-rail-w);
+  }
+  .lx-rail ol {
+    position: relative; display: grid; margin: 0; padding: 0; list-style: none;
+  }
+  .lx-rail ol::before {
+    content: ""; position: absolute; inset-block: 8px; inset-inline-end: 0;
+    width: 1px; background: color-mix(in oklab, var(--line) 80%, transparent);
+  }
+  /* flex-end is the outer edge of the rail in both directions, so the ticks
+     always grow inward from the spine. */
+  .lx-rail__btn {
+    position: relative; display: flex; align-items: center; justify-content: flex-end;
+    gap: var(--s-2); width: 100%; min-height: var(--tap-min); padding-inline-start: var(--s-3);
+    font: inherit; background: none; border: 0; color: var(--ink-faint); cursor: pointer;
+  }
+  .lx-rail__n {
+    font-family: var(--font-num); font-size: 10px; letter-spacing: .08em;
+    opacity: 0; transition: opacity var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+  }
+  .lx-rail__tick {
+    display: block; width: 14px; height: 1px; background: currentColor; opacity: .8;
+    transition: width var(--dur-slow) var(--ease-inout), background var(--dur-slow) var(--ease-inout), opacity var(--dur-slow) var(--ease-inout);
+  }
+  .lx-rail__btn:hover .lx-rail__n, .lx-rail__btn:focus-visible .lx-rail__n { opacity: 1; }
+  .lx-rail__btn:hover .lx-rail__tick { width: 24px; opacity: 1; }
+  .lx-rail__btn[aria-current="true"] { color: var(--accent); }
+  .lx-rail__btn[aria-current="true"] .lx-rail__tick { width: 34px; opacity: 1; background: var(--accent); }
+  .lx-rail__btn[aria-current="true"] .lx-rail__n { opacity: 1; }
+  .lx-rail__btn[data-kind="edge"] .lx-rail__tick { width: 6px; height: 6px; rotate: 45deg; background: none; border: var(--border-w) solid currentColor; }
+  .lx-rail__btn[data-kind="edge"][aria-current="true"] .lx-rail__tick { width: 7px; height: 7px; background: var(--accent); border-color: var(--accent); }
+  @media (max-height: 760px) { .lx-rail__btn { min-height: 30px; } }
+  @media (max-width: 720px) { .lx-rail { display: none; } }
+
+  /* ── section shell ──────────────────────────── */
+
+  .lx-sect {
+    position: relative; min-height: 100vh; min-height: 100svh;
+    scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden;
+  }
+  .lx-veil {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(to bottom, color-mix(in oklab, var(--bg) 86%, transparent), transparent 34%),
+      linear-gradient(to top, color-mix(in oklab, var(--bg) 92%, transparent) 2%, transparent 58%),
+      linear-gradient(var(--lx-veil-x), color-mix(in oklab, var(--bg) 94%, transparent) 4%,
+        color-mix(in oklab, var(--bg) 62%, transparent) 42%, color-mix(in oklab, var(--bg) 14%, transparent) 78%);
+  }
+
+  /* ── product section ────────────────────────── */
+
+  .lx-sect--product {
+    display: grid; grid-template-rows: 1fr auto;
+    padding: calc(var(--lx-frame) + var(--lx-mast-h)) var(--lx-pad) var(--lx-frame);
+  }
+  /* The plate carries the position; the mount host inside it is styled by
+     the kit (.ck-media fills its parent). */
+  .lx-plate {
+    position: absolute; inset-block: 0; inset-inline-end: 0;
+    width: min(68%, 1100px); overflow: hidden;
+    -webkit-mask-image: linear-gradient(var(--lx-veil-x), transparent 0, var(--ink) 30%);
+    mask-image: linear-gradient(var(--lx-veil-x), transparent 0, var(--ink) 30%);
+  }
+  @media (max-width: 900px) { .lx-plate { width: auto; inset-inline: 0; } }
+  .lx-shot { cursor: zoom-in; touch-action: pan-y pinch-zoom; }
+  .lx-plate img {
+    filter: brightness(.7) saturate(.68) contrast(1.06);
+    opacity: 0; transform: scale(1.08); transform-origin: 50% 42%;
+    transition: opacity var(--dur-page) var(--ease-inout), transform var(--lx-slow) var(--ease-inout);
+  }
+  .is-live .lx-plate img { opacity: 1; transform: none; }
+  .lx-plate .ck-cue {
+    inset-block: auto calc(var(--s-8) + var(--s-2)); inset-inline: auto var(--lx-pad);
+    border-radius: 0; background: color-mix(in oklab, var(--bg) 72%, transparent);
+    border: var(--border-w) solid color-mix(in oklab, var(--line) 80%, transparent);
+    font-family: var(--font-fa-ui); font-size: var(--t-xs); letter-spacing: var(--tracking-fa);
+  }
+  .lx-plate .ck-bigplay { border-radius: 0; background: color-mix(in oklab, var(--bg) 60%, transparent); }
+
+  /* A watermark of the running index, cropped by two edges so it reads as a
+     layer of the page rather than as stray type. */
+  .lx-num {
+    position: absolute; z-index: 1; pointer-events: none; user-select: none;
+    inset-block-start: calc(var(--lx-mast-h) - 0.3em); inset-inline-end: -0.07em;
+    font-size: clamp(9rem, 25vw, 23rem); line-height: .78;
+    color: transparent; -webkit-text-stroke: 1.5px var(--accent); opacity: .26;
+    transition: opacity var(--lx-slow) var(--ease-inout), transform var(--lx-slow) var(--ease-inout);
+    transform: translateY(24px);
+  }
+  [dir="rtl"] .lx-num { font-family: var(--font-fa-display); }
+  [dir="ltr"] .lx-num { font-family: var(--font-en-display); }
+  .is-live .lx-num { opacity: .26; transform: none; }
+  .lx-sect:not(.is-live) .lx-num { opacity: 0; }
+
+  .lx-mark {
+    position: absolute; z-index: 1; pointer-events: none;
+    inset-block-start: calc(var(--lx-mast-h) + var(--s-7)); inset-inline-start: calc(var(--lx-frame) + var(--s-3));
+  }
+  .lx-mark span {
+    display: block; writing-mode: vertical-rl; direction: ltr;
+    font-family: var(--font-en-ui); font-size: var(--t-xs);
+    letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--ink-faint);
+  }
+  @media (max-width: 900px) { .lx-mark { display: none; } }
+
+  .lx-head { display: flex; align-items: baseline; gap: var(--s-4); }
+  .lx-head .lx-eyebrow { flex: 1; min-width: 0; }
+  .lx-index { margin: 0; line-height: .78; color: var(--accent); }
+  [dir="rtl"] .lx-index { font-family: var(--font-fa-display); font-size: clamp(3rem, 5.8vw, 5.4rem); }
+  [dir="ltr"] .lx-index { font-family: var(--font-en-display); font-size: clamp(2.6rem, 4.6vw, 4.2rem); }
+
+  .lx-body {
+    position: relative; z-index: 2; align-self: end;
+    display: grid; gap: var(--s-4); width: min(620px, 48vw); max-width: 100%;
+    padding-block-end: var(--s-5);
+  }
+  /* Without this the nowrap name would inflate the track and drag every
+     other row out with it; instead it overflows the column on purpose. */
+  .lx-body > * { min-width: 0; }
+  @media (max-width: 900px) { .lx-body { width: min(620px, 92vw); } }
+
+  .lx-eyebrow {
+    display: flex; align-items: center; gap: var(--s-3); margin: 0;
+    font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--ink-muted);
+  }
+  .lx-eyebrow .lx-rule { flex: 1; height: 1px; background: var(--line); }
+  .lx-eyebrow .lx-sku { color: var(--accent); }
+
+  .lx-name {
+    margin: 0; white-space: nowrap; font-weight: var(--w-medium); letter-spacing: -0.005em;
+    text-shadow: 0 0 46px color-mix(in oklab, var(--bg) 82%, transparent),
+                 0 3px 16px color-mix(in oklab, var(--bg) 55%, transparent);
+  }
+  [dir="rtl"] .lx-name { font-family: var(--font-fa-display); font-size: clamp(3.4rem, 9.2vw, 8.4rem); line-height: .96; }
+  [dir="ltr"] .lx-name { font-family: var(--font-en-display); font-size: clamp(2.6rem, 6.6vw, 5.8rem); line-height: 1.02; }
+  .lx-name span { display: inline-block; }
+
+  /* The alternate name is always in the other script, so its inline flow is
+     set by the text and its alignment by the page. */
+  .lx-name-alt {
+    margin: 0; color: var(--accent);
+    text-shadow: 0 2px 18px color-mix(in oklab, var(--bg) 70%, transparent);
+  }
+  [dir="rtl"] .lx-name-alt {
+    direction: ltr; text-align: right;
+    font-family: var(--font-en-display); font-size: clamp(1rem, 1.7vw, 1.35rem);
     letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
-    color: var(--ink-faint);
   }
-  .mx-head h1 { font-size: var(--t-2xl); max-width: 20ch; }
-  .mx-head p { font-size: var(--t-md); color: var(--ink-muted); max-width: var(--measure-fa); margin: 0; }
+  [dir="ltr"] .lx-name-alt {
+    direction: rtl; text-align: left;
+    font-family: var(--font-fa-display); font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+  }
+  .lx-name-alt span { display: inline-block; }
 
-  .mx-bar {
-    position: sticky; inset-block-start: 0; z-index: 20;
+  .lx-lede {
+    margin: 0; max-width: 46ch; color: var(--ink-muted); font-size: var(--t-md);
+    text-shadow: 0 2px 18px color-mix(in oklab, var(--bg) 70%, transparent);
+  }
+
+  .lx-specs { max-width: 480px; }
+  .lx-specs th, .lx-specs td { padding: var(--s-2) 0; border-block-end-color: color-mix(in oklab, var(--line) 75%, transparent); }
+  .lx-specs th { width: 34%; font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; }
+  .lx-specs td { font-family: inherit; color: var(--ink); }
+  .lx-specs tr:hover { background: color-mix(in oklab, var(--surface) 45%, transparent); }
+
+  .lx-buy { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4) var(--s-5); }
+  .lx-price { margin: 0; font-family: inherit; font-size: var(--t-md); color: var(--ink); }
+  .lx-latin .lx-price, .lx-latin .lx-foot__idx { font-family: var(--font-num); }
+  .lx-acts { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+  .lx-acts .cat-btn { padding-inline: var(--s-5); font-size: var(--t-sm); letter-spacing: var(--tracking-en-caps); }
+
+  .lx-mediax { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .lx-mediax button {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+    min-height: var(--tap-min); padding: 0 var(--s-4); font: inherit; font-size: var(--t-xs);
+    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+    background: color-mix(in oklab, var(--surface) 55%, transparent); color: var(--ink-muted);
+    border: var(--border-w) solid color-mix(in oklab, var(--line) 80%, transparent); cursor: pointer;
+    transition: color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .lx-mediax button:hover { color: var(--accent); border-color: var(--accent); }
+  .lx-mediax svg { width: 15px; height: 15px; }
+
+  .lx-foot {
+    position: relative; z-index: 2; pointer-events: none;
+    display: flex; align-items: center; gap: var(--s-4);
+    padding-block-start: var(--s-3); border-block-start: var(--border-w) solid color-mix(in oklab, var(--line) 70%, transparent);
+    font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--ink-faint);
+  }
+  .lx-foot__idx { color: var(--accent); }
+  .lx-foot__spacer { flex: 1; }
+  .lx-foot__mark { font-family: var(--font-en-ui); }
+
+  /* ── reveal ─────────────────────────────────── */
+
+  .lx-rev {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity var(--dur-page) var(--ease-inout), transform var(--dur-page) var(--ease-inout);
+    transition-delay: calc(var(--i, 0) * var(--stagger) * 2);
+  }
+  .is-live .lx-rev { opacity: 1; transform: none; }
+
+  /* ── title sequence ─────────────────────────── */
+
+  .lx-sect--title { display: grid; place-items: center; text-align: center; padding: calc(var(--lx-frame) + var(--lx-mast-h)) var(--lx-pad) var(--s-9); }
+  .lx-plates { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; }
+  .lx-sect--title .lx-veil {
+    background:
+      radial-gradient(58% 46% at 50% 45%, color-mix(in oklab, var(--bg) 90%, transparent),
+        color-mix(in oklab, var(--bg) 42%, transparent) 62%, transparent),
+      linear-gradient(to bottom, color-mix(in oklab, var(--bg) 92%, transparent), transparent 30%),
+      linear-gradient(to top, color-mix(in oklab, var(--bg) 94%, transparent) 2%, transparent 48%);
+  }
+  .lx-plates div {
+    background-size: cover; background-position: 50% 42%;
+    filter: brightness(.34) saturate(.5) contrast(1.15) blur(1.5px);
+    opacity: 0; transform: scale(1.06);
+    transition: opacity var(--lx-slow) var(--ease-inout), transform var(--lx-slow) var(--ease-inout);
+  }
+  .is-live .lx-plates div { opacity: 1; transform: none; }
+  .lx-plates div:nth-child(2) { transition-delay: calc(var(--stagger) * 2); }
+  .lx-plates div:nth-child(3) { transition-delay: calc(var(--stagger) * 4); }
+
+  .lx-hero { position: relative; z-index: 2; display: grid; justify-items: center; gap: var(--s-4); max-width: 46rem; }
+  .lx-hero__kicker { margin: 0; font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--ink-muted); }
+  .lx-hero__name { margin: 0; font-weight: var(--w-regular); line-height: .9; }
+  [dir="rtl"] .lx-hero__name { font-family: var(--font-fa-display); font-size: clamp(5rem, 15vw, 13rem); }
+  [dir="ltr"] .lx-hero__name { font-family: var(--font-en-display); font-size: clamp(3.4rem, 10vw, 8.5rem); }
+  .lx-hero__latin {
+    margin: 0; font-family: var(--font-en-display); font-size: clamp(.9rem, 2vw, 1.5rem);
+    letter-spacing: .42em; text-indent: .42em; text-transform: uppercase; color: var(--accent);
+  }
+  .lx-hero__div { width: 96px; height: 1px; background: var(--line-strong); }
+  .lx-hero__coll { margin: 0; font-family: var(--font-fa-display); font-size: var(--t-xl); line-height: 1.2; }
+  [dir="ltr"] .lx-hero__coll { font-family: var(--font-en-display); }
+  .lx-hero__lede { margin: 0; color: var(--ink-muted); max-width: 40ch; }
+  .lx-hero .cat-btn { margin-block-start: var(--s-3); letter-spacing: var(--tracking-en-caps); }
+
+  .lx-corner {
+    position: absolute; z-index: 2; font-size: var(--t-xs);
+    letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--ink-faint);
+  }
+  .lx-corner--a { inset-block-start: calc(var(--lx-mast-h) + var(--s-5)); inset-inline-start: var(--lx-pad); }
+  .lx-corner--b { inset-block-start: calc(var(--lx-mast-h) + var(--s-5)); inset-inline-end: var(--lx-pad); }
+  .lx-corner--c { inset-block-end: var(--s-6); inset-inline-start: var(--lx-pad); }
+  .lx-cue {
+    position: absolute; inset-block-end: var(--s-6); inset-inline: 0; z-index: 2;
+    display: grid; justify-items: center; gap: var(--s-2);
+    font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--ink-faint);
+  }
+  .lx-cue svg { width: 16px; height: 16px; animation: lx-drift 2.8s var(--ease-inout) infinite; }
+  @keyframes lx-drift { 0%, 100% { transform: translateY(-3px); opacity: .5; } 50% { transform: translateY(3px); opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .lx-cue svg { animation: none; } }
+
+  /* ── atelier ────────────────────────────────── */
+
+  .lx-sect--atelier {
+    display: grid; align-content: center; gap: var(--s-6);
+    padding: calc(var(--lx-frame) + var(--lx-mast-h) + var(--s-6)) var(--lx-pad) var(--s-9);
+  }
+  .lx-atelier { position: relative; z-index: 2; display: grid; gap: var(--s-6); }
+  .lx-atelier__head { display: grid; gap: var(--s-3); }
+  .lx-atelier h2 { margin: 0; font-size: clamp(2.4rem, 6vw, 4.6rem); font-weight: var(--w-regular); line-height: 1; }
+  [dir="ltr"] .lx-atelier h2 { font-family: var(--font-en-display); }
+  .lx-atelier .lx-lede { text-shadow: none; }
+  .lx-sign {
+    position: absolute; z-index: 1; pointer-events: none;
+    inset-block-end: -0.32em; inset-inline-end: -0.06em;
+    font-family: var(--font-en-display); font-size: clamp(6rem, 19vw, 17rem); line-height: .8;
+    white-space: nowrap; color: transparent; -webkit-text-stroke: 1.5px var(--accent); opacity: .16;
+  }
+  .lx-houses { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; border-block-start: var(--border-w) solid var(--line); }
+  .lx-house { padding: var(--s-5) var(--s-5) var(--s-6); border-block-end: var(--border-w) solid var(--line); border-inline-start: var(--border-w) solid var(--line); }
+  .lx-house:first-child { border-inline-start: 0; }
+  .lx-house h3 { margin: 0 0 var(--s-3); font-size: var(--t-md); font-weight: var(--w-medium); color: var(--accent); }
+  .lx-house dl { display: grid; grid-template-columns: auto 1fr; gap: var(--s-2) var(--s-4); margin: 0; font-size: var(--t-sm); }
+  .lx-house dt { color: var(--ink-faint); font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; }
+  .lx-house dd { margin: 0; color: var(--ink-muted); }
+  .lx-house a { color: var(--ink-muted); }
+  .lx-house a:hover { color: var(--accent); }
+  .lx-colophon {
     display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4);
-    padding: var(--s-3) var(--page-pad);
-    background: var(--bg); border-block-end: var(--border-w) solid var(--line);
+    padding-block-start: var(--s-4); border-block-start: var(--border-w) solid var(--line);
+    font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--ink-faint);
   }
-  .mx-bar__label { font-size: var(--t-xs); color: var(--ink-faint); }
-  .mx-themes { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .lx-colophon .lx-foot__spacer { flex: 1; }
 
-  .mx-section { padding: var(--s-7) var(--page-pad); border-block-end: var(--border-w) solid var(--line); }
-  .mx-section > .mx-inner { max-width: var(--page-max); margin-inline: auto; display: grid; gap: var(--s-5); }
-  .mx-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-4); }
-  .mx-h span { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
-  .mx-h h2 { font-size: var(--t-lg); }
-  .mx-h p { margin: 0; font-size: var(--t-sm); color: var(--ink-muted); max-width: var(--measure-fa); }
+  /* ── inquiry dialog ─────────────────────────── */
 
-  .mx-grid {
-    display: grid; gap: var(--gutter);
-    grid-template-columns: repeat(auto-fill, minmax(var(--col-min), 1fr));
+  .lx-dialog { border: var(--border-w) solid var(--line-strong); }
+  @media (min-width: 760px) { .lx-dialog { width: min(720px, 92vw); } }
+  .lx-dialog__head { display: grid; gap: var(--s-2); margin-block-end: var(--s-5); }
+  .lx-dialog__head h2 { margin: 0; font-size: var(--t-xl); font-weight: var(--w-regular); }
+  [dir="ltr"] .lx-dialog__head h2 { font-family: var(--font-en-display); }
+  .lx-dialog__head p { margin: 0; color: var(--ink-muted); font-size: var(--t-sm); }
+  .lx-dialog .cat-inquiry__row { background: var(--bg); border-color: var(--line); margin-block-end: var(--s-5); }
+  .lx-dialog .cat-inquiry__row img { width: 56px; aspect-ratio: var(--ratio-media); object-fit: cover; }
+  .lx-row__name { display: grid; gap: 2px; }
+  .lx-row__name b { font-family: var(--font-fa-display); font-size: var(--t-md); font-weight: var(--w-medium); }
+  [dir="ltr"] .lx-row__name b { font-family: var(--font-en-display); }
+  .lx-form { display: grid; gap: var(--s-4); }
+  .lx-field { display: grid; gap: var(--s-2); }
+  .lx-field > span { font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--ink-muted); }
+  .lx-field input, .lx-field select, .lx-field textarea {
+    min-height: var(--tap-min); padding: var(--s-2) var(--s-3); font: inherit; color: var(--ink);
+    background: var(--bg); border: var(--border-w) solid var(--line); border-radius: var(--radius-control);
   }
+  .lx-field textarea { min-height: 84px; resize: vertical; }
+  .lx-field input:focus-visible, .lx-field select:focus-visible, .lx-field textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .lx-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--s-4); }
+  .lx-form__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-block-start: var(--s-2); }
+  .lx-sent { display: grid; gap: var(--s-3); padding: var(--s-6) 0; }
+  .lx-sent b { font-family: var(--font-fa-display); font-size: var(--t-lg); font-weight: var(--w-medium); }
+  [dir="ltr"] .lx-sent b { font-family: var(--font-en-display); }
+  .lx-sent p { margin: 0; color: var(--ink-muted); }
 
-  .mx-keys { display: grid; gap: var(--s-2); }
-  .mx-key { display: flex; align-items: baseline; gap: var(--s-3); font-size: var(--t-sm); color: var(--ink-muted); }
-  .mx-key kbd {
-    font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink);
-    background: var(--surface-alt); border: var(--border-w) solid var(--line);
-    border-radius: var(--radius-control); padding: 2px 8px; min-width: 52px; text-align: center;
-  }
+  /* The viewer chrome borrows page tokens; on a dark ground its panels need
+     the deeper surface so they read as chrome and not as lit artwork. */
+  .ck-viewer, .ck-scrim { --surface: var(--bg); --surface-alt: var(--bg-alt); --line: var(--line-strong); }
+  .ck-viewer .ck-vtop, .ck-viewer .ck-vbar { background: color-mix(in oklab, var(--bg) 92%, transparent); backdrop-filter: blur(6px); }
 
-  .mx-swap {
-    display: grid; gap: var(--s-3);
-    padding: var(--s-5); background: var(--surface);
-    border: var(--border-w) solid var(--line); border-radius: var(--radius-card);
+  .lx-skip {
+    position: fixed; z-index: 50; inset-block-start: var(--s-3); inset-inline-start: var(--s-3);
+    padding: var(--s-2) var(--s-4); background: var(--accent); color: var(--on-accent);
+    translate: 0 -200%; transition: translate var(--dur-fast) var(--ease-out);
   }
-  .mx-swap pre {
-    margin: 0; overflow-x: auto; direction: ltr; text-align: start;
-    font-family: var(--font-num); font-size: var(--t-xs); line-height: 1.85;
-    color: var(--ink-muted);
+  .lx-skip:focus-visible { translate: 0; }
+
+  /* ── print: no fixed chrome, one product per page ─ */
+
+  @media print {
+    html { scroll-snap-type: none; }
+    .lx-edge, .lx-mast, .lx-rail, .lx-cue, .lx-plates, .lx-veil, .lx-num, .lx-mediax, .lx-acts, .lx-skip { display: none !important; }
+    .lx-sect { min-height: 0; padding: 0 0 var(--s-6); overflow: visible; break-after: page; display: block; }
+    .lx-plate { position: relative; inset: auto; width: auto; aspect-ratio: var(--ratio-spread); margin-block-end: var(--s-4); }
+    .lx-plate img { filter: none; opacity: 1; transform: none; }
+    .lx-rev { opacity: 1; transform: none; }
+    .lx-body { width: auto; }
+    .lx-name, .lx-name-alt, .lx-lede { text-shadow: none; }
   }
 </style>
 </head>
 <body>
 
-<header class="mx-head">
-  <div class="mx-kicker">Media mechanisms · live</div>
-  <h1>همان مکانیزمی که در هر هشت کاتالوگ کار می‌کند</h1>
-  <p>
-    روی هر تصویر کلیک کنید. این صفحه فقط برای امتحان کردن است — هشت کاتالوگ
-    همین رفتار را دارند، با ظاهر و چیدمان متفاوت. تم را از نوار بالا عوض کنید
-    تا ببینید هیچ‌کدام از این رفتارها به تم وابسته نیست.
-  </p>
-</header>
+<a class="lx-skip" href="#p1" data-i18n="skip">رفتن به نخستین قطعه</a>
 
-<div class="mx-bar">
-  <span class="mx-bar__label">تم</span>
-  <div class="mx-themes" id="themes"></div>
-  <div style="flex:1"></div>
-  <div class="cat-lang" id="lang">
-    <button type="button" data-lang="fa" aria-pressed="true">فارسی</button>
+<div class="lx-edge" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+<header class="lx-mast">
+  <p class="lx-mast__mark"><b data-i18n="brand">زرنگار</b><i>Shab-Cherāgh</i></p>
+  <span class="lx-mast__line" aria-hidden="true"></span>
+  <span class="lx-mast__where" data-i18n="mastWhere">اصفهان، از ۱۳۱۸</span>
+  <div class="cat-lang" role="group" data-i18n-label="langLabel" aria-label="زبان">
+    <button type="button" data-lang="fa" aria-pressed="true">فا</button>
     <button type="button" data-lang="en" aria-pressed="false">EN</button>
   </div>
-</div>
+</header>
 
-<section class="mx-section">
-  <div class="mx-inner">
-    <div class="mx-h">
-      <span>01</span>
-      <h2 data-t="s1">جزئیات روی عکس</h2>
-      <p data-t="s1p">کلیک روی تصویر، بزرگ‌نمایی روی همان نقطه‌ای که کلیک کردید. نقطه‌های شماره‌دار به بخش واقعی محصول چسبیده‌اند و با زوم همراه می‌شوند.</p>
-    </div>
-    <div class="mx-grid cat-stagger" id="grid"></div>
-  </div>
-</section>
+<nav class="lx-rail" data-i18n-label="railLabel" aria-label="پیمایش مجموعه">
+  <ol id="rail"></ol>
+</nav>
 
-<section class="mx-section">
-  <div class="mx-inner">
-    <div class="mx-h">
-      <span>02</span>
-      <h2 data-t="s2">صفحه‌کلید</h2>
-      <p data-t="s2p">نمایشگر جزئیات کامل با صفحه‌کلید کار می‌کند و فوکوس داخلش می‌ماند.</p>
+<main>
+  <section class="lx-sect lx-sect--title" id="cover" aria-labelledby="cover-name">
+    <div class="lx-plates" aria-hidden="true"><div></div><div></div><div></div></div>
+    <div class="lx-veil" aria-hidden="true"></div>
+    <p class="lx-corner lx-corner--a" data-i18n="coverKicker">دفتر مجموعه</p>
+    <p class="lx-corner lx-corner--b" data-i18n="coverCount">دوازده قطعه</p>
+    <p class="lx-corner lx-corner--c">MMXXV</p>
+    <div class="lx-hero">
+      <p class="lx-hero__kicker lx-rev" style="--i:0" data-i18n="brandLine">خانهٔ عطر، چرم و ساعت</p>
+      <h1 class="lx-hero__name lx-rev" style="--i:1" id="cover-name" data-i18n="brand">زرنگار</h1>
+      <p class="lx-hero__latin lx-rev" style="--i:2">Isfahan · Tehrān</p>
+      <span class="lx-hero__div lx-rev" style="--i:3" aria-hidden="true"></span>
+      <p class="lx-hero__coll lx-rev" style="--i:4" data-i18n="collection">مجموعهٔ شب‌چراغ، ۱۴۰۴</p>
+      <p class="lx-hero__lede lx-rev" style="--i:5" data-i18n="coverLede">دوازده قطعه که هر کدام در کارگاه‌های اصفهان و تهران، به دست یک استاد تمام شده‌اند.</p>
+      <button type="button" class="cat-btn lx-rev" style="--i:6" id="enter" data-i18n="begin">آغاز مجموعه</button>
     </div>
-    <div class="mx-keys">
-      <div class="mx-key"><kbd>Esc</kbd><span data-t="k1">بستن</span></div>
-      <div class="mx-key"><kbd>← →</kbd><span data-t="k2">رفتن بین رسانه‌ها — و در حالت ویدیو، جابه‌جایی روی تایم‌لاین</span></div>
-      <div class="mx-key"><kbd>Space</kbd><span data-t="k3">پخش و مکث ویدیو</span></div>
-      <div class="mx-key"><kbd>+ −</kbd><span data-t="k4">زوم</span></div>
-      <div class="mx-key"><kbd>Tab</kbd><span data-t="k5">گشتن بین کنترل‌ها؛ فوکوس از نمایشگر بیرون نمی‌رود</span></div>
-    </div>
-  </div>
-</section>
+    <p class="lx-cue" aria-hidden="true">
+      <span data-i18n="scrollHint">بچرخانید یا کلید ↓</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5v15M6.4 13.6 12 19.5l5.6-5.9"/></svg>
+    </p>
+  </section>
 
-<section class="mx-section">
-  <div class="mx-inner">
-    <div class="mx-h">
-      <span>03</span>
-      <h2 data-t="s3">گذاشتن عکس و ویدیوی واقعی</h2>
-      <p data-t="s3p">تصویرها جانگهدارِ ساخته‌شده‌اند. برای فایل واقعی فقط src را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.</p>
+  <section class="lx-sect lx-sect--atelier" id="atelier" aria-labelledby="atelier-title">
+    <p class="lx-sign" aria-hidden="true">Zarnegār</p>
+    <div class="lx-atelier">
+      <div class="lx-atelier__head">
+        <p class="lx-eyebrow lx-rev" style="--i:0"><span data-i18n="atelierEyebrow">پایان دفتر</span><i class="lx-rule"></i><span class="lx-sku num">ZN · 1404</span></p>
+        <h2 id="atelier-title" class="lx-rev" style="--i:1" data-i18n="atelierTitle">اتلیه</h2>
+        <p class="lx-name-alt lx-rev" style="--i:2" data-i18n="atelierAlt" lang="en">The Atelier</p>
+        <p class="lx-lede lx-rev" style="--i:3" data-i18n="atelierLede">هر دو اتلیه مجموعه را نشان می‌دهند؛ برای دیدن یک قطعهٔ مشخص وقت بگیرید.</p>
+      </div>
+      <div class="lx-houses lx-rev" style="--i:4">
+        <div class="lx-house">
+          <h3 data-i18n="cityA">اصفهان</h3>
+          <dl>
+            <dt data-i18n="addr">نشانی</dt><dd data-i18n="addrA">چهارباغ عباسی، سرای زرنگار، پلاک ۱۴</dd>
+            <dt data-i18n="hours">ساعت</dt><dd data-i18n="hoursA">شنبه تا چهارشنبه، ۱۰ تا ۱۹</dd>
+            <dt data-i18n="tel">تلفن</dt><dd><a href="tel:+983134567890" dir="ltr">+۹۸ ۳۱ ۳۴۵۶ ۷۸۹۰</a></dd>
+          </dl>
+        </div>
+        <div class="lx-house">
+          <h3 data-i18n="cityB">تهران</h3>
+          <dl>
+            <dt data-i18n="addr">نشانی</dt><dd data-i18n="addrB">خیابان فرشته، شمارهٔ ۲۲، طبقهٔ دوم</dd>
+            <dt data-i18n="hours">ساعت</dt><dd data-i18n="hoursB">شنبه تا پنجشنبه، ۱۱ تا ۲۰</dd>
+            <dt data-i18n="tel">تلفن</dt><dd><a href="tel:+982122334455" dir="ltr">+۹۸ ۲۱ ۲۲۳۳ ۴۴۵۵</a></dd>
+          </dl>
+        </div>
+        <div class="lx-house">
+          <h3 data-i18n="cityC">سفارش</h3>
+          <dl>
+            <dt data-i18n="mail">رایانامه</dt><dd><a href="mailto:atelier@zarnegar.example" dir="ltr">atelier@zarnegar.example</a></dd>
+            <dt data-i18n="lead">تحویل</dt><dd data-i18n="leadV">سفارش دوخت، ۶ تا ۹ هفته</dd>
+            <dt data-i18n="care">نگهداری</dt><dd data-i18n="careV">بازسازی رایگان تا سه سال</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="lx-buy lx-rev" style="--i:5">
+        <div class="lx-acts">
+          <button type="button" class="cat-btn" id="ask-all" data-i18n="askAll">استعلام از اتلیه</button>
+          <button type="button" class="cat-btn cat-btn--ghost" id="to-top" data-i18n="toTop">بازگشت به آغاز</button>
+        </div>
+      </div>
+      <p class="lx-colophon lx-rev" style="--i:6">
+        <span data-i18n="brand">زرنگار</span>
+        <span class="lx-foot__spacer"></span>
+        <span>SHAB-CHERĀGH · MMXXV</span>
+      </p>
     </div>
-    <div class="mx-swap">
-<pre>{ type: 'photo', src: 'assets/SK-101-front.jpg',
-  hotspots: [ { x: 50, y: 38, title: 'بدنه', body: 'سرامیک لعاب‌دار.' } ] }
+  </section>
+</main>
 
-{ type: 'video', src: 'assets/SK-101.mp4',
-  poster: 'assets/SK-101-poster.jpg' }</pre>
-    </div>
-  </div>
-</section>
+<div class="cat-scrim" id="scrim" hidden></div>
+<div class="cat-dialog lx-dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" hidden></div>
 
 <script>
 /* inlined from shared/catalog-kit.js */
@@ -1934,190 +2311,812 @@ a:hover { color: var(--ink); }
 
 </script>
 <script>
-const THEMES = ['editorial', 'luxe', 'brutal', 'glass', 'press', 'spec', 'craft', 'mono'];
+(function () {
+  'use strict';
 
-/* Six products, each demonstrating a different subject and palette so the
-   procedural artwork shows its range. Hotspots name real parts, because a
-   hotspot that says "detail 1" teaches nothing about the mechanism. */
-const PRODUCTS = [
-  {
-    sku: 'SK-101', subject: 'vase', palette: 'warm',
-    fa: 'گلدان لعاب خاکستر', en: 'Ash-glaze vessel',
-    price: '۲٬۴۸۰٬۰۰۰', priceEn: '2,480,000',
-    hotspots: [
-      { x: 50, y: 22, fa: ['لبه', 'لبه‌ی برگردان، ضخامت ۶ میلی‌متر.'], en: ['Rim', 'Rolled rim, 6 mm wall.'] },
-      { x: 62, y: 45, fa: ['لعاب', 'لعاب خاکستر چوب، پخت احیایی ۱۲۸۰ درجه.'], en: ['Glaze', 'Wood-ash glaze, reduction fired at 1280°C.'] },
-      { x: 44, y: 76, fa: ['پاخور', 'پاخور تراش‌خورده، قطر ۹ سانتی‌متر.'], en: ['Foot ring', 'Turned foot, 9 cm diameter.'] }
-    ]
-  },
-  {
-    sku: 'SK-204', subject: 'chair', palette: 'stone',
-    fa: 'صندلی گردو', en: 'Walnut side chair',
-    price: '۸٬۹۵۰٬۰۰۰', priceEn: '8,950,000',
-    hotspots: [
-      { x: 50, y: 28, fa: ['پشتی', 'تخته‌ی خم‌شده با بخار، ضخامت ۱۲ میلی‌متر.'], en: ['Back', 'Steam-bent panel, 12 mm.'] },
-      { x: 34, y: 58, fa: ['اتصال', 'فاق و زبانه‌ی کور، بدون پیچ.'], en: ['Joint', 'Blind mortise and tenon, no fasteners.'] },
-      { x: 66, y: 82, fa: ['پایه', 'گردو روغن‌خورده، مقطع ۲۲ میلی‌متر.'], en: ['Leg', 'Oiled walnut, 22 mm section.'] }
-    ]
-  },
-  {
-    sku: 'SK-330', subject: 'bag', palette: 'clay',
-    fa: 'کیف چرم گیاهی', en: 'Veg-tan satchel',
-    price: '۶٬۲۰۰٬۰۰۰', priceEn: '6,200,000',
-    hotspots: [
-      { x: 50, y: 24, fa: ['دسته', 'دوخت زینی دستی، نخ کتان موم‌زده.'], en: ['Handle', 'Hand saddle-stitched, waxed linen.'] },
-      { x: 50, y: 52, fa: ['قفل', 'برنج ریخته‌گری، بدون آبکاری.'], en: ['Clasp', 'Cast brass, unplated.'] },
-      { x: 30, y: 70, fa: ['چرم', 'دباغی گیاهی، ضخامت ۲٫۲ میلی‌متر.'], en: ['Leather', 'Vegetable tanned, 2.2 mm.'] }
-    ]
-  },
-  {
-    sku: 'SK-412', subject: 'lamp', palette: 'sage',
-    fa: 'چراغ رومیزی کاغذی', en: 'Paper table lamp',
-    price: '۳٬۷۴۰٬۰۰۰', priceEn: '3,740,000',
-    hotspots: [
-      { x: 50, y: 30, fa: ['حباب', 'کاغذ دست‌ساز روی رینگ فولادی.'], en: ['Shade', 'Handmade paper on steel ring.'] },
-      { x: 50, y: 68, fa: ['ساقه', 'فولاد پودری‌رنگ، قطر ۱۲ میلی‌متر.'], en: ['Stem', 'Powder-coated steel, 12 mm.'] }
-    ]
-  },
-  {
-    sku: 'SK-508', subject: 'watch', palette: 'ink',
-    fa: 'ساعت مینای سرمه‌ای', en: 'Indigo enamel watch',
-    price: '۲۴٬۶۰۰٬۰۰۰', priceEn: '24,600,000',
-    hotspots: [
-      { x: 50, y: 44, fa: ['صفحه', 'مینای آتشی، سه لایه پخت.'], en: ['Dial', 'Fired enamel, three firings.'] },
-      { x: 68, y: 52, fa: ['عقربه', 'فولاد آبی‌شده با حرارت.'], en: ['Hands', 'Heat-blued steel.'] },
-      { x: 50, y: 76, fa: ['بند', 'چرم ساغری، عرض ۱۸ میلی‌متر.'], en: ['Strap', 'Shagreen, 18 mm lug.'] }
-    ]
-  },
-  {
-    sku: 'SK-615', subject: 'textile', palette: 'indigo',
-    fa: 'قالیچه‌ی پشم دست‌ریس', en: 'Handspun wool rug',
-    price: '۱۸٬۹۰۰٬۰۰۰', priceEn: '18,900,000',
-    hotspots: [
-      { x: 38, y: 34, fa: ['گره', 'گره فارسی، ۴۰ رج در دسی‌متر.'], en: ['Knot', 'Persian knot, 40 rows/dm.'] },
-      { x: 62, y: 60, fa: ['رنگرزی', 'نیل طبیعی، رنگرزی دیگ‌به‌دیگ.'], en: ['Dye', 'Natural indigo, lot-dyed.'] },
-      { x: 50, y: 86, fa: ['شیرازه', 'شیرازه‌پیچ دستی با پشم همان دیگ.'], en: ['Selvedge', 'Hand-wrapped in the same lot.'] }
-    ]
+  var ICON = {
+    zoom: '<circle cx="11" cy="11" r="6.6"/><path d="M15.9 15.9 21 21M8.6 11h4.8M11 8.6v4.8"/>',
+    film: '<rect x="3.2" y="5.4" width="17.6" height="13.2" rx="1"/><path d="M8.4 5.4v13.2M15.6 5.4v13.2M3.2 12h17.6"/>',
+    spin: '<path d="M20.2 12a8.2 8.2 0 1 1-2.7-6.1"/><path d="M20.4 4.2v4.3h-4.3"/>',
+    down: '<path d="M12 4.5v15M6.4 13.6 12 19.5l5.6-5.9"/>'
+  };
+
+  function svg(name) {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" ' +
+      'stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">' + ICON[name] + '</svg>';
   }
-];
 
-const STRINGS = {
-  fa: {
-    s1: 'جزئیات روی عکس',
-    s1p: 'کلیک روی تصویر، بزرگ‌نمایی روی همان نقطه‌ای که کلیک کردید. نقطه‌های شماره‌دار به بخش واقعی محصول چسبیده‌اند و با زوم همراه می‌شوند.',
-    s2: 'صفحه‌کلید',
-    s2p: 'نمایشگر جزئیات کامل با صفحه‌کلید کار می‌کند و فوکوس داخلش می‌ماند.',
-    s3: 'گذاشتن عکس و ویدیوی واقعی',
-    s3p: 'تصویرها جانگهدارِ ساخته‌شده‌اند. برای فایل واقعی فقط src را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.',
-    k1: 'بستن', k2: 'رفتن بین رسانه‌ها — و در حالت ویدیو، جابه‌جایی روی تایم‌لاین',
-    k3: 'پخش و مکث ویدیو', k4: 'زوم', k5: 'گشتن بین کنترل‌ها؛ فوکوس از نمایشگر بیرون نمی‌رود',
-    unit: 'تومان', detail: 'جزئیات'
-  },
-  en: {
-    s1: 'Detail on the image',
-    s1p: 'Click the image and it zooms to the point you clicked. Numbered hotspots are pinned to the part they name and travel with the zoom.',
-    s2: 'Keyboard',
-    s2p: 'The detail viewer is fully keyboard operable and traps focus while open.',
-    s3: 'Dropping in real photography',
-    s3p: 'The artwork is a generated placeholder. Give a descriptor a src and the same mechanism plays the real file.',
-    k1: 'Close', k2: 'Move between media — and seek the timeline in video mode',
-    k3: 'Play and pause', k4: 'Zoom', k5: 'Cycle the controls; focus stays inside the viewer',
-    unit: 'IRT', detail: 'Details'
-  }
-};
+  /* ── copy ─────────────────────────────────────
+     One table, two columns. Nothing in the DOM is duplicated per language. */
 
-let lang = 'fa';
-const root = document.documentElement;
-const grid = document.getElementById('grid');
-
-const themeBar = document.getElementById('themes');
-for (const name of THEMES) {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = 'cat-chip';
-  b.textContent = name;
-  b.setAttribute('aria-pressed', String(name === root.dataset.theme));
-  b.addEventListener('click', () => {
-    root.dataset.theme = name;
-    for (const other of themeBar.children) {
-      other.setAttribute('aria-pressed', String(other === b));
+  var S = {
+    fa: {
+      brand: 'زرنگار',
+      brandLine: 'خانهٔ عطر، چرم و ساعت',
+      mastWhere: 'اصفهان، از ۱۳۱۸',
+      langLabel: 'زبان',
+      railLabel: 'پیمایش مجموعه',
+      skip: 'رفتن به نخستین قطعه',
+      coverKicker: 'دفتر مجموعه',
+      coverCount: 'دوازده قطعه',
+      collection: 'مجموعهٔ شب‌چراغ، ۱۴۰۴',
+      coverLede: 'دوازده قطعه که هر کدام در کارگاه‌های اصفهان و تهران، به دست یک استاد تمام شده‌اند.',
+      begin: 'آغاز مجموعه',
+      scrollHint: 'بچرخانید یا کلید ↓',
+      cover: 'آغاز',
+      atelierEyebrow: 'پایان دفتر',
+      atelierTitle: 'اتلیه',
+      atelierAlt: 'The Atelier',
+      atelierLede: 'هر دو اتلیه مجموعه را نشان می‌دهند؛ برای دیدن یک قطعهٔ مشخص وقت بگیرید.',
+      cityA: 'اصفهان', cityB: 'تهران', cityC: 'سفارش',
+      addr: 'نشانی', hours: 'ساعت', tel: 'تلفن', mail: 'رایانامه', lead: 'تحویل', care: 'نگهداری',
+      addrA: 'چهارباغ عباسی، سرای زرنگار، پلاک ۱۴',
+      addrB: 'خیابان فرشته، شمارهٔ ۲۲، طبقهٔ دوم',
+      hoursA: 'شنبه تا چهارشنبه، ۱۰ تا ۱۹',
+      hoursB: 'شنبه تا پنجشنبه، ۱۱ تا ۲۰',
+      leadV: 'سفارش دوخت، ۶ تا ۹ هفته',
+      careV: 'بازسازی رایگان تا سه سال',
+      askAll: 'استعلام از اتلیه',
+      toTop: 'بازگشت به آغاز',
+      inquire: 'استعلام قیمت',
+      look: 'نمای نزدیک',
+      photo: 'عکس', video: 'ویدیو', spin: 'چرخش ۳۶۰',
+      mediaGroup: 'رسانهٔ قطعه',
+      price: 'قیمت', sku: 'کد',
+      dialogTitle: 'استعلام قیمت',
+      dialogLede: 'قیمت و زمان تحویل را برایتان می‌فرستیم.',
+      dialogLedeAll: 'قطعهٔ مورد نظرتان را در یادداشت بنویسید.',
+      fName: 'نام و نام خانوادگی',
+      fReach: 'تلفن یا رایانامه',
+      fHouse: 'اتلیه',
+      fNote: 'یادداشت',
+      send: 'ارسال استعلام',
+      cancel: 'انصراف',
+      sent: 'استعلام ثبت شد',
+      sentLine: 'دفتر زرنگار تا یک روز کاری پاسخ می‌دهد.',
+      done: 'بستن',
+      cats: { perfume: 'عطر', leather: 'چرم', watch: 'ساعت' },
+      sectionOf: 'قطعهٔ %1 از %2'
+    },
+    en: {
+      brand: 'Zarnegār',
+      brandLine: 'Perfume, leather and timepieces',
+      mastWhere: 'Isfahan · since 1939',
+      langLabel: 'Language',
+      railLabel: 'Collection navigation',
+      skip: 'Skip to the first piece',
+      coverKicker: 'Collection folio',
+      coverCount: 'Twelve pieces',
+      collection: 'The Shab-Cherāgh Collection · 1404',
+      coverLede: 'Twelve pieces, each finished by a single hand in our Isfahan and Tehran workshops.',
+      begin: 'Enter the collection',
+      scrollHint: 'Scroll, or press ↓',
+      cover: 'Opening',
+      atelierEyebrow: 'End of folio',
+      atelierTitle: 'The atelier',
+      atelierAlt: 'اتلیه',
+      atelierLede: 'Both ateliers show the collection. To see one piece in particular, make an appointment.',
+      cityA: 'Isfahan', cityB: 'Tehran', cityC: 'Orders',
+      addr: 'Address', hours: 'Hours', tel: 'Telephone', mail: 'Email', lead: 'Lead time', care: 'Care',
+      addrA: '14 Sarā-ye Zarnegār, Chahār Bāgh Abbāsi',
+      addrB: '22 Fereshteh Street, second floor',
+      hoursA: 'Saturday to Wednesday, 10–19',
+      hoursB: 'Saturday to Thursday, 11–20',
+      leadV: 'Made to order, 6–9 weeks',
+      careV: 'Free restoration for three years',
+      askAll: 'Write to the atelier',
+      toTop: 'Back to the opening',
+      inquire: 'Request price',
+      look: 'Look closer',
+      photo: 'Still', video: 'Film', spin: '360 spin',
+      mediaGroup: 'Piece media',
+      price: 'Price', sku: 'Reference',
+      dialogTitle: 'Price request',
+      dialogLede: 'We will send the price and the lead time.',
+      dialogLedeAll: 'Name the piece you are after in the note.',
+      fName: 'Full name',
+      fReach: 'Phone or email',
+      fHouse: 'Atelier',
+      fNote: 'Note',
+      send: 'Send request',
+      cancel: 'Cancel',
+      sent: 'Request recorded',
+      sentLine: 'The Zarnegār office replies within one working day.',
+      done: 'Close',
+      cats: { perfume: 'Fragrance', leather: 'Leather', watch: 'Timepiece' },
+      sectionOf: 'Piece %1 of %2'
     }
-  });
-  themeBar.appendChild(b);
-}
+  };
 
-document.getElementById('lang').addEventListener('click', (e) => {
-  const btn = e.target.closest('button[data-lang]');
-  if (!btn || btn.dataset.lang === lang) return;
-  lang = btn.dataset.lang;
-  for (const other of btn.parentNode.children) {
-    other.setAttribute('aria-pressed', String(other === btn));
+  /* ── the collection ───────────────────────────
+     Four fragrances, four leather pieces, four timepieces. Hotspot
+     coordinates are percentages of the artwork, placed on the part they
+     name: the cap and label of a bottle, the dial and strap of a watch. */
+
+  var PRODUCTS = [
+    {
+      sku: 'ZN-01', cat: 'perfume', subject: 'bottle', palette: 'amber',
+      fa: {
+        name: 'عطر شب‌بو', alt: 'Shab-bū',
+        lede: 'شبانه و خنک؛ شب‌بوی کاشان روی بستری از صندل و کندر.',
+        price: '۱۸٬۴۰۰٬۰۰۰ تومان',
+        specs: [['غلظت', 'اکستره ۲۲٪'], ['حجم', '۵۰ میلی‌لیتر'], ['ماندگاری', '۸ تا ۱۰ ساعت']],
+        hot: [
+          { x: 50, y: 18, title: 'درپوش', body: 'برنج ماشین‌کاری‌شده با آب‌طلای ۱۸ عیار.' },
+          { x: 36, y: 46, title: 'شیشه', body: 'دست‌دمیده در کارگاه شیشهٔ میبد؛ ضخامت عمداً نایکنواخت.' },
+          { x: 50, y: 57, title: 'برچسب', body: 'چاپ برجسته روی کاغذ پنبه‌ای، شمارهٔ سری با دست.' }
+        ]
+      },
+      en: {
+        name: 'Shab-bū', alt: 'عطر شب‌بو',
+        lede: 'Cool and nocturnal: Kashan stock flower over sandalwood and frankincense.',
+        price: '18,400,000 toman',
+        specs: [['Concentration', '22% extrait'], ['Volume', '50 ml'], ['Longevity', '8–10 hours']],
+        hot: [
+          { x: 50, y: 18, title: 'Cap', body: 'Machined brass under an 18-carat gold wash.' },
+          { x: 36, y: 46, title: 'Glass', body: 'Hand-blown in Meybod; the wall is deliberately uneven.' },
+          { x: 50, y: 57, title: 'Label', body: 'Letterpress on cotton paper, batch numbered by hand.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-02', cat: 'perfume', subject: 'bottle', palette: 'rose',
+      fa: {
+        name: 'عطر گلاب قمصر', alt: 'Golāb-e Qamsar',
+        lede: 'گل محمدی قمصر، همان صبحی که چیده می‌شود تقطیر می‌شود.',
+        price: '۱۴٬۹۰۰٬۰۰۰ تومان',
+        specs: [['غلظت', 'ادوپرفیوم ۱۸٪'], ['حجم', '۷۵ میلی‌لیتر'], ['گل‌آوری', '۳۰ کیلو گل برای هر لیتر']],
+        hot: [
+          { x: 50, y: 19, title: 'گردن', body: 'شیار دست‌تراش، برای گرفتن با دو انگشت.' },
+          { x: 50, y: 40, title: 'شانه', body: 'شیشهٔ صورتی کم‌رنگ، بدون رنگ افزوده.' },
+          { x: 42, y: 58, title: 'برچسب', body: 'نام قمصر و سال برداشت، با مرکب سیاه.' }
+        ]
+      },
+      en: {
+        name: 'Golāb-e Qamsar', alt: 'عطر گلاب قمصر',
+        lede: 'Qamsar damask rose, distilled the same morning it is picked.',
+        price: '14,900,000 toman',
+        specs: [['Concentration', '18% eau de parfum'], ['Volume', '75 ml'], ['Yield', '30 kg of petals per litre']],
+        hot: [
+          { x: 50, y: 19, title: 'Neck', body: 'A hand-cut groove, sized for two fingers.' },
+          { x: 50, y: 40, title: 'Shoulder', body: 'Pale rose glass, no added colour.' },
+          { x: 42, y: 58, title: 'Label', body: 'Qamsar and the harvest year, in black ink.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-03', cat: 'perfume', subject: 'bottle', palette: 'ink',
+      fa: {
+        name: 'عطر عود سیاه', alt: 'Ūd-e Siyāh',
+        lede: 'عود هندی کهنه با فلفل سیاه و چرم؛ تندی‌اش پس از نیم‌ساعت می‌نشیند.',
+        price: '۳۶٬۵۰۰٬۰۰۰ تومان',
+        specs: [['غلظت', 'اکستره ۲۵٪'], ['حجم', '۵۰ میلی‌لیتر'], ['کهنگی عود', 'دوازده سال']],
+        hot: [
+          { x: 50, y: 18, title: 'درپوش', body: 'چوب آبنوس، پرداخت مات.' },
+          { x: 50, y: 45, title: 'بدنه', body: 'شیشهٔ دودی؛ عود از نور مستقیم آسیب می‌بیند.' },
+          { x: 58, y: 57, title: 'مهر', body: 'مهر مومی کارگاه روی هر جعبه.' }
+        ]
+      },
+      en: {
+        name: 'Ūd-e Siyāh', alt: 'عطر عود سیاه',
+        lede: 'Aged Hindi oud with black pepper and leather; the edge settles after half an hour.',
+        price: '36,500,000 toman',
+        specs: [['Concentration', '25% extrait'], ['Volume', '50 ml'], ['Oud age', 'Twelve years']],
+        hot: [
+          { x: 50, y: 18, title: 'Cap', body: 'Ebony, matte finish.' },
+          { x: 50, y: 45, title: 'Body', body: 'Smoked glass — direct light spoils oud.' },
+          { x: 58, y: 57, title: 'Seal', body: 'The workshop wax seal, on every box.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-04', cat: 'perfume', subject: 'bottle', palette: 'warm',
+      fa: {
+        name: 'عطر نرگس شیراز', alt: 'Narges-e Shirāz',
+        lede: 'نرگس بهمن‌ماه با نارنج و مشک سفید؛ سبک‌ترین عطر مجموعه.',
+        price: '۹٬۸۰۰٬۰۰۰ تومان',
+        specs: [['غلظت', 'ادوتوالت ۱۲٪'], ['حجم', '۱۰۰ میلی‌لیتر'], ['ماندگاری', '۵ تا ۶ ساعت']],
+        hot: [
+          { x: 50, y: 20, title: 'اسپری', body: 'پمپ ریز‌پاش، ۰٫۰۸ میلی‌لیتر در هر فشار.' },
+          { x: 38, y: 50, title: 'بدنه', body: 'شیشهٔ شفاف بی‌رنگ، جدارهٔ ۴ میلی‌متر.' },
+          { x: 50, y: 60, title: 'برچسب', body: 'کاغذ دست‌ساز قزوین، لبهٔ پاره.' }
+        ]
+      },
+      en: {
+        name: 'Narges-e Shirāz', alt: 'عطر نرگس شیراز',
+        lede: 'Winter narcissus with bitter orange and white musk — the lightest of the twelve.',
+        price: '9,800,000 toman',
+        specs: [['Concentration', '12% eau de toilette'], ['Volume', '100 ml'], ['Longevity', '5–6 hours']],
+        hot: [
+          { x: 50, y: 20, title: 'Atomiser', body: 'Fine pump, 0.08 ml per press.' },
+          { x: 38, y: 50, title: 'Body', body: 'Clear uncoloured glass, 4 mm wall.' },
+          { x: 50, y: 60, title: 'Label', body: 'Handmade Qazvin paper with a torn edge.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-05', cat: 'leather', subject: 'bag', palette: 'clay',
+      fa: {
+        name: 'کیف دستی سرو', alt: 'Sarv Top-Handle',
+        lede: 'چرم گاوی دباغی‌گیاهی، دستهٔ یک‌تکه و دوخت زین‌دوزی.',
+        price: '۶۲٬۰۰۰٬۰۰۰ تومان',
+        specs: [['چرم', 'گاوی دباغی‌گیاهی'], ['ابعاد', '۳۰ × ۲۲ × ۱۲ سانتی‌متر'], ['دوخت', 'زین‌دوزی دستی، ۹ کوک در سانتی‌متر']],
+        hot: [
+          { x: 50, y: 16, title: 'دسته', body: 'یک تکه چرم تاشده، بدون درز میانی.' },
+          { x: 50, y: 44, title: 'قفل', body: 'برنج ریخته‌گری با فنر داخلی؛ صدای بسته‌شدن تنظیم شده.' },
+          { x: 30, y: 58, title: 'بدنه', body: 'لبه‌ها با موم زنبور پرداخت شده‌اند.' }
+        ]
+      },
+      en: {
+        name: 'Sarv Top-Handle', alt: 'کیف دستی سرو',
+        lede: 'Vegetable-tanned calf, a one-piece handle, saddle-stitched throughout.',
+        price: '62,000,000 toman',
+        specs: [['Leather', 'Vegetable-tanned calf'], ['Dimensions', '30 × 22 × 12 cm'], ['Stitch', 'Hand saddle-stitch, 9 per cm']],
+        hot: [
+          { x: 50, y: 16, title: 'Handle', body: 'One folded piece of hide, no centre seam.' },
+          { x: 50, y: 44, title: 'Clasp', body: 'Cast brass over a spring; the closing sound is tuned.' },
+          { x: 30, y: 58, title: 'Body', body: 'Edges burnished with beeswax.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-06', cat: 'leather', subject: 'bag', palette: 'ink',
+      fa: {
+        name: 'کیف اسناد دیوان', alt: 'Divān Document Case',
+        lede: 'برای دفتر و سند؛ سه جیب داخلی و یکی پنهان پشت آستر.',
+        price: '۴۸٬۵۰۰٬۰۰۰ تومان',
+        specs: [['چرم', 'بزی ساغری'], ['ابعاد', '۳۸ × ۲۷ × ۶ سانتی‌متر'], ['آستر', 'ابریشم یزدی']],
+        hot: [
+          { x: 50, y: 17, title: 'دستگیره', body: 'دو حلقهٔ برنجی، قابل تعویض با بند شانه.' },
+          { x: 50, y: 43, title: 'سرقفل', body: 'زبانهٔ کشویی؛ بدون قفل رمز.' },
+          { x: 66, y: 57, title: 'لبه', body: 'رنگ لبه در سه لایه، هر لایه پس از خشک‌شدن ساییده.' }
+        ]
+      },
+      en: {
+        name: 'Divān Document Case', alt: 'کیف اسناد دیوان',
+        lede: 'For papers and a notebook: three inner pockets and one hidden behind the lining.',
+        price: '48,500,000 toman',
+        specs: [['Leather', 'Shagreen goat'], ['Dimensions', '38 × 27 × 6 cm'], ['Lining', 'Yazd silk']],
+        hot: [
+          { x: 50, y: 17, title: 'Handle', body: 'Two brass rings, interchangeable with a shoulder strap.' },
+          { x: 50, y: 43, title: 'Catch', body: 'A sliding tongue — no combination lock.' },
+          { x: 66, y: 57, title: 'Edge', body: 'Three coats of edge paint, sanded between each.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-07', cat: 'leather', subject: 'shoe', palette: 'warm',
+      fa: {
+        name: 'نیم‌بوت شهربانو', alt: 'Shahrbānū Boot',
+        lede: 'قالب باریک اصفهانی روی زیرهٔ چرمی دوخت گودایر.',
+        price: '۳۴٬۰۰۰٬۰۰۰ تومان',
+        specs: [['رویه', 'چرم بزی مات'], ['زیره', 'چرم، دوخت گودایر'], ['سایز', '۳۹ تا ۴۵']],
+        hot: [
+          { x: 44, y: 40, title: 'بندینه', body: 'پنج جفت سگک برنجی، دست‌نشان.' },
+          { x: 52, y: 52, title: 'زیره', body: 'دوخت گودایر؛ زیره دو بار تعویض می‌شود.' },
+          { x: 82, y: 46, title: 'پنجه', body: 'قالب باریک با نوک گرد، بدون درز.' }
+        ]
+      },
+      en: {
+        name: 'Shahrbānū Boot', alt: 'نیم‌بوت شهربانو',
+        lede: 'A narrow Isfahan last on a Goodyear-welted leather sole.',
+        price: '34,000,000 toman',
+        specs: [['Upper', 'Matte goat'], ['Sole', 'Goodyear-welted leather'], ['Sizes', '39–45']],
+        hot: [
+          { x: 44, y: 40, title: 'Lacing', body: 'Five pairs of brass eyelets, set by hand.' },
+          { x: 52, y: 52, title: 'Welt', body: 'Goodyear-welted; the sole can be replaced twice.' },
+          { x: 82, y: 46, title: 'Toe', body: 'A narrow last with a round tip, seamless.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-08', cat: 'leather', subject: 'textile', palette: 'clay',
+      fa: {
+        name: 'جلد سفر قلمکار', alt: 'Qalamkār Travel Folio',
+        lede: 'آستر قلمکار چاپ‌قالبی اصفهان روی چرم بزی نرم.',
+        price: '۱۲٬۴۰۰٬۰۰۰ تومان',
+        specs: [['آستر', 'قلمکار، قالب چوبی'], ['ابعاد', '۲۶ × ۱۹ سانتی‌متر'], ['جا', 'گذرنامه، سه کارت، بلیت']],
+        hot: [
+          { x: 50, y: 28, title: 'نقش', body: 'قالب چوب گلابی؛ هر رنگ یک قالب جدا.' },
+          { x: 32, y: 50, title: 'درز', body: 'دوخت لبه با نخ کتان موم‌زده.' },
+          { x: 62, y: 62, title: 'جیب', body: 'سه جیب کارت، عمق نامساوی برای برداشتن آسان.' }
+        ]
+      },
+      en: {
+        name: 'Qalamkār Travel Folio', alt: 'جلد سفر قلمکار',
+        lede: 'Hand-blocked Isfahan qalamkār lining on soft goat leather.',
+        price: '12,400,000 toman',
+        specs: [['Lining', 'Qalamkār, wood block'], ['Dimensions', '26 × 19 cm'], ['Fits', 'Passport, three cards, a ticket']],
+        hot: [
+          { x: 50, y: 28, title: 'Print', body: 'Pearwood blocks — one block per colour.' },
+          { x: 32, y: 50, title: 'Seam', body: 'Edge-stitched with waxed linen thread.' },
+          { x: 62, y: 62, title: 'Pockets', body: 'Three card slots at uneven depths, so they lift out easily.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-09', cat: 'watch', subject: 'watch', palette: 'ink',
+      fa: {
+        name: 'ساعت زیج', alt: 'Zij Astronomical',
+        lede: 'فاز ماه و تقویم هجری شمسی، روی صفحهٔ لاکی سیاه.',
+        price: '۲۴۸٬۰۰۰٬۰۰۰ تومان',
+        specs: [['قطر', '۳۹ میلی‌متر'], ['مکانیزم', 'اتوماتیک، ذخیرهٔ ۷۲ ساعت'], ['صفحه', 'لاک سیاه، هفت لایه']],
+        hot: [
+          { x: 50, y: 15, title: 'شاخک', body: 'جوش‌خورده به قاب، نه پیچ‌شده.' },
+          { x: 50, y: 40, title: 'صفحه', body: 'هفت لایه لاک، هر لایه دستی صیقل می‌خورد.' },
+          { x: 50, y: 31, title: 'عقربه', body: 'فولاد آبی‌شده با حرارت، نه رنگ‌شده.' },
+          { x: 50, y: 69, title: 'بند', body: 'چرم گاوی، آستر بزی، دوخت دستی.' }
+        ]
+      },
+      en: {
+        name: 'Zij Astronomical', alt: 'ساعت زیج',
+        lede: 'Moon phase and Solar Hijri calendar on a black lacquer dial.',
+        price: '248,000,000 toman',
+        specs: [['Case', '39 mm'], ['Movement', 'Automatic, 72-hour reserve'], ['Dial', 'Black lacquer, seven coats']],
+        hot: [
+          { x: 50, y: 15, title: 'Lugs', body: 'Welded to the case, not screwed.' },
+          { x: 50, y: 40, title: 'Dial', body: 'Seven coats of lacquer, each polished by hand.' },
+          { x: 50, y: 31, title: 'Hands', body: 'Heat-blued steel, not painted.' },
+          { x: 50, y: 69, title: 'Strap', body: 'Calf outer, goat lining, stitched by hand.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-10', cat: 'watch', subject: 'watch', palette: 'stone',
+      fa: {
+        name: 'ساعت صدف', alt: 'Sadaf Nacre',
+        lede: 'صفحهٔ صدف خلیج فارس؛ هیچ دو ساعتی رگهٔ یکسان ندارند.',
+        price: '۱۸۹٬۰۰۰٬۰۰۰ تومان',
+        specs: [['قطر', '۳۶ میلی‌متر'], ['مکانیزم', 'اتوماتیک، ۳۸ ساعت'], ['صفحه', 'صدف طبیعی، ۰٫۴ میلی‌متر']],
+        hot: [
+          { x: 50, y: 40, title: 'صدف', body: 'برش ۰٫۴ میلی‌متری؛ نازک‌تر بشکند، ضخیم‌تر کدر شود.' },
+          { x: 50, y: 28, title: 'نشانه', body: 'اندکس‌های برجستهٔ طلای سفید، دست‌نشان.' },
+          { x: 50, y: 70, title: 'سگک', body: 'سگک تاشو، برنج آبکاری‌شده.' }
+        ]
+      },
+      en: {
+        name: 'Sadaf Nacre', alt: 'ساعت صدف',
+        lede: 'A Persian Gulf nacre dial — no two watches share a grain.',
+        price: '189,000,000 toman',
+        specs: [['Case', '36 mm'], ['Movement', 'Automatic, 38 hours'], ['Dial', 'Natural nacre, 0.4 mm']],
+        hot: [
+          { x: 50, y: 40, title: 'Nacre', body: 'Cut at 0.4 mm: thinner cracks, thicker goes dull.' },
+          { x: 50, y: 28, title: 'Indices', body: 'Applied white-gold markers, set by hand.' },
+          { x: 50, y: 70, title: 'Buckle', body: 'Folding buckle in plated brass.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-11', cat: 'watch', subject: 'watch', palette: 'indigo',
+      fa: {
+        name: 'ساعت مینا', alt: 'Minā Enamel',
+        lede: 'مینای اصفهان روی صفحهٔ مسی، پنج بار در کوره.',
+        price: '۳۱۵٬۰۰۰٬۰۰۰ تومان',
+        specs: [['قطر', '۳۸ میلی‌متر'], ['مکانیزم', 'کوکی دستی، ۵۶ ساعت'], ['مینا', 'پنج پخت، ۸۰۰ درجه']],
+        hot: [
+          { x: 50, y: 40, title: 'مینا', body: 'هر پخت ۸۰۰ درجه؛ یکی از هر سه صفحه ترک می‌خورد.' },
+          { x: 50, y: 32, title: 'عقربه', body: 'برش دستی از ورق فولاد، پرداخت آینه‌ای.' },
+          { x: 50, y: 16, title: 'قاب', body: 'طلای زرد ۱۸ عیار، بدنهٔ یک‌تکه.' }
+        ]
+      },
+      en: {
+        name: 'Minā Enamel', alt: 'ساعت مینا',
+        lede: 'Isfahan enamel on a copper dial, fired five times.',
+        price: '315,000,000 toman',
+        specs: [['Case', '38 mm'], ['Movement', 'Hand-wound, 56 hours'], ['Enamel', 'Five firings at 800 °C']],
+        hot: [
+          { x: 50, y: 40, title: 'Enamel', body: 'Fired at 800 °C; one dial in three cracks.' },
+          { x: 50, y: 32, title: 'Hands', body: 'Cut by hand from sheet steel, mirror polished.' },
+          { x: 50, y: 16, title: 'Case', body: '18-carat yellow gold, made from one billet.' }
+        ]
+      }
+    },
+    {
+      sku: 'ZN-12', cat: 'watch', subject: 'watch', palette: 'amber',
+      fa: {
+        name: 'ساعت شب‌چراغ', alt: 'Shab-Cherāgh Perpetual',
+        lede: 'قطعهٔ نام‌گذار مجموعه؛ تقویم دائمی با نشانهٔ سال کبیسه.',
+        price: '۹۸۰٬۰۰۰٬۰۰۰ تومان',
+        specs: [['قطر', '۴۱ میلی‌متر'], ['مکانیزم', 'تقویم دائمی، اتوماتیک'], ['ساخت', 'دوازده نمونه در سال']],
+        hot: [
+          { x: 50, y: 40, title: 'تقویم', body: 'تا ۱۴۷۹ تنظیم است؛ پس از آن یک روز عقب می‌افتد.' },
+          { x: 50, y: 22, title: 'کبیسه', body: 'نشانهٔ کوچک سال کبیسه، در چهار خانه.' },
+          { x: 50, y: 15, title: 'قاب', body: 'فولاد پرداخت‌شده با براده‌ی چوب، مات و زبر.' },
+          { x: 50, y: 70, title: 'بند', body: 'چرم ساغری سیاه، دوخت با نخ ابریشم.' }
+        ]
+      },
+      en: {
+        name: 'Shab-Cherāgh Perpetual', alt: 'ساعت شب‌چراغ',
+        lede: 'The piece the collection is named for: a perpetual calendar with a leap-year hand.',
+        price: '980,000,000 toman',
+        specs: [['Case', '41 mm'], ['Movement', 'Perpetual calendar, automatic'], ['Production', 'Twelve pieces a year']],
+        hot: [
+          { x: 50, y: 40, title: 'Calendar', body: 'Correct to 1479; a day behind after that.' },
+          { x: 50, y: 22, title: 'Leap year', body: 'A small hand over four windows.' },
+          { x: 50, y: 15, title: 'Case', body: 'Steel finished with wood shavings — matte and coarse.' },
+          { x: 50, y: 70, title: 'Strap', body: 'Black shagreen, stitched with silk thread.' }
+        ]
+      }
+    }
+  ];
+
+  var root = document.documentElement;
+  var body = document.body;
+  var lang = 'fa';
+  var sections = [];
+  var current = 0;
+
+  function t(key) { return S[lang][key]; }
+  function reduced() { return matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  function digits(n) { return lang === 'fa' ? CatalogKit.toFa(String(n)) : String(n); }
+  function pad(n) { return digits(n < 10 ? '0' + n : String(n)); }
+
+  /* Reveal pieces: Persian only ever splits on spaces — cutting inside a
+     word would break the cursive joins. Latin may split on characters.
+     Both are capped so a name never staggers more than a handful of parts. */
+  function pieces(text, max) {
+    var words = text.split(/\s+/).filter(Boolean);
+    if (words.length >= 2) {
+      if (words.length > max) words = words.slice(0, max - 1).concat(words.slice(max - 1).join(' '));
+      return { parts: words, joiner: ' ' };
+    }
+    if (/[؀-ۿ]/.test(text)) return { parts: [text], joiner: '' };
+    var size = Math.ceil(text.length / max), out = [];
+    for (var i = 0; i < text.length; i += size) out.push(text.slice(i, i + size));
+    return { parts: out, joiner: '' };
   }
-  root.lang = lang;
-  root.dir = lang === 'fa' ? 'rtl' : 'ltr';
-  for (const node of document.querySelectorAll('[data-t]')) {
-    node.textContent = STRINGS[lang][node.dataset.t];
-  }
-  render();
-});
 
-function render() {
-  const t = STRINGS[lang];
-  grid.innerHTML = '';
-  for (const p of PRODUCTS) {
-    const card = document.createElement('article');
-    card.className = 'cat-card';
-
-    const media = document.createElement('div');
-    card.appendChild(media);
-
-    const name = document.createElement('h3');
-    name.className = 'cat-card__name';
-    name.textContent = lang === 'fa' ? p.fa : p.en;
-
-    const alt = document.createElement('div');
-    alt.className = 'cat-card__name-en';
-    alt.dir = lang === 'fa' ? 'ltr' : 'rtl';
-    alt.textContent = lang === 'fa' ? p.en : p.fa;
-
-    const meta = document.createElement('div');
-    meta.className = 'cat-card__meta';
-    const price = document.createElement('div');
-    price.className = 'cat-price';
-    price.innerHTML = '<span></span><span class="cat-price__unit"></span>';
-    price.firstChild.textContent = lang === 'fa' ? p.price : p.priceEn;
-    price.lastChild.textContent = t.unit;
-    const sku = document.createElement('div');
-    sku.className = 'cat-sku';
-    sku.textContent = p.sku;
-    meta.append(price, sku);
-
-    const open = document.createElement('button');
-    open.type = 'button';
-    open.className = 'cat-btn cat-btn--ghost';
-    open.textContent = t.detail;
-
-    card.append(name, alt, meta, open);
-    grid.appendChild(card);
-
-    /* The media element has to be in the document before it is mounted,
-       so this runs after the card is appended. */
-    media.className = 'cat-card__media';
-    const hotspots = p.hotspots.map((h) => ({
-      x: h.x, y: h.y,
-      title: (lang === 'fa' ? h.fa : h.en)[0],
-      body: (lang === 'fa' ? h.fa : h.en)[1]
-    }));
-    const set = CatalogKit.defaultMedia(p.sku, hotspots, {
-      subject: p.subject, palette: p.palette
+  function fillPieces(host, text, max) {
+    var split = pieces(text, max);
+    host.textContent = '';
+    split.parts.forEach(function (piece, i) {
+      if (i && split.joiner) host.appendChild(document.createTextNode(split.joiner));
+      var span = document.createElement('span');
+      span.className = 'lx-rev';
+      span.textContent = piece;
+      host.appendChild(span);
     });
-    const meta2 = { title: lang === 'fa' ? p.fa : p.en, sku: p.sku };
-    CatalogKit.mountMedia(media, set, meta2, lang);
-    open.addEventListener('click', () => CatalogKit.open(set, meta2, lang, 0));
+    return host.querySelectorAll('span');
   }
-}
 
-render();
+  /* ── build ────────────────────────────────── */
+
+  var atelier = document.getElementById('atelier');
+
+  function buildProduct(p, n) {
+    var s = document.createElement('section');
+    s.className = 'lx-sect lx-sect--product';
+    s.id = 'p' + n;
+    s.setAttribute('aria-labelledby', s.id + '-name');
+    s.innerHTML =
+      '<div class="lx-plate"><div class="lx-shot" data-r="shot"></div></div>' +
+      '<div class="lx-veil" aria-hidden="true"></div>' +
+      '<p class="lx-num" data-r="num" aria-hidden="true"></p>' +
+      '<p class="lx-mark" aria-hidden="true"><span>Zarnegār · Isfahan</span></p>' +
+      '<div class="lx-body">' +
+        '<div class="lx-head lx-rev">' +
+          '<p class="lx-index" data-r="index" aria-hidden="true"></p>' +
+          '<p class="lx-eyebrow"><span data-r="cat"></span><i class="lx-rule"></i><span class="lx-sku num" data-r="sku"></span></p>' +
+        '</div>' +
+        '<h2 class="lx-name" id="' + s.id + '-name" data-r="name"></h2>' +
+        '<p class="lx-name-alt" data-r="alt"></p>' +
+        '<p class="lx-lede lx-rev" data-r="lede"></p>' +
+        '<table class="cat-specs lx-specs lx-rev"><tbody data-r="specs"></tbody></table>' +
+        '<div class="lx-buy lx-rev">' +
+          '<p class="cat-price lx-price" data-r="price"></p>' +
+          '<div class="lx-acts">' +
+            '<button type="button" class="cat-btn" data-r="ask"></button>' +
+            '<button type="button" class="cat-btn cat-btn--ghost" data-r="look"></button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="lx-mediax lx-rev" role="group" data-r="mx"></div>' +
+      '</div>' +
+      '<p class="lx-foot" aria-hidden="true">' +
+        '<span class="lx-foot__idx" data-r="idx"></span>' +
+        '<span class="lx-foot__spacer"></span>' +
+        '<span class="lx-foot__mark">SHAB-CHERĀGH · MMXXV</span>' +
+      '</p>';
+
+    var r = {};
+    s.querySelectorAll('[data-r]').forEach(function (node) { r[node.dataset.r] = node; });
+
+    ['photo', 'video', 'spin'].forEach(function (kind, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.dataset.kind = kind;
+      b.innerHTML = svg(kind === 'photo' ? 'zoom' : kind === 'video' ? 'film' : 'spin') + '<span></span>';
+      b.addEventListener('click', function () { CatalogKit.open(mediaFor(p), metaFor(p), lang, i); });
+      r.mx.appendChild(b);
+    });
+    r.ask.addEventListener('click', function () { openDialog(p); });
+    r.look.addEventListener('click', function () { CatalogKit.open(mediaFor(p), metaFor(p), lang, 0); });
+
+    atelier.before(s);
+    return { el: s, refs: r, product: p, n: n, mounted: false };
+  }
+
+  function mediaFor(p) {
+    return CatalogKit.defaultMedia(p.sku, p[lang].hot, { subject: p.subject, palette: p.palette });
+  }
+  function metaFor(p) { return { title: p[lang].name, sku: p.sku }; }
+
+  /* A fresh host each time: mountMedia binds its own listeners, and a
+     language switch re-mounts, so re-using the node would stack them. */
+  function mountShot(entry) {
+    var host = document.createElement('div');
+    host.className = 'lx-shot';
+    entry.refs.shot.replaceWith(host);
+    entry.refs.shot = host;
+    CatalogKit.mountMedia(host, mediaFor(entry.product), metaFor(entry.product), lang);
+    entry.mounted = true;
+  }
+
+  /* ── language ─────────────────────────────── */
+
+  function applyProduct(entry) {
+    var p = entry.product, L = p[lang], r = entry.refs;
+    var i = 0;
+    var step = function (node) { node.style.setProperty('--i', String(Math.min(i++, 7))); };
+
+    r.cat.textContent = t('cats')[p.cat];
+    r.sku.textContent = p.sku;
+    r.index.textContent = pad(entry.n);
+    step(r.cat.closest('.lx-rev'));
+
+    fillPieces(r.name, L.name, 3).forEach(step);
+    fillPieces(r.alt, L.alt, 2).forEach(step);
+    r.alt.lang = lang === 'fa' ? 'en' : 'fa';
+
+    r.lede.textContent = L.lede;
+    step(r.lede);
+
+    r.specs.textContent = '';
+    L.specs.forEach(function (row) {
+      var tr = document.createElement('tr');
+      var th = document.createElement('th');
+      var td = document.createElement('td');
+      th.scope = 'row';
+      th.textContent = row[0];
+      td.textContent = row[1];
+      tr.appendChild(th); tr.appendChild(td);
+      r.specs.appendChild(tr);
+    });
+    step(r.specs.closest('.lx-rev'));
+
+    r.price.textContent = L.price;
+    r.ask.textContent = t('inquire');
+    r.look.textContent = t('look');
+    step(r.price.closest('.lx-rev'));
+
+    r.mx.setAttribute('aria-label', t('mediaGroup') + ' — ' + L.name);
+    r.mx.querySelectorAll('button').forEach(function (b) {
+      b.querySelector('span').textContent = t(b.dataset.kind);
+      b.setAttribute('aria-label', t(b.dataset.kind) + ' — ' + L.name);
+    });
+    step(r.mx);
+
+    r.num.textContent = digits(entry.n);
+    r.idx.textContent = pad(entry.n) + ' / ' + digits(PRODUCTS.length);
+  }
+
+  function applyLang(next) {
+    lang = next;
+    root.lang = lang === 'fa' ? 'fa' : 'en';
+    root.dir = lang === 'fa' ? 'rtl' : 'ltr';
+    body.classList.toggle('lx-latin', lang === 'en');
+    document.title = t('brand') + ' — ' + t('collection');
+
+    document.querySelectorAll('[data-i18n]').forEach(function (n) { n.textContent = t(n.dataset.i18n); });
+    document.querySelector('[data-i18n="atelierAlt"]').lang = lang === 'fa' ? 'en' : 'fa';
+    document.querySelectorAll('[data-i18n-label]').forEach(function (n) { n.setAttribute('aria-label', t(n.dataset.i18nLabel)); });
+    document.querySelectorAll('.cat-lang button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+    });
+
+    sections.forEach(function (entry) {
+      if (!entry.product) return;
+      applyProduct(entry);
+      if (entry.mounted) mountShot(entry);
+    });
+    buildRail();
+    if (!dialogState.closed) renderDialog();
+  }
+
+  /* ── rail ─────────────────────────────────── */
+
+  var rail = document.getElementById('rail');
+
+  function buildRail() {
+    rail.textContent = '';
+    sections.forEach(function (entry, i) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'lx-rail__btn';
+      b.dataset.kind = entry.product ? 'piece' : 'edge';
+      b.innerHTML = '<span class="lx-rail__n"></span><span class="lx-rail__tick"></span>';
+      b.querySelector('.lx-rail__n').textContent = entry.product ? pad(entry.n) : '';
+      b.setAttribute('aria-label', entry.product
+        ? t('sectionOf').replace('%1', digits(entry.n)).replace('%2', digits(PRODUCTS.length)) + ' — ' + entry.product[lang].name
+        : t(entry.key));
+      if (i === current) b.setAttribute('aria-current', 'true');
+      b.addEventListener('click', function () { go(i); });
+      li.appendChild(b);
+      rail.appendChild(li);
+    });
+  }
+
+  function markCurrent(i) {
+    current = i;
+    rail.querySelectorAll('.lx-rail__btn').forEach(function (b, j) {
+      if (j === i) b.setAttribute('aria-current', 'true');
+      else b.removeAttribute('aria-current');
+    });
+  }
+
+  function go(i) {
+    i = Math.max(0, Math.min(sections.length - 1, i));
+    sections[i].el.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  /* ── inquiry dialog ───────────────────────── */
+
+  var scrim = document.getElementById('scrim');
+  var dialog = document.getElementById('dialog');
+  var dialogState = { closed: true, product: null, sent: false, opener: null };
+
+  function renderDialog() {
+    var p = dialogState.product;
+    var head =
+      '<div class="lx-dialog__head">' +
+        '<h2 id="dialog-title">' + esc(t('dialogTitle')) + '</h2>' +
+        '<p>' + esc(p ? t('dialogLede') : t('dialogLedeAll')) + '</p>' +
+      '</div>';
+
+    if (dialogState.sent) {
+      dialog.innerHTML = head +
+        '<div class="lx-sent"><b>' + esc(t('sent')) + '</b><p>' + esc(t('sentLine')) + '</p></div>' +
+        '<div class="lx-form__actions"><button type="button" class="cat-btn" data-close>' + esc(t('done')) + '</button></div>';
+    } else {
+      var row = '';
+      if (p) {
+        row = '<div class="cat-inquiry__row">' +
+          '<img src="' + CatalogKit.image(p.sku + '-a', { w: 120, h: 150, subject: p.subject, palette: p.palette }) + '" alt="">' +
+          '<span class="lx-row__name"><b>' + esc(p[lang].name) + '</b><span class="cat-sku num">' + esc(p.sku) + '</span></span>' +
+          '<span class="lx-price">' + esc(p[lang].price) + '</span>' +
+        '</div>';
+      }
+      dialog.innerHTML = head + row +
+        '<form class="lx-form" novalidate>' +
+          '<div class="lx-pair">' +
+            '<label class="lx-field"><span>' + esc(t('fName')) + '</span><input name="name" autocomplete="name" required></label>' +
+            '<label class="lx-field"><span>' + esc(t('fReach')) + '</span><input name="reach" autocomplete="email" required></label>' +
+          '</div>' +
+          '<label class="lx-field"><span>' + esc(t('fHouse')) + '</span><select name="house">' +
+            '<option>' + esc(t('cityA')) + '</option><option>' + esc(t('cityB')) + '</option>' +
+          '</select></label>' +
+          '<label class="lx-field"><span>' + esc(t('fNote')) + '</span><textarea name="note" rows="3"></textarea></label>' +
+          '<div class="lx-form__actions">' +
+            '<button type="submit" class="cat-btn">' + esc(t('send')) + '</button>' +
+            '<button type="button" class="cat-btn cat-btn--ghost" data-close>' + esc(t('cancel')) + '</button>' +
+          '</div>' +
+        '</form>';
+      dialog.querySelector('form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        dialogState.sent = true;
+        renderDialog();
+        dialog.querySelector('[data-close]').focus();
+      });
+    }
+    dialog.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', closeDialog); });
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function openDialog(p) {
+    dialogState = { closed: false, product: p || null, sent: false, opener: document.activeElement };
+    renderDialog();
+    scrim.hidden = false;
+    dialog.hidden = false;
+    var first = dialog.querySelector('input, button');
+    if (first) first.focus();
+  }
+
+  function closeDialog() {
+    dialogState.closed = true;
+    scrim.hidden = true;
+    dialog.hidden = true;
+    if (dialogState.opener && dialogState.opener.focus) dialogState.opener.focus();
+  }
+
+  scrim.addEventListener('click', closeDialog);
+  dialog.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { e.stopPropagation(); closeDialog(); return; }
+    if (e.key !== 'Tab') return;
+    var f = dialog.querySelectorAll('input, select, textarea, button');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* ── observers ────────────────────────────── */
+
+  function observe() {
+    var band = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var entry = e.target.__lx;
+        if (e.isIntersecting) {
+          e.target.classList.add('is-live');
+          markCurrent(sections.indexOf(entry));
+        } else {
+          e.target.classList.remove('is-live');
+        }
+      });
+    }, { rootMargin: '-32% 0px -32% 0px' });
+
+    var near = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var entry = e.target.__lx;
+        if (entry.product && !entry.mounted) mountShot(entry);
+        near.unobserve(e.target);
+      });
+    }, { rootMargin: '70% 0px' });
+
+    sections.forEach(function (entry) {
+      entry.el.__lx = entry;
+      band.observe(entry.el);
+      if (entry.product) near.observe(entry.el);
+    });
+  }
+
+  /* ── keyboard ─────────────────────────────── */
+
+  var KEYS = { ArrowDown: 1, PageDown: 1, ArrowUp: -1, PageUp: -1 };
+
+  document.addEventListener('keydown', function (e) {
+    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!dialogState.closed || document.querySelector('.ck-scrim')) return;
+    var tag = e.target.tagName;
+    if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+
+    if (e.key === 'Home') { e.preventDefault(); go(0); return; }
+    if (e.key === 'End') { e.preventDefault(); go(sections.length - 1); return; }
+    var step = KEYS[e.key];
+    if (!step) return;
+    e.preventDefault();
+    go(current + step);
+  });
+
+  /* ── boot ─────────────────────────────────── */
+
+  sections.push({ el: document.getElementById('cover'), key: 'cover', refs: {}, product: null });
+  PRODUCTS.forEach(function (p, i) { sections.push(buildProduct(p, i + 1)); });
+  sections.push({ el: atelier, key: 'atelierTitle', refs: {}, product: null });
+
+  ['bottle', 'bag', 'watch'].forEach(function (subject, i) {
+    var plate = document.querySelectorAll('.lx-plates div')[i];
+    plate.style.backgroundImage = 'url("' + CatalogKit.image('ZN-cover-' + subject, {
+      w: 700, h: 1100, subject: subject, palette: ['amber', 'clay', 'ink'][i]
+    }) + '")';
+  });
+
+  document.querySelectorAll('.cat-lang button').forEach(function (b) {
+    b.addEventListener('click', function () { if (b.dataset.lang !== lang) applyLang(b.dataset.lang); });
+  });
+  document.getElementById('enter').addEventListener('click', function () { go(1); });
+  document.getElementById('ask-all').addEventListener('click', function () { openDialog(null); });
+  document.getElementById('to-top').addEventListener('click', function () { go(0); });
+
+  applyLang('fa');
+  observe();
+  sections[0].el.classList.add('is-live');
+})();
 </script>
 </body>
 </html>

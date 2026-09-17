@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="fa" data-theme="editorial">
+<html dir="rtl" lang="fa" data-theme="spec">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>مکانیزم‌های رسانه — نمونه‌ی زنده</title>
-<meta name="description" content="زوم روی نقطه، نقطه‌های جزئیات، پخش ویدیو و چرخش ۳۶۰ — همان مکانیزمی که در هر هشت کاتالوگ کار می‌کند.">
+<title>ARAS — کاتالوگ فنی یراق‌آلات معماری</title>
 <style>
 /* inlined from shared/ds-core.css */
 /* ============================================================
@@ -629,126 +628,554 @@ a:hover { color: var(--ink); }
 
 </style>
 <style>
-  .mx-head {
-    display: grid; gap: var(--s-4);
-    padding: var(--s-8) var(--page-pad) var(--s-6);
-    border-block-end: var(--border-w) solid var(--line);
-  }
-  .mx-kicker {
-    font-family: var(--font-num); font-size: var(--t-xs);
-    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
-    color: var(--ink-faint);
-  }
-  .mx-head h1 { font-size: var(--t-2xl); max-width: 20ch; }
-  .mx-head p { font-size: var(--t-md); color: var(--ink-muted); max-width: var(--measure-fa); margin: 0; }
+/* Technical values read left-to-right inside Persian cells; isolating them
+   stops "152 × 76" from being re-ordered by the surrounding RTL run. */
+.num { direction: ltr; unicode-bidi: isolate; }
 
-  .mx-bar {
-    position: sticky; inset-block-start: 0; z-index: 20;
-    display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4);
-    padding: var(--s-3) var(--page-pad);
-    background: var(--bg); border-block-end: var(--border-w) solid var(--line);
-  }
-  .mx-bar__label { font-size: var(--t-xs); color: var(--ink-faint); }
-  .mx-themes { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+/* Several regions below are laid out with grid or flex, which would
+   otherwise win over the attribute's UA rule. */
+[hidden] { display: none !important; }
 
-  .mx-section { padding: var(--s-7) var(--page-pad); border-block-end: var(--border-w) solid var(--line); }
-  .mx-section > .mx-inner { max-width: var(--page-max); margin-inline: auto; display: grid; gap: var(--s-5); }
-  .mx-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-4); }
-  .mx-h span { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
-  .mx-h h2 { font-size: var(--t-lg); }
-  .mx-h p { margin: 0; font-size: var(--t-sm); color: var(--ink-muted); max-width: var(--measure-fa); }
+:root[dir="rtl"] { --sp-slide: -1; }
+:root[dir="ltr"] { --sp-slide: 1; }
 
-  .mx-grid {
-    display: grid; gap: var(--gutter);
-    grid-template-columns: repeat(auto-fill, minmax(var(--col-min), 1fr));
-  }
+body { font-size: var(--t-sm); }
+.sp-in { max-width: var(--page-max); margin-inline: auto; }
 
-  .mx-keys { display: grid; gap: var(--s-2); }
-  .mx-key { display: flex; align-items: baseline; gap: var(--s-3); font-size: var(--t-sm); color: var(--ink-muted); }
-  .mx-key kbd {
-    font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink);
-    background: var(--surface-alt); border: var(--border-w) solid var(--line);
-    border-radius: var(--radius-control); padding: 2px 8px; min-width: 52px; text-align: center;
-  }
+.sp-skip {
+  position: absolute; inset-block-start: var(--s-2); inset-inline-start: var(--s-2); z-index: 60;
+  display: inline-flex; align-items: center; min-height: var(--tap-min); padding: 0 var(--s-4);
+  background: var(--ink); color: var(--bg); text-decoration: none;
+  border-radius: var(--radius-control); transform: translateY(-250%);
+}
+.sp-skip:focus { transform: none; color: var(--bg); }
 
-  .mx-swap {
-    display: grid; gap: var(--s-3);
-    padding: var(--s-5); background: var(--surface);
-    border: var(--border-w) solid var(--line); border-radius: var(--radius-card);
+/* ── masthead: a drawing title block ────────────────────── */
+.sp-mast { border-block-end: var(--border-w-strong) solid var(--line-strong); background: var(--bg-alt); }
+.sp-mast .sp-in {
+  display: grid; grid-template-columns: minmax(190px, auto) minmax(0, 1fr) auto; align-items: stretch;
+}
+.sp-mast__id {
+  display: flex; align-items: center; gap: var(--s-3); padding: var(--s-4);
+  border-inline-end: var(--border-w) solid var(--line);
+}
+.sp-mark { width: 30px; height: 30px; flex: none; color: var(--ink); }
+.sp-word {
+  font-family: var(--font-en-display); font-weight: var(--w-bold); font-size: var(--t-lg);
+  line-height: 1; letter-spacing: var(--tracking-en-caps); direction: ltr;
+}
+.sp-tagline { font-size: var(--t-xs); color: var(--ink-muted); line-height: 1.5; }
+
+.sp-block { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; }
+.sp-block > div {
+  display: flex; flex-direction: column; justify-content: center; gap: 2px; min-width: 0;
+  padding: var(--s-2) var(--s-3); border-inline-end: var(--border-w) solid var(--line);
+}
+.sp-block dt {
+  font-size: var(--t-xs); color: var(--ink-faint);
+  text-transform: uppercase; letter-spacing: var(--tracking-en-caps);
+}
+.sp-block dd { margin: 0; font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink); }
+
+.sp-mast__actions { display: flex; align-items: center; gap: var(--s-2); padding: var(--s-3) var(--s-4); }
+.sp-langswitch > button { min-width: 44px; font-family: var(--font-num); font-size: var(--t-xs); }
+
+.sp-badge {
+  display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px;
+  font-family: var(--font-num); font-size: var(--t-xs); line-height: 1;
+  background: var(--accent); color: var(--on-accent); border-radius: var(--radius-pill);
+}
+.sp-badge[data-empty="true"] { background: var(--surface-alt); color: var(--ink-faint); }
+
+/* ── shell ──────────────────────────────────────────────── */
+.sp-shell { display: grid; grid-template-columns: 252px minmax(0, 1fr); }
+.sp-rail {
+  position: sticky; inset-block-start: 0; align-self: start; max-height: 100vh; overflow-y: auto;
+  padding: var(--s-4) var(--s-4) var(--s-7); border-inline-end: var(--border-w) solid var(--line);
+}
+.sp-main { min-width: 0; padding: 0 var(--s-4) var(--s-9); }
+
+/* ── filter rail ────────────────────────────────────────── */
+.sp-rail__title { margin-block-end: var(--s-3); }
+.sp-group + .sp-group { margin-block-start: var(--s-5); }
+.sp-group__head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-2);
+  padding-block-end: var(--s-2); margin-block-end: var(--s-2);
+  border-block-end: var(--border-w) solid var(--line);
+}
+.sp-group__title, .sp-rail__title {
+  font-size: var(--t-xs); font-weight: var(--w-medium); color: var(--ink);
+  letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+}
+.sp-group__n { font-family: var(--font-num); font-size: var(--t-xs); color: var(--accent); }
+
+.sp-opt {
+  position: relative; display: flex; align-items: center; gap: var(--s-2);
+  min-height: 30px; padding-inline: 2px; cursor: pointer; color: var(--ink-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.sp-opt:hover { color: var(--ink); }
+.sp-opt input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.sp-box {
+  flex: none; display: grid; place-items: center; width: 14px; height: 14px;
+  color: transparent; background: var(--surface);
+  border: var(--border-w) solid var(--line-strong); border-radius: 1px;
+  transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.sp-box--round { border-radius: var(--radius-pill); }
+.sp-opt input:checked + .sp-box, .sp-pick input:checked + .sp-box { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.sp-opt input:focus-visible + .sp-box, .sp-pick input:focus-visible + .sp-box { outline: 2px solid var(--focus); outline-offset: 2px; }
+.sp-opt__label { flex: 1; min-width: 0; font-size: var(--t-xs); line-height: 1.5; }
+.sp-opt input:checked ~ .sp-opt__label { color: var(--ink); }
+.sp-opt__n { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
+
+.sp-search { min-height: 38px; padding-inline: var(--s-3); margin-block-end: var(--s-5); }
+.sp-search > input { font-size: var(--t-xs); }
+.sp-rail__reset { width: 100%; margin-block-start: var(--s-5); font-size: var(--t-xs); }
+
+/* ── result bar ─────────────────────────────────────────── */
+.sp-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3);
+  padding: var(--s-3) 0; border-block-end: var(--border-w) solid var(--line);
+}
+.sp-result { margin: 0; font-size: var(--t-xs); color: var(--ink-muted); }
+.sp-result strong { font-family: var(--font-num); font-weight: var(--w-medium); color: var(--ink); }
+.sp-active { display: flex; flex: 1; flex-wrap: wrap; align-items: center; gap: var(--s-2); min-width: 0; }
+.sp-active__none { font-size: var(--t-xs); color: var(--ink-faint); }
+.sp-pill {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-height: 26px; padding: 0 var(--s-2); font: inherit; font-size: var(--t-xs);
+  color: var(--ink); background: var(--surface);
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-control); cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.sp-pill:hover { border-color: var(--danger); color: var(--danger); }
+.sp-pill__k { color: var(--ink-faint); }
+.sp-pill__x { display: block; opacity: 0.6; }
+
+.sp-viewswitch { display: inline-flex; border: var(--border-w) solid var(--line); border-radius: var(--radius-control); overflow: hidden; }
+.sp-viewswitch > button {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-height: 34px; padding: 0 var(--s-3); font: inherit; font-size: var(--t-xs);
+  background: transparent; color: var(--ink-muted); border: 0; cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.sp-viewswitch > button + button { border-inline-start: var(--border-w) solid var(--line); }
+.sp-viewswitch > button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+/* ── table ──────────────────────────────────────────────── */
+.sp-views.sp-enter { animation: cat-fade var(--dur-base) var(--ease-out) both; }
+.sp-scroller { overflow-x: auto; }
+.sp-t { width: 100%; min-width: 980px; border-collapse: separate; border-spacing: 0; }
+.sp-t th, .sp-t td {
+  padding: var(--s-1) var(--s-3); text-align: start; vertical-align: middle;
+  border-block-end: var(--border-w) solid var(--line);
+}
+.sp-t thead th {
+  position: sticky; inset-block-start: 0; z-index: 10; padding: 0; white-space: nowrap;
+  font-weight: var(--w-medium); background: var(--surface-alt);
+  border-block-end: var(--border-w) solid var(--line-strong);
+}
+.sp-sort {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  width: 100%; min-height: var(--tap-min); padding: 0 var(--s-3);
+  font: inherit; font-size: var(--t-xs); font-weight: var(--w-medium);
+  text-transform: uppercase; letter-spacing: var(--tracking-en-caps);
+  color: var(--ink-muted); background: none; border: 0; cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.sp-sort:hover { color: var(--ink); background: var(--surface); }
+.sp-t th[aria-sort] .sp-sort { color: var(--accent); }
+.sp-caret {
+  display: block; opacity: 0;
+  transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+.sp-t th[aria-sort] .sp-caret { opacity: 1; }
+.sp-t th[aria-sort="descending"] .sp-caret { transform: rotate(180deg); }
+.sp-th-plain {
+  display: block; padding: 0 var(--s-3); line-height: var(--tap-min);
+  font-size: var(--t-xs); color: var(--ink-faint);
+  text-transform: uppercase; letter-spacing: var(--tracking-en-caps);
+}
+
+.sp-row { background: var(--surface); transition: background var(--dur-fast) var(--ease-out); }
+.sp-row:hover { background: var(--surface-alt); }
+.sp-row > td:first-child { position: relative; }
+.sp-row > td:first-child::before {
+  content: ""; position: absolute; inset-block: 0; inset-inline-start: 0; width: 2px;
+  background: var(--accent); opacity: 0; transition: opacity var(--dur-fast) var(--ease-out);
+}
+.sp-row[data-picked="true"] { background: var(--accent-soft); }
+.sp-row[data-picked="true"] > td:first-child::before { opacity: 1; }
+
+.sp-pick { position: relative; display: grid; place-items: center; width: var(--tap-min); height: var(--tap-min); cursor: pointer; }
+.sp-pick input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.sp-pick input:disabled + .sp-box { background: var(--surface-alt); border-color: var(--line); }
+.sp-pick:has(input:disabled) { cursor: not-allowed; }
+
+/* The kit sizes a mounted host to 100%, so the fixed box wins on
+   specificity rather than on source order. */
+.sp-t .sp-thumb { width: 44px; height: 44px; overflow: hidden; background: var(--surface-alt); border-radius: var(--radius-media); }
+/* At 44px the kit's captioned badge is unreadable; the glyph alone still
+   shows that the thumbnail opens. */
+.sp-thumb .ck-cue { inset-block-end: 2px; inset-inline-start: 2px; padding: 2px 3px; gap: 0; border-radius: 1px; }
+.sp-thumb .ck-cue span { display: none; }
+
+.sp-code { font-family: var(--font-num); font-size: var(--t-xs); white-space: nowrap; }
+.sp-name { display: block; font-size: var(--t-sm); line-height: 1.35; color: var(--ink); }
+.sp-name--alt { font-size: var(--t-xs); color: var(--ink-faint); }
+.sp-name--alt[lang="en"] { direction: ltr; unicode-bidi: isolate; font-family: var(--font-en-ui); }
+.sp-name--alt[lang="fa"] { direction: rtl; unicode-bidi: isolate; font-family: var(--font-fa-ui); }
+.sp-mat { display: block; font-size: var(--t-xs); line-height: 1.35; color: var(--ink); }
+.sp-mat--fin { color: var(--ink-faint); }
+.sp-dim { font-family: var(--font-num); font-size: var(--t-xs); white-space: nowrap; }
+.sp-price { font-family: var(--font-num); font-size: var(--t-sm); white-space: nowrap; }
+.sp-price__u { margin-inline-start: var(--s-1); font-size: var(--t-xs); color: var(--ink-faint); }
+.sp-end { text-align: end; }
+
+.sp-stock { display: inline-flex; align-items: center; gap: var(--s-2); font-size: var(--t-xs); white-space: nowrap; }
+.sp-dot { width: 7px; height: 7px; flex: none; background: currentColor; }
+.sp-stock[data-s="in"] { color: var(--ok); }
+.sp-stock[data-s="low"] { color: var(--warn); }
+.sp-stock[data-s="out"] { color: var(--danger); }
+.sp-stock[data-s="order"] { color: var(--ink-faint); }
+.sp-stock[data-s="order"] .sp-dot { background: none; box-shadow: inset 0 0 0 1px currentColor; }
+
+.sp-add { min-width: var(--tap-min); min-height: var(--tap-min); padding: 0; }
+.sp-add[data-in="true"] { background: var(--accent-soft); color: var(--accent); }
+
+/* ── cards ──────────────────────────────────────────────── */
+.sp-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--gutter); padding-block-start: var(--s-4); }
+.cat-card.sp-card { flex-direction: row; align-items: flex-start; gap: var(--s-3); padding: var(--s-3); }
+.cat-card.sp-card:hover { transform: none; }
+.cat-card.sp-card[data-picked="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.sp-card .sp-card__media { flex: none; width: 76px; height: 76px; overflow: hidden; background: var(--surface-alt); border-radius: var(--radius-media); }
+.sp-card__media .ck-cue { inset-block-end: 3px; inset-inline-start: 3px; padding: 2px 5px; gap: 3px; font-size: 9px; border-radius: 1px; }
+.sp-card__body { display: grid; flex: 1; gap: 2px; min-width: 0; }
+.sp-card__top { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); }
+.sp-card__specs { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px var(--s-3); margin-block-start: var(--s-2); }
+.sp-card__specs dt { font-size: var(--t-xs); color: var(--ink-faint); }
+.sp-card__specs dd { margin: 0; min-width: 0; font-size: var(--t-xs); color: var(--ink); }
+.sp-card__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); margin-block-start: var(--s-3); }
+.sp-card__tools { display: flex; align-items: center; gap: var(--s-1); }
+
+/* ── empty state ────────────────────────────────────────── */
+.sp-empty {
+  margin-block-start: var(--s-6); padding: var(--s-8) var(--s-5); text-align: center;
+  border: var(--border-w) dashed var(--line); border-radius: var(--radius-card);
+}
+.sp-empty__t { margin: 0; font-size: var(--t-md); color: var(--ink); }
+.sp-empty__b { margin-block: var(--s-2) var(--s-5); font-size: var(--t-xs); color: var(--ink-muted); }
+
+.sp-legend {
+  display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6);
+  margin-block-start: var(--s-5); padding-block-start: var(--s-4);
+  border-block-start: var(--border-w) solid var(--line);
+  font-size: var(--t-xs); color: var(--ink-faint);
+}
+.sp-legend__k { display: flex; flex-wrap: wrap; gap: var(--s-4); }
+.sp-legend p { margin: 0; max-width: none; }
+
+/* ── comparison tray ────────────────────────────────────── */
+.sp-tray {
+  position: fixed; inset-inline: 0; inset-block-end: 0; z-index: 30;
+  background: var(--surface); border-block-start: var(--border-w-strong) solid var(--line-strong);
+  box-shadow: var(--shadow-2);
+  transform: translateY(100%); visibility: hidden;
+  transition: transform var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
+}
+.sp-tray[data-open="true"] { transform: none; visibility: visible; transition-delay: 0s; }
+.sp-tray .sp-in { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); padding: var(--s-2) var(--s-4); }
+.sp-tray__slots { display: flex; align-items: center; gap: var(--s-2); }
+.sp-slot {
+  position: relative; width: 40px; height: 40px; padding: 0; overflow: hidden; cursor: pointer;
+  background: var(--surface-alt); border: var(--border-w) solid var(--line); border-radius: var(--radius-media);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.sp-slot:hover { border-color: var(--danger); }
+.sp-slot img { width: 100%; height: 100%; object-fit: cover; }
+.sp-slot--empty { border-style: dashed; }
+.sp-slot__x {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: var(--overlay); color: var(--bg); opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+.sp-slot:hover .sp-slot__x, .sp-slot:focus-visible .sp-slot__x { opacity: 1; }
+.sp-tray__txt { margin: 0; font-size: var(--t-xs); color: var(--ink-muted); }
+.sp-tray__txt strong { font-family: var(--font-num); font-weight: var(--w-medium); color: var(--ink); }
+.sp-tray__sp { flex: 1; }
+
+/* ── comparison dialog ──────────────────────────────────── */
+.sp-dlg {
+  display: grid; grid-template-rows: auto minmax(0, 1fr); gap: var(--s-3);
+  max-height: 86vh; padding: var(--s-5); overflow: hidden;
+}
+.sp-dlg__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
+.sp-dlg__title { font-size: var(--t-md); }
+.sp-dlg__sp { flex: 1; }
+.sp-dlg__body { overflow: auto; }
+.sp-hint { margin: 0; font-size: var(--t-xs); color: var(--ink-faint); }
+
+.sp-cmp { width: 100%; border-collapse: separate; border-spacing: 0; }
+.sp-cmp th, .sp-cmp td {
+  padding: var(--s-2) var(--s-3); text-align: start; vertical-align: top;
+  font-size: var(--t-xs); font-weight: var(--w-regular);
+  border-block-end: var(--border-w) solid var(--line);
+}
+.sp-cmp thead th {
+  position: sticky; inset-block-start: 0; z-index: 2;
+  background: var(--surface); border-block-end: var(--border-w) solid var(--line-strong);
+}
+.sp-cmp__rowhead { width: 20%; color: var(--ink-faint); background: var(--surface); }
+.sp-cmp__hd { display: flex; align-items: flex-start; gap: var(--s-2); }
+.sp-cmp__hd img { width: 40px; height: 40px; flex: none; object-fit: cover; background: var(--surface-alt); border-radius: var(--radius-media); }
+.sp-cmp tbody tr:hover > * { background: var(--surface-alt); }
+.sp-cmp td.sp-diff { background: var(--accent-soft); box-shadow: inset 0 -2px 0 var(--accent); }
+.sp-cmp tbody tr[data-diff="true"] .sp-cmp__rowhead { color: var(--accent); }
+.sp-cmp__mark { margin-inline-end: var(--s-2); font-family: var(--font-num); }
+.sp-cmp[data-only="true"] tbody tr[data-diff="false"] { display: none; }
+.sp-cmp__none { padding: var(--s-6); font-size: var(--t-xs); color: var(--ink-faint); text-align: center; }
+
+/* ── inquiry drawer ─────────────────────────────────────── */
+.sp-drawer {
+  position: fixed; inset-block: 0; inset-inline-end: 0; z-index: 41;
+  display: flex; flex-direction: column; width: min(420px, 94vw);
+  background: var(--surface); border-inline-start: var(--border-w-strong) solid var(--line-strong);
+  box-shadow: var(--shadow-2);
+  transform: translateX(calc(var(--sp-slide) * 100%)); visibility: hidden;
+  transition: transform var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
+}
+.sp-drawer[data-open="true"] { transform: none; visibility: visible; transition-delay: 0s; }
+.sp-drawer__head {
+  display: flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4);
+  border-block-end: var(--border-w) solid var(--line-strong);
+}
+.sp-drawer__title { flex: 1; font-size: var(--t-base); }
+.sp-drawer__body { flex: 1; overflow-y: auto; padding: 0 var(--s-4); }
+.sp-drawer__foot { display: grid; gap: var(--s-3); padding: var(--s-4); border-block-start: var(--border-w) solid var(--line); }
+.sp-drawer__sum { display: flex; justify-content: space-between; gap: var(--s-3); margin: 0; font-size: var(--t-xs); color: var(--ink-muted); }
+.sp-drawer__btns { display: flex; gap: var(--s-2); }
+.sp-drawer__btns > .cat-btn { flex: 1; font-size: var(--t-xs); }
+
+.sp-line {
+  display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: var(--s-3);
+  align-items: center; padding-block: var(--s-3);
+  border-block-end: var(--border-w) solid var(--line);
+}
+.sp-line img { width: 40px; height: 40px; object-fit: cover; background: var(--surface-alt); border-radius: var(--radius-media); }
+.sp-line__tools { display: flex; align-items: center; gap: var(--s-1); }
+.sp-step {
+  display: grid; place-items: center; width: var(--tap-min); height: var(--tap-min); padding: 0;
+  font: inherit; color: var(--ink); background: var(--surface);
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-control); cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.sp-step:hover { border-color: var(--line-strong); }
+.sp-qty { min-width: 28px; font-family: var(--font-num); font-size: var(--t-xs); text-align: center; }
+.sp-step--kill { color: var(--ink-faint); }
+.sp-step--kill:hover { color: var(--danger); border-color: var(--danger); }
+.sp-inq-empty { margin: var(--s-5) 0; padding: var(--s-7) var(--s-4); }
+.sp-inq-empty p { margin: 0; max-width: none; }
+.sp-inq-empty p + p { margin-block-start: var(--s-2); font-size: var(--t-xs); }
+
+/* ── responsive ─────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .sp-mast .sp-in { grid-template-columns: minmax(0, 1fr) auto; }
+  .sp-mast__id { border-inline-end: 0; }
+  .sp-block { grid-column: 1 / -1; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); border-block-start: var(--border-w) solid var(--line); }
+}
+@media (max-width: 900px) {
+  .sp-shell { grid-template-columns: minmax(0, 1fr); }
+  .sp-rail {
+    position: static; max-height: none;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0 var(--s-5);
+    border-inline-end: 0; border-block-end: var(--border-w) solid var(--line);
   }
-  .mx-swap pre {
-    margin: 0; overflow-x: auto; direction: ltr; text-align: start;
-    font-family: var(--font-num); font-size: var(--t-xs); line-height: 1.85;
-    color: var(--ink-muted);
+  .sp-rail__title, .sp-search, .sp-rail__reset { grid-column: 1 / -1; }
+  .sp-group + .sp-group { margin-block-start: 0; }
+}
+
+/* ── print: no floating chrome, inquiry as an appendix ──── */
+@media print {
+  .sp-rail, .sp-bar, .sp-tray, .sp-mast__actions, .sp-skip, .cat-scrim, .sp-dlg { display: none !important; }
+  .sp-shell { display: block; }
+  .sp-main { padding: 0; }
+  .sp-t thead th { position: static; }
+  .sp-thumb, .sp-add, .sp-pick, .sp-t th:first-child, .sp-t td:first-child { display: none; }
+  .sp-drawer:not([data-open="true"]) { display: none; }
+  .sp-drawer {
+    position: static; width: auto; transform: none; visibility: visible;
+    border: 0; border-block-start: var(--border-w-strong) solid var(--line-strong);
+    box-shadow: none; break-before: page;
   }
+  .sp-drawer__body { overflow: visible; }
+  .sp-drawer__btns, .sp-drawer__close { display: none; }
+}
 </style>
 </head>
 <body>
+<a class="sp-skip" href="#results" data-i="skip">پرش به فهرست قطعات</a>
 
-<header class="mx-head">
-  <div class="mx-kicker">Media mechanisms · live</div>
-  <h1>همان مکانیزمی که در هر هشت کاتالوگ کار می‌کند</h1>
-  <p>
-    روی هر تصویر کلیک کنید. این صفحه فقط برای امتحان کردن است — هشت کاتالوگ
-    همین رفتار را دارند، با ظاهر و چیدمان متفاوت. تم را از نوار بالا عوض کنید
-    تا ببینید هیچ‌کدام از این رفتارها به تم وابسته نیست.
-  </p>
+<header class="sp-mast">
+  <div class="sp-in">
+    <div class="sp-mast__id">
+      <svg class="sp-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <path d="M12 2.2 20.5 7v10L12 21.8 3.5 17V7z"/>
+        <circle cx="12" cy="12" r="4.4"/>
+      </svg>
+      <div>
+        <div class="sp-word">ARAS</div>
+        <div class="sp-tagline" data-i="tagline">یراق‌آلات و اتصالات معماری · تهران</div>
+      </div>
+    </div>
+
+    <dl class="sp-block">
+      <div><dt data-i="fDoc">سند</dt><dd class="num">ARS-AF-04</dd></div>
+      <div><dt data-i="fRev">ویرایش</dt><dd class="num">04</dd></div>
+      <div><dt data-i="fDate">تاریخ</dt><dd class="num" data-v="date">1405/06</dd></div>
+      <div><dt data-i="fUnit">واحد ابعاد</dt><dd class="num">mm</dd></div>
+      <div><dt data-i="fStd">استاندارد</dt><dd class="num">EN 1906 · 1935 · 1670</dd></div>
+    </dl>
+
+    <div class="sp-mast__actions">
+      <div class="cat-lang sp-langswitch" role="group" data-i-label="langGroup" aria-label="زبان">
+        <button type="button" data-lang="fa" aria-pressed="true">FA</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="cat-btn cat-btn--ghost" id="inqOpen" aria-expanded="false" aria-controls="drawer">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M9 4.5h6v2.5H9zM15 5.8h2.5a1 1 0 0 1 1 1v12.7a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V6.8a1 1 0 0 1 1-1H9"/>
+          <path d="M8.5 11.5h7M8.5 15h4.5"/>
+        </svg>
+        <span data-i="inquiry">استعلام قیمت</span>
+        <span class="sp-badge num" id="inqCount" data-empty="true">0</span>
+      </button>
+    </div>
+  </div>
 </header>
 
-<div class="mx-bar">
-  <span class="mx-bar__label">تم</span>
-  <div class="mx-themes" id="themes"></div>
-  <div style="flex:1"></div>
-  <div class="cat-lang" id="lang">
-    <button type="button" data-lang="fa" aria-pressed="true">فارسی</button>
-    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+<div class="sp-shell sp-in">
+  <aside class="sp-rail" aria-labelledby="railTitle">
+    <h2 class="sp-rail__title" id="railTitle" data-i="filters">فیلترها</h2>
+
+    <label class="cat-search sp-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="color:var(--ink-faint);flex:none">
+        <circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 20 20"/>
+      </svg>
+      <input type="search" id="q" placeholder="جست‌وجوی کد یا نام…" data-i-ph="searchPh" data-i-label="searchPh" aria-label="جست‌وجو">
+    </label>
+
+    <div class="sp-group" data-facet="cat"></div>
+    <div class="sp-group" data-facet="mat"></div>
+    <div class="sp-group" data-facet="size"></div>
+    <div class="sp-group" data-facet="stock"></div>
+
+    <button type="button" class="cat-btn cat-btn--ghost sp-rail__reset" id="reset" data-i="clearAll">پاک کردن فیلترها</button>
+  </aside>
+
+  <main class="sp-main" id="results" tabindex="-1">
+    <div class="sp-bar">
+      <p class="sp-result" id="resultCount" aria-live="polite"></p>
+      <div class="sp-active" id="activeFilters"></div>
+      <div class="sp-viewswitch" role="group" data-i-label="viewGroup" aria-label="نمای نمایش">
+        <button type="button" data-view="table" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3.5" y="4.5" width="17" height="15"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 9.5v10"/>
+          </svg>
+          <span data-i="viewTable">جدول</span>
+        </button>
+        <button type="button" data-view="cards" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3.5" y="3.5" width="7" height="7"/><rect x="13.5" y="3.5" width="7" height="7"/>
+            <rect x="3.5" y="13.5" width="7" height="7"/><rect x="13.5" y="13.5" width="7" height="7"/>
+          </svg>
+          <span data-i="viewCards">کارت</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sp-views" id="tableView">
+      <div class="sp-scroller">
+        <table class="sp-t">
+          <thead><tr id="headRow"></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sp-views sp-cards" id="cardView" hidden></div>
+
+    <div class="sp-empty" id="empty" hidden>
+      <p class="sp-empty__t" data-i="emptyT">قطعه‌ای با این فیلترها پیدا نشد</p>
+      <p class="sp-empty__b" data-i="emptyB">یک فیلتر را بردارید یا عبارت جست‌وجو را تغییر دهید.</p>
+      <button type="button" class="cat-btn cat-btn--ghost" data-act="reset" data-i="clearAll">پاک کردن فیلترها</button>
+    </div>
+
+    <div class="sp-legend">
+      <div class="sp-legend__k">
+        <span class="sp-stock" data-s="in"><i class="sp-dot"></i><span data-i="stIn">موجود</span></span>
+        <span class="sp-stock" data-s="low"><i class="sp-dot"></i><span data-i="stLow">رو به اتمام</span></span>
+        <span class="sp-stock" data-s="order"><i class="sp-dot"></i><span data-i="stOrder">سفارش تولید</span></span>
+        <span class="sp-stock" data-s="out"><i class="sp-dot"></i><span data-i="stOut">ناموجود</span></span>
+      </div>
+      <p data-i="note">ابعاد بر حسب میلی‌متر و وزن بر حسب گرم است. قیمت‌ها بدون مالیات بر ارزش افزوده و بر پایه فهرست ۱۴۰۵/۰۶ است.</p>
+    </div>
+  </main>
+</div>
+
+<div class="sp-tray no-print" id="tray" role="region" data-i-label="trayRegion" aria-label="سینی مقایسه">
+  <div class="sp-in">
+    <div class="sp-tray__slots" id="traySlots"></div>
+    <p class="sp-tray__txt" id="trayTxt"></p>
+    <span class="sp-tray__sp"></span>
+    <button type="button" class="cat-btn cat-btn--quiet" id="trayClear" data-i="clearSel">پاک کردن</button>
+    <button type="button" class="cat-btn" id="trayCompare">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <rect x="3.5" y="4.5" width="6.5" height="15"/><rect x="14" y="4.5" width="6.5" height="15"/><path d="M12 3v18"/>
+      </svg>
+      <span data-i="compare">مقایسه</span>
+    </button>
   </div>
 </div>
 
-<section class="mx-section">
-  <div class="mx-inner">
-    <div class="mx-h">
-      <span>01</span>
-      <h2 data-t="s1">جزئیات روی عکس</h2>
-      <p data-t="s1p">کلیک روی تصویر، بزرگ‌نمایی روی همان نقطه‌ای که کلیک کردید. نقطه‌های شماره‌دار به بخش واقعی محصول چسبیده‌اند و با زوم همراه می‌شوند.</p>
+<div class="cat-scrim no-print" id="scrim" hidden></div>
+
+<div class="cat-dialog sp-dlg no-print" id="cmpDlg" role="dialog" aria-modal="true" aria-labelledby="cmpTitle" hidden>
+  <div>
+    <div class="sp-dlg__head">
+      <h2 class="sp-dlg__title" id="cmpTitle" data-i="cmpTitle">مقایسه مشخصات</h2>
+      <span class="sp-dlg__sp"></span>
+      <label class="sp-opt">
+        <input type="checkbox" id="diffOnly">
+        <span class="sp-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span>
+        <span class="sp-opt__label" data-i="diffOnly">فقط تفاوت‌ها</span>
+      </label>
+      <button type="button" class="cat-btn cat-btn--quiet" id="cmpAddAll" data-i="addAll">افزودن همه به استعلام</button>
+      <button type="button" class="cat-btn cat-btn--ghost cat-btn--icon" id="cmpClose" data-i-label="close" aria-label="بستن">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
     </div>
-    <div class="mx-grid cat-stagger" id="grid"></div>
+    <p class="sp-hint" data-i="cmpHint">سلول‌های متفاوت با خط آبی مشخص شده‌اند.</p>
   </div>
-</section>
+  <div class="sp-dlg__body" id="cmpBody"></div>
+</div>
 
-<section class="mx-section">
-  <div class="mx-inner">
-    <div class="mx-h">
-      <span>02</span>
-      <h2 data-t="s2">صفحه‌کلید</h2>
-      <p data-t="s2p">نمایشگر جزئیات کامل با صفحه‌کلید کار می‌کند و فوکوس داخلش می‌ماند.</p>
-    </div>
-    <div class="mx-keys">
-      <div class="mx-key"><kbd>Esc</kbd><span data-t="k1">بستن</span></div>
-      <div class="mx-key"><kbd>← →</kbd><span data-t="k2">رفتن بین رسانه‌ها — و در حالت ویدیو، جابه‌جایی روی تایم‌لاین</span></div>
-      <div class="mx-key"><kbd>Space</kbd><span data-t="k3">پخش و مکث ویدیو</span></div>
-      <div class="mx-key"><kbd>+ −</kbd><span data-t="k4">زوم</span></div>
-      <div class="mx-key"><kbd>Tab</kbd><span data-t="k5">گشتن بین کنترل‌ها؛ فوکوس از نمایشگر بیرون نمی‌رود</span></div>
-    </div>
+<aside class="sp-drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+  <div class="sp-drawer__head">
+    <h2 class="sp-drawer__title" id="drawerTitle" data-i="inqTitle">فهرست استعلام قیمت</h2>
+    <button type="button" class="cat-btn cat-btn--ghost cat-btn--icon sp-drawer__close" id="inqClose" data-i-label="close" aria-label="بستن">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
   </div>
-</section>
-
-<section class="mx-section">
-  <div class="mx-inner">
-    <div class="mx-h">
-      <span>03</span>
-      <h2 data-t="s3">گذاشتن عکس و ویدیوی واقعی</h2>
-      <p data-t="s3p">تصویرها جانگهدارِ ساخته‌شده‌اند. برای فایل واقعی فقط src را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.</p>
-    </div>
-    <div class="mx-swap">
-<pre>{ type: 'photo', src: 'assets/SK-101-front.jpg',
-  hotspots: [ { x: 50, y: 38, title: 'بدنه', body: 'سرامیک لعاب‌دار.' } ] }
-
-{ type: 'video', src: 'assets/SK-101.mp4',
-  poster: 'assets/SK-101-poster.jpg' }</pre>
+  <div class="sp-drawer__body" id="inqBody"></div>
+  <div class="sp-drawer__foot">
+    <p class="sp-drawer__sum" id="inqSum"></p>
+    <div class="sp-drawer__btns">
+      <button type="button" class="cat-btn cat-btn--quiet" id="inqClear" data-i="clearList">خالی کردن</button>
+      <button type="button" class="cat-btn" id="inqPrint" data-i="printList">چاپ فهرست</button>
     </div>
   </div>
-</section>
+</aside>
 
 <script>
 /* inlined from shared/catalog-kit.js */
@@ -1934,190 +2361,1120 @@ a:hover { color: var(--ink); }
 
 </script>
 <script>
-const THEMES = ['editorial', 'luxe', 'brutal', 'glass', 'press', 'spec', 'craft', 'mono'];
+(function () {
+  'use strict';
 
-/* Six products, each demonstrating a different subject and palette so the
-   procedural artwork shows its range. Hotspots name real parts, because a
-   hotspot that says "detail 1" teaches nothing about the mechanism. */
-const PRODUCTS = [
-  {
-    sku: 'SK-101', subject: 'vase', palette: 'warm',
-    fa: 'گلدان لعاب خاکستر', en: 'Ash-glaze vessel',
-    price: '۲٬۴۸۰٬۰۰۰', priceEn: '2,480,000',
-    hotspots: [
-      { x: 50, y: 22, fa: ['لبه', 'لبه‌ی برگردان، ضخامت ۶ میلی‌متر.'], en: ['Rim', 'Rolled rim, 6 mm wall.'] },
-      { x: 62, y: 45, fa: ['لعاب', 'لعاب خاکستر چوب، پخت احیایی ۱۲۸۰ درجه.'], en: ['Glaze', 'Wood-ash glaze, reduction fired at 1280°C.'] },
-      { x: 44, y: 76, fa: ['پاخور', 'پاخور تراش‌خورده، قطر ۹ سانتی‌متر.'], en: ['Foot ring', 'Turned foot, 9 cm diameter.'] }
-    ]
-  },
-  {
-    sku: 'SK-204', subject: 'chair', palette: 'stone',
-    fa: 'صندلی گردو', en: 'Walnut side chair',
-    price: '۸٬۹۵۰٬۰۰۰', priceEn: '8,950,000',
-    hotspots: [
-      { x: 50, y: 28, fa: ['پشتی', 'تخته‌ی خم‌شده با بخار، ضخامت ۱۲ میلی‌متر.'], en: ['Back', 'Steam-bent panel, 12 mm.'] },
-      { x: 34, y: 58, fa: ['اتصال', 'فاق و زبانه‌ی کور، بدون پیچ.'], en: ['Joint', 'Blind mortise and tenon, no fasteners.'] },
-      { x: 66, y: 82, fa: ['پایه', 'گردو روغن‌خورده، مقطع ۲۲ میلی‌متر.'], en: ['Leg', 'Oiled walnut, 22 mm section.'] }
-    ]
-  },
-  {
-    sku: 'SK-330', subject: 'bag', palette: 'clay',
-    fa: 'کیف چرم گیاهی', en: 'Veg-tan satchel',
-    price: '۶٬۲۰۰٬۰۰۰', priceEn: '6,200,000',
-    hotspots: [
-      { x: 50, y: 24, fa: ['دسته', 'دوخت زینی دستی، نخ کتان موم‌زده.'], en: ['Handle', 'Hand saddle-stitched, waxed linen.'] },
-      { x: 50, y: 52, fa: ['قفل', 'برنج ریخته‌گری، بدون آبکاری.'], en: ['Clasp', 'Cast brass, unplated.'] },
-      { x: 30, y: 70, fa: ['چرم', 'دباغی گیاهی، ضخامت ۲٫۲ میلی‌متر.'], en: ['Leather', 'Vegetable tanned, 2.2 mm.'] }
-    ]
-  },
-  {
-    sku: 'SK-412', subject: 'lamp', palette: 'sage',
-    fa: 'چراغ رومیزی کاغذی', en: 'Paper table lamp',
-    price: '۳٬۷۴۰٬۰۰۰', priceEn: '3,740,000',
-    hotspots: [
-      { x: 50, y: 30, fa: ['حباب', 'کاغذ دست‌ساز روی رینگ فولادی.'], en: ['Shade', 'Handmade paper on steel ring.'] },
-      { x: 50, y: 68, fa: ['ساقه', 'فولاد پودری‌رنگ، قطر ۱۲ میلی‌متر.'], en: ['Stem', 'Powder-coated steel, 12 mm.'] }
-    ]
-  },
-  {
-    sku: 'SK-508', subject: 'watch', palette: 'ink',
-    fa: 'ساعت مینای سرمه‌ای', en: 'Indigo enamel watch',
-    price: '۲۴٬۶۰۰٬۰۰۰', priceEn: '24,600,000',
-    hotspots: [
-      { x: 50, y: 44, fa: ['صفحه', 'مینای آتشی، سه لایه پخت.'], en: ['Dial', 'Fired enamel, three firings.'] },
-      { x: 68, y: 52, fa: ['عقربه', 'فولاد آبی‌شده با حرارت.'], en: ['Hands', 'Heat-blued steel.'] },
-      { x: 50, y: 76, fa: ['بند', 'چرم ساغری، عرض ۱۸ میلی‌متر.'], en: ['Strap', 'Shagreen, 18 mm lug.'] }
-    ]
-  },
-  {
-    sku: 'SK-615', subject: 'textile', palette: 'indigo',
-    fa: 'قالیچه‌ی پشم دست‌ریس', en: 'Handspun wool rug',
-    price: '۱۸٬۹۰۰٬۰۰۰', priceEn: '18,900,000',
-    hotspots: [
-      { x: 38, y: 34, fa: ['گره', 'گره فارسی، ۴۰ رج در دسی‌متر.'], en: ['Knot', 'Persian knot, 40 rows/dm.'] },
-      { x: 62, y: 60, fa: ['رنگرزی', 'نیل طبیعی، رنگرزی دیگ‌به‌دیگ.'], en: ['Dye', 'Natural indigo, lot-dyed.'] },
-      { x: 50, y: 86, fa: ['شیرازه', 'شیرازه‌پیچ دستی با پشم همان دیگ.'], en: ['Selvedge', 'Hand-wrapped in the same lot.'] }
-    ]
+  var K = window.CatalogKit;
+
+  /* ── strings ──────────────────────────────────────────── */
+
+  var S = {
+    skip:       ['پرش به فهرست قطعات', 'Skip to the parts list'],
+    tagline:    ['یراق‌آلات و اتصالات معماری · تهران', 'Architectural hardware and fittings · Tehran'],
+    fDoc:       ['سند', 'Document'],
+    fRev:       ['ویرایش', 'Revision'],
+    fDate:      ['تاریخ', 'Date'],
+    fUnit:      ['واحد ابعاد', 'Dimension unit'],
+    fStd:       ['استاندارد', 'Standards'],
+    langGroup:  ['زبان', 'Language'],
+    inquiry:    ['استعلام قیمت', 'Price inquiry'],
+    filters:    ['فیلترها', 'Filters'],
+    searchPh:   ['جست‌وجوی کد یا نام…', 'Search code or name…'],
+    fQuery:     ['جست‌وجو', 'Search'],
+    fCat:       ['دسته‌بندی', 'Category'],
+    fMat:       ['جنس', 'Material'],
+    fSize:      ['بازه اندازه', 'Size range'],
+    fStock:     ['موجودی', 'Availability'],
+    clearAll:   ['پاک کردن فیلترها', 'Clear filters'],
+    viewGroup:  ['نمای نمایش', 'View'],
+    viewTable:  ['جدول', 'Table'],
+    viewCards:  ['کارت', 'Cards'],
+    colPick:    ['مقایسه', 'Compare'],
+    colImg:     ['نما', 'View'],
+    colCode:    ['کد', 'Code'],
+    colName:    ['نام قطعه', 'Part'],
+    colMat:     ['جنس و پرداخت', 'Material & finish'],
+    colDim:     ['ابعاد mm', 'Dimensions mm'],
+    colWeight:  ['وزن g', 'Weight g'],
+    colPrice:   ['قیمت', 'Price'],
+    colStock:   ['موجودی', 'Stock'],
+    colAdd:     ['افزودن', 'Add'],
+    sortAsc:    ['مرتب‌سازی صعودی', 'Sort ascending'],
+    sortDesc:   ['مرتب‌سازی نزولی', 'Sort descending'],
+    emptyT:     ['قطعه‌ای با این فیلترها پیدا نشد', 'No part matches these filters'],
+    emptyB:     ['یک فیلتر را بردارید یا عبارت جست‌وجو را تغییر دهید.', 'Remove a filter or change the search term.'],
+    noFilters:  ['بدون فیلتر — همه قطعه‌ها', 'No filters — the full list'],
+    removeF:    ['برداشتن فیلتر', 'Remove filter'],
+    note:       ['ابعاد بر حسب میلی‌متر و وزن بر حسب گرم. قیمت‌ها بدون مالیات بر ارزش افزوده و بر پایه فهرست ۱۴۰۵/۰۶ است.',
+                 'Dimensions in millimetres, weights in grams. Prices exclude VAT and follow the 1405/06 list.'],
+    stIn:       ['موجود', 'In stock'],
+    stLow:      ['رو به اتمام', 'Low stock'],
+    stOrder:    ['سفارش تولید', 'Made to order'],
+    stOut:      ['ناموجود', 'Out of stock'],
+    toman:      ['تومان', 'toman'],
+    trayRegion: ['سینی مقایسه', 'Comparison tray'],
+    compare:    ['مقایسه', 'Compare'],
+    clearSel:   ['پاک کردن', 'Clear'],
+    removeSel:  ['برداشتن از مقایسه', 'Remove from the comparison'],
+    cmpTitle:   ['مقایسه مشخصات', 'Spec comparison'],
+    diffOnly:   ['فقط تفاوت‌ها', 'Differences only'],
+    addAll:     ['افزودن همه به استعلام', 'Add all to inquiry'],
+    cmpHint:    ['ردیف‌هایی که مقدارشان یکسان نیست با خط آبی و نشانه Δ مشخص شده‌اند.',
+                 'Rows whose values are not identical are marked with a blue rule and a Δ.'],
+    cmpSame:    ['این قطعه‌ها در همه مشخصات یکسان‌اند.', 'These parts match on every spec.'],
+    close:      ['بستن', 'Close'],
+    inqTitle:   ['فهرست استعلام قیمت', 'Price inquiry list'],
+    inqEmptyT:  ['فهرست خالی است', 'The list is empty'],
+    inqEmptyB:  ['قطعه‌ها را از ستون آخر جدول اضافه کنید.', 'Add parts from the last column of the table.'],
+    clearList:  ['خالی کردن', 'Clear list'],
+    printList:  ['چاپ فهرست', 'Print list'],
+    qtyUp:      ['یکی بیشتر', 'Increase quantity'],
+    qtyDown:    ['یکی کمتر', 'Decrease quantity'],
+    removeLine: ['حذف از فهرست', 'Remove from the list'],
+    addTo:      ['افزودن به استعلام', 'Add to the inquiry'],
+    inTo:       ['در فهرست استعلام', 'In the inquiry list'],
+    sCat:       ['دسته‌بندی', 'Category'],
+    sMat:       ['جنس', 'Material'],
+    sFinish:    ['پرداخت', 'Finish'],
+    sDim:       ['ابعاد', 'Dimensions'],
+    sFix:       ['اتصال', 'Fixing'],
+    sLoad:      ['بار مجاز', 'Load rating'],
+    sWeight:    ['وزن', 'Weight'],
+    sStd:       ['استاندارد', 'Standard'],
+    sCorr:      ['کلاس خوردگی', 'Corrosion class'],
+    sPack:      ['بسته‌بندی', 'Pack'],
+    sPrice:     ['قیمت واحد', 'Unit price'],
+    sStock:     ['موجودی', 'Stock']
+  };
+
+  /* Sentences that wrap two numbers; kept apart from S so t() stays a
+     string lookup. */
+  var PHRASES = {
+    result: [['نمایش ', ' از ', ' قطعه'], ['Showing ', ' of ', ' parts']],
+    tray:   [['', ' از ', ' قطعه برای مقایسه'], ['', ' of ', ' parts to compare']],
+    inq:    [['', ' ردیف · ', ' عدد'], ['', ' lines · ', ' units']]
+  };
+
+  var FACETS = {
+    cat: { title: 'fCat', opts: [
+      ['handle', 'دستگیره', 'Handles'],
+      ['hinge',  'لولا و پاشنه', 'Hinges and pivots'],
+      ['closer', 'آرام‌بند و فنر', 'Closers and springs'],
+      ['glass',  'اتصالات شیشه', 'Glass fittings'],
+      ['slide',  'ریل کشویی', 'Sliding gear'],
+      ['rail',   'نرده و براکت', 'Balustrade and brackets']
+    ] },
+    mat: { title: 'fMat', opts: [
+      ['brass', 'برنج CuZn37', 'Brass CuZn37'],
+      ['ss316', 'فولاد زنگ‌نزن 316', 'Stainless 316'],
+      ['ss304', 'فولاد زنگ‌نزن 304', 'Stainless 304'],
+      ['alu',   'آلومینیوم 6063-T6', 'Aluminium 6063-T6'],
+      ['steel', 'فولاد کربنی', 'Carbon steel']
+    ] },
+    size: { title: 'fSize', single: true, opts: [
+      ['all', 'همه', 'All'],
+      ['s',   'زیر 100 mm', 'Under 100 mm'],
+      ['m',   '100 تا 200 mm', '100 to 200 mm'],
+      ['l',   '200 تا 400 mm', '200 to 400 mm'],
+      ['xl',  'بالای 400 mm', 'Over 400 mm']
+    ] },
+    stock: { title: 'fStock', opts: [
+      ['in',    'موجود', 'In stock'],
+      ['low',   'رو به اتمام', 'Low stock'],
+      ['order', 'سفارش تولید', 'Made to order'],
+      ['out',   'ناموجود', 'Out of stock']
+    ] }
+  };
+
+  var SIZE_TEST = {
+    all: function () { return true; },
+    s:   function (v) { return v < 100; },
+    m:   function (v) { return v >= 100 && v <= 200; },
+    l:   function (v) { return v > 200 && v <= 400; },
+    xl:  function (v) { return v > 400; }
+  };
+
+  var STOCK_RANK = { in: 0, low: 1, order: 2, out: 3 };
+  var MAX_PICK = 3;
+
+  /* ── parts ────────────────────────────────────────────── */
+
+  var PARTS = [
+    { code: 'ARS-H110', cat: 'handle', mat: 'brass', size: 128, weight: 420, price: 2850000,
+      stock: 'in', subject: 'bottle', palette: 'amber',
+      name: ['دستگیره اهرمی کرمان', 'Kerman lever handle'], finish: ['نیکل مات', 'Satin nickel'],
+      dim: '128 × 19 × 62', fix: 'M5 · 38 c/c', load: '300 N', std: 'EN 1906 / 3', corr: 'Grade 4', pack: 2,
+      hot: [
+        { x: 50, y: 26, fa: ['رزوه M5', 'پیچ اتصال M5×45 از میان مغزی فولادی می‌گذرد.'], en: ['M5 thread', 'An M5×45 bolt passes through the steel sleeve.'] },
+        { x: 36, y: 58, fa: ['رزت Ø52', 'رزت گرد Ø52 روی واشر نایلونی ضدسایش می‌نشیند.'], en: ['Ø52 rosette', 'The round Ø52 rosette seats on a nylon anti-wear washer.'] },
+        { x: 64, y: 76, fa: ['پرداخت نیکل مات', 'آبکاری نیکل مات، کلاس خوردگی ۴ طبق EN 1670.'], en: ['Satin nickel finish', 'Satin nickel plating, corrosion grade 4 to EN 1670.'] }
+      ] },
+
+    { code: 'ARS-H220', cat: 'handle', mat: 'ss316', size: 600, weight: 1180, price: 6400000,
+      stock: 'low', subject: 'bottle', palette: 'stone',
+      name: ['دستگیره کششی البرز', 'Alborz pull handle'], finish: ['برس‌خورده', 'Brushed'],
+      dim: '600 × Ø25', fix: 'M8 · 450 c/c', load: '450 N', std: 'EN 1906 / 4', corr: 'Grade 5', pack: 1,
+      hot: [
+        { x: 50, y: 22, fa: ['مرکز پیچ 450 mm', 'دو نقطه اتصال با فاصله مرکز تا مرکز ۴۵۰ میلی‌متر.'], en: ['Fixing centres 450 mm', 'Two fixing points at 450 mm centre-to-centre.'] },
+        { x: 50, y: 52, fa: ['لوله Ø25', 'لوله فولاد زنگ‌نزن 316 با ضخامت جدار ۲ میلی‌متر.'], en: ['Ø25 tube', 'Stainless 316 tube with a 2 mm wall.'] },
+        { x: 50, y: 82, fa: ['پایه رزوه M8', 'پایه با رزوه داخلی M8 برای پیچ سرخزینه.'], en: ['M8 threaded boss', 'Internally threaded M8 boss for a countersunk bolt.'] }
+      ] },
+
+    { code: 'ARS-H305', cat: 'handle', mat: 'alu', size: 160, weight: 86, price: 480000,
+      stock: 'in', subject: 'watch', palette: 'ink',
+      name: ['دستگیره کابینت نی‌ریز', 'Neyriz cabinet pull'], finish: ['آنودایز نقره‌ای', 'Silver anodised'],
+      dim: '160 × 12 × 28', fix: 'M4 · 128 c/c', load: '150 N', std: 'EN 1670', corr: 'Grade 3', pack: 10,
+      hot: [
+        { x: 34, y: 46, fa: ['مرکز پیچ 128 mm', 'سازگار با سوراخ‌کاری استاندارد کابینت ۱۲۸ میلی‌متر.'], en: ['Fixing centres 128 mm', 'Matches the standard 128 mm cabinet drilling.'] },
+        { x: 66, y: 46, fa: ['رزوه M4', 'پیچ M4×25 همراه بسته ارسال می‌شود.'], en: ['M4 thread', 'M4×25 screws are supplied in the pack.'] },
+        { x: 50, y: 72, fa: ['آنودایز 15 µm', 'لایه آنودایز نقره‌ای با ضخامت ۱۵ میکرون.'], en: ['15 µm anodising', 'Silver anodised layer, 15 micron.'] }
+      ] },
+
+    { code: 'ARS-G250', cat: 'hinge', mat: 'ss304', size: 102, weight: 310, price: 1980000,
+      stock: 'in', subject: 'textile', palette: 'stone',
+      name: ['لولا بلبرینگی زاگرس', 'Zagros ball-bearing hinge'], finish: ['صیقلی', 'Polished'],
+      dim: '102 × 76 × 3', fix: '8 × Ø5.5', load: '120 kg', std: 'EN 1935 / 13', corr: 'Grade 4', pack: 2,
+      hot: [
+        { x: 50, y: 32, fa: ['نشیمن بلبرینگ', 'دو ردیف ساچمه در نشیمن پین سوار می‌شود.'], en: ['Bearing seat', 'Two ball races sit in the pin seat.'] },
+        { x: 34, y: 60, fa: ['پین Ø5', 'پین فولاد زنگ‌نزن Ø۵، پرچ‌شده و جدانشدنی.'], en: ['Ø5 pin', 'Riveted, non-removable stainless Ø5 pin.'] },
+        { x: 66, y: 72, fa: ['سوراخ 8 × Ø5.5', 'هشت سوراخ خزینه برای پیچ سرخزینه ۴ میلی‌متری.'], en: ['8 × Ø5.5 holes', 'Eight countersunk holes for 4 mm screws.'] }
+      ] },
+
+    { code: 'ARS-G410', cat: 'hinge', mat: 'steel', size: 165, weight: 980, price: 9750000,
+      stock: 'low', subject: 'bag', palette: 'ink',
+      name: ['پاشنه‌گرد مخفی دنا', 'Dena concealed pivot'], finish: ['روی‌اندود', 'Zinc plated'],
+      dim: '165 × 38 × 30', fix: 'M6 · 120 c/c', load: '150 kg', std: 'EN 1935 / 14', corr: 'Grade 3', pack: 1,
+      hot: [
+        { x: 50, y: 28, fa: ['صفحه بالا', 'صفحه فوقانی با تنظیم ارتفاع ±۳ میلی‌متر.'], en: ['Top plate', 'Top plate with ±3 mm height adjustment.'] },
+        { x: 50, y: 58, fa: ['بوش برنزی', 'بوش خودروان برنزی در نشیمن محور.'], en: ['Bronze bush', 'Self-lubricating bronze bush in the spindle seat.'] },
+        { x: 50, y: 82, fa: ['مرکز پیچ 120 mm', 'چهار پیچ M6 با فاصله مرکز ۱۲۰ میلی‌متر.'], en: ['Fixing centres 120 mm', 'Four M6 bolts at 120 mm centres.'] }
+      ] },
+
+    { code: 'ARS-G520', cat: 'hinge', mat: 'steel', size: 240, weight: 1640, price: 3600000,
+      stock: 'in', subject: 'chair', palette: 'ink',
+      name: ['لولای دروازه کارون', 'Karun gate hinge'], finish: ['گالوانیزه گرم', 'Hot-dip galvanised'],
+      dim: '240 × 60 × 8', fix: '4 × Ø12', load: '400 kg', std: 'EN 1935 / 14', corr: 'Grade 5', pack: 2,
+      hot: [
+        { x: 40, y: 32, fa: ['بال جوشی', 'بال ثابت روی قوطی فولادی جوش می‌شود.'], en: ['Weld-on leaf', 'The fixed leaf welds to a steel section.'] },
+        { x: 62, y: 56, fa: ['مجرای گریس', 'گریس‌خور M6 روی بدنه پین.'], en: ['Grease port', 'An M6 grease nipple sits on the pin body.'] },
+        { x: 50, y: 80, fa: ['گالوانیزه 80 µm', 'پوشش گالوانیزه گرم با ضخامت ۸۰ میکرون.'], en: ['Galvanising 80 µm', 'Hot-dip zinc coating, 80 micron.'] }
+      ] },
+
+    { code: 'ARS-C610', cat: 'closer', mat: 'alu', size: 242, weight: 1950, price: 5250000,
+      stock: 'in', subject: 'lamp', palette: 'ink',
+      name: ['آرام‌بند درب سهند', 'Sahand door closer'], finish: ['رنگ پودری مشکی', 'Powder-coated black'],
+      dim: '242 × 45 × 65', fix: 'M5 · 190 c/c', load: '80 kg', std: 'EN 1154 / 2-4', corr: 'Grade 4', pack: 1,
+      hot: [
+        { x: 36, y: 38, fa: ['شیر تنظیم', 'دو شیر جداگانه برای سرعت بستن و ضربه نهایی.'], en: ['Adjustment valves', 'Separate valves for closing speed and latch action.'] },
+        { x: 64, y: 38, fa: ['قدرت EN 2–4', 'قابل تنظیم برای لنگه درب ۸۵۰ تا ۱۱۰۰ میلی‌متر.'], en: ['Power EN 2–4', 'Adjustable for 850 to 1100 mm door leaves.'] },
+        { x: 50, y: 72, fa: ['مرکز پیچ 190 mm', 'الگوی پیچ M5 با فاصله مرکز ۱۹۰ میلی‌متر.'], en: ['Fixing centres 190 mm', 'M5 pattern at 190 mm centres.'] }
+      ] },
+
+    { code: 'ARS-C700', cat: 'closer', mat: 'steel', size: 293, weight: 4200, price: 24600000,
+      stock: 'order', subject: 'bag', palette: 'stone',
+      name: ['فنر زمینی تفتان', 'Taftan floor spring'], finish: ['رنگ کوره‌ای', 'Stove enamelled'],
+      dim: '293 × 108 × 47', fix: '4 × M8', load: '120 kg', std: 'EN 1154 / 3', corr: 'Grade 3', pack: 1,
+      hot: [
+        { x: 50, y: 30, fa: ['محور Ø20', 'محور فولادی Ø۲۰ با چهار شیار درگیر.'], en: ['Ø20 spindle', 'Four-spline Ø20 steel spindle.'] },
+        { x: 34, y: 62, fa: ['مخزن روغن', 'مخزن آب‌بند با دمای کاری ۱۵- تا ۵۰+ درجه.'], en: ['Oil chamber', 'Sealed chamber rated −15 to +50 °C.'] },
+        { x: 66, y: 78, fa: ['جعبه کار 293 × 108', 'ابعاد جعبه کار برای جاسازی در کف.'], en: ['Cement box 293 × 108', 'Cement-box footprint for the floor recess.'] }
+      ] },
+
+    { code: 'ARS-S310', cat: 'glass', mat: 'ss316', size: 230, weight: 2350, price: 12400000,
+      stock: 'in', subject: 'chair', palette: 'stone',
+      name: ['اسپایدر دوبازو خزر', 'Khazar two-arm spider'], finish: ['ساتن', 'Satin'],
+      dim: '230 × 230 × 42', fix: 'M10 · 190 c/c', load: '220 kg', std: 'EN 1670', corr: 'Grade 5', pack: 1,
+      hot: [
+        { x: 50, y: 26, fa: ['مرکز بازو 190 mm', 'فاصله مرکز تا مرکز بازوها ۱۹۰ میلی‌متر.'], en: ['Arm centres 190 mm', 'Arms at 190 mm centre-to-centre.'] },
+        { x: 34, y: 62, fa: ['روتول کروی', 'اتصال کروی لنگر را از صفحه شیشه می‌گیرد.'], en: ['Ball joint', 'The spherical joint relieves moment in the glass.'] },
+        { x: 66, y: 72, fa: ['رزوه M10', 'پیچ M10 با آب‌بند EPDM.'], en: ['M10 thread', 'M10 bolt with an EPDM seal.'] }
+      ] },
+
+    { code: 'ARS-S180', cat: 'glass', mat: 'ss304', size: 152, weight: 890, price: 4850000,
+      stock: 'order', subject: 'watch', palette: 'stone',
+      name: ['پچ‌فیتینگ ارومیه', 'Urmia patch fitting'], finish: ['آینه‌ای', 'Mirror polished'],
+      dim: '152 × 76 × 28', fix: '2 × M6', load: '90 kg', std: 'EN 1670', corr: 'Grade 4', pack: 2,
+      hot: [
+        { x: 50, y: 30, fa: ['گیره 10–12 mm', 'برای شیشه سکوریت ۱۰ تا ۱۲ میلی‌متر.'], en: ['Clamp 10–12 mm', 'Takes 10 to 12 mm toughened glass.'] },
+        { x: 36, y: 62, fa: ['واشر EPDM', 'واشر دوطرفه فشار گیره را پخش می‌کند.'], en: ['EPDM gasket', 'A double gasket spreads the clamp load.'] },
+        { x: 64, y: 76, fa: ['پرداخت آینه‌ای', 'پولیش آینه‌ای با زبری Ra ≤ 0.2 µm.'], en: ['Mirror finish', 'Mirror polish, Ra ≤ 0.2 µm.'] }
+      ] },
+
+    { code: 'ARS-T900', cat: 'slide', mat: 'ss304', size: 2000, weight: 5600, price: 18900000,
+      stock: 'in', subject: 'textile', palette: 'stone',
+      name: ['ریل کشویی سیستان', 'Sistan sliding track'], finish: ['برس‌خورده', 'Brushed'],
+      dim: '2000 × 45 × 60', fix: 'M8 · 500 c/c', load: '120 kg', std: 'EN 1527', corr: 'Grade 4', pack: 1,
+      hot: [
+        { x: 50, y: 24, fa: ['ریل 2000 mm', 'پروفیل ۲۰۰۰ میلی‌متری، قابل برش در محل.'], en: ['2000 mm rail', '2000 mm profile, cut to length on site.'] },
+        { x: 50, y: 52, fa: ['غلتک نایلونی', 'غلتک نایلون تقویت‌شده روی بلبرینگ آب‌بند.'], en: ['Nylon roller', 'Glass-filled nylon roller on a sealed bearing.'] },
+        { x: 50, y: 80, fa: ['مرکز پیچ 500 mm', 'پیچ M8 در فواصل ۵۰۰ میلی‌متر.'], en: ['Fixing centres 500 mm', 'M8 bolts every 500 mm.'] }
+      ] },
+
+    { code: 'ARS-T420', cat: 'slide', mat: 'steel', size: 88, weight: 240, price: 3150000,
+      stock: 'low', subject: 'watch', palette: 'ink',
+      name: ['غلتک آرام‌بند تالش', 'Talesh soft-close roller'], finish: ['روی‌اندود', 'Zinc plated'],
+      dim: '88 × 42 × 36', fix: 'M6 · 64 c/c', load: '80 kg', std: 'EN 1527', corr: 'Grade 3', pack: 2,
+      hot: [
+        { x: 50, y: 30, fa: ['مهارکننده نرم', 'سیلندر بادی با کورس ۳۵ میلی‌متر.'], en: ['Soft-close damper', 'Pneumatic cylinder with a 35 mm stroke.'] },
+        { x: 36, y: 60, fa: ['یاتاقان آب‌بند', 'بلبرینگ 608-2RS آب‌بند.'], en: ['Sealed bearing', 'Sealed 608-2RS ball bearing.'] },
+        { x: 64, y: 74, fa: ['مرکز پیچ 64 mm', 'دو پیچ M6 با فاصله ۶۴ میلی‌متر.'], en: ['Fixing centres 64 mm', 'Two M6 bolts at 64 mm.'] }
+      ] },
+
+    { code: 'ARS-B450', cat: 'rail', mat: 'brass', size: 92, weight: 560, price: 1420000,
+      stock: 'in', subject: 'lamp', palette: 'amber',
+      name: ['براکت دست‌انداز الوند', 'Alvand handrail bracket'], finish: ['برنز روغنی', 'Oil-rubbed bronze'],
+      dim: '92 × 76 × 64', fix: '3 × Ø6', load: '90 kg', std: 'EN 1670', corr: 'Grade 4', pack: 2,
+      hot: [
+        { x: 50, y: 28, fa: ['نشیمن Ø42', 'نشیمن هلالی برای لوله دست‌انداز Ø۴۲٫۴.'], en: ['Ø42 saddle', 'Cradle for a Ø42.4 handrail tube.'] },
+        { x: 36, y: 64, fa: ['صفحه 3 × Ø6', 'صفحه دیواری با سه سوراخ Ø۶.'], en: ['3 × Ø6 wall plate', 'Wall plate with three Ø6 holes.'] },
+        { x: 64, y: 78, fa: ['برنز روغنی', 'پرداخت برنز روغنی با لایه موم محافظ.'], en: ['Oil-rubbed bronze', 'Oil-rubbed bronze under a protective wax.'] }
+      ] },
+
+    { code: 'ARS-B720', cat: 'rail', mat: 'alu', size: 150, weight: 3100, price: 7300000,
+      stock: 'out', subject: 'chair', palette: 'ink',
+      name: ['پایه نرده شیشه بیستون', 'Bisotun balustrade shoe'], finish: ['آنودایز طبیعی', 'Natural anodised'],
+      dim: '150 × 120 × 135', fix: 'M12 · 250 c/c', load: '1.0 kN/m', std: 'EN 1991-1-1', corr: 'Grade 5', pack: 1,
+      hot: [
+        { x: 50, y: 26, fa: ['شیار 21.5 mm', 'شیار برای شیشه لمینت ۲۱٫۵ میلی‌متر.'], en: ['21.5 mm channel', 'Channel for 21.5 mm laminated glass.'] },
+        { x: 34, y: 58, fa: ['گوه تنظیم', 'گوه پلیمری شاقولی را تا ±۲ درجه تنظیم می‌کند.'], en: ['Adjustment wedge', 'A polymer wedge trims plumb by ±2°.'] },
+        { x: 66, y: 80, fa: ['مرکز پیچ 250 mm', 'بولت M12 با فاصله مرکز ۲۵۰ میلی‌متر.'], en: ['Fixing centres 250 mm', 'M12 anchors at 250 mm centres.'] }
+      ] }
+  ];
+
+  /* ── state ────────────────────────────────────────────── */
+
+  var L = 0;                        /* 0 = fa, 1 = en */
+  var state = { q: '', cat: [], mat: [], size: 'all', stock: [], sortKey: 'code', sortDir: 1, view: 'table' };
+  var picked = [];                  /* codes, at most MAX_PICK */
+  var inquiry = [];                 /* { code, qty } */
+  var rows = {};
+  var cards = {};
+  var lastFocus = null;
+
+  /* ── helpers ──────────────────────────────────────────── */
+
+  function t(key) { return S[key][L]; }
+  function lang() { return L === 0 ? 'fa' : 'en'; }
+  function num(v) { return L === 0 ? K.toFa(String(v)) : String(v); }
+
+  function price(v) {
+    var s = String(v).replace(/\B(?=(\d{3})+(?!\d))/g, L === 0 ? '٬' : ',');
+    return L === 0 ? K.toFa(s) : s;
   }
-];
 
-const STRINGS = {
-  fa: {
-    s1: 'جزئیات روی عکس',
-    s1p: 'کلیک روی تصویر، بزرگ‌نمایی روی همان نقطه‌ای که کلیک کردید. نقطه‌های شماره‌دار به بخش واقعی محصول چسبیده‌اند و با زوم همراه می‌شوند.',
-    s2: 'صفحه‌کلید',
-    s2p: 'نمایشگر جزئیات کامل با صفحه‌کلید کار می‌کند و فوکوس داخلش می‌ماند.',
-    s3: 'گذاشتن عکس و ویدیوی واقعی',
-    s3p: 'تصویرها جانگهدارِ ساخته‌شده‌اند. برای فایل واقعی فقط src را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.',
-    k1: 'بستن', k2: 'رفتن بین رسانه‌ها — و در حالت ویدیو، جابه‌جایی روی تایم‌لاین',
-    k3: 'پخش و مکث ویدیو', k4: 'زوم', k5: 'گشتن بین کنترل‌ها؛ فوکوس از نمایشگر بیرون نمی‌رود',
-    unit: 'تومان', detail: 'جزئیات'
-  },
-  en: {
-    s1: 'Detail on the image',
-    s1p: 'Click the image and it zooms to the point you clicked. Numbered hotspots are pinned to the part they name and travel with the zoom.',
-    s2: 'Keyboard',
-    s2p: 'The detail viewer is fully keyboard operable and traps focus while open.',
-    s3: 'Dropping in real photography',
-    s3p: 'The artwork is a generated placeholder. Give a descriptor a src and the same mechanism plays the real file.',
-    k1: 'Close', k2: 'Move between media — and seek the timeline in video mode',
-    k3: 'Play and pause', k4: 'Zoom', k5: 'Cycle the controls; focus stays inside the viewer',
-    unit: 'IRT', detail: 'Details'
+  function optLabel(facet, value) {
+    var list = FACETS[facet].opts;
+    for (var i = 0; i < list.length; i++) if (list[i][0] === value) return list[i][1 + L];
+    return value;
   }
-};
+  function matLabel(m) { return optLabel('mat', m); }
+  function stockLabel(s) { return t('st' + s.charAt(0).toUpperCase() + s.slice(1)); }
 
-let lang = 'fa';
-const root = document.documentElement;
-const grid = document.getElementById('grid');
-
-const themeBar = document.getElementById('themes');
-for (const name of THEMES) {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = 'cat-chip';
-  b.textContent = name;
-  b.setAttribute('aria-pressed', String(name === root.dataset.theme));
-  b.addEventListener('click', () => {
-    root.dataset.theme = name;
-    for (const other of themeBar.children) {
-      other.setAttribute('aria-pressed', String(other === b));
-    }
-  });
-  themeBar.appendChild(b);
-}
-
-document.getElementById('lang').addEventListener('click', (e) => {
-  const btn = e.target.closest('button[data-lang]');
-  if (!btn || btn.dataset.lang === lang) return;
-  lang = btn.dataset.lang;
-  for (const other of btn.parentNode.children) {
-    other.setAttribute('aria-pressed', String(other === btn));
+  function el(tag, cls, attrs) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    return n;
   }
-  root.lang = lang;
-  root.dir = lang === 'fa' ? 'rtl' : 'ltr';
-  for (const node of document.querySelectorAll('[data-t]')) {
-    node.textContent = STRINGS[lang][node.dataset.t];
+
+  function text(tag, cls, str) {
+    var n = el(tag, cls);
+    n.textContent = str;
+    return n;
   }
-  render();
-});
 
-function render() {
-  const t = STRINGS[lang];
-  grid.innerHTML = '';
-  for (const p of PRODUCTS) {
-    const card = document.createElement('article');
-    card.className = 'cat-card';
+  var ICON = {
+    check: '<path d="m5 12.5 4.5 4.5L19 7" stroke-width="3"/>',
+    caret: '<path d="m6 9.5 6 6 6-6"/>',
+    close: '<path d="M6 6l12 12M18 6 6 18"/>',
+    plus:  '<path d="M12 5v14M5 12h14"/>',
+    minus: '<path d="M5 12h14"/>',
+    trash: '<path d="M4.5 6.5h15M9.5 6.5V4.5h5v2M6.5 6.5 7.5 20h9l1-13.5"/>'
+  };
 
-    const media = document.createElement('div');
-    card.appendChild(media);
+  function icon(paths, size) {
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" ' +
+      'stroke="currentColor" stroke-width="1.5" aria-hidden="true">' + paths + '</svg>';
+  }
 
-    const name = document.createElement('h3');
-    name.className = 'cat-card__name';
-    name.textContent = lang === 'fa' ? p.fa : p.en;
+  function part(code) {
+    for (var i = 0; i < PARTS.length; i++) if (PARTS[i].code === code) return PARTS[i];
+    return null;
+  }
 
-    const alt = document.createElement('div');
-    alt.className = 'cat-card__name-en';
-    alt.dir = lang === 'fa' ? 'ltr' : 'rtl';
-    alt.textContent = lang === 'fa' ? p.en : p.fa;
-
-    const meta = document.createElement('div');
-    meta.className = 'cat-card__meta';
-    const price = document.createElement('div');
-    price.className = 'cat-price';
-    price.innerHTML = '<span></span><span class="cat-price__unit"></span>';
-    price.firstChild.textContent = lang === 'fa' ? p.price : p.priceEn;
-    price.lastChild.textContent = t.unit;
-    const sku = document.createElement('div');
-    sku.className = 'cat-sku';
-    sku.textContent = p.sku;
-    meta.append(price, sku);
-
-    const open = document.createElement('button');
-    open.type = 'button';
-    open.className = 'cat-btn cat-btn--ghost';
-    open.textContent = t.detail;
-
-    card.append(name, alt, meta, open);
-    grid.appendChild(card);
-
-    /* The media element has to be in the document before it is mounted,
-       so this runs after the card is appended. */
-    media.className = 'cat-card__media';
-    const hotspots = p.hotspots.map((h) => ({
-      x: h.x, y: h.y,
-      title: (lang === 'fa' ? h.fa : h.en)[0],
-      body: (lang === 'fa' ? h.fa : h.en)[1]
-    }));
-    const set = CatalogKit.defaultMedia(p.sku, hotspots, {
-      subject: p.subject, palette: p.palette
+  function media(a) {
+    var hot = a.hot.map(function (h) {
+      var copy = L === 0 ? h.fa : h.en;
+      return { x: h.x, y: h.y, title: copy[0], body: copy[1] };
     });
-    const meta2 = { title: lang === 'fa' ? p.fa : p.en, sku: p.sku };
-    CatalogKit.mountMedia(media, set, meta2, lang);
-    open.addEventListener('click', () => CatalogKit.open(set, meta2, lang, 0));
+    return K.defaultMedia(a.code, hot, { subject: a.subject, palette: a.palette });
   }
-}
 
-render();
+  /* Matches the first descriptor defaultMedia() builds, so the small
+     thumbnails elsewhere on the page show the same frame as the row. */
+  function poster(a) { return K.image(a.code + '-a', { w: 200, h: 250, subject: a.subject, palette: a.palette }); }
+
+  function phrase(host, key, a, b) {
+    var seg = PHRASES[key][L];
+    host.innerHTML = '';
+    host.appendChild(document.createTextNode(seg[0]));
+    host.appendChild(text('strong', '', num(a)));
+    host.appendChild(document.createTextNode(seg[1]));
+    host.appendChild(text('strong', '', num(b)));
+    host.appendChild(document.createTextNode(seg[2]));
+  }
+
+  /* ── columns and specs ────────────────────────────────── */
+
+  var COLUMNS = [
+    { key: 'code',   label: 'colCode',   sort: function (a) { return a.code; } },
+    { key: 'name',   label: 'colName',   sort: function (a) { return a.name[L]; } },
+    { key: 'mat',    label: 'colMat',    sort: function (a) { return matLabel(a.mat); } },
+    { key: 'dim',    label: 'colDim',    sort: function (a) { return a.size; } },
+    { key: 'weight', label: 'colWeight', sort: function (a) { return a.weight; } },
+    { key: 'price',  label: 'colPrice',  sort: function (a) { return a.price; } },
+    { key: 'stock',  label: 'colStock',  sort: function (a) { return STOCK_RANK[a.stock]; } }
+  ];
+
+  var SPEC_ROWS = [
+    { label: 'sCat',    get: function (a) { return optLabel('cat', a.cat); } },
+    { label: 'sMat',    get: function (a) { return matLabel(a.mat); } },
+    { label: 'sFinish', get: function (a) { return a.finish[L]; } },
+    { label: 'sDim',    get: function (a) { return a.dim + ' mm'; }, mono: true },
+    { label: 'sFix',    get: function (a) { return a.fix; }, mono: true },
+    { label: 'sLoad',   get: function (a) { return a.load; }, mono: true },
+    { label: 'sWeight', get: function (a) { return a.weight + ' g'; }, mono: true },
+    { label: 'sStd',    get: function (a) { return a.std; }, mono: true },
+    { label: 'sCorr',   get: function (a) { return a.corr; }, mono: true },
+    { label: 'sPack',   get: function (a) { return num(a.pack); }, mono: true },
+    { label: 'sPrice',  get: function (a) { return price(a.price) + ' ' + t('toman'); }, mono: true },
+    { label: 'sStock',  get: function (a) { return stockLabel(a.stock); } }
+  ];
+
+  function column(key) {
+    for (var i = 0; i < COLUMNS.length; i++) if (COLUMNS[i].key === key) return COLUMNS[i];
+    return COLUMNS[0];
+  }
+
+  /* ── filtering and sorting ────────────────────────────── */
+
+  function matches(a) {
+    if (state.cat.length && state.cat.indexOf(a.cat) < 0) return false;
+    if (state.mat.length && state.mat.indexOf(a.mat) < 0) return false;
+    if (state.stock.length && state.stock.indexOf(a.stock) < 0) return false;
+    if (!SIZE_TEST[state.size](a.size)) return false;
+    if (state.q) {
+      var hay = (a.code + ' ' + a.name[0] + ' ' + a.name[1] + ' ' + a.dim + ' ' +
+                 matLabel(a.mat) + ' ' + a.finish[L] + ' ' + a.std).toLowerCase();
+      if (hay.indexOf(state.q.toLowerCase()) < 0) return false;
+    }
+    return true;
+  }
+
+  function visible() {
+    var get = column(state.sortKey).sort;
+    var dir = state.sortDir;
+    var collator = new Intl.Collator(lang(), { numeric: true, sensitivity: 'base' });
+    return PARTS.filter(matches).sort(function (a, b) {
+      var x = get(a), y = get(b);
+      var d = typeof x === 'number' ? x - y : collator.compare(x, y);
+      /* Code breaks every tie, so the order never depends on array order. */
+      return (d || collator.compare(a.code, b.code)) * dir;
+    });
+  }
+
+  /* How many parts an option would leave with the other facets still on —
+     the number someone needs before clicking it. */
+  function facetCount(facet, value) {
+    var saved = state[facet];
+    state[facet] = facet === 'size' ? value : [value];
+    var n = PARTS.filter(matches).length;
+    state[facet] = saved;
+    return n;
+  }
+
+  /* ── filter rail ──────────────────────────────────────── */
+
+  function buildRail() {
+    Object.keys(FACETS).forEach(function (facet) {
+      var spec = FACETS[facet];
+      var host = document.querySelector('[data-facet="' + facet + '"]');
+
+      var head = el('div', 'sp-group__head');
+      var title = el('h3', 'sp-group__title');
+      title.setAttribute('data-i', spec.title);
+      head.appendChild(title);
+      var chosen = el('span', 'sp-group__n');
+      chosen.setAttribute('data-n', facet);
+      head.appendChild(chosen);
+      host.appendChild(head);
+
+      spec.opts.forEach(function (opt) {
+        var label = el('label', 'sp-opt');
+        var input = el('input', '', spec.single
+          ? { type: 'radio', name: 'facet-' + facet, value: opt[0] }
+          : { type: 'checkbox', value: opt[0] });
+        if (spec.single && opt[0] === 'all') input.checked = true;
+        input.addEventListener('change', function () {
+          if (spec.single) state[facet] = input.value;
+          else {
+            var at = state[facet].indexOf(opt[0]);
+            if (input.checked && at < 0) state[facet].push(opt[0]);
+            if (!input.checked && at >= 0) state[facet].splice(at, 1);
+          }
+          render();
+        });
+        label.appendChild(input);
+
+        var box = el('span', 'sp-box' + (spec.single ? ' sp-box--round' : ''));
+        box.innerHTML = icon(ICON.check, 10);
+        label.appendChild(box);
+
+        var caption = el('span', 'sp-opt__label');
+        caption.setAttribute('data-opt', facet + ':' + opt[0]);
+        label.appendChild(caption);
+
+        var count = el('span', 'sp-opt__n');
+        count.setAttribute('data-count', facet + ':' + opt[0]);
+        label.appendChild(count);
+
+        host.appendChild(label);
+      });
+    });
+  }
+
+  function paintRail() {
+    Object.keys(FACETS).forEach(function (facet) {
+      var chosen = facet === 'size' ? (state.size === 'all' ? 0 : 1) : state[facet].length;
+      document.querySelector('[data-n="' + facet + '"]').textContent = chosen ? num(chosen) : '';
+      FACETS[facet].opts.forEach(function (opt) {
+        document.querySelector('[data-opt="' + facet + ':' + opt[0] + '"]').textContent = opt[1 + L];
+        document.querySelector('[data-count="' + facet + ':' + opt[0] + '"]').textContent = num(facetCount(facet, opt[0]));
+      });
+    });
+  }
+
+  function syncInputs() {
+    Object.keys(FACETS).forEach(function (facet) {
+      var single = FACETS[facet].single;
+      document.querySelectorAll('[data-facet="' + facet + '"] input').forEach(function (input) {
+        input.checked = single ? state.size === input.value : state[facet].indexOf(input.value) >= 0;
+      });
+    });
+  }
+
+  function activeChips() {
+    var out = [];
+    ['cat', 'mat', 'stock'].forEach(function (facet) {
+      state[facet].forEach(function (v) {
+        out.push({ facet: facet, value: v, key: t(FACETS[facet].title), label: optLabel(facet, v) });
+      });
+    });
+    if (state.size !== 'all') out.push({ facet: 'size', value: state.size, key: t('fSize'), label: optLabel('size', state.size) });
+    if (state.q) out.push({ facet: 'q', value: state.q, key: t('fQuery'), label: state.q });
+    return out;
+  }
+
+  function dropFilter(facet, value) {
+    if (facet === 'q') { state.q = ''; document.getElementById('q').value = ''; }
+    else if (facet === 'size') state.size = 'all';
+    else state[facet] = state[facet].filter(function (v) { return v !== value; });
+    syncInputs();
+    render();
+  }
+
+  function resetFilters() {
+    state.q = '';
+    state.cat = []; state.mat = []; state.stock = []; state.size = 'all';
+    document.getElementById('q').value = '';
+    syncInputs();
+    render();
+  }
+
+  /* ── table ────────────────────────────────────────────── */
+
+  function buildHead() {
+    var tr = document.getElementById('headRow');
+
+    ['colPick', 'colImg'].forEach(function (key) {
+      var th = el('th', '', { scope: 'col' });
+      var span = el('span', 'sp-th-plain');
+      span.setAttribute('data-i', key);
+      th.appendChild(span);
+      tr.appendChild(th);
+    });
+
+    COLUMNS.forEach(function (col) {
+      var th = el('th', '', { scope: 'col', 'data-col': col.key });
+      var btn = el('button', 'sp-sort', { type: 'button' });
+      var span = el('span');
+      span.setAttribute('data-i', col.label);
+      btn.appendChild(span);
+      var caret = el('span', 'sp-caret');
+      caret.innerHTML = icon(ICON.caret, 11);
+      btn.appendChild(caret);
+      btn.addEventListener('click', function () {
+        if (state.sortKey === col.key) state.sortDir = -state.sortDir;
+        else { state.sortKey = col.key; state.sortDir = 1; }
+        render();
+      });
+      th.appendChild(btn);
+      tr.appendChild(th);
+    });
+
+    var add = el('th', '', { scope: 'col' });
+    var addSpan = el('span', 'sp-th-plain');
+    addSpan.setAttribute('data-i', 'colAdd');
+    add.appendChild(addSpan);
+    tr.appendChild(add);
+  }
+
+  function paintHead() {
+    document.querySelectorAll('.sp-t th[data-col]').forEach(function (th) {
+      var active = th.getAttribute('data-col') === state.sortKey;
+      if (active) th.setAttribute('aria-sort', state.sortDir > 0 ? 'ascending' : 'descending');
+      else th.removeAttribute('aria-sort');
+      th.querySelector('.sp-sort').title = active && state.sortDir > 0 ? t('sortDesc') : t('sortAsc');
+    });
+  }
+
+  function stockCell(a) {
+    var span = el('span', 'sp-stock', { 'data-s': a.stock });
+    span.appendChild(el('i', 'sp-dot'));
+    span.appendChild(text('span', '', stockLabel(a.stock)));
+    return span;
+  }
+
+  function pickControl(a) {
+    var label = el('label', 'sp-pick');
+    var input = el('input', '', { type: 'checkbox' });
+    input.checked = picked.indexOf(a.code) >= 0;
+    input.addEventListener('change', function () { togglePick(a.code, input); });
+    label.appendChild(input);
+    var box = el('span', 'sp-box');
+    box.innerHTML = icon(ICON.check, 10);
+    label.appendChild(box);
+    return label;
+  }
+
+  function addControl(a) {
+    var btn = el('button', 'cat-btn cat-btn--quiet sp-add', { type: 'button' });
+    btn.innerHTML = icon(ICON.plus, 15);
+    btn.addEventListener('click', function () { addToInquiry(a.code); });
+    return btn;
+  }
+
+  function priceCell(a) {
+    var span = el('span', 'sp-price num');
+    span.appendChild(document.createTextNode(price(a.price)));
+    span.appendChild(text('span', 'sp-price__u', t('toman')));
+    return span;
+  }
+
+  function buildRow(a) {
+    var tr = el('tr', 'sp-row', { 'data-code': a.code });
+    var parts = {};
+
+    var tdPick = el('td');
+    tdPick.appendChild(pickControl(a));
+    tr.appendChild(tdPick);
+
+    var tdImg = el('td');
+    parts.thumb = el('div', 'sp-thumb');
+    tdImg.appendChild(parts.thumb);
+    tr.appendChild(tdImg);
+
+    var tdCode = el('td');
+    tdCode.appendChild(text('span', 'sp-code num', a.code));
+    tr.appendChild(tdCode);
+
+    var tdName = el('td');
+    parts.name = el('span', 'sp-name');
+    parts.alt = el('span', 'sp-name sp-name--alt');
+    tdName.appendChild(parts.name);
+    tdName.appendChild(parts.alt);
+    tr.appendChild(tdName);
+
+    var tdMat = el('td');
+    parts.mat = el('span', 'sp-mat');
+    parts.fin = el('span', 'sp-mat sp-mat--fin');
+    tdMat.appendChild(parts.mat);
+    tdMat.appendChild(parts.fin);
+    tr.appendChild(tdMat);
+
+    var tdDim = el('td');
+    tdDim.appendChild(text('span', 'sp-dim num', a.dim));
+    tr.appendChild(tdDim);
+
+    var tdWeight = el('td', 'sp-end');
+    tdWeight.appendChild(text('span', 'sp-dim num', String(a.weight)));
+    tr.appendChild(tdWeight);
+
+    parts.price = el('td', 'sp-end');
+    tr.appendChild(parts.price);
+
+    parts.stock = el('td');
+    tr.appendChild(parts.stock);
+
+    var tdAdd = el('td');
+    parts.add = addControl(a);
+    tdAdd.appendChild(parts.add);
+    tr.appendChild(tdAdd);
+
+    parts.pick = tdPick.querySelector('input');
+    tr._parts = parts;
+    return tr;
+  }
+
+  function buildCard(a) {
+    var card = el('article', 'cat-card sp-card', { 'data-code': a.code });
+    var parts = {};
+
+    parts.thumb = el('div', 'sp-card__media');
+    card.appendChild(parts.thumb);
+
+    var body = el('div', 'sp-card__body');
+    var top = el('div', 'sp-card__top');
+    top.appendChild(text('span', 'sp-code num', a.code));
+    parts.stock = el('span');
+    top.appendChild(parts.stock);
+    body.appendChild(top);
+
+    parts.name = el('span', 'sp-name');
+    parts.alt = el('span', 'sp-name sp-name--alt');
+    body.appendChild(parts.name);
+    body.appendChild(parts.alt);
+
+    var specs = el('dl', 'sp-card__specs');
+    parts.dds = ['sMat', 'sDim', 'sLoad'].map(function (key) {
+      var dt = el('dt');
+      dt.setAttribute('data-i', key);
+      var dd = el('dd');
+      specs.appendChild(dt);
+      specs.appendChild(dd);
+      return dd;
+    });
+    body.appendChild(specs);
+
+    var foot = el('div', 'sp-card__foot');
+    parts.price = el('span');
+    foot.appendChild(parts.price);
+    var tools = el('div', 'sp-card__tools');
+    tools.appendChild(pickControl(a));
+    parts.add = addControl(a);
+    tools.appendChild(parts.add);
+    foot.appendChild(tools);
+    body.appendChild(foot);
+
+    card.appendChild(body);
+    parts.pick = tools.querySelector('input');
+    card._parts = parts;
+    return card;
+  }
+
+  /* mountMedia binds its own listeners to the host, so a fresh host goes in
+     each time rather than stacking a second set on a language switch. */
+  function remount(parts, cls, a) {
+    var fresh = el('div', cls);
+    parts.thumb.replaceWith(fresh);
+    parts.thumb = fresh;
+    K.mountMedia(fresh, media(a), { title: a.name[L], sku: a.code }, lang());
+  }
+
+  function paintNode(node, a, thumbClass) {
+    var r = node._parts;
+    r.name.textContent = a.name[L];
+    r.alt.textContent = a.name[1 - L];
+    r.alt.setAttribute('lang', L === 0 ? 'en' : 'fa');
+    r.stock.replaceChildren(stockCell(a));
+    r.price.replaceChildren(priceCell(a));
+    r.pick.setAttribute('aria-label', t('compare') + ' — ' + a.code);
+    paintAddButton(r.add, a.code);
+    remount(r, thumbClass, a);
+  }
+
+  function paintRow(a) {
+    var r = rows[a.code]._parts;
+    r.mat.textContent = matLabel(a.mat);
+    r.fin.textContent = a.finish[L];
+    paintNode(rows[a.code], a, 'sp-thumb');
+  }
+
+  function paintCard(a) {
+    var r = cards[a.code]._parts;
+    r.dds[0].textContent = matLabel(a.mat) + ' · ' + a.finish[L];
+    r.dds[1].replaceChildren(text('span', 'num', a.dim + ' mm'));
+    r.dds[2].replaceChildren(text('span', 'num', a.load));
+    paintNode(cards[a.code], a, 'sp-card__media');
+  }
+
+  /* ── comparison ───────────────────────────────────────── */
+
+  function togglePick(code, input) {
+    var at = picked.indexOf(code);
+    if (at >= 0) picked.splice(at, 1);
+    else if (picked.length < MAX_PICK) picked.push(code);
+    else { if (input) input.checked = false; return; }
+    paintPicks();
+  }
+
+  function paintPicks() {
+    PARTS.forEach(function (a) {
+      var on = picked.indexOf(a.code) >= 0;
+      var full = !on && picked.length >= MAX_PICK;
+      [rows[a.code], cards[a.code]].forEach(function (node) {
+        node.setAttribute('data-picked', on ? 'true' : 'false');
+        node._parts.pick.checked = on;
+        node._parts.pick.disabled = full;
+      });
+    });
+    paintTray();
+  }
+
+  function paintTray() {
+    document.getElementById('tray').setAttribute('data-open', picked.length ? 'true' : 'false');
+
+    var slots = document.getElementById('traySlots');
+    slots.innerHTML = '';
+    for (var i = 0; i < MAX_PICK; i++) {
+      if (!picked[i]) { slots.appendChild(el('span', 'sp-slot sp-slot--empty')); continue; }
+      slots.appendChild(traySlot(part(picked[i])));
+    }
+
+    phrase(document.getElementById('trayTxt'), 'tray', picked.length, MAX_PICK);
+    document.getElementById('trayCompare').disabled = picked.length < 2;
+  }
+
+  function traySlot(a) {
+    var btn = el('button', 'sp-slot', { type: 'button', title: a.code,
+      'aria-label': t('removeSel') + ' — ' + a.code });
+    btn.appendChild(el('img', '', { src: poster(a), alt: '' }));
+    var x = el('span', 'sp-slot__x');
+    x.innerHTML = icon(ICON.close, 14);
+    btn.appendChild(x);
+    btn.addEventListener('click', function () { togglePick(a.code); });
+    return btn;
+  }
+
+  function buildComparison() {
+    var chosen = picked.map(part);
+    var body = document.getElementById('cmpBody');
+    body.innerHTML = '';
+
+    var table = el('table', 'sp-cmp', { 'data-only': document.getElementById('diffOnly').checked ? 'true' : 'false' });
+
+    var hr = el('tr');
+    hr.appendChild(el('th', 'sp-cmp__rowhead', { scope: 'col' }));
+    chosen.forEach(function (a) {
+      var th = el('th', '', { scope: 'col' });
+      var wrap = el('div', 'sp-cmp__hd');
+      wrap.appendChild(el('img', '', { src: poster(a), alt: '' }));
+      var b = el('div');
+      b.appendChild(text('div', 'sp-code num', a.code));
+      b.appendChild(text('div', 'sp-name', a.name[L]));
+      wrap.appendChild(b);
+      th.appendChild(wrap);
+      hr.appendChild(th);
+    });
+    var thead = el('thead');
+    thead.appendChild(hr);
+    table.appendChild(thead);
+
+    var tbody = el('tbody');
+    var differing = 0;
+    SPEC_ROWS.forEach(function (row) {
+      var values = chosen.map(row.get);
+      var differs = values.some(function (v) { return v !== values[0]; });
+      if (differs) differing++;
+
+      var tr = el('tr', '', { 'data-diff': differs ? 'true' : 'false' });
+      var head = el('th', 'sp-cmp__rowhead', { scope: 'row' });
+      if (differs) head.appendChild(text('span', 'sp-cmp__mark', 'Δ'));
+      head.appendChild(document.createTextNode(t(row.label)));
+      tr.appendChild(head);
+
+      values.forEach(function (v) {
+        var td = el('td', differs ? 'sp-diff' : '');
+        td.appendChild(text('span', row.mono ? 'num' : '', v));
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    body.appendChild(table);
+
+    if (!differing) body.appendChild(text('p', 'sp-cmp__none', t('cmpSame')));
+  }
+
+  /* ── price inquiry ────────────────────────────────────── */
+
+  function inquiryLine(code) {
+    for (var i = 0; i < inquiry.length; i++) if (inquiry[i].code === code) return inquiry[i];
+    return null;
+  }
+
+  function addToInquiry(code) {
+    var line = inquiryLine(code);
+    if (line) line.qty++;
+    else inquiry.push({ code: code, qty: 1 });
+    paintInquiry();
+  }
+
+  function setQty(code, delta) {
+    var line = inquiryLine(code);
+    if (!line) return;
+    line.qty += delta;
+    if (line.qty < 1) inquiry.splice(inquiry.indexOf(line), 1);
+    paintInquiry();
+  }
+
+  function paintAddButton(btn, code) {
+    var on = !!inquiryLine(code);
+    btn.setAttribute('data-in', on ? 'true' : 'false');
+    btn.setAttribute('aria-label', (on ? t('inTo') : t('addTo')) + ' — ' + code);
+    btn.title = on ? t('inTo') : t('addTo');
+  }
+
+  function stepButton(paths, label, fn, cls) {
+    var btn = el('button', 'sp-step' + (cls ? ' ' + cls : ''), { type: 'button', 'aria-label': label, title: label });
+    btn.innerHTML = icon(paths, 13);
+    btn.addEventListener('click', fn);
+    return btn;
+  }
+
+  function inquiryRow(line) {
+    var a = part(line.code);
+    var row = el('div', 'sp-line');
+    row.appendChild(el('img', '', { src: poster(a), alt: '' }));
+
+    var b = el('div');
+    b.appendChild(text('div', 'sp-code num', a.code));
+    b.appendChild(text('div', 'sp-name', a.name[L]));
+    b.appendChild(text('div', 'sp-dim num', price(a.price * line.qty) + ' ' + t('toman')));
+    row.appendChild(b);
+
+    var tools = el('div', 'sp-line__tools');
+    tools.appendChild(stepButton(ICON.minus, t('qtyDown') + ' — ' + a.code, function () { setQty(line.code, -1); }));
+    tools.appendChild(text('span', 'sp-qty', num(line.qty)));
+    tools.appendChild(stepButton(ICON.plus, t('qtyUp') + ' — ' + a.code, function () { setQty(line.code, 1); }));
+    tools.appendChild(stepButton(ICON.trash, t('removeLine') + ' — ' + a.code, function () { setQty(line.code, -line.qty); }, 'sp-step--kill'));
+    row.appendChild(tools);
+    return row;
+  }
+
+  function paintInquiry() {
+    var body = document.getElementById('inqBody');
+    body.innerHTML = '';
+
+    if (!inquiry.length) {
+      var empty = el('div', 'cat-inquiry__empty sp-inq-empty');
+      empty.appendChild(text('p', '', t('inqEmptyT')));
+      empty.appendChild(text('p', '', t('inqEmptyB')));
+      body.appendChild(empty);
+    } else {
+      inquiry.forEach(function (line) { body.appendChild(inquiryRow(line)); });
+    }
+
+    var units = inquiry.reduce(function (sum, line) { return sum + line.qty; }, 0);
+    var total = inquiry.reduce(function (sum, line) { return sum + line.qty * part(line.code).price; }, 0);
+
+    var sum = document.getElementById('inqSum');
+    sum.innerHTML = '';
+    var left = el('span');
+    phrase(left, 'inq', inquiry.length, units);
+    sum.appendChild(left);
+    sum.appendChild(text('span', 'num', price(total) + ' ' + t('toman')));
+
+    var badge = document.getElementById('inqCount');
+    badge.textContent = num(inquiry.length);
+    badge.setAttribute('data-empty', inquiry.length ? 'false' : 'true');
+
+    document.getElementById('inqClear').disabled = !inquiry.length;
+    document.getElementById('inqPrint').disabled = !inquiry.length;
+
+    PARTS.forEach(function (a) {
+      paintAddButton(rows[a.code]._parts.add, a.code);
+      paintAddButton(cards[a.code]._parts.add, a.code);
+    });
+  }
+
+  /* ── overlays ─────────────────────────────────────────── */
+
+  function openOverlay(node) {
+    lastFocus = document.activeElement;
+    document.getElementById('scrim').hidden = false;
+    if (node.id === 'drawer') {
+      node.setAttribute('data-open', 'true');
+      document.getElementById('inqOpen').setAttribute('aria-expanded', 'true');
+    } else {
+      node.hidden = false;
+    }
+    var first = node.querySelector('button:not([disabled]), input:not([disabled])');
+    if (first) first.focus();
+  }
+
+  function closeOverlays() {
+    document.getElementById('scrim').hidden = true;
+    document.getElementById('drawer').setAttribute('data-open', 'false');
+    document.getElementById('cmpDlg').hidden = true;
+    document.getElementById('inqOpen').setAttribute('aria-expanded', 'false');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+    lastFocus = null;
+  }
+
+  function trap(e, root) {
+    var f = Array.prototype.filter.call(
+      root.querySelectorAll('button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+      function (n) { return n.offsetWidth || n.offsetHeight; });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  function overlayKeys(e) {
+    /* The kit's viewer sits above these panels and owns Escape while open. */
+    if (document.querySelector('.ck-viewer')) return;
+    var open = document.querySelector('.sp-drawer[data-open="true"], .sp-dlg:not([hidden])');
+    if (!open) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeOverlays(); }
+    else if (e.key === 'Tab') trap(e, open);
+  }
+
+  /* ── render ───────────────────────────────────────────── */
+
+  function render() {
+    var list = visible();
+    var tbody = document.getElementById('tbody');
+    var cardHost = document.getElementById('cardView');
+    tbody.innerHTML = '';
+    cardHost.innerHTML = '';
+    list.forEach(function (a) {
+      tbody.appendChild(rows[a.code]);
+      cardHost.appendChild(cards[a.code]);
+    });
+
+    phrase(document.getElementById('resultCount'), 'result', list.length, PARTS.length);
+
+    var host = document.getElementById('activeFilters');
+    host.innerHTML = '';
+    var chips = activeChips();
+    if (!chips.length) {
+      host.appendChild(text('span', 'sp-active__none', t('noFilters')));
+    } else {
+      chips.forEach(function (chip) {
+        var btn = el('button', 'sp-pill', { type: 'button', 'aria-label': t('removeF') + ' — ' + chip.label });
+        btn.appendChild(text('span', 'sp-pill__k', chip.key));
+        btn.appendChild(document.createTextNode(chip.label));
+        var x = el('span', 'sp-pill__x');
+        x.innerHTML = icon(ICON.close, 11);
+        btn.appendChild(x);
+        btn.addEventListener('click', function () { dropFilter(chip.facet, chip.value); });
+        host.appendChild(btn);
+      });
+    }
+
+    document.getElementById('empty').hidden = list.length > 0;
+    document.getElementById('tableView').hidden = state.view !== 'table' || !list.length;
+    document.getElementById('cardView').hidden = state.view !== 'cards' || !list.length;
+
+    paintHead();
+    paintRail();
+  }
+
+  function applyStrings() {
+    document.documentElement.lang = lang();
+    document.documentElement.dir = L === 0 ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-i]').forEach(function (n) { n.textContent = t(n.getAttribute('data-i')); });
+    document.querySelectorAll('[data-i-ph]').forEach(function (n) { n.placeholder = t(n.getAttribute('data-i-ph')); });
+    document.querySelectorAll('[data-i-label]').forEach(function (n) { n.setAttribute('aria-label', t(n.getAttribute('data-i-label'))); });
+    document.querySelector('[data-v="date"]').textContent = L === 0 ? '1405/06' : '2026-09';
+    document.querySelectorAll('.sp-langswitch button').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang() ? 'true' : 'false');
+    });
+  }
+
+  function paintAll() {
+    applyStrings();
+    PARTS.forEach(function (a) { paintRow(a); paintCard(a); });
+    paintInquiry();
+    paintPicks();
+    render();
+    if (!document.getElementById('cmpDlg').hidden) buildComparison();
+  }
+
+  function setView(view) {
+    state.view = view;
+    document.querySelectorAll('.sp-viewswitch button').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-view') === view ? 'true' : 'false');
+    });
+    render();
+    var shown = document.getElementById(view === 'table' ? 'tableView' : 'cardView');
+    shown.classList.remove('sp-enter');
+    void shown.offsetWidth;
+    shown.classList.add('sp-enter');
+  }
+
+  /* ── wiring ───────────────────────────────────────────── */
+
+  buildRail();
+  buildHead();
+
+  var tbody = document.getElementById('tbody');
+  var cardHost = document.getElementById('cardView');
+  PARTS.forEach(function (a) {
+    rows[a.code] = buildRow(a);
+    cards[a.code] = buildCard(a);
+    tbody.appendChild(rows[a.code]);
+    cardHost.appendChild(cards[a.code]);
+  });
+
+  document.getElementById('q').addEventListener('input', function (e) {
+    state.q = e.target.value.trim();
+    render();
+  });
+  document.getElementById('reset').addEventListener('click', resetFilters);
+  document.querySelector('#empty [data-act="reset"]').addEventListener('click', resetFilters);
+
+  document.querySelectorAll('.sp-viewswitch button').forEach(function (b) {
+    b.addEventListener('click', function () { setView(b.getAttribute('data-view')); });
+  });
+  document.querySelectorAll('.sp-langswitch button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var next = b.getAttribute('data-lang') === 'en' ? 1 : 0;
+      if (next !== L) { L = next; paintAll(); }
+    });
+  });
+
+  document.getElementById('trayClear').addEventListener('click', function () {
+    picked = [];
+    paintPicks();
+  });
+  document.getElementById('trayCompare').addEventListener('click', function () {
+    buildComparison();
+    openOverlay(document.getElementById('cmpDlg'));
+  });
+  document.getElementById('diffOnly').addEventListener('change', function (e) {
+    var table = document.querySelector('.sp-cmp');
+    if (table) table.setAttribute('data-only', e.target.checked ? 'true' : 'false');
+  });
+  document.getElementById('cmpAddAll').addEventListener('click', function () { picked.forEach(addToInquiry); });
+  document.getElementById('cmpClose').addEventListener('click', closeOverlays);
+
+  document.getElementById('inqOpen').addEventListener('click', function () {
+    openOverlay(document.getElementById('drawer'));
+  });
+  document.getElementById('inqClose').addEventListener('click', closeOverlays);
+  document.getElementById('inqClear').addEventListener('click', function () {
+    inquiry = [];
+    paintInquiry();
+  });
+  document.getElementById('inqPrint').addEventListener('click', function () { window.print(); });
+  document.getElementById('scrim').addEventListener('click', closeOverlays);
+  document.addEventListener('keydown', overlayKeys);
+
+  paintAll();
+}());
 </script>
 </body>
 </html>

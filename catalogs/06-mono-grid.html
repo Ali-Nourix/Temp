@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html dir="rtl" lang="fa" data-theme="editorial">
+<!doctype html>
+<html dir="rtl" lang="fa" data-theme="mono">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>مکانیزم‌های رسانه — نمونه‌ی زنده</title>
-<meta name="description" content="زوم روی نقطه، نقطه‌های جزئیات، پخش ویدیو و چرخش ۳۶۰ — همان مکانیزمی که در هر هشت کاتالوگ کار می‌کند.">
+<title>منظر — کاتالوگ عینک و ملزومات</title>
 <style>
 /* inlined from shared/ds-core.css */
 /* ============================================================
@@ -629,126 +628,409 @@ a:hover { color: var(--ink); }
 
 </style>
 <style>
-  .mx-head {
-    display: grid; gap: var(--s-4);
-    padding: var(--s-8) var(--page-pad) var(--s-6);
-    border-block-end: var(--border-w) solid var(--line);
-  }
-  .mx-kicker {
-    font-family: var(--font-num); font-size: var(--t-xs);
-    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
-    color: var(--ink-faint);
-  }
-  .mx-head h1 { font-size: var(--t-2xl); max-width: 20ch; }
-  .mx-head p { font-size: var(--t-md); color: var(--ink-muted); max-width: var(--measure-fa); margin: 0; }
+/* ── roles this variant derives from the theme ───────────────
+   Two axes swap with the language: the type faces and the numeral face.
+   Persian figures live in the UI face; IBM Plex Mono has no Persian
+   digits, so it is kept for the Latin-only figures (codes, sizes). */
+:root {
+  --mg-inset: var(--s-3);
+  --mg-display: var(--font-fa-display);
+  --mg-ui: var(--font-fa-ui);
+  --mg-num: var(--font-fa-ui);
+  --mg-caps: var(--tracking-fa);
+  /* The system's focus hue is the one colour this page cannot keep. Black
+     on the white sheet, white on every inverted surface — see .mg-panel. */
+  --focus: var(--line-strong);
+}
+[dir="ltr"] {
+  --mg-display: var(--font-en-display);
+  --mg-ui: var(--font-en-ui);
+  --mg-num: var(--font-num);
+  --mg-caps: var(--tracking-en-caps);
+}
 
-  .mx-bar {
-    position: sticky; inset-block-start: 0; z-index: 20;
-    display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4);
-    padding: var(--s-3) var(--page-pad);
-    background: var(--bg); border-block-end: var(--border-w) solid var(--line);
-  }
-  .mx-bar__label { font-size: var(--t-xs); color: var(--ink-faint); }
-  .mx-themes { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+body { background: var(--bg); }
+.mg-fig { font-family: var(--mg-num); font-variant-numeric: tabular-nums; }
+.mg-caps { letter-spacing: var(--mg-caps); text-transform: uppercase; }
 
-  .mx-section { padding: var(--s-7) var(--page-pad); border-block-end: var(--border-w) solid var(--line); }
-  .mx-section > .mx-inner { max-width: var(--page-max); margin-inline: auto; display: grid; gap: var(--s-5); }
-  .mx-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-4); }
-  .mx-h span { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
-  .mx-h h2 { font-size: var(--t-lg); }
-  .mx-h p { margin: 0; font-size: var(--t-sm); color: var(--ink-muted); max-width: var(--measure-fa); }
+.mg-skip {
+  position: absolute; inset-block-start: 0; inset-inline-start: -9999px; z-index: 60;
+  padding: var(--s-3) var(--s-4); background: var(--ink); color: var(--bg);
+}
+.mg-skip:focus { inset-inline-start: 0; color: var(--bg); }
 
-  .mx-grid {
-    display: grid; gap: var(--gutter);
-    grid-template-columns: repeat(auto-fill, minmax(var(--col-min), 1fr));
-  }
+/* ── masthead ────────────────────────────────────────────── */
+.mg-mast { border-block-end: var(--border-w-strong) solid var(--line-strong); }
+.mg-folio {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-5);
+  padding: var(--s-2) var(--mg-inset);
+  background: var(--ink); color: var(--bg);
+  font-size: var(--t-xs); line-height: var(--lh-en-body);
+}
+.mg-folio > :last-child { margin-inline-start: auto; }
+.mg-folio b { font-family: var(--font-en-display); font-weight: var(--w-black); letter-spacing: var(--tracking-en-caps); }
 
-  .mx-keys { display: grid; gap: var(--s-2); }
-  .mx-key { display: flex; align-items: baseline; gap: var(--s-3); font-size: var(--t-sm); color: var(--ink-muted); }
-  .mx-key kbd {
-    font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink);
-    background: var(--surface-alt); border: var(--border-w) solid var(--line);
-    border-radius: var(--radius-control); padding: 2px 8px; min-width: 52px; text-align: center;
-  }
+.mg-mast__top { display: grid; gap: var(--s-5); padding: var(--s-5) var(--mg-inset); }
+.mg-word { display: grid; gap: var(--s-2); }
+.mg-word__fa {
+  font-family: var(--font-fa-display); font-weight: var(--w-bold);
+  font-size: var(--t-3xl); line-height: 1.05;
+}
+.mg-word__en {
+  font-family: var(--font-en-display); font-weight: var(--w-black);
+  font-size: var(--t-lg); line-height: var(--lh-en-tight);
+  letter-spacing: var(--tracking-en-caps);
+}
+.mg-say { margin: 0 0 var(--s-3); font-size: var(--t-md); line-height: var(--lh-fa-body); }
+.mg-hint { margin: 0; max-width: var(--measure-fa); font-size: var(--t-sm); color: var(--ink-muted); }
+[dir="ltr"] .mg-say, [dir="ltr"] .mg-hint { line-height: var(--lh-en-body); }
 
-  .mx-swap {
-    display: grid; gap: var(--s-3);
-    padding: var(--s-5); background: var(--surface);
-    border: var(--border-w) solid var(--line); border-radius: var(--radius-card);
+.mg-meta { display: grid; grid-template-columns: repeat(2, 1fr); margin: 0; border-block-start: var(--border-w) solid var(--line); }
+.mg-meta > div { padding: var(--s-3) var(--mg-inset); border-inline-start: var(--border-w) solid var(--line); }
+.mg-meta > div:nth-child(odd) { border-inline-start: 0; }
+.mg-meta dt { font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--mg-caps); text-transform: uppercase; }
+.mg-meta dd { margin: 0; font-family: var(--mg-display); font-size: var(--t-base); }
+
+/* ── toolbar ─────────────────────────────────────────────── */
+.mg-bar {
+  position: sticky; inset-block-start: 0; z-index: 20;
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-5);
+  padding: var(--s-2) var(--mg-inset);
+  background: var(--bg); border-block-end: var(--border-w-strong) solid var(--line-strong);
+}
+.mg-bar__mark {
+  font-family: var(--font-en-display); font-weight: var(--w-black);
+  font-size: var(--t-sm); letter-spacing: var(--tracking-en-caps);
+  margin-inline-end: auto;
+}
+.mg-seg { display: flex; align-items: center; gap: var(--s-2); }
+.mg-seg__label { font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--mg-caps); text-transform: uppercase; }
+.mg-seg__set { display: flex; border: var(--border-w) solid var(--line-strong); }
+.mg-seg__set > button {
+  min-height: var(--tap-min); min-width: var(--tap-min); padding: 0 var(--s-3);
+  font: inherit; font-size: var(--t-sm); line-height: 1;
+  background: var(--surface); color: var(--ink-muted);
+  border: 0; border-inline-start: var(--border-w) solid var(--line); cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.mg-seg__set > button:first-child { border-inline-start: 0; }
+.mg-seg__set > button:hover { color: var(--ink); }
+.mg-seg__set > button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.mg-open {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-height: var(--tap-min); padding: 0 var(--s-4);
+  font: inherit; font-size: var(--t-sm);
+  background: var(--ink); color: var(--bg);
+  border: var(--border-w) solid var(--line-strong); cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.mg-open:hover { background: var(--surface); color: var(--ink); }
+
+/* ── the grid ────────────────────────────────────────────────
+   The gap is the drawing: a black sheet behind white cells, so the
+   2px gutter reads as a rule and the catalogue looks ruled, not spaced. */
+.mg-grid {
+  --mg-cols: 4;
+  display: grid;
+  grid-template-columns: repeat(var(--mg-cols), minmax(0, 1fr));
+  gap: var(--gutter);
+  background: var(--line-strong);
+  border-block-end: var(--border-w-strong) solid var(--line-strong);
+}
+.mg-grid[data-cols="2"] { --mg-cols: 2; }
+.mg-grid[data-cols="6"] { --mg-cols: 6; }
+
+.mg-cell {
+  position: relative; display: flex; flex-direction: column;
+  background: var(--surface); color: var(--ink);
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.mg-cell:hover, .mg-cell:focus-within { background: var(--ink); color: var(--bg); }
+/* A square module is what makes a grid read as a grid; the artwork is cropped
+   to it rather than the 4:5 the system uses for a card. */
+.mg-cell__frame { position: relative; aspect-ratio: 1; min-block-size: 0; overflow: hidden; background: var(--surface-alt); }
+/* The mounted media fills the frame rather than sizing it, so the square holds
+   whatever the artwork's own proportions are. */
+.mg-cell__frame > .mg-cell__media { position: absolute; inset: 0; }
+/* Every face is a photo, so the kit's cue would repeat one word sixteen times.
+   The mark stays, the word goes — the host still carries it as its label. */
+.mg-cell .ck-cue { border-radius: var(--radius-none); padding: 6px; }
+.mg-cell .ck-cue span { display: none; }
+.mg-cell__foot { display: grid; gap: var(--s-1); padding: var(--s-3) var(--mg-inset) var(--s-4); }
+.mg-cell__name { font-family: var(--mg-display); font-size: var(--t-md); line-height: var(--lh-fa-tight); }
+.mg-cell__code { font-family: var(--font-num); font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); color: var(--ink-faint); }
+
+/* Denser packing, smaller voice: the type steps with the columns. */
+.mg-grid[data-cols="2"] .mg-cell__foot { grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; }
+.mg-grid[data-cols="2"] .mg-cell__name { font-size: var(--t-xl); }
+.mg-grid[data-cols="2"] .mg-over__line { font-size: var(--t-md); }
+.mg-grid[data-cols="2"] .mg-price__n { font-size: var(--t-xl); }
+.mg-grid[data-cols="2"] .mg-spec { font-size: var(--t-sm); }
+.mg-grid[data-cols="2"] .mg-spec > div { padding-block: var(--s-2); }
+.mg-grid[data-cols="6"] .mg-cell__name { font-size: var(--t-sm); }
+.mg-grid[data-cols="6"] .mg-cell__foot { padding-block: var(--s-2) var(--s-3); }
+.mg-grid[data-cols="6"] .mg-price__n { font-size: var(--t-md); }
+.mg-grid[data-cols="6"] .mg-over__line { display: none; }
+
+/* ── the flat overlay ────────────────────────────────────────
+   Flush to the media's four edges, no radius, no shadow: an inversion
+   of the cell rather than a card floating over it. It is a child of the
+   cell, not of the frame, so print can drop it into the flow; the square
+   aspect makes it cover exactly the frame above it. */
+.mg-cell__over {
+  position: absolute; inset-inline: 0; inset-block-start: 0; aspect-ratio: 1;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: var(--s-3);
+  padding: var(--s-3) var(--mg-inset) var(--s-4);
+  background: var(--ink); color: var(--bg);
+  opacity: 0; pointer-events: none; overflow: hidden;
+  transition: opacity var(--dur-fast) var(--ease-out);
+  --focus: var(--bg);
+}
+.mg-cell:hover .mg-cell__over, .mg-cell:focus-within .mg-cell__over { opacity: 1; }
+.mg-cell__over p { margin: 0; max-width: none; }
+.mg-over__line { font-size: var(--t-sm); line-height: var(--lh-fa-tight); }
+[dir="ltr"] .mg-over__line { line-height: var(--lh-en-body); }
+.mg-over__body { display: grid; gap: var(--s-2); margin-block-start: auto; }
+.mg-price { display: flex; align-items: baseline; gap: var(--s-2); }
+.mg-price__n { font-family: var(--mg-num); font-size: var(--t-lg); line-height: 1.2; font-variant-numeric: tabular-nums; }
+.mg-price__u { font-size: var(--t-xs); color: var(--ink-faint); }
+.mg-spec { display: grid; gap: 0; margin: 0; font-size: var(--t-xs); }
+.mg-spec > div { display: flex; justify-content: space-between; gap: var(--s-2); padding-block: var(--s-1); border-block-start: var(--border-w) solid var(--ink-muted); }
+.mg-spec dt { color: var(--ink-faint); }
+.mg-spec dd { margin: 0; font-family: var(--mg-num); text-align: end; }
+
+.mg-act { display: flex; flex-wrap: wrap; gap: var(--s-1); pointer-events: auto; }
+.mg-ib {
+  flex: 0 0 var(--tap-min); width: var(--tap-min); height: var(--tap-min);
+  display: grid; place-items: center; padding: 0;
+  background: transparent; color: inherit; border: var(--border-w) solid currentColor; cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.mg-ib:hover, .mg-ib[aria-pressed="true"] { background: var(--bg); color: var(--ink); }
+.mg-ib svg { width: 18px; height: 18px; fill: currentColor; }
+
+/* Without hover there is nothing to reveal, so the overlay leaves the frame
+   and sits under the name as an ordinary block. */
+@media (hover: none) {
+  .mg-cell__over {
+    position: static; order: 1; aspect-ratio: auto; opacity: 1; pointer-events: auto;
+    border-block-start: var(--border-w) solid var(--ink-muted);
   }
-  .mx-swap pre {
-    margin: 0; overflow-x: auto; direction: ltr; text-align: start;
-    font-family: var(--font-num); font-size: var(--t-xs); line-height: 1.85;
-    color: var(--ink-muted);
+}
+
+/* ── the cell that closes the grid ───────────────────────────
+   Its span is set in script so the last row is always flush, at any density. */
+.mg-end {
+  grid-column: span var(--mg-end-span, 1);
+  display: flex; flex-direction: column; justify-content: center; gap: var(--s-4);
+  padding: var(--s-5) var(--mg-inset);
+  background: var(--ink); color: var(--bg);
+  --focus: var(--bg);
+}
+.mg-end__title { font-family: var(--mg-display); font-size: var(--t-md); }
+.mg-end p { margin: 0; max-width: var(--measure-fa); font-size: var(--t-sm); color: var(--ink-faint); }
+.mg-end__btn {
+  align-self: start; min-height: var(--tap-min); padding: 0 var(--s-5);
+  font: inherit; font-size: var(--t-sm);
+  background: var(--bg); color: var(--ink); border: var(--border-w) solid var(--bg); cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.mg-end__btn:hover { background: var(--ink); color: var(--bg); }
+
+/* ── price inquiry ───────────────────────────────────────── */
+.mg-scrim { position: fixed; inset: 0; z-index: 40; background: var(--overlay); animation: cat-fade var(--dur-fast) var(--ease-out) both; }
+.mg-panel {
+  position: fixed; inset-block: 0; inset-inline-end: 0; z-index: 41;
+  display: flex; flex-direction: column; width: min(420px, 100vw);
+  background: var(--ink); color: var(--bg);
+  animation: cat-fade var(--dur-fast) var(--ease-out) both;
+  --focus: var(--bg);
+}
+.mg-panel[hidden] { display: none; }
+.mg-panel__head { display: flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--mg-inset); border-block-end: var(--border-w) solid var(--ink-muted); }
+.mg-panel__title { flex: 1; font-family: var(--mg-display); font-size: var(--t-md); }
+.mg-x { min-width: var(--tap-min); min-height: var(--tap-min); display: grid; place-items: center; padding: 0;
+  background: transparent; color: inherit; border: var(--border-w) solid currentColor; cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.mg-x:hover { background: var(--bg); color: var(--ink); }
+.mg-x svg { width: 18px; height: 18px; fill: currentColor; }
+.mg-list { flex: 1; overflow: auto; margin: 0; padding: 0; list-style: none; }
+.mg-row { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto; gap: var(--s-3); align-items: center;
+  padding: var(--s-3) var(--mg-inset); border-block-end: var(--border-w) solid var(--ink-muted); }
+.mg-row img { width: 44px; aspect-ratio: 1; object-fit: cover; }
+.mg-row__name { font-family: var(--mg-display); font-size: var(--t-sm); line-height: var(--lh-fa-tight); }
+.mg-row__code { font-family: var(--font-num); font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); color: var(--ink-faint); }
+.mg-row__price { font-family: var(--mg-num); font-size: var(--t-sm); font-variant-numeric: tabular-nums; }
+.mg-empty { margin: var(--s-5) var(--mg-inset); padding: var(--s-7) var(--s-4); text-align: center;
+  border: var(--border-w) dashed var(--ink-muted); color: var(--ink-faint); font-size: var(--t-sm); }
+.mg-empty b { display: block; margin-block-end: var(--s-2); font-family: var(--mg-display); font-size: var(--t-base); font-weight: var(--w-regular); color: var(--bg); }
+.mg-panel__foot { padding: var(--s-4) var(--mg-inset) var(--s-5); border-block-start: var(--border-w) solid var(--ink-muted); display: grid; gap: var(--s-3); }
+.mg-sum { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-3); }
+.mg-sum__k { font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--mg-caps); text-transform: uppercase; }
+.mg-sum__v { font-family: var(--mg-num); font-size: var(--t-lg); font-variant-numeric: tabular-nums; }
+.mg-send { min-height: var(--tap-min); padding: 0 var(--s-5); font: inherit;
+  background: var(--bg); color: var(--ink); border: var(--border-w) solid var(--bg); cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.mg-send:hover { background: var(--ink); color: var(--bg); }
+.mg-send[disabled] { opacity: 0.45; cursor: not-allowed; }
+.mg-note { margin: 0; font-size: var(--t-xs); color: var(--ink-faint); }
+
+/* ── colophon ────────────────────────────────────────────── */
+.mg-foot {
+  display: grid; gap: var(--s-5);
+  padding: var(--s-7) var(--mg-inset);
+  background: var(--ink); color: var(--bg);
+  --focus: var(--bg);
+}
+.mg-foot h2 { font-family: var(--mg-display); font-size: var(--t-md); }
+.mg-foot dt { font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--mg-caps); text-transform: uppercase; }
+.mg-foot dd { margin: 0 0 var(--s-2); font-size: var(--t-sm); }
+.mg-foot__word { font-family: var(--font-en-display); font-weight: var(--w-black); font-size: var(--t-xl); letter-spacing: var(--tracking-en-caps); line-height: var(--lh-en-tight); }
+.mg-print { justify-self: start; min-height: var(--tap-min); padding: 0 var(--s-4); font: inherit; font-size: var(--t-sm);
+  background: transparent; color: inherit; border: var(--border-w) solid currentColor; cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.mg-print:hover { background: var(--bg); color: var(--ink); }
+
+@media (min-width: 720px) {
+  .mg-meta { grid-template-columns: repeat(4, 1fr); }
+  .mg-meta > div:nth-child(odd) { border-inline-start: var(--border-w) solid var(--line); }
+  .mg-meta > div:first-child { border-inline-start: 0; }
+  .mg-foot { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 900px) {
+  :root { --mg-inset: var(--s-4); }
+  .mg-mast__top { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: end; gap: var(--s-7); }
+}
+/* Six columns of product below a laptop is a stripe, not a cell. */
+@media (max-width: 860px) {
+  .mg-grid[data-cols="6"] { --mg-cols: 3; }
+  .mg-grid[data-cols="4"] { --mg-cols: 2; }
+}
+@media (max-width: 520px) {
+  .mg-grid[data-cols="6"] { --mg-cols: 2; }
+}
+
+@media print {
+  .mg-grid { --mg-cols: 3; }
+  .mg-cell { break-inside: avoid; }
+  /* On paper the overlay is not an overlay: it falls in below the name as
+     the product's specification block. */
+  .mg-cell__over {
+    position: static; order: 1; aspect-ratio: auto; opacity: 1;
+    background: none; color: var(--ink);
+    border-block-start: var(--border-w) solid var(--line);
   }
+  .mg-cell .ck-cue { display: none; }
+  .mg-spec > div { border-block-start-color: var(--line); }
+  .mg-price__u, .mg-spec dt { color: var(--ink-muted); }
+  .mg-act { display: none; }
+  .mg-end { grid-column: 1 / -1; }
+  .mg-end, .mg-foot { background: none; color: var(--ink); border: var(--border-w) solid var(--line); }
+  .mg-end p, .mg-foot dt { color: var(--ink-muted); }
+}
 </style>
 </head>
 <body>
+<a class="mg-skip" href="#grid" data-i18n="skip">رفتن به شبکهٔ محصولات</a>
 
-<header class="mx-head">
-  <div class="mx-kicker">Media mechanisms · live</div>
-  <h1>همان مکانیزمی که در هر هشت کاتالوگ کار می‌کند</h1>
-  <p>
-    روی هر تصویر کلیک کنید. این صفحه فقط برای امتحان کردن است — هشت کاتالوگ
-    همین رفتار را دارند، با ظاهر و چیدمان متفاوت. تم را از نوار بالا عوض کنید
-    تا ببینید هیچ‌کدام از این رفتارها به تم وابسته نیست.
-  </p>
+<header class="mg-mast">
+  <div class="mg-folio">
+    <span>منظر <b>MANZAR</b></span>
+    <span data-i18n="folioKind">کاتالوگ قیمت</span>
+    <span data-i18n="folioSeries">سری ۰۶ — پاییز ۱۴۰۵</span>
+  </div>
+
+  <div class="mg-mast__top">
+    <h1 class="mg-word">
+      <span class="mg-word__fa">منظر</span>
+      <span class="mg-word__en">MANZAR</span>
+    </h1>
+    <div>
+      <p class="mg-say" data-i18n="statement">شانزده قلم از دفتر پاییز. قاب‌ها از استات ایتالیایی و ورق تیتانیوم بریده می‌شوند، با لولای پیچی و شمارهٔ حک‌شده روی دسته.</p>
+      <p class="mg-hint" data-i18n="hint">قیمت و مشخصات هر قلم با ایستادن نشانگر روی خانه — یا رسیدن به آن با کلید تب — روی همان خانه باز می‌شود.</p>
+    </div>
+  </div>
+
+  <dl class="mg-meta">
+    <div><dt data-i18n="metaSeries">مجموعه</dt><dd data-i18n="metaSeriesV">پاییز ۱۴۰۵</dd></div>
+    <div><dt data-i18n="metaItems">اقلام</dt><dd data-i18n="metaItemsV">۱۶ قلم</dd></div>
+    <div><dt data-i18n="metaShop">کارگاه</dt><dd data-i18n="metaShopV">تهران، خیابان ویلا</dd></div>
+    <div><dt data-i18n="metaUnit">واحد قیمت</dt><dd data-i18n="metaUnitV">تومان</dd></div>
+  </dl>
 </header>
 
-<div class="mx-bar">
-  <span class="mx-bar__label">تم</span>
-  <div class="mx-themes" id="themes"></div>
-  <div style="flex:1"></div>
-  <div class="cat-lang" id="lang">
-    <button type="button" data-lang="fa" aria-pressed="true">فارسی</button>
-    <button type="button" data-lang="en" aria-pressed="false">EN</button>
-  </div>
-</div>
+<nav class="mg-bar no-print" data-i18n-label="barLabel" aria-label="ابزار کاتالوگ">
+  <span class="mg-bar__mark">MANZAR</span>
 
-<section class="mx-section">
-  <div class="mx-inner">
-    <div class="mx-h">
-      <span>01</span>
-      <h2 data-t="s1">جزئیات روی عکس</h2>
-      <p data-t="s1p">کلیک روی تصویر، بزرگ‌نمایی روی همان نقطه‌ای که کلیک کردید. نقطه‌های شماره‌دار به بخش واقعی محصول چسبیده‌اند و با زوم همراه می‌شوند.</p>
-    </div>
-    <div class="mx-grid cat-stagger" id="grid"></div>
-  </div>
-</section>
-
-<section class="mx-section">
-  <div class="mx-inner">
-    <div class="mx-h">
-      <span>02</span>
-      <h2 data-t="s2">صفحه‌کلید</h2>
-      <p data-t="s2p">نمایشگر جزئیات کامل با صفحه‌کلید کار می‌کند و فوکوس داخلش می‌ماند.</p>
-    </div>
-    <div class="mx-keys">
-      <div class="mx-key"><kbd>Esc</kbd><span data-t="k1">بستن</span></div>
-      <div class="mx-key"><kbd>← →</kbd><span data-t="k2">رفتن بین رسانه‌ها — و در حالت ویدیو، جابه‌جایی روی تایم‌لاین</span></div>
-      <div class="mx-key"><kbd>Space</kbd><span data-t="k3">پخش و مکث ویدیو</span></div>
-      <div class="mx-key"><kbd>+ −</kbd><span data-t="k4">زوم</span></div>
-      <div class="mx-key"><kbd>Tab</kbd><span data-t="k5">گشتن بین کنترل‌ها؛ فوکوس از نمایشگر بیرون نمی‌رود</span></div>
+  <div class="mg-seg" role="group" aria-labelledby="mg-l-density">
+    <span class="mg-seg__label" id="mg-l-density" data-i18n="density">چگالی</span>
+    <div class="mg-seg__set" id="mg-density">
+      <button type="button" class="mg-fig" data-cols="2" aria-pressed="false">۲</button>
+      <button type="button" class="mg-fig" data-cols="4" aria-pressed="true">۴</button>
+      <button type="button" class="mg-fig" data-cols="6" aria-pressed="false">۶</button>
     </div>
   </div>
-</section>
 
-<section class="mx-section">
-  <div class="mx-inner">
-    <div class="mx-h">
-      <span>03</span>
-      <h2 data-t="s3">گذاشتن عکس و ویدیوی واقعی</h2>
-      <p data-t="s3p">تصویرها جانگهدارِ ساخته‌شده‌اند. برای فایل واقعی فقط src را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.</p>
-    </div>
-    <div class="mx-swap">
-<pre>{ type: 'photo', src: 'assets/SK-101-front.jpg',
-  hotspots: [ { x: 50, y: 38, title: 'بدنه', body: 'سرامیک لعاب‌دار.' } ] }
-
-{ type: 'video', src: 'assets/SK-101.mp4',
-  poster: 'assets/SK-101-poster.jpg' }</pre>
+  <div class="mg-seg" role="group" aria-labelledby="mg-l-sort">
+    <span class="mg-seg__label" id="mg-l-sort" data-i18n="order">ترتیب</span>
+    <div class="mg-seg__set" id="mg-sort">
+      <button type="button" data-sort="name" aria-pressed="true" data-i18n="byName">نام</button>
+      <button type="button" data-sort="price" aria-pressed="false" data-i18n="byPrice">قیمت</button>
     </div>
   </div>
-</section>
+
+  <div class="mg-seg" role="group" aria-labelledby="mg-l-lang">
+    <span class="mg-seg__label" id="mg-l-lang" data-i18n="language">زبان</span>
+    <div class="mg-seg__set" id="mg-lang">
+      <button type="button" data-lang="fa" aria-pressed="true" lang="fa">فارسی</button>
+      <button type="button" data-lang="en" aria-pressed="false" lang="en">English</button>
+    </div>
+  </div>
+
+  <button type="button" class="mg-open" id="mg-open" aria-expanded="false" aria-controls="mg-panel">
+    <span data-i18n="inquiry">استعلام قیمت</span>
+    <span class="mg-fig" id="mg-count">۰</span>
+  </button>
+</nav>
+
+<main>
+  <section id="grid" class="mg-grid cat-stagger" data-cols="4" data-i18n-label="gridLabel" aria-label="شبکهٔ محصولات"></section>
+</main>
+
+<footer class="mg-foot">
+  <div>
+    <p class="mg-foot__word">MANZAR</p>
+    <p data-i18n="footLine">عینک و ملزومات کوچک. کارگاه تهران، از ۱۳۹۴.</p>
+    <button type="button" class="mg-print no-print" id="mg-print" data-i18n="print">چاپ کاتالوگ</button>
+  </div>
+  <dl>
+    <dt data-i18n="footShop">کارگاه</dt><dd data-i18n="footShopV">تهران، خیابان ویلا، شمارهٔ ۴۸</dd>
+    <dt data-i18n="footTel">تماس</dt><dd class="mg-fig" data-i18n="footTelV">۰۲۱ ۸۸۳۲ ۰۱۱۴</dd>
+    <dt data-i18n="footMail">رایانامه</dt><dd>salam@manzar.example</dd>
+  </dl>
+  <dl>
+    <dt data-i18n="footTerms">شرایط</dt><dd data-i18n="footTermsV">قیمت‌ها بدون عدسی طبی است و تا پایان پاییز ۱۴۰۵ معتبر می‌ماند.</dd>
+    <dt data-i18n="footMake">ساخت</dt><dd data-i18n="footMakeV">هر قاب دست‌ساز؛ تحویل سفارش تا سه هفته.</dd>
+  </dl>
+</footer>
+
+<div class="mg-scrim no-print" id="mg-scrim" hidden></div>
+
+<aside class="mg-panel no-print" id="mg-panel" role="dialog" aria-modal="true" aria-labelledby="mg-panel-title" hidden>
+  <div class="mg-panel__head">
+    <h2 class="mg-panel__title" id="mg-panel-title" data-i18n="inquiry">استعلام قیمت</h2>
+    <button type="button" class="mg-x" id="mg-close" data-i18n-label="close" aria-label="بستن"></button>
+  </div>
+  <ul class="mg-list" id="mg-list"></ul>
+  <div class="mg-panel__foot">
+    <div class="mg-sum">
+      <span class="mg-sum__k"><span data-i18n="total">جمع</span> · <span id="mg-sum-n"></span></span>
+      <span class="mg-sum__v" id="mg-sum-v"></span>
+    </div>
+    <button type="button" class="mg-send" id="mg-send" data-i18n="send">ارسال درخواست</button>
+    <p class="mg-note" data-i18n="note">قیمت‌ها بدون عدسی طبی است.</p>
+  </div>
+</aside>
 
 <script>
 /* inlined from shared/catalog-kit.js */
@@ -1934,190 +2216,654 @@ a:hover { color: var(--ink); }
 
 </script>
 <script>
-const THEMES = ['editorial', 'luxe', 'brutal', 'glass', 'press', 'spec', 'craft', 'mono'];
+(function () {
+  'use strict';
 
-/* Six products, each demonstrating a different subject and palette so the
-   procedural artwork shows its range. Hotspots name real parts, because a
-   hotspot that says "detail 1" teaches nothing about the mechanism. */
-const PRODUCTS = [
-  {
-    sku: 'SK-101', subject: 'vase', palette: 'warm',
-    fa: 'گلدان لعاب خاکستر', en: 'Ash-glaze vessel',
-    price: '۲٬۴۸۰٬۰۰۰', priceEn: '2,480,000',
-    hotspots: [
-      { x: 50, y: 22, fa: ['لبه', 'لبه‌ی برگردان، ضخامت ۶ میلی‌متر.'], en: ['Rim', 'Rolled rim, 6 mm wall.'] },
-      { x: 62, y: 45, fa: ['لعاب', 'لعاب خاکستر چوب، پخت احیایی ۱۲۸۰ درجه.'], en: ['Glaze', 'Wood-ash glaze, reduction fired at 1280°C.'] },
-      { x: 44, y: 76, fa: ['پاخور', 'پاخور تراش‌خورده، قطر ۹ سانتی‌متر.'], en: ['Foot ring', 'Turned foot, 9 cm diameter.'] }
-    ]
-  },
-  {
-    sku: 'SK-204', subject: 'chair', palette: 'stone',
-    fa: 'صندلی گردو', en: 'Walnut side chair',
-    price: '۸٬۹۵۰٬۰۰۰', priceEn: '8,950,000',
-    hotspots: [
-      { x: 50, y: 28, fa: ['پشتی', 'تخته‌ی خم‌شده با بخار، ضخامت ۱۲ میلی‌متر.'], en: ['Back', 'Steam-bent panel, 12 mm.'] },
-      { x: 34, y: 58, fa: ['اتصال', 'فاق و زبانه‌ی کور، بدون پیچ.'], en: ['Joint', 'Blind mortise and tenon, no fasteners.'] },
-      { x: 66, y: 82, fa: ['پایه', 'گردو روغن‌خورده، مقطع ۲۲ میلی‌متر.'], en: ['Leg', 'Oiled walnut, 22 mm section.'] }
-    ]
-  },
-  {
-    sku: 'SK-330', subject: 'bag', palette: 'clay',
-    fa: 'کیف چرم گیاهی', en: 'Veg-tan satchel',
-    price: '۶٬۲۰۰٬۰۰۰', priceEn: '6,200,000',
-    hotspots: [
-      { x: 50, y: 24, fa: ['دسته', 'دوخت زینی دستی، نخ کتان موم‌زده.'], en: ['Handle', 'Hand saddle-stitched, waxed linen.'] },
-      { x: 50, y: 52, fa: ['قفل', 'برنج ریخته‌گری، بدون آبکاری.'], en: ['Clasp', 'Cast brass, unplated.'] },
-      { x: 30, y: 70, fa: ['چرم', 'دباغی گیاهی، ضخامت ۲٫۲ میلی‌متر.'], en: ['Leather', 'Vegetable tanned, 2.2 mm.'] }
-    ]
-  },
-  {
-    sku: 'SK-412', subject: 'lamp', palette: 'sage',
-    fa: 'چراغ رومیزی کاغذی', en: 'Paper table lamp',
-    price: '۳٬۷۴۰٬۰۰۰', priceEn: '3,740,000',
-    hotspots: [
-      { x: 50, y: 30, fa: ['حباب', 'کاغذ دست‌ساز روی رینگ فولادی.'], en: ['Shade', 'Handmade paper on steel ring.'] },
-      { x: 50, y: 68, fa: ['ساقه', 'فولاد پودری‌رنگ، قطر ۱۲ میلی‌متر.'], en: ['Stem', 'Powder-coated steel, 12 mm.'] }
-    ]
-  },
-  {
-    sku: 'SK-508', subject: 'watch', palette: 'ink',
-    fa: 'ساعت مینای سرمه‌ای', en: 'Indigo enamel watch',
-    price: '۲۴٬۶۰۰٬۰۰۰', priceEn: '24,600,000',
-    hotspots: [
-      { x: 50, y: 44, fa: ['صفحه', 'مینای آتشی، سه لایه پخت.'], en: ['Dial', 'Fired enamel, three firings.'] },
-      { x: 68, y: 52, fa: ['عقربه', 'فولاد آبی‌شده با حرارت.'], en: ['Hands', 'Heat-blued steel.'] },
-      { x: 50, y: 76, fa: ['بند', 'چرم ساغری، عرض ۱۸ میلی‌متر.'], en: ['Strap', 'Shagreen, 18 mm lug.'] }
-    ]
-  },
-  {
-    sku: 'SK-615', subject: 'textile', palette: 'indigo',
-    fa: 'قالیچه‌ی پشم دست‌ریس', en: 'Handspun wool rug',
-    price: '۱۸٬۹۰۰٬۰۰۰', priceEn: '18,900,000',
-    hotspots: [
-      { x: 38, y: 34, fa: ['گره', 'گره فارسی، ۴۰ رج در دسی‌متر.'], en: ['Knot', 'Persian knot, 40 rows/dm.'] },
-      { x: 62, y: 60, fa: ['رنگرزی', 'نیل طبیعی، رنگرزی دیگ‌به‌دیگ.'], en: ['Dye', 'Natural indigo, lot-dyed.'] },
-      { x: 50, y: 86, fa: ['شیرازه', 'شیرازه‌پیچ دستی با پشم همان دیگ.'], en: ['Selvedge', 'Hand-wrapped in the same lot.'] }
-    ]
-  }
-];
+  /* Every product is drawn with one palette. The artwork has to live inside a
+     black-and-white page, and letting each seed pick its own would drop a warm
+     or blue cast into the grid; `ink` is the achromatic one. */
+  var PALETTE = 'ink';
 
-const STRINGS = {
-  fa: {
-    s1: 'جزئیات روی عکس',
-    s1p: 'کلیک روی تصویر، بزرگ‌نمایی روی همان نقطه‌ای که کلیک کردید. نقطه‌های شماره‌دار به بخش واقعی محصول چسبیده‌اند و با زوم همراه می‌شوند.',
-    s2: 'صفحه‌کلید',
-    s2p: 'نمایشگر جزئیات کامل با صفحه‌کلید کار می‌کند و فوکوس داخلش می‌ماند.',
-    s3: 'گذاشتن عکس و ویدیوی واقعی',
-    s3p: 'تصویرها جانگهدارِ ساخته‌شده‌اند. برای فایل واقعی فقط src را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.',
-    k1: 'بستن', k2: 'رفتن بین رسانه‌ها — و در حالت ویدیو، جابه‌جایی روی تایم‌لاین',
-    k3: 'پخش و مکث ویدیو', k4: 'زوم', k5: 'گشتن بین کنترل‌ها؛ فوکوس از نمایشگر بیرون نمی‌رود',
-    unit: 'تومان', detail: 'جزئیات'
-  },
-  en: {
-    s1: 'Detail on the image',
-    s1p: 'Click the image and it zooms to the point you clicked. Numbered hotspots are pinned to the part they name and travel with the zoom.',
-    s2: 'Keyboard',
-    s2p: 'The detail viewer is fully keyboard operable and traps focus while open.',
-    s3: 'Dropping in real photography',
-    s3p: 'The artwork is a generated placeholder. Give a descriptor a src and the same mechanism plays the real file.',
-    k1: 'Close', k2: 'Move between media — and seek the timeline in video mode',
-    k3: 'Play and pause', k4: 'Zoom', k5: 'Cycle the controls; focus stays inside the viewer',
-    unit: 'IRT', detail: 'Details'
-  }
-};
+  /* Same 24px filled set the kit uses for its own cues, so the page has one
+     icon family rather than two. */
+  var ICON = {
+    play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+    spin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1L8 5l4 4V6a6 6 0 11-6 6H4a8 8 0 108-8z"/></svg>',
+    plus: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>',
+    check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 16.6L5 12l-1.4 1.4 6 6 12-12L20.2 6z"/></svg>',
+    minus: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14v2H5z"/></svg>',
+    close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 5.7l-1.4-1.4L12 9.2 7.1 4.3 5.7 5.7l4.9 4.9-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>'
+  };
 
-let lang = 'fa';
-const root = document.documentElement;
-const grid = document.getElementById('grid');
-
-const themeBar = document.getElementById('themes');
-for (const name of THEMES) {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = 'cat-chip';
-  b.textContent = name;
-  b.setAttribute('aria-pressed', String(name === root.dataset.theme));
-  b.addEventListener('click', () => {
-    root.dataset.theme = name;
-    for (const other of themeBar.children) {
-      other.setAttribute('aria-pressed', String(other === b));
+  var S = {
+    fa: {
+      skip: 'رفتن به شبکهٔ محصولات',
+      folioKind: 'کاتالوگ قیمت',
+      folioSeries: 'سری ۰۶ — پاییز ۱۴۰۵',
+      statement: 'شانزده قلم از دفتر پاییز. قاب‌ها از استات ایتالیایی و ورق تیتانیوم بریده می‌شوند، با لولای پیچی و شمارهٔ حک‌شده روی دسته.',
+      hint: 'قیمت و مشخصات هر قلم با ایستادن نشانگر روی خانه — یا رسیدن به آن با کلید تب — روی همان خانه باز می‌شود.',
+      metaSeries: 'مجموعه', metaSeriesV: 'پاییز ۱۴۰۵',
+      metaItems: 'اقلام', metaItemsV: '۱۶ قلم',
+      metaShop: 'کارگاه', metaShopV: 'تهران، خیابان ویلا',
+      metaUnit: 'واحد قیمت', metaUnitV: 'تومان',
+      barLabel: 'ابزار کاتالوگ', gridLabel: 'شبکهٔ محصولات',
+      density: 'چگالی', order: 'ترتیب', language: 'زبان',
+      byName: 'نام', byPrice: 'قیمت',
+      inquiry: 'استعلام قیمت',
+      unit: 'تومان',
+      detail: 'جزئیات', video: 'ویدیو', spin: 'چرخش ۳۶۰',
+      add: 'افزودن به استعلام', added: 'برداشتن از استعلام',
+      remove: 'حذف از استعلام', close: 'بستن',
+      emptyTitle: 'فهرست خالی است.',
+      emptyBody: 'روی هر خانه بایستید و دکمهٔ + را بزنید تا قلم به این فهرست بیاید.',
+      total: 'جمع', pieces: 'قلم',
+      send: 'ارسال درخواست',
+      note: 'قیمت‌ها بدون عدسی طبی است.',
+      print: 'چاپ کاتالوگ',
+      endTitle: 'قیمت‌ها را یکجا بفرستید.',
+      endBody: 'هر قلم را به فهرست اضافه کنید و درخواست را با یک کد پیگیری برای کارگاه بفرستید.',
+      footLine: 'عینک و ملزومات کوچک. کارگاه تهران، از ۱۳۹۴.',
+      footShop: 'کارگاه', footShopV: 'تهران، خیابان ویلا، شمارهٔ ۴۸',
+      footTel: 'تماس', footTelV: '۰۲۱ ۸۸۳۲ ۰۱۱۴',
+      footMail: 'رایانامه',
+      footTerms: 'شرایط', footTermsV: 'قیمت‌ها بدون عدسی طبی است و تا پایان پاییز ۱۴۰۵ معتبر می‌ماند.',
+      footMake: 'ساخت', footMakeV: 'هر قاب دست‌ساز؛ تحویل سفارش تا سه هفته.'
+    },
+    en: {
+      skip: 'Skip to the product grid',
+      folioKind: 'Price catalogue',
+      folioSeries: 'Series 06 — Autumn 1405',
+      statement: 'Sixteen pieces from the autumn run. Frames are cut from Italian acetate and titanium sheet, screw-hinged, with the serial stamped inside the temple.',
+      hint: 'Rest on a cell — or reach it with the Tab key — and its price and specification open on the cell itself.',
+      metaSeries: 'Series', metaSeriesV: 'Autumn 1405',
+      metaItems: 'Items', metaItemsV: '16 pieces',
+      metaShop: 'Workshop', metaShopV: 'Villa St., Tehran',
+      metaUnit: 'Prices in', metaUnitV: 'Toman',
+      barLabel: 'Catalogue controls', gridLabel: 'Product grid',
+      density: 'Density', order: 'Order', language: 'Language',
+      byName: 'Name', byPrice: 'Price',
+      inquiry: 'Price inquiry',
+      unit: 'Toman',
+      detail: 'Details', video: 'Video', spin: '360 spin',
+      add: 'Add to the inquiry', added: 'Remove from the inquiry',
+      remove: 'Remove from the inquiry', close: 'Close',
+      emptyTitle: 'The list is empty.',
+      emptyBody: 'Rest on any cell and press + to bring the piece into this list.',
+      total: 'Total', pieces: 'pieces',
+      send: 'Send the request',
+      note: 'Prices exclude prescription lenses.',
+      print: 'Print the catalogue',
+      endTitle: 'Send the prices in one go.',
+      endBody: 'Add the pieces you want and the workshop answers with one quotation and a reference number.',
+      footLine: 'Eyewear and small goods. A Tehran workshop, since 2015.',
+      footShop: 'Workshop', footShopV: '48 Villa St., Tehran',
+      footTel: 'Telephone', footTelV: '+98 21 8832 0114',
+      footMail: 'Email',
+      footTerms: 'Terms', footTermsV: 'Prices exclude prescription lenses and hold until the end of autumn 1405.',
+      footMake: 'Making', footMakeV: 'Every frame is made by hand; orders ship within three weeks.'
     }
-  });
-  themeBar.appendChild(b);
-}
+  };
 
-document.getElementById('lang').addEventListener('click', (e) => {
-  const btn = e.target.closest('button[data-lang]');
-  if (!btn || btn.dataset.lang === lang) return;
-  lang = btn.dataset.lang;
-  for (const other of btn.parentNode.children) {
-    other.setAttribute('aria-pressed', String(other === btn));
+  function spec(kfa, ken, vfa, ven) { return { k: { fa: kfa, en: ken }, v: { fa: vfa, en: ven } }; }
+  function spot(x, y, tfa, ten, bfa, ben) { return { x: x, y: y, t: { fa: tfa, en: ten }, b: { fa: bfa, en: ben } }; }
+
+  var P = [
+    {
+      sku: 'MZ-101', subject: 'watch', price: 6400000,
+      name: { fa: 'کویر', en: 'Kavir' },
+      line: { fa: 'آفتابی گرد با قاب استات ضخیم و عدسی دودی.', en: 'Round sunglass in thick acetate with a smoke lens.' },
+      specs: [
+        spec('قاب', 'Frame', 'استات ایتالیایی ۶ میلی‌متر', 'Italian acetate, 6 mm'),
+        spec('عدسی', 'Lens', 'دودی، دستهٔ ۳', 'Smoke, category 3'),
+        spec('اندازه', 'Size', '۴۸–۲۱–۱۴۵', '48–21–145')
+      ],
+      spots: [
+        spot(50, 40, 'عدسی دودی', 'Smoke lens', 'دستهٔ ۳؛ نور مستقیم ظهر را می‌گیرد.', 'Category three — it takes down direct midday light.'),
+        spot(34, 40, 'حلقه', 'Rim', 'لبهٔ شش‌میلی‌متری، پخ‌خورده با دست.', 'A six-millimetre edge, bevelled by hand.'),
+        spot(50, 16, 'دسته', 'Temple', 'استات روی مغزی فولادی.', 'Acetate over a steel core.')
+      ]
+    },
+    {
+      sku: 'MZ-104', subject: 'watch', price: 8900000,
+      name: { fa: 'نقش', en: 'Naqsh' },
+      line: { fa: 'قاب تیتانیوم سبک با پل دوگانه و پد قابل تنظیم.', en: 'Light titanium optical with a double bridge and adjustable pads.' },
+      specs: [
+        spec('قاب', 'Frame', 'ورق تیتانیوم ۰٫۶', 'Titanium sheet, 0.6 mm'),
+        spec('وزن', 'Weight', '۱۸ گرم', '18 g'),
+        spec('اندازه', 'Size', '۵۰–۲۰–۱۴۰', '50–20–140')
+      ],
+      spots: [
+        spot(50, 40, 'عدسی نمایشی', 'Demo lens', 'عدسی آزمایشی؛ با نسخهٔ شما عوض می‌شود.', 'A trial lens, swapped for your prescription.'),
+        spot(50, 28, 'پل دوگانه', 'Double bridge', 'دو میله، بار قاب را پخش می‌کند.', 'Two bars spread the weight of the front.'),
+        spot(50, 16, 'دستهٔ تیتانیوم', 'Titanium temple', 'ورق ۰٫۶ میلی‌متری، بدون جوش.', 'Half-millimetre sheet, folded and not welded.'),
+        spot(50, 62, 'نوک دسته', 'Temple tip', 'روکش نرم، قابل تعویض.', 'A soft tip that can be replaced.')
+      ]
+    },
+    {
+      sku: 'MZ-107', subject: 'watch', price: 7250000,
+      name: { fa: 'شبگرد', en: 'Shabgard' },
+      line: { fa: 'آفتابی مات با عدسی پلاریزهٔ خاکستری.', en: 'Matte sunglass with a grey polarised lens.' },
+      specs: [
+        spec('قاب', 'Frame', 'استات مات', 'Matte acetate'),
+        spec('عدسی', 'Lens', 'پلاریزهٔ خاکستری', 'Grey polarised'),
+        spec('اندازه', 'Size', '۵۲–۱۹–۱۴۵', '52–19–145')
+      ],
+      spots: [
+        spot(50, 40, 'پلاریزه', 'Polarised', 'بازتاب آب و آسفالت را می‌بندد.', 'Shuts down glare off water and asphalt.'),
+        spot(34, 40, 'سطح مات', 'Matte face', 'ساییدهٔ دستی، بدون براقی.', 'Rubbed back by hand, with no gloss left.'),
+        spot(50, 62, 'لولای پیچی', 'Screw hinge', 'پنج‌بند فولادی، باز و بسته می‌شود.', 'A five-barrel steel hinge you can open and service.')
+      ]
+    },
+    {
+      sku: 'MZ-110', subject: 'watch', price: 5700000,
+      name: { fa: 'هندسه', en: 'Hendese' },
+      line: { fa: 'قاب شش‌ضلعی از استات مات روی مغزی فلزی.', en: 'Hexagonal optical in matte acetate over a metal core.' },
+      specs: [
+        spec('قاب', 'Frame', 'استات و فولاد', 'Acetate and steel'),
+        spec('وزن', 'Weight', '۲۴ گرم', '24 g'),
+        spec('اندازه', 'Size', '۴۹–۲۲–۱۴۵', '49–22–145')
+      ],
+      spots: [
+        spot(50, 40, 'خط شش‌ضلعی', 'Hexagon line', 'زاویه‌ها روی فرز دستی پرداخت شده.', 'The angles are finished on a hand mill.'),
+        spot(50, 16, 'مغزی فلزی', 'Metal core', 'فولاد فنری داخل استات.', 'Spring steel runs inside the acetate.'),
+        spot(50, 62, 'شمارهٔ سریال', 'Serial', 'حک‌شده روی دستهٔ چپ.', 'Stamped inside the left temple.')
+      ]
+    },
+    {
+      sku: 'MZ-113', subject: 'watch', price: 6950000,
+      name: { fa: 'سایه‌بان', en: 'Sayeban' },
+      line: { fa: 'آفتابی پهن با عدسی گرادیان و دستهٔ فنری.', en: 'Wide sunglass with a gradient lens and sprung temples.' },
+      specs: [
+        spec('قاب', 'Frame', 'استات ایتالیایی', 'Italian acetate'),
+        spec('عدسی', 'Lens', 'گرادیان خاکستری', 'Grey gradient'),
+        spec('اندازه', 'Size', '۵۵–۱۸–۱۴۵', '55–18–145')
+      ],
+      spots: [
+        spot(50, 32, 'گرادیان', 'Gradient', 'بالا تیره، پایین روشن.', 'Dark at the brow, clear at the base.'),
+        spot(50, 16, 'فنر دسته', 'Sprung temple', 'برای صورت‌های پهن باز می‌شود و برمی‌گردد.', 'Opens for a wider face and springs back.'),
+        spot(50, 62, 'پل بینی', 'Bridge', 'استات یکپارچه، بدون پد جدا.', 'One piece of acetate, with no separate pads.')
+      ]
+    },
+    {
+      sku: 'MZ-116', subject: 'watch', price: 4980000,
+      name: { fa: 'کتیبه', en: 'Katibe' },
+      line: { fa: 'قاب مستطیل با خط بالایی صاف و حک سریال.', en: 'Rectangular optical with a flat brow and a stamped temple.' },
+      specs: [
+        spec('قاب', 'Frame', 'استات براق', 'Polished acetate'),
+        spec('وزن', 'Weight', '۲۶ گرم', '26 g'),
+        spec('اندازه', 'Size', '۵۱–۲۰–۱۴۰', '51–20–140')
+      ],
+      spots: [
+        spot(50, 30, 'خط بالا', 'Brow line', 'لبهٔ صاف، ضخامت ثابت.', 'A flat edge held at one thickness.'),
+        spot(50, 40, 'عدسی نمایشی', 'Demo lens', 'با نسخهٔ شما عوض می‌شود.', 'Swapped for your prescription.'),
+        spot(50, 62, 'حک سریال', 'Stamp', 'شمارهٔ قاب روی دستهٔ چپ.', 'The frame number sits inside the left temple.')
+      ]
+    },
+    {
+      sku: 'MZ-119', subject: 'watch', price: 6150000,
+      name: { fa: 'نیلوفر', en: 'Nilufar' },
+      line: { fa: 'آفتابی گربه‌ای با گوشهٔ بالابرده و عدسی دودی روشن.', en: 'Cat-eye sunglass with lifted corners and a light smoke lens.' },
+      specs: [
+        spec('قاب', 'Frame', 'استات ایتالیایی', 'Italian acetate'),
+        spec('عدسی', 'Lens', 'دودی روشن، دستهٔ ۲', 'Light smoke, category 2'),
+        spec('اندازه', 'Size', '۵۳–۱۷–۱۴۰', '53–17–140')
+      ],
+      spots: [
+        spot(50, 40, 'عدسی', 'Lens', 'دستهٔ ۲؛ برای نور شهر.', 'Category two, for city light.'),
+        spot(34, 34, 'گوشهٔ بالابرده', 'Lifted corner', 'زاویهٔ گوشه با سوهان باز شده.', 'The corner angle is opened with a file.'),
+        spot(50, 16, 'دسته', 'Temple', 'باریک‌شونده تا نوک.', 'Tapers to the tip.')
+      ]
+    },
+    {
+      sku: 'MZ-122', subject: 'watch', price: 5300000,
+      name: { fa: 'مشبک', en: 'Moshabbak' },
+      line: { fa: 'قاب سیمی گرد با پل قوسی و پد قابل تنظیم.', en: 'Round wire optical with an arched bridge and adjustable pads.' },
+      specs: [
+        spec('قاب', 'Frame', 'مفتول فولادی ۱٫۲', 'Steel wire, 1.2 mm'),
+        spec('وزن', 'Weight', '۱۵ گرم', '15 g'),
+        spec('اندازه', 'Size', '۴۷–۲۲–۱۴۵', '47–22–145')
+      ],
+      spots: [
+        spot(50, 40, 'حلقهٔ سیمی', 'Wire rim', 'مفتول ۱٫۲ میلی‌متری، خم‌شده روی قالب.', 'One-point-two millimetre wire, bent on a form.'),
+        spot(50, 28, 'پل قوسی', 'Arched bridge', 'قوس روی بینی می‌نشیند، نه روی پد.', 'The arch sits on the nose, not on pads.'),
+        spot(50, 62, 'پد قابل تنظیم', 'Adjustable pad', 'بازوی پد با انبردست تنظیم می‌شود.', 'The pad arm is set with pliers.')
+      ]
+    },
+    {
+      sku: 'MZ-201', subject: 'bag', price: 980000,
+      name: { fa: 'جلد', en: 'Jeld' },
+      line: { fa: 'قاب سخت با روکش چرم و آستر نمدی.', en: 'A hard case, leather-wrapped and felt-lined.' },
+      specs: [
+        spec('جنس', 'Material', 'چرم گاوی', 'Cowhide'),
+        spec('آستر', 'Lining', 'نمد پشمی', 'Wool felt'),
+        spec('اندازه', 'Size', '۱۶۵×۶۵×۴۵ میلی‌متر', '165×65×45 mm')
+      ],
+      spots: [
+        spot(50, 18, 'بند دستی', 'Hand strap', 'نوار چرمی، دوخته به بدنه.', 'A leather band stitched into the shell.'),
+        spot(50, 45, 'قفل', 'Catch', 'قفل فشاری فولادی.', 'A steel push catch.'),
+        spot(32, 55, 'بدنه', 'Shell', 'پوستهٔ فشرده زیر روکش.', 'A pressed shell under the leather.')
+      ]
+    },
+    {
+      sku: 'MZ-204', subject: 'bag', price: 460000,
+      name: { fa: 'کیسه', en: 'Kise' },
+      line: { fa: 'کیف نرم دولایه با درز بسته و بند کشویی.', en: 'A two-ply soft pouch with a closed seam and a drawcord.' },
+      specs: [
+        spec('جنس', 'Material', 'میکروفایبر و نمد', 'Microfibre and felt'),
+        spec('لایه', 'Plies', 'دولایه', 'Two'),
+        spec('اندازه', 'Size', '۱۷۰×۸۰ میلی‌متر', '170×80 mm')
+      ],
+      spots: [
+        spot(50, 18, 'بند کشویی', 'Drawcord', 'بند پنبه‌ای با گره ثابت.', 'A cotton cord with a fixed knot.'),
+        spot(50, 45, 'درز', 'Seam', 'درز بسته، بدون لبهٔ زبر.', 'A closed seam with no rough edge.'),
+        spot(35, 58, 'آستر', 'Lining', 'میکروفایبر، همان پارچهٔ دستمال.', 'Microfibre — the same cloth as the wipe.')
+      ]
+    },
+    {
+      sku: 'MZ-207', subject: 'bag', price: 1850000,
+      name: { fa: 'صندوق', en: 'Sanduq' },
+      line: { fa: 'جعبهٔ سفری سه‌خانه برای سه قاب و یک دستمال.', en: 'A travel box with three bays for three frames and a cloth.' },
+      specs: [
+        spec('ظرفیت', 'Capacity', 'سه قاب', 'Three frames'),
+        spec('جنس', 'Material', 'چوب راش و چرم', 'Beech and leather'),
+        spec('اندازه', 'Size', '۲۱۰×۱۵۰×۷۰ میلی‌متر', '210×150×70 mm')
+      ],
+      spots: [
+        spot(50, 18, 'دستگیره', 'Handle', 'چرم دوخته، برای حمل کوتاه.', 'Stitched leather, for a short carry.'),
+        spot(50, 45, 'قفل', 'Latch', 'قفل برنجی با زبانهٔ فنری.', 'A brass latch with a sprung tongue.'),
+        spot(32, 58, 'خانه‌ها', 'Bays', 'سه خانهٔ نمدپوش، جدا از هم.', 'Three felt-lined bays, kept apart.')
+      ]
+    },
+    {
+      sku: 'MZ-210', subject: 'textile', price: 210000,
+      name: { fa: 'ریسمان', en: 'Risman' },
+      line: { fa: 'بند بافتهٔ پنبه با قفل سیلیکونی.', en: 'A woven cotton cord with silicone grips.' },
+      specs: [
+        spec('جنس', 'Material', 'پنبهٔ بافته', 'Woven cotton'),
+        spec('طول', 'Length', '۷۰ سانتی‌متر', '70 cm'),
+        spec('قفل', 'Grip', 'سیلیکون', 'Silicone')
+      ],
+      spots: [
+        spot(50, 24, 'بافت', 'Weave', 'بافت چهارلا، کشیده نمی‌شود.', 'A four-strand weave that does not stretch.'),
+        spot(35, 45, 'تار و پود', 'Yarn', 'پنبهٔ رنگ‌نشده.', 'Undyed cotton.'),
+        spot(62, 60, 'قفل سیلیکونی', 'Silicone grip', 'روی دستهٔ نازک هم می‌ماند.', 'Holds even on a thin temple.')
+      ]
+    },
+    {
+      sku: 'MZ-213', subject: 'textile', price: 180000,
+      name: { fa: 'ترمه', en: 'Termeh' },
+      line: { fa: 'دستمال میکروفایبر با لبهٔ دوخته و چاپ نشان.', en: 'A microfibre cloth with a stitched edge and a printed mark.' },
+      specs: [
+        spec('جنس', 'Material', 'میکروفایبر ۳۰۰ گرم', 'Microfibre, 300 gsm'),
+        spec('اندازه', 'Size', '۱۸۰×۱۸۰ میلی‌متر', '180×180 mm'),
+        spec('شست‌وشو', 'Washing', '۳۰ درجه', 'At 30 degrees')
+      ],
+      spots: [
+        spot(50, 24, 'لبهٔ دوخته', 'Stitched edge', 'دوخت ریز، نخ باز نمی‌شود.', 'A fine stitch that will not unpick.'),
+        spot(35, 45, 'پرز', 'Pile', 'پرز کوتاه؛ روی روکش عدسی خط نمی‌اندازد.', 'A short pile that will not scratch a coating.'),
+        spot(62, 62, 'چاپ نشان', 'Printed mark', 'نشان منظر، چاپ سیلک.', 'The Manzar mark, screen-printed.')
+      ]
+    },
+    {
+      sku: 'MZ-216', subject: 'textile', price: 320000,
+      name: { fa: 'نمد', en: 'Namad' },
+      line: { fa: 'کاور نمدی تک‌لایه برای حمل روزانه.', en: 'A single-ply felt sleeve for everyday carry.' },
+      specs: [
+        spec('جنس', 'Material', 'نمد پشمی ۳ میلی‌متر', 'Wool felt, 3 mm'),
+        spec('اندازه', 'Size', '۱۷۵×۸۵ میلی‌متر', '175×85 mm'),
+        spec('دوخت', 'Stitch', 'درز کناری', 'Side seam')
+      ],
+      spots: [
+        spot(50, 24, 'دهانه', 'Mouth', 'برش صاف، بدون لبهٔ اضافه.', 'A straight cut with no extra edge.'),
+        spot(35, 45, 'نمد', 'Felt', 'پشم فشرده، سه میلی‌متر.', 'Pressed wool, three millimetres thick.'),
+        spot(62, 60, 'درز کناری', 'Side seam', 'یک درز، تا ته دوخته.', 'One seam, sewn to the base.')
+      ]
+    },
+    {
+      sku: 'MZ-219', subject: 'bottle', price: 240000,
+      name: { fa: 'شبنم', en: 'Shabnam' },
+      line: { fa: 'اسپری پاک‌کنندهٔ عدسی، بدون الکل، سی میلی‌لیتر.', en: 'An alcohol-free lens spray, thirty millilitres.' },
+      specs: [
+        spec('حجم', 'Volume', '۳۰ میلی‌لیتر', '30 ml'),
+        spec('ترکیب', 'Formula', 'بدون الکل', 'Alcohol-free'),
+        spec('مصرف', 'Use', 'روزانه', 'Daily')
+      ],
+      spots: [
+        spot(50, 18, 'درپوش', 'Cap', 'درپوش پیچی، نشت نمی‌کند.', 'A screw cap that does not leak.'),
+        spot(50, 45, 'برچسب', 'Label', 'کاغذ بدون روکش، چاپ تک‌رنگ.', 'Uncoated paper, printed in one colour.'),
+        spot(36, 58, 'بدنه', 'Body', 'شیشهٔ بازیافتی، قابل پرکردن.', 'Recycled glass, made to be refilled.')
+      ]
+    },
+    {
+      sku: 'MZ-222', subject: 'bottle', price: 390000,
+      name: { fa: 'چشمه', en: 'Cheshme' },
+      line: { fa: 'محلول پرکننده، صد میلی‌لیتر، برای اسپری شبنم.', en: 'A refill solution, one hundred millilitres, for the Shabnam spray.' },
+      specs: [
+        spec('حجم', 'Volume', '۱۰۰ میلی‌لیتر', '100 ml'),
+        spec('ترکیب', 'Formula', 'بدون الکل', 'Alcohol-free'),
+        spec('سازگاری', 'Fits', 'اسپری شبنم', 'The Shabnam spray')
+      ],
+      spots: [
+        spot(50, 18, 'درپوش', 'Cap', 'درپوش پهن برای پرکردن.', 'A wide cap, for pouring.'),
+        spot(50, 45, 'برچسب', 'Label', 'دستور پرکردن پشت برچسب.', 'The refill instruction sits on the back.'),
+        spot(36, 58, 'بدنه', 'Body', 'سه بار پرکردن اسپری سی‌میلی‌لیتری.', 'Three refills of the thirty-millilitre spray.')
+      ]
+    }
+  ];
+
+  var state = { lang: 'fa', cols: 4, sort: 'name', picked: [] };
+
+  var grid = document.getElementById('grid');
+  var panel = document.getElementById('mg-panel');
+  var scrim = document.getElementById('mg-scrim');
+  var openBtn = document.getElementById('mg-open');
+  var closeBtn = document.getElementById('mg-close');
+  var list = document.getElementById('mg-list');
+  var countEl = document.getElementById('mg-count');
+  var sumN = document.getElementById('mg-sum-n');
+  var sumV = document.getElementById('mg-sum-v');
+  var sendBtn = document.getElementById('mg-send');
+  var endCell, endCount, lastFocus = null;
+
+  function t(key) { return S[state.lang][key]; }
+
+  function fig(value) {
+    var s = Number(value).toLocaleString('en-US');
+    return state.lang === 'fa' ? CatalogKit.toFa(s).replace(/,/g, '٬') : s;
   }
-  root.lang = lang;
-  root.dir = lang === 'fa' ? 'rtl' : 'ltr';
-  for (const node of document.querySelectorAll('[data-t]')) {
-    node.textContent = STRINGS[lang][node.dataset.t];
+
+  function mediaFor(p) {
+    var lang = state.lang;
+    var spots = p.spots.map(function (s) { return { x: s.x, y: s.y, title: s.t[lang], body: s.b[lang] }; });
+    return [
+      { type: 'photo', seed: p.sku + '-a', subject: p.subject, palette: PALETTE, hotspots: spots },
+      { type: 'video', seed: p.sku + '-a', subject: p.subject, palette: PALETTE, duration: 10 },
+      { type: 'spin', seed: p.sku + '-a', subject: p.subject, palette: PALETTE },
+      { type: 'photo', seed: p.sku + '-b', subject: p.subject, palette: PALETTE, hotspots: [] }
+    ];
   }
-  render();
-});
 
-function render() {
-  const t = STRINGS[lang];
-  grid.innerHTML = '';
-  for (const p of PRODUCTS) {
-    const card = document.createElement('article');
-    card.className = 'cat-card';
+  function meta(p) { return { title: p.name[state.lang], sku: p.sku }; }
 
-    const media = document.createElement('div');
-    card.appendChild(media);
+  function build(p) {
+    var cell = document.createElement('article');
+    cell.className = 'mg-cell';
+    cell.innerHTML =
+      '<div class="mg-cell__frame">' +
+        '<div class="mg-cell__media"></div>' +
+      '</div>' +
+      '<div class="mg-cell__over">' +
+          '<p class="mg-over__line"></p>' +
+          '<div class="mg-over__body">' +
+            '<p class="mg-price"><span class="mg-price__n"></span><span class="mg-price__u"></span></p>' +
+            '<dl class="mg-spec"></dl>' +
+          '</div>' +
+          '<div class="mg-act">' +
+            '<button type="button" class="mg-ib mg-ib--add" aria-pressed="false"></button>' +
+            '<button type="button" class="mg-ib" data-go="1">' + ICON.play + '</button>' +
+            '<button type="button" class="mg-ib" data-go="2">' + ICON.spin + '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="mg-cell__foot">' +
+        '<h3 class="mg-cell__name"></h3>' +
+        '<span class="mg-cell__code"></span>' +
+      '</div>';
 
-    const name = document.createElement('h3');
-    name.className = 'cat-card__name';
-    name.textContent = lang === 'fa' ? p.fa : p.en;
+    p.node = cell;
+    p.host = cell.querySelector('.mg-cell__media');
+    p.lineEl = cell.querySelector('.mg-over__line');
+    p.priceEl = cell.querySelector('.mg-price__n');
+    p.unitEl = cell.querySelector('.mg-price__u');
+    p.specEl = cell.querySelector('.mg-spec');
+    p.nameEl = cell.querySelector('.mg-cell__name');
+    p.addBtn = cell.querySelector('.mg-ib--add');
+    cell.querySelector('.mg-cell__code').textContent = p.sku;
 
-    const alt = document.createElement('div');
-    alt.className = 'cat-card__name-en';
-    alt.dir = lang === 'fa' ? 'ltr' : 'rtl';
-    alt.textContent = lang === 'fa' ? p.en : p.fa;
-
-    const meta = document.createElement('div');
-    meta.className = 'cat-card__meta';
-    const price = document.createElement('div');
-    price.className = 'cat-price';
-    price.innerHTML = '<span></span><span class="cat-price__unit"></span>';
-    price.firstChild.textContent = lang === 'fa' ? p.price : p.priceEn;
-    price.lastChild.textContent = t.unit;
-    const sku = document.createElement('div');
-    sku.className = 'cat-sku';
-    sku.textContent = p.sku;
-    meta.append(price, sku);
-
-    const open = document.createElement('button');
-    open.type = 'button';
-    open.className = 'cat-btn cat-btn--ghost';
-    open.textContent = t.detail;
-
-    card.append(name, alt, meta, open);
-    grid.appendChild(card);
-
-    /* The media element has to be in the document before it is mounted,
-       so this runs after the card is appended. */
-    media.className = 'cat-card__media';
-    const hotspots = p.hotspots.map((h) => ({
-      x: h.x, y: h.y,
-      title: (lang === 'fa' ? h.fa : h.en)[0],
-      body: (lang === 'fa' ? h.fa : h.en)[1]
-    }));
-    const set = CatalogKit.defaultMedia(p.sku, hotspots, {
-      subject: p.subject, palette: p.palette
+    p.specs.forEach(function () {
+      var row = document.createElement('div');
+      row.innerHTML = '<dt></dt><dd></dd>';
+      p.specEl.appendChild(row);
     });
-    const meta2 = { title: lang === 'fa' ? p.fa : p.en, sku: p.sku };
-    CatalogKit.mountMedia(media, set, meta2, lang);
-    open.addEventListener('click', () => CatalogKit.open(set, meta2, lang, 0));
-  }
-}
 
-render();
+    cell.querySelectorAll('[data-go]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        CatalogKit.open(mediaFor(p), meta(p), state.lang, Number(b.dataset.go));
+      });
+    });
+    p.addBtn.addEventListener('click', function () { togglePick(p); });
+
+    grid.appendChild(cell);
+    paint(p);
+  }
+
+  function paint(p) {
+    var lang = state.lang;
+    p.nameEl.textContent = p.name[lang];
+    p.lineEl.textContent = p.line[lang];
+    p.priceEl.textContent = fig(p.price);
+    p.unitEl.textContent = t('unit');
+    p.specEl.querySelectorAll('div').forEach(function (row, i) {
+      row.firstChild.textContent = p.specs[i].k[lang];
+      row.lastChild.textContent = p.specs[i].v[lang];
+    });
+    p.node.querySelector('[data-go="1"]').setAttribute('aria-label', p.name[lang] + ' — ' + t('video'));
+    p.node.querySelector('[data-go="2"]').setAttribute('aria-label', p.name[lang] + ' — ' + t('spin'));
+
+    /* mountMedia binds its click and key handlers to the host element itself,
+       so a second mount on the same node would open the viewer twice. Hand it
+       a fresh host each time instead. */
+    var host = document.createElement('div');
+    host.className = 'mg-cell__media';
+    p.host.replaceWith(host);
+    p.host = host;
+    CatalogKit.mountMedia(host, mediaFor(p), meta(p), lang);
+  }
+
+  function buildEnd() {
+    endCell = document.createElement('article');
+    endCell.className = 'mg-end';
+    endCell.innerHTML =
+      '<h2 class="mg-end__title"></h2>' +
+      '<p></p>' +
+      '<button type="button" class="mg-end__btn"><span></span> <span class="mg-fig"></span></button>';
+    endCount = endCell.querySelector('.mg-fig');
+    endCell.querySelector('.mg-end__btn').addEventListener('click', openPanel);
+    grid.appendChild(endCell);
+    paintEnd();
+  }
+
+  function paintEnd() {
+    endCell.querySelector('.mg-end__title').textContent = t('endTitle');
+    endCell.querySelector('p').textContent = t('endBody');
+    endCell.querySelector('.mg-end__btn > span').textContent = t('inquiry');
+  }
+
+  /* The grid closes flush at every density: the last cell takes whatever the
+     product cells left over in the final row. */
+  /* Narrow viewports fold the chosen density down, so the effective column
+     count comes from the resolved property rather than from the control. */
+  function fitEnd() {
+    var cols = Number(getComputedStyle(grid).getPropertyValue('--mg-cols')) || Number(grid.dataset.cols);
+    var rest = P.length % cols;
+    endCell.style.setProperty('--mg-end-span', String(rest ? cols - rest : cols));
+  }
+
+  function order() {
+    var lang = state.lang;
+    var sorted = P.slice();
+    if (state.sort === 'price') sorted.sort(function (a, b) { return a.price - b.price; });
+    else sorted.sort(function (a, b) { return a.name[lang].localeCompare(b.name[lang], lang); });
+    sorted.forEach(function (p) { grid.appendChild(p.node); });
+    grid.appendChild(endCell);
+  }
+
+  function togglePick(p) {
+    var i = state.picked.indexOf(p.sku);
+    if (i < 0) state.picked.push(p.sku); else state.picked.splice(i, 1);
+    syncPicked();
+  }
+
+  function syncPicked() {
+    P.forEach(function (p) {
+      var on = state.picked.indexOf(p.sku) > -1;
+      p.addBtn.setAttribute('aria-pressed', String(on));
+      p.addBtn.setAttribute('aria-label', p.name[state.lang] + ' — ' + (on ? t('added') : t('add')));
+      p.addBtn.innerHTML = on ? ICON.check : ICON.plus;
+    });
+    countEl.textContent = fig(state.picked.length);
+    if (endCount) endCount.textContent = fig(state.picked.length);
+    renderList();
+  }
+
+  function renderList() {
+    var lang = state.lang;
+    var chosen = state.picked.map(function (sku) {
+      return P.filter(function (p) { return p.sku === sku; })[0];
+    });
+    list.innerHTML = '';
+
+    if (!chosen.length) {
+      var empty = document.createElement('li');
+      empty.className = 'mg-empty';
+      empty.innerHTML = '<b></b><span></span>';
+      empty.firstChild.textContent = t('emptyTitle');
+      empty.lastChild.textContent = t('emptyBody');
+      list.appendChild(empty);
+    }
+
+    var total = 0;
+    chosen.forEach(function (p) {
+      total += p.price;
+      var row = document.createElement('li');
+      row.className = 'mg-row';
+      row.innerHTML =
+        '<img alt="" src="' + CatalogKit.image(p.sku + '-a', { w: 160, h: 200, subject: p.subject, palette: PALETTE }) + '">' +
+        '<span><span class="mg-row__name"></span><br><span class="mg-row__code"></span></span>' +
+        '<span class="mg-row__price"></span>' +
+        '<button type="button" class="mg-x">' + ICON.minus + '</button>';
+      row.querySelector('.mg-row__name').textContent = p.name[lang];
+      row.querySelector('.mg-row__code').textContent = p.sku;
+      row.querySelector('.mg-row__price').textContent = fig(p.price);
+      var rm = row.querySelector('button');
+      rm.setAttribute('aria-label', p.name[lang] + ' — ' + t('remove'));
+      rm.addEventListener('click', function () { togglePick(p); });
+      list.appendChild(row);
+    });
+
+    sumN.textContent = fig(chosen.length) + ' ' + t('pieces');
+    sumV.textContent = fig(total) + ' ' + t('unit');
+    sendBtn.disabled = !chosen.length;
+  }
+
+  function openPanel() {
+    lastFocus = document.activeElement;
+    scrim.hidden = false;
+    panel.hidden = false;
+    openBtn.setAttribute('aria-expanded', 'true');
+    document.documentElement.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closePanel() {
+    scrim.hidden = true;
+    panel.hidden = true;
+    openBtn.setAttribute('aria-expanded', 'false');
+    document.documentElement.style.overflow = '';
+    if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+  }
+
+  function setLang(lang) {
+    state.lang = lang;
+    var root = document.documentElement;
+    root.lang = lang;
+    root.dir = lang === 'fa' ? 'rtl' : 'ltr';
+
+    document.querySelectorAll('[data-i18n]').forEach(function (n) {
+      var v = S[lang][n.dataset.i18n];
+      if (v) n.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-label]').forEach(function (n) {
+      n.setAttribute('aria-label', S[lang][n.dataset.i18nLabel]);
+    });
+    document.querySelectorAll('#mg-density button').forEach(function (b) {
+      b.textContent = fig(b.dataset.cols);
+    });
+    document.querySelectorAll('#mg-lang button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+    });
+
+    P.forEach(paint);
+    paintEnd();
+    syncPicked();
+    order();
+  }
+
+  function setCols(cols) {
+    state.cols = cols;
+    grid.dataset.cols = String(cols);
+    document.querySelectorAll('#mg-density button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(Number(b.dataset.cols) === cols));
+    });
+    fitEnd();
+    try { localStorage.setItem('mz-cols', String(cols)); } catch (e) { /* file:// or blocked storage */ }
+  }
+
+  function setSort(key) {
+    state.sort = key;
+    document.querySelectorAll('#mg-sort button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.sort === key));
+    });
+    order();
+  }
+
+  /* The staggered entrance is a first-paint event only: once it has run the
+     class comes off, so re-ordering the grid moves cells without replaying it. */
+  grid.addEventListener('animationend', function (e) {
+    if (e.target === grid.lastElementChild) grid.classList.remove('cat-stagger');
+  });
+
+  P.forEach(build);
+  buildEnd();
+
+  var saved;
+  try { saved = Number(localStorage.getItem('mz-cols')); } catch (e) { saved = 0; }
+  setCols(saved === 2 || saved === 4 || saved === 6 ? saved : 4);
+  setSort('name');
+  syncPicked();
+
+  document.getElementById('mg-density').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (b) setCols(Number(b.dataset.cols));
+  });
+  document.getElementById('mg-sort').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (b) setSort(b.dataset.sort);
+  });
+  document.getElementById('mg-lang').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (b && b.dataset.lang !== state.lang) setLang(b.dataset.lang);
+  });
+  document.getElementById('mg-print').addEventListener('click', function () { window.print(); });
+  window.addEventListener('resize', fitEnd);
+
+  openBtn.addEventListener('click', function () { panel.hidden ? openPanel() : closePanel(); });
+  closeBtn.innerHTML = ICON.close;
+  closeBtn.addEventListener('click', closePanel);
+  scrim.addEventListener('click', closePanel);
+
+  /* The panel is modal, so Escape and Tab are handled inside it — the viewer
+     keeps its own keys and the two never fight over the document. */
+  panel.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { closePanel(); return; }
+    if (e.key !== 'Tab') return;
+    var stops = Array.prototype.filter.call(panel.querySelectorAll('button'), function (b) { return !b.disabled; });
+    if (!stops.length) return;
+    var first = stops[0], last = stops[stops.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+}());
 </script>
 </body>
 </html>

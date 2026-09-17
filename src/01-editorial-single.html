@@ -1,0 +1,1096 @@
+<!doctype html>
+<html dir="rtl" lang="fa" data-theme="editorial">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>میناوند — کاتالوگ پاییز ۱۴۰۵</title>
+<link rel="stylesheet" href="../shared/ds-core.css">
+<style>
+/* ── page shell ─────────────────────────────────────────── */
+.ed-wrap { max-width: var(--page-max); margin-inline: auto; padding-inline: var(--page-pad); }
+.ed-grid12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+
+html { scroll-padding-block-start: var(--s-9); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+.ed-skip {
+  position: fixed; inset-block-start: var(--s-3); inset-inline-start: var(--s-3); z-index: 60;
+  display: inline-flex; align-items: center; min-height: var(--tap-min); padding: 0 var(--s-4);
+  background: var(--surface); color: var(--ink); text-decoration: none;
+  border: var(--border-w) solid var(--line-strong); border-radius: var(--radius-control);
+  transform: translateY(calc(-1 * var(--s-9)));
+}
+.ed-skip:focus-visible { transform: none; }
+
+/* ── shared editorial type roles ────────────────────────── */
+.ed-mark {
+  font-family: var(--font-en-ui); font-weight: var(--w-medium);
+  letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+}
+.ed-eyebrow { font-size: var(--t-xs); color: var(--ink-faint); }
+[dir="ltr"] .ed-eyebrow {
+  font-family: var(--font-en-ui); text-transform: uppercase; letter-spacing: var(--tracking-en-caps);
+}
+.ed-rule { display: block; height: var(--border-w); background: var(--line); }
+
+/* ── cover ──────────────────────────────────────────────── */
+.ed-cover {
+  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  min-height: 100svh; border-block-end: var(--border-w) solid var(--line-strong);
+}
+.ed-cover__type {
+  display: grid; align-content: space-between; gap: var(--s-7);
+  padding: var(--s-5) var(--page-pad) var(--s-6);
+}
+.ed-cover__head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4);
+  padding-block-end: var(--s-3); border-block-end: var(--border-w) solid var(--line);
+}
+.ed-cover__head .ed-mark { font-size: var(--t-sm); }
+.ed-cover__title { font-size: var(--t-3xl); font-weight: var(--w-light); }
+.ed-cover__sub { margin-block-start: var(--s-4); font-size: var(--t-xs); color: var(--ink-faint); }
+.ed-cover__say {
+  margin-block: var(--s-6) 0; max-width: 32ch;
+  font-size: var(--t-md); color: var(--ink-muted);
+}
+.ed-cover__accent {
+  display: block; inline-size: var(--s-8); block-size: var(--border-w-strong);
+  margin-block-start: var(--s-6); background: var(--accent);
+}
+.ed-cover__foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-6);
+  padding-block-start: var(--s-4); border-block-start: var(--border-w) solid var(--line);
+  font-size: var(--t-xs); color: var(--ink-faint);
+}
+.ed-cover__down {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-height: var(--tap-min); margin-inline-start: auto;
+  color: var(--ink-muted); text-decoration: none;
+}
+.ed-cover__down:hover { color: var(--ink); }
+.ed-cover__down svg { inline-size: 16px; block-size: 16px; fill: currentColor; }
+.ed-cover__art {
+  position: relative; overflow: hidden; background: var(--surface-alt);
+  border-inline-start: var(--border-w) solid var(--line-strong);
+}
+.ed-cover__art img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; }
+.ed-cover__caption {
+  position: absolute; inset-block-end: var(--s-5); inset-inline-start: var(--s-5);
+  max-inline-size: 26ch; padding: var(--s-3) var(--s-4);
+  background: var(--bg); font-size: var(--t-xs); color: var(--ink-muted);
+}
+
+/* ── masthead ───────────────────────────────────────────── */
+.ed-mast {
+  position: fixed; inset-block-start: 0; inset-inline: 0; z-index: 30;
+  display: flex; align-items: center; gap: var(--s-4);
+  min-height: var(--s-8); padding-inline: var(--page-pad);
+  background: var(--bg); border-block-end: var(--border-w) solid var(--line);
+  visibility: hidden; transform: translateY(-100%);
+  transition: transform var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
+}
+.ed-mast.is-on {
+  visibility: visible; transform: none;
+  transition: transform var(--dur-base) var(--ease-out), visibility 0s;
+}
+.ed-mast__brand { font-size: var(--t-sm); }
+.ed-mast__nav { display: flex; gap: var(--s-5); margin-inline-start: var(--s-6); }
+.ed-mast__nav a {
+  display: inline-flex; align-items: center; min-height: var(--tap-min);
+  font-size: var(--t-sm); color: var(--ink-muted); text-decoration: none;
+}
+.ed-mast__nav a:hover { color: var(--ink); }
+.ed-mast__end { display: flex; align-items: center; gap: var(--s-3); margin-inline-start: auto; }
+.ed-mast .cat-lang > button { min-height: var(--tap-min); font-size: var(--t-xs); }
+.ed-inq-open { gap: var(--s-3); padding-inline: var(--s-4); font-size: var(--t-sm); }
+.ed-inq-open svg { inline-size: 16px; block-size: 16px; fill: currentColor; }
+.ed-count { min-inline-size: 22px; justify-content: center; font-family: var(--font-num); }
+.ed-count[data-zero="true"] {
+  background: transparent; color: var(--ink-faint);
+  border: var(--border-w) solid var(--line);
+}
+
+/* ── chapter opener ─────────────────────────────────────── */
+.ed-chapter__head { padding-block: clamp(var(--s-8), 8vw, var(--s-10)) var(--s-7); }
+.ed-chapter__head .ed-rule { grid-column: 1 / -1; margin-block-end: var(--s-6); background: var(--accent); }
+.ed-chapter__num { grid-column: 1 / 2; font-size: var(--t-sm); color: var(--accent); }
+.ed-chapter__title { grid-column: 2 / 8; font-size: var(--t-2xl); font-weight: var(--w-light); }
+.ed-chapter__line {
+  grid-column: 9 / 13; align-self: end; margin: 0;
+  font-size: var(--t-sm); color: var(--ink-muted);
+}
+
+/* ── product band ───────────────────────────────────────── */
+.ed-band { align-items: start; padding-block: clamp(var(--s-8), 6vw, var(--s-9)); }
+.ed-band__media {
+  grid-column: 1 / 9; grid-row: 1; position: relative;
+  aspect-ratio: 5 / 4; overflow: hidden;
+  background: var(--surface-alt); border-radius: var(--radius-media);
+}
+.ed-band--flip .ed-band__media { grid-column: 5 / 13; }
+.ed-band__drift { position: absolute; inset: 0; }
+.ed-band__frame { position: absolute; inset: 0; }
+/* The artwork is drawn 4:5; a wider crop plus a light bias keeps the whole
+   object inside the band and leaves headroom for the parallax drift. */
+.ed-band__frame > img,
+.ed-band__frame > canvas {
+  object-position: 50% 33%;
+  transform: translate3d(0, var(--ed-drift, 0px), 0) scale(1.04);
+}
+.ed-band__frame .ck-cue { inset-block-end: var(--s-3); inset-inline-start: var(--s-3); }
+.ed-band--flip .ed-band__frame .ck-cue { inset-inline-start: auto; inset-inline-end: var(--s-3); }
+
+/* The text column crosses the last column of the media, so it carries the
+   page ground with it and sits above the artwork. */
+.ed-band__text {
+  grid-column: 8 / 13; grid-row: 1; align-self: end;
+  position: relative; z-index: 1;
+  margin-block-end: calc(-1 * var(--s-7));
+  padding-block: var(--s-5) 0;
+  padding-inline-start: var(--s-6);
+  background: var(--bg);
+}
+/* The padding belongs on whichever edge crosses the artwork. */
+.ed-band--flip .ed-band__text {
+  grid-column: 1 / 6;
+  padding-inline-start: 0; padding-inline-end: var(--s-6);
+}
+.ed-band__index { display: flex; align-items: center; gap: var(--s-3); margin: 0 0 var(--s-4); }
+.ed-band__index .num { font-size: var(--t-xs); color: var(--ink-faint); }
+.ed-band__index .ed-rule { flex: 1; }
+.ed-band__name { font-size: var(--t-xl); font-weight: var(--w-medium); }
+.ed-band__line { margin: var(--s-4) 0 0; color: var(--ink-muted); }
+
+/* Rows share one rule per line, so the cells sit flush and the label column
+   makes its own gap with padding. */
+.ed-band__specs {
+  display: grid; grid-template-columns: max-content 1fr;
+  margin-block-start: var(--s-6); border-block-start: var(--border-w) solid var(--line);
+}
+.ed-spec { display: contents; }
+.ed-band__specs dt, .ed-band__specs dd {
+  margin: 0; padding-block: var(--s-3); font-size: var(--t-sm);
+  border-block-end: var(--border-w) solid var(--line);
+}
+.ed-band__specs dt { padding-inline-end: var(--s-6); color: var(--ink-faint); }
+
+.ed-band__buy {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4);
+  margin-block-start: var(--s-5);
+}
+.ed-band__price { margin: 0; font-size: var(--t-lg); color: var(--accent); }
+.ed-band__unit { font-size: var(--t-xs); color: var(--ink-muted); }
+
+.ed-band__acts {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4);
+  margin-block-start: var(--s-5);
+}
+.ed-band__add { padding-inline: var(--s-4); font-size: var(--t-sm); }
+.ed-band__add[aria-pressed="true"] { border-color: var(--line); color: var(--ink-muted); }
+.ed-band__links { display: flex; align-items: center; }
+.ed-link {
+  min-height: var(--tap-min); padding: 0 var(--s-4); font: inherit; font-size: var(--t-sm);
+  background: none; color: var(--ink-muted); border: 0; cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.ed-link:first-child { padding-inline-start: 0; }
+.ed-link + .ed-link { border-inline-start: var(--border-w) solid var(--line); }
+.ed-link:hover { color: var(--ink); }
+
+/* ── colophon ───────────────────────────────────────────── */
+.ed-colophon {
+  margin-block-start: clamp(var(--s-8), 8vw, var(--s-10));
+  padding-block: var(--s-8) var(--s-6);
+  border-block-start: var(--border-w) solid var(--line-strong);
+}
+.ed-colophon__title { font-size: var(--t-lg); font-weight: var(--w-light); }
+.ed-colophon__grid { row-gap: var(--s-6); }
+.ed-colophon__col { grid-column: span 3; }
+.ed-colophon__col p { margin: var(--s-3) 0 0; font-size: var(--t-sm); color: var(--ink-muted); }
+.ed-colophon__mark {
+  margin: clamp(var(--s-8), 7vw, var(--s-9)) 0 0;
+  font-size: var(--t-2xl); font-weight: var(--w-regular); color: var(--ink);
+  text-align: center;
+}
+.ed-colophon__foot {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-4);
+  margin-block-start: var(--s-6); padding-block-start: var(--s-4);
+  border-block-start: var(--border-w) solid var(--line);
+  font-size: var(--t-xs); color: var(--ink-faint);
+}
+
+/* ── price-inquiry sheet ────────────────────────────────── */
+.ed-sheet { width: min(680px, 92vw); max-height: 86vh; }
+/* .cat-dialog centres itself twice above 760px — once with the `translate`
+   property and again in the transform its entrance keyframe leaves behind.
+   Dropping the property leaves exactly one offset. */
+@media (min-width: 760px) { .ed-sheet { translate: none; } }
+.ed-sheet__head {
+  display: flex; align-items: flex-start; gap: var(--s-4);
+  padding-block-end: var(--s-4); border-block-end: var(--border-w) solid var(--line);
+}
+.ed-sheet__title { font-size: var(--t-lg); font-weight: var(--w-light); }
+.ed-sheet__sub { margin: var(--s-2) 0 0; font-size: var(--t-sm); color: var(--ink-muted); }
+.ed-sheet__close { margin-inline-start: auto; flex: 0 0 auto; }
+.ed-sheet__close svg { inline-size: 18px; block-size: 18px; fill: currentColor; }
+.ed-sheet .cat-inquiry { margin-block: var(--s-5); }
+.ed-sheet .cat-inquiry__row { align-items: center; }
+.ed-inq-thumb {
+  inline-size: 56px; aspect-ratio: 4 / 5; object-fit: cover;
+  background: var(--surface-alt); border-radius: var(--radius-media);
+}
+.ed-inq-name { font-size: var(--t-base); }
+.ed-inq-meta { display: flex; gap: var(--s-3); margin-block-start: 2px; font-size: var(--t-xs); color: var(--ink-faint); }
+.ed-inq-drop { min-inline-size: var(--tap-min); min-block-size: var(--tap-min); }
+.ed-inq-drop svg { inline-size: 14px; block-size: 14px; fill: currentColor; }
+.ed-sheet__foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3);
+  padding-block-start: var(--s-4); border-block-start: var(--border-w) solid var(--line);
+}
+.ed-sheet__total { margin-inline-end: auto; font-size: var(--t-sm); color: var(--ink-muted); }
+.ed-sheet__status { flex-basis: 100%; min-height: var(--s-5); font-size: var(--t-xs); color: var(--ink-faint); }
+.ed-locked, .ed-locked body { overflow: hidden; }
+
+/* ── motion ─────────────────────────────────────────────────
+   The reveal moves things only. An opacity reveal would leave every
+   band that was never scrolled past blank in print and in a static
+   capture of the page. */
+[data-reveal] .ed-rise { transform: translateY(var(--s-6)); transition: transform var(--dur-slow) var(--ease-out); }
+[data-reveal] .ed-rise--late { transform: translateY(var(--s-4)); transition-delay: calc(var(--stagger) * 2); }
+[data-reveal] .ed-band__drift { transform: scale(1.03); transition: transform var(--dur-slow) var(--ease-out); }
+[data-reveal].is-in .ed-rise,
+[data-reveal].is-in .ed-band__drift { transform: none; }
+
+/* ── narrow screens ─────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .ed-cover { grid-template-columns: 1fr; min-height: 0; }
+  .ed-cover__art {
+    aspect-ratio: 3 / 2; order: -1;
+    border-inline-start: 0; border-block-end: var(--border-w) solid var(--line-strong);
+  }
+  .ed-cover__type { padding-block: var(--s-6) var(--s-7); }
+  .ed-mast__nav { display: none; }
+  .ed-chapter__title { grid-column: 2 / 13; }
+  .ed-chapter__line { grid-column: 2 / 13; margin-block-start: var(--s-4); }
+  .ed-band { display: block; }
+  .ed-band__media, .ed-band--flip .ed-band__media { aspect-ratio: 4 / 3; }
+  .ed-band__text, .ed-band--flip .ed-band__text {
+    margin-block-end: 0; padding: var(--s-5) 0 0; max-inline-size: var(--measure-fa);
+  }
+  .ed-colophon__col { grid-column: span 6; }
+}
+@media (max-width: 620px) {
+  .ed-colophon__col { grid-column: 1 / -1; }
+  .ed-cover__caption { position: static; max-inline-size: none; }
+}
+
+/* ── print ──────────────────────────────────────────────── */
+@media print {
+  .ed-cover { min-height: 0; }
+  .ed-band { break-inside: avoid; }
+  .ed-band__media { aspect-ratio: 4 / 3; }
+  .ed-rise, .ed-band__drift { transform: none !important; }
+  .ed-band__frame > img { transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<a class="ed-skip no-print" href="#ed-main" data-i18n="a.skip">رفتن به فهرست قطعه‌ها</a>
+
+<header class="ed-cover" id="ed-top">
+  <div class="ed-cover__type">
+    <div class="ed-cover__head">
+      <span class="ed-mark">Mināvand</span>
+      <span class="ed-eyebrow" data-i18n="cover.season">مجموعهٔ پاییز ۱۴۰۵ — دفتر دوم</span>
+    </div>
+    <div>
+      <h1 class="ed-cover__title" data-i18n="cover.title">میناوند</h1>
+      <p class="ed-cover__sub ed-mark">Kāshān · Clay &amp; Glaze</p>
+      <p class="ed-cover__say" data-i18n="cover.say">سفال و لوازم خانه از کاشان؛ خاکِ محلی، لعابِ پختِ دوم، و تیراژِ کوتاه.</p>
+      <span class="ed-cover__accent" aria-hidden="true"></span>
+    </div>
+    <div class="ed-cover__foot">
+      <span data-i18n="cover.pieces">۱۲ قطعه</span>
+      <span data-i18n="cover.chapters">سه فصل</span>
+      <span data-i18n="cover.year">پاییز ۱۴۰۵</span>
+      <a class="ed-cover__down" href="#ch-1">
+        <span data-i18n="cover.down">آغاز فصل یکم</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.25 3h1.5v13.19l5.47-5.47 1.06 1.06L12 19.06l-7.28-7.28 1.06-1.06 5.47 5.47z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="ed-cover__art">
+    <img id="ed-cover-art" alt="">
+    <p class="ed-cover__caption" data-i18n="cover.caption">گلدان بلند «قامت» — لعاب خاکستر روی گِل خاکستری.</p>
+  </div>
+</header>
+
+<nav class="ed-mast no-print" id="ed-mast" aria-label="فهرست فصل‌ها">
+  <span class="ed-mast__brand ed-mark">Mināvand</span>
+  <span class="ed-mast__nav" id="ed-jump"></span>
+  <span class="ed-mast__end">
+    <span class="cat-lang" role="group" aria-label="زبان">
+      <button type="button" id="ed-lang-fa" aria-pressed="true" lang="fa">فارسی</button>
+      <button type="button" id="ed-lang-en" aria-pressed="false" lang="en">EN</button>
+    </span>
+    <button type="button" class="cat-btn cat-btn--quiet ed-inq-open" id="ed-inq-open" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h2v2H4zM8 6h12v2H8zM4 11h2v2H4zM8 11h12v2H8zM4 16h2v2H4zM8 16h12v2H8z"/></svg>
+      <span data-i18n="mast.inquiry">استعلام</span>
+      <span class="cat-badge ed-count num" id="ed-count" data-zero="true">۰</span>
+    </button>
+  </span>
+</nav>
+
+<main id="ed-main"></main>
+
+<footer class="ed-colophon" id="ed-colophon">
+  <div class="ed-wrap">
+    <div class="ed-colophon__grid ed-grid12">
+      <div class="ed-colophon__col">
+        <h2 class="ed-colophon__title" data-i18n="col.title">شناسنامه</h2>
+        <p data-i18n="col.about">میناوند کارگاه کوچکی است در کاشان. هر قطعه روی چرخ شکل می‌گیرد، دو بار پخته می‌شود و پیش از بسته‌بندی وزن و اندازه‌اش ثبت می‌شود.</p>
+      </div>
+      <div class="ed-colophon__col">
+        <p class="ed-eyebrow" data-i18n="col.kilnLabel">کارگاه</p>
+        <p data-i18n="col.kiln">کاشان، محلهٔ سلطان‌امیر احمد. کوره‌ی گازی، پخت دوم در ۱۲۴۰ درجه. اختلاف رنگ و اندازه تا پنج درصد طبیعی است.</p>
+      </div>
+      <div class="ed-colophon__col">
+        <p class="ed-eyebrow" data-i18n="col.codeLabel">کدها</p>
+        <p data-i18n="col.code">کدها با MV آغاز می‌شوند؛ رقم نخست شمارهٔ فصل و دو رقم بعد شمارهٔ قطعه در آن فصل است.</p>
+      </div>
+      <div class="ed-colophon__col">
+        <p class="ed-eyebrow" data-i18n="col.artLabel">تصویرها</p>
+        <p data-i18n="col.art">تصویرها ترسیمی و جانگهدارند و جای عکس کارگاه را می‌گیرند. قیمت‌ها بدون بسته‌بندی چوبی است.</p>
+      </div>
+    </div>
+    <p class="ed-colophon__mark ed-mark">Mināvand</p>
+    <div class="ed-colophon__foot">
+      <span data-i18n="col.volume">دفتر دوم — پاییز ۱۴۰۵</span>
+      <span data-i18n="col.rights">قیمت‌ها تا پایان فصل معتبر است.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="cat-scrim no-print" id="ed-scrim" hidden></div>
+<section class="cat-dialog ed-sheet no-print" id="ed-sheet" role="dialog" aria-modal="true"
+         aria-labelledby="ed-sheet-title" hidden>
+  <div class="ed-sheet__head">
+    <div>
+      <h2 class="ed-sheet__title" id="ed-sheet-title" data-i18n="sheet.title">فهرست استعلام قیمت</h2>
+      <p class="ed-sheet__sub" data-i18n="sheet.sub">قطعه‌ها را انتخاب کنید، فهرست را بردارید و برای کارگاه بفرستید.</p>
+    </div>
+    <button type="button" class="cat-btn cat-btn--quiet cat-btn--icon ed-sheet__close" id="ed-sheet-close"
+            data-i18n-label="sheet.close">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 5.7l-1.4-1.4L12 9.2 7.1 4.3 5.7 5.7l4.9 4.9-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>
+    </button>
+  </div>
+  <div class="cat-inquiry" id="ed-inq-list"></div>
+  <p class="cat-inquiry__empty" id="ed-inq-empty" data-i18n="sheet.empty">هنوز چیزی انتخاب نشده است. از هر قطعه دکمهٔ «افزودن به استعلام» را بزنید.</p>
+  <div class="ed-sheet__foot">
+    <span class="ed-sheet__total" id="ed-inq-total"></span>
+    <button type="button" class="cat-btn cat-btn--ghost" id="ed-inq-clear" data-i18n="sheet.clear">خالی کردن فهرست</button>
+    <button type="button" class="cat-btn" id="ed-inq-copy" data-i18n="sheet.copy">برداشتن فهرست</button>
+    <p class="ed-sheet__status" id="ed-inq-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<script src="../shared/catalog-kit.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var UI = {
+    fa: {
+      'a.skip': 'رفتن به فهرست قطعه‌ها',
+      'cover.season': 'مجموعهٔ پاییز ۱۴۰۵ — دفتر دوم',
+      'cover.title': 'میناوند',
+      'cover.say': 'سفال و لوازم خانه از کاشان؛ خاکِ محلی، لعابِ پختِ دوم، و تیراژِ کوتاه.',
+      'cover.pieces': '۱۲ قطعه',
+      'cover.chapters': 'سه فصل',
+      'cover.year': 'پاییز ۱۴۰۵',
+      'cover.down': 'آغاز فصل یکم',
+      'cover.caption': 'گلدان بلند «قامت» — لعاب خاکستر روی گِل خاکستری.',
+      'cover.alt': 'گلدان بلند قامت روی سطحی روشن.',
+      'mast.inquiry': 'استعلام',
+      'mast.nav': 'فهرست فصل‌ها',
+      'mast.lang': 'زبان',
+      'act.add': 'افزودن به استعلام',
+      'act.added': 'در فهرست',
+      'act.detail': 'جزئیات',
+      'act.video': 'ویدیو',
+      'act.spin': 'چرخش ۳۶۰',
+      'unit.toman': 'تومان',
+      'sheet.title': 'فهرست استعلام قیمت',
+      'sheet.sub': 'قطعه‌ها را انتخاب کنید، فهرست را بردارید و برای کارگاه بفرستید.',
+      'sheet.empty': 'هنوز چیزی انتخاب نشده است. از هر قطعه دکمهٔ «افزودن به استعلام» را بزنید.',
+      'sheet.close': 'بستن فهرست',
+      'sheet.clear': 'خالی کردن فهرست',
+      'sheet.copy': 'برداشتن فهرست',
+      'sheet.copied': 'فهرست در حافظه کپی شد.',
+      'sheet.copyfail': 'کپی ممکن نشد؛ فهرست را دستی بردارید.',
+      'sheet.remove': 'حذف از فهرست',
+      'col.title': 'شناسنامه',
+      'col.about': 'میناوند کارگاه کوچکی است در کاشان. هر قطعه روی چرخ شکل می‌گیرد، دو بار پخته می‌شود و پیش از بسته‌بندی وزن و اندازه‌اش ثبت می‌شود.',
+      'col.kilnLabel': 'کارگاه',
+      'col.kiln': 'کاشان، محلهٔ سلطان‌امیر احمد. کوره‌ی گازی، پخت دوم در ۱۲۴۰ درجه. اختلاف رنگ و اندازه تا پنج درصد طبیعی است.',
+      'col.codeLabel': 'کدها',
+      'col.code': 'کدها با MV آغاز می‌شوند؛ رقم نخست شمارهٔ فصل و دو رقم بعد شمارهٔ قطعه در آن فصل است.',
+      'col.artLabel': 'تصویرها',
+      'col.art': 'تصویرها ترسیمی و جانگهدارند و جای عکس کارگاه را می‌گیرند. قیمت‌ها بدون بسته‌بندی چوبی است.',
+      'col.volume': 'دفتر دوم — پاییز ۱۴۰۵',
+      'col.rights': 'قیمت‌ها تا پایان فصل معتبر است.'
+    },
+    en: {
+      'a.skip': 'Skip to the pieces',
+      'cover.season': 'Autumn 1405 Collection — Volume Two',
+      'cover.title': 'Mināvand',
+      'cover.say': 'Ceramics and homeware from Kāshān: local clay, a second glaze firing, short runs.',
+      'cover.pieces': '12 pieces',
+      'cover.chapters': 'Three chapters',
+      'cover.year': 'Autumn 1405',
+      'cover.down': 'Begin chapter one',
+      'cover.caption': 'The Qāmat tall vase — ash glaze over grey clay.',
+      'cover.alt': 'The Qāmat tall vase standing on a lit surface.',
+      'mast.inquiry': 'Inquiry',
+      'mast.nav': 'Chapters',
+      'mast.lang': 'Language',
+      'act.add': 'Add to inquiry',
+      'act.added': 'On the list',
+      'act.detail': 'Details',
+      'act.video': 'Video',
+      'act.spin': '360 spin',
+      'unit.toman': 'Toman',
+      'sheet.title': 'Price inquiry list',
+      'sheet.sub': 'Pick the pieces, take the list, and send it to the workshop.',
+      'sheet.empty': 'Nothing chosen yet. Use “Add to inquiry” on any piece.',
+      'sheet.close': 'Close the list',
+      'sheet.clear': 'Empty the list',
+      'sheet.copy': 'Take the list',
+      'sheet.copied': 'The list is on your clipboard.',
+      'sheet.copyfail': 'Copying failed — take the list by hand.',
+      'sheet.remove': 'Remove from the list',
+      'col.title': 'Colophon',
+      'col.about': 'Mināvand is a small workshop in Kāshān. Every piece is thrown on the wheel, fired twice, and weighed and measured before it is packed.',
+      'col.kilnLabel': 'Workshop',
+      'col.kiln': 'Kāshān, Soltān-Amir Ahmad quarter. Gas kiln, second firing at 1240 °C. Colour and size vary by up to five per cent.',
+      'col.codeLabel': 'Codes',
+      'col.code': 'Codes begin with MV; the first digit is the chapter and the next two the piece within it.',
+      'col.artLabel': 'Pictures',
+      'col.art': 'The pictures are drawn placeholders standing in for the workshop photography. Prices exclude the wooden crate.',
+      'col.volume': 'Volume Two — Autumn 1405',
+      'col.rights': 'Prices hold until the end of the season.'
+    }
+  };
+
+  var CHAPTERS = [
+    { id: 'ch-1',
+      fa: { t: 'سفرهٔ روز', line: 'چهار قطعه برای سفره‌ای که هر روز چیده می‌شود.' },
+      en: { t: 'The Everyday Table', line: 'Four pieces for a table that gets set every day.' } },
+    { id: 'ch-2',
+      fa: { t: 'گلدان و شاخه', line: 'چهار گلدان، از یک شاخه تا یک بغل شاخه.' },
+      en: { t: 'Vessel & Stem', line: 'Four vases, from a single stem to an armful.' } },
+    { id: 'ch-3',
+      fa: { t: 'نور و خانه', line: 'آباژور، سبو و پارچه؛ آنچه شب را نرم می‌کند.' },
+      en: { t: 'Light & House', line: 'Lamps, a jug and cloth — what softens the evening.' } }
+  ];
+
+  var PRODUCTS = [
+    { sku: 'MV-101', ch: 0, subject: 'bottle', palette: 'warm', price: 1480000,
+      fa: { name: 'تنگ آب «آوند»', line: 'دهانهٔ باریک تا آب بی‌چکه بریزد؛ برای سفرهٔ هر روز.',
+            specs: [['ارتفاع', '۲۴ سانتی‌متر'], ['گنجایش', '۱٫۲ لیتر'], ['لعاب', 'خاکستر چوب']] },
+      en: { name: 'Āvand Water Carafe', line: 'A narrow mouth that pours clean — for the everyday table.',
+            specs: [['Height', '24 cm'], ['Capacity', '1.2 L'], ['Glaze', 'Wood ash']] },
+      hot: [
+        { x: 50, y: 18, fa: { t: 'لبهٔ ریزش', b: 'دهانهٔ سه سانتی‌متری، لبه‌اش کمی به بیرون برگشته تا آب چکه نکند.' },
+                        en: { t: 'Pour lip', b: 'A 30 mm mouth with the rim turned out, so the water does not dribble.' } },
+        { x: 50, y: 27, fa: { t: 'گردن', b: 'گردن را کوتاه و پهن می‌کشیم تا با یک دست گرفته شود.' },
+                        en: { t: 'Neck', b: 'Thrown short and wide, so one hand is enough to hold it.' } },
+        { x: 38, y: 44, fa: { t: 'لعاب خاکستر', b: 'خاکستر چوب انگور با گِل محلی، پختِ دوم در ۱۲۴۰ درجه.' },
+                        en: { t: 'Ash glaze', b: 'Vine ash over local clay, second-fired at 1240 °C.' } },
+        { x: 50, y: 66, fa: { t: 'کفِ بی‌لعاب', b: 'کف را لعاب نمی‌زنیم تا روی سنگ میز سُر نخورد.' },
+                        en: { t: 'Unglazed foot', b: 'Left bare so it will not slide on a stone table.' } }
+      ] },
+
+    { sku: 'MV-104', ch: 0, subject: 'bottle', palette: 'clay', price: 960000,
+      fa: { name: 'بطری روغن «کاشانه»', line: 'روغن را کنارِ اجاق نگه می‌دارد، نه ته کابینت.',
+            specs: [['ارتفاع', '۲۱ سانتی‌متر'], ['گنجایش', '۵۰۰ میلی‌لیتر'], ['در', 'چوب‌پنبهٔ طبیعی']] },
+      en: { name: 'Kāshāne Oil Bottle', line: 'Keeps the oil beside the stove, not at the back of a cupboard.',
+            specs: [['Height', '21 cm'], ['Capacity', '500 ml'], ['Stopper', 'Natural cork']] },
+      hot: [
+        { x: 50, y: 19, fa: { t: 'چوب‌پنبه', b: 'درِ چوب‌پنبهٔ ۲۲ میلی‌متری؛ جداگانه هم فروخته می‌شود.' },
+                        en: { t: 'Cork', b: 'A 22 mm natural cork; sold separately as well.' } },
+        { x: 50, y: 30, fa: { t: 'گردنِ باریک', b: 'جریان روغن را کند می‌کند تا با چشم اندازه بگیرید.' },
+                        en: { t: 'Narrow neck', b: 'Slows the oil so you can measure by eye.' } },
+        { x: 40, y: 48, fa: { t: 'بدنهٔ مات', b: 'لعاب مات؛ دستِ چرب روی آن نمی‌لغزد.' },
+                        en: { t: 'Matte body', b: 'A matte glaze an oily hand does not slip on.' } }
+      ] },
+
+    { sku: 'MV-107', ch: 0, subject: 'bottle', palette: 'stone', price: 2350000,
+      fa: { name: 'کوزهٔ ترشی «انبار»', line: 'کوزهٔ لبه‌آبی برای ترشی و شور، با درِ سفالی.',
+            specs: [['ارتفاع', '۳۲ سانتی‌متر'], ['گنجایش', '۴ لیتر'], ['لبه', 'آب‌بند']] },
+      en: { name: 'Anbār Pickling Jar', line: 'A water-sealed jar for pickles and brine, with a clay lid.',
+            specs: [['Height', '32 cm'], ['Capacity', '4 L'], ['Rim', 'Water seal']] },
+      hot: [
+        { x: 50, y: 17, fa: { t: 'لبهٔ آب‌بند', b: 'شیارِ دورِ دهانه آب می‌گیرد و هوا را پشتِ در نگه می‌دارد.' },
+                        en: { t: 'Water seal', b: 'A channel at the rim holds water and keeps air behind the lid.' } },
+        { x: 36, y: 45, fa: { t: 'دیوارهٔ ضخیم', b: 'نُه میلی‌متر ضخامت؛ دمای درون را آرام نگه می‌دارد.' },
+                        en: { t: 'Thick wall', b: 'Nine millimetres — it keeps the temperature inside steady.' } },
+        { x: 50, y: 67, fa: { t: 'کفِ پهن', b: 'قطر کف ۱۶ سانتی‌متر؛ پُر هم روی طبقه نمی‌لغزد.' },
+                        en: { t: 'Wide foot', b: 'A 160 mm base; it stays put on a shelf even when full.' } }
+      ] },
+
+    { sku: 'MV-112', ch: 0, subject: 'textile', palette: 'amber', price: 3900000,
+      fa: { name: 'رومیزی کتان «هفت‌رج»', line: 'رومیزی کتان با هفت رج حاشیهٔ دست‌باف.',
+            specs: [['اندازه', '۱۴۰ × ۲۴۰ سانتی‌متر'], ['جنس', 'کتان شسته'], ['رنگ', 'روناس']] },
+      en: { name: 'Haft-Raj Linen Cloth', line: 'A linen cloth with seven hand-woven rows at the border.',
+            specs: [['Size', '140 × 240 cm'], ['Cloth', 'Washed linen'], ['Dye', 'Madder root']] },
+      hot: [
+        { x: 50, y: 21, fa: { t: 'حاشیه', b: 'هفت رج دست‌باف با نخِ رنگ‌شده با روناس.' },
+                        en: { t: 'Border', b: 'Seven hand-woven rows in madder-dyed thread.' } },
+        { x: 33, y: 38, fa: { t: 'بافتِ کتان', b: 'کتان شسته؛ بعد از هر شست‌وشو نرم‌تر می‌شود و کم‌تر چروک می‌ماند.' },
+                        en: { t: 'Washed linen', b: 'Softer after every wash, and it holds fewer creases.' } },
+        { x: 25, y: 52, fa: { t: 'لبهٔ دوخته', b: 'لبهٔ تاشدهٔ دولایه با دوختِ دست.' },
+                        en: { t: 'Hem', b: 'Double-folded and stitched by hand.' } }
+      ] },
+
+    { sku: 'MV-201', ch: 1, subject: 'vase', palette: 'stone', price: 2780000,
+      fa: { name: 'گلدان بلند «قامت»', line: 'برای شاخه‌های بلند؛ دهانهٔ تنگ روی شکمی که پایین نشسته.',
+            specs: [['ارتفاع', '۳۸ سانتی‌متر'], ['دهانه', '۶ سانتی‌متر'], ['وزن', '۱٫۴ کیلوگرم']] },
+      en: { name: 'Qāmat Tall Vase', line: 'For tall stems: a narrow mouth over a belly that sits low.',
+            specs: [['Height', '38 cm'], ['Mouth', '6 cm'], ['Weight', '1.4 kg']] },
+      hot: [
+        { x: 50, y: 21, fa: { t: 'دهانهٔ تنگ', b: 'شش سانتی‌متر؛ شاخه‌های بلند را بی‌آنکه باز شوند سرِ پا نگه می‌دارد.' },
+                        en: { t: 'Narrow mouth', b: 'Sixty millimetres: it holds tall stems upright without letting them splay.' } },
+        { x: 34, y: 42, fa: { t: 'شکم', b: 'بیشترین قطر ۱۹ سانتی‌متر است، درست زیرِ نیمهٔ بدنه.' },
+                        en: { t: 'Belly', b: 'Widest at 190 mm, just below the middle of the body.' } },
+        { x: 50, y: 44, fa: { t: 'خطِ کنده', b: 'یک شیار دورِ بدنه؛ ردِ ناخنِ چرخ‌کار پیش از پختِ اول.' },
+                        en: { t: 'Incised line', b: 'One groove around the body, left by the thrower before the first firing.' } },
+        { x: 50, y: 65, fa: { t: 'پایهٔ تراشیده', b: 'پایه را می‌تراشیم و بی‌لعاب می‌گذاریم تا گِل دیده شود.' },
+                        en: { t: 'Turned foot', b: 'Trimmed and left unglazed so the clay itself shows.' } }
+      ] },
+
+    { sku: 'MV-204', ch: 1, subject: 'vase', palette: 'clay', price: 1640000,
+      fa: { name: 'گلدان کوتاه «کاسه‌خاک»', line: 'کوتاه و پهن، برای طاقچه و لبهٔ پنجره.',
+            specs: [['ارتفاع', '۱۳ سانتی‌متر'], ['دهانه', '۱۴ سانتی‌متر'], ['لعاب', 'خاک‌رسِ مات']] },
+      en: { name: 'Kāse-Khāk Low Vase', line: 'Low and wide, for a window sill or a shallow shelf.',
+            specs: [['Height', '13 cm'], ['Mouth', '14 cm'], ['Glaze', 'Matte clay']] },
+      hot: [
+        { x: 50, y: 22, fa: { t: 'دهانهٔ باز', b: 'چهارده سانتی‌متر؛ دسته‌گلِ کوتاه را باز نگه می‌دارد.' },
+                        en: { t: 'Open mouth', b: 'A hundred and forty millimetres, wide enough to spread a short bunch.' } },
+        { x: 66, y: 42, fa: { t: 'ایستِ لعاب', b: 'لعاب را از لبه می‌ریزیم؛ روی شکم می‌ایستد و مرزش پیدا است.' },
+                        en: { t: 'Glaze break', b: 'Poured from the rim, the glaze stops on the belly and the edge stays visible.' } },
+        { x: 50, y: 65, fa: { t: 'کفِ کم‌ارتفاع', b: 'برای طاقچه ساخته شده؛ ارتفاع کل ۱۳ سانتی‌متر است.' },
+                        en: { t: 'Low profile', b: 'Made for a sill: 130 mm over all.' } }
+      ] },
+
+    { sku: 'MV-207', ch: 1, subject: 'vase', palette: 'warm', price: 720000,
+      fa: { name: 'گلدان تک‌شاخه «یک‌شاخه»', line: 'یک شاخه، یک قطعه؛ همین.',
+            specs: [['ارتفاع', '۱۷ سانتی‌متر'], ['دهانه', '۲ سانتی‌متر'], ['وزن', '۲۴۰ گرم']] },
+      en: { name: 'Yek-Shākhe Bud Vase', line: 'One stem, one piece. That is the whole idea.',
+            specs: [['Height', '17 cm'], ['Mouth', '2 cm'], ['Weight', '240 g']] },
+      hot: [
+        { x: 50, y: 21, fa: { t: 'لولهٔ باریک', b: 'دهانهٔ دو سانتی‌متری: یک شاخه، نه بیشتر.' },
+                        en: { t: 'Bud tube', b: 'A 20 mm mouth: one stem, no more.' } },
+        { x: 36, y: 45, fa: { t: 'ردِ انگشت', b: 'اثر انگشتِ چرخ‌کار زیر لعاب مانده و پاک نشده است.' },
+                        en: { t: 'Thumb mark', b: 'The thrower’s thumb, left under the glaze and not smoothed away.' } },
+        { x: 50, y: 64, fa: { t: 'وزن', b: '۲۴۰ گرم؛ سنگین‌تر از آن که یک شاخهٔ بلند بیندازدش.' },
+                        en: { t: 'Weight', b: '240 g — heavier than the stem it has to carry.' } }
+      ] },
+
+    { sku: 'MV-210', ch: 1, subject: 'vase', palette: 'amber', price: 3150000,
+      fa: { name: 'گلدان دولایه «دو لعاب»', line: 'دو لعاب روی هم؛ مرزشان روی هر قطعه جای دیگری می‌ایستد.',
+            specs: [['ارتفاع', '۲۶ سانتی‌متر'], ['لعاب', 'دو لایه'], ['پخت', '۱۲۴۰ درجه']] },
+      en: { name: 'Do-Lo’āb Layered Vase', line: 'Two glazes, one over the other; the seam lands elsewhere on every piece.',
+            specs: [['Height', '26 cm'], ['Glaze', 'Two layers'], ['Firing', '1240 °C']] },
+      hot: [
+        { x: 50, y: 21, fa: { t: 'لبهٔ مسی', b: 'لعاب مسی فقط روی لبه نشسته و یک نوار باریک می‌سازد.' },
+                        en: { t: 'Copper rim', b: 'A copper glaze on the lip alone, drawing one narrow band.' } },
+        { x: 50, y: 35, fa: { t: 'مرزِ دو لعاب', b: 'خطِ جدایی دو لعاب در کوره جابه‌جا می‌شود؛ دو قطعهٔ یکسان نداریم.' },
+                        en: { t: 'Glaze seam', b: 'The line between the two glazes shifts in the kiln; no two pieces match.' } },
+        { x: 64, y: 46, fa: { t: 'لایهٔ زیرین', b: 'لعاب شیری روی بیسکویتِ پختِ اول در ۹۸۰ درجه.' },
+                        en: { t: 'Under layer', b: 'A milk glaze over bisque, first-fired at 980 °C.' } },
+        { x: 50, y: 65, fa: { t: 'پایهٔ کوتاه', b: 'پایهٔ تراشِ دست، با یک شیار برای گرفتنِ لعابِ اضافه.' },
+                        en: { t: 'Short foot', b: 'Turned by hand, with a groove that catches the running glaze.' } }
+      ] },
+
+    { sku: 'MV-301', ch: 2, subject: 'lamp', palette: 'warm', price: 5400000,
+      fa: { name: 'آباژور رومیزی «فانوس»', line: 'نور را روی میز نگه می‌دارد، نه روی سقف.',
+            specs: [['ارتفاع', '۴۲ سانتی‌متر'], ['کلاهک', '۲۶ سانتی‌متر'], ['سرپیچ', 'E27']] },
+      en: { name: 'Fānus Table Lamp', line: 'Keeps the light down on the table instead of up on the ceiling.',
+            specs: [['Height', '42 cm'], ['Shade', '26 cm'], ['Socket', 'E27']] },
+      hot: [
+        { x: 50, y: 30, fa: { t: 'کلاهک سرامیکی', b: 'سرامیک را نازک می‌کشیم تا نور از آن رد شود و زرد بماند.' },
+                        en: { t: 'Ceramic shade', b: 'Thrown thin, so the light passes through and stays warm.' } },
+        { x: 38, y: 38, fa: { t: 'لبهٔ کلاهک', b: 'قطر ۲۶ سانتی‌متر؛ دایرهٔ نور را روی میز می‌ریزد.' },
+                        en: { t: 'Shade edge', b: '260 mm across, dropping the circle of light onto the table.' } },
+        { x: 50, y: 53, fa: { t: 'بدنه', b: 'لولهٔ سفالی با سیمِ پارچه‌ای که از درونش رد می‌شود.' },
+                        en: { t: 'Stem', b: 'A clay tube with a braided cloth cord running inside it.' } },
+        { x: 50, y: 66, fa: { t: 'پایهٔ وزنه‌دار', b: '۱٫۱ کیلوگرم؛ کشیدنِ سیم آن را نمی‌اندازد.' },
+                        en: { t: 'Weighted base', b: '1.1 kg — a tug on the cord will not tip it.' } }
+      ] },
+
+    { sku: 'MV-304', ch: 2, subject: 'lamp', palette: 'stone', price: 7900000,
+      fa: { name: 'آباژور پایه‌بلند «ستون»', line: 'ستونی از سه قطعهٔ سفالی، زیرِ کلاهک کتان.',
+            specs: [['ارتفاع', '۱۴۰ سانتی‌متر'], ['کلاهک', '۴۵ سانتی‌متر'], ['سیم', '۲٫۵ متر']] },
+      en: { name: 'Sotun Floor Lamp', line: 'A column of three clay sections under a linen shade.',
+            specs: [['Height', '140 cm'], ['Shade', '45 cm'], ['Cord', '2.5 m']] },
+      hot: [
+        { x: 50, y: 30, fa: { t: 'کلاهک کتان', b: 'کتانِ خام روی حلقهٔ فولادی؛ جداشدنی و شستنی.' },
+                        en: { t: 'Linen shade', b: 'Raw linen over a steel ring; it lifts off and washes.' } },
+        { x: 50, y: 50, fa: { t: 'ستون سفالی', b: 'سه قطعه که روی هم سوار می‌شوند؛ برای حمل از هم باز می‌شود.' },
+                        en: { t: 'Clay column', b: 'Three stacked sections that come apart for carrying.' } },
+        { x: 50, y: 66, fa: { t: 'صفحهٔ پایه', b: 'قطر ۳۲ سانتی‌متر با نمدِ زیرین، برای کفِ چوبی.' },
+                        en: { t: 'Base plate', b: '320 mm with felt underneath, for a wooden floor.' } }
+      ] },
+
+    { sku: 'MV-307', ch: 2, subject: 'bottle', palette: 'amber', price: 1250000,
+      fa: { name: 'سبوی شربت «نیمروز»', line: 'سبوی شربت و آب، با دهانه‌ای که یخ از آن رد می‌شود.',
+            specs: [['ارتفاع', '۲۸ سانتی‌متر'], ['گنجایش', '۱٫۶ لیتر'], ['دهانه', '۵ سانتی‌متر']] },
+      en: { name: 'Nimruz Sharbat Jug', line: 'A jug for sharbat and cold water, with a mouth that takes ice.',
+            specs: [['Height', '28 cm'], ['Capacity', '1.6 L'], ['Mouth', '5 cm']] },
+      hot: [
+        { x: 50, y: 20, fa: { t: 'دهانهٔ پنج سانتی', b: 'قالبِ یخ از آن رد می‌شود و شستنش با دست ممکن است.' },
+                        en: { t: 'Fifty-millimetre mouth', b: 'An ice cube goes in, and a hand goes in to wash it.' } },
+        { x: 50, y: 29, fa: { t: 'گردنِ کوتاه', b: 'گردن کوتاه است تا سبوی پر با یک دست بلند شود.' },
+                        en: { t: 'Short neck', b: 'Kept short so a full jug lifts with one hand.' } },
+        { x: 39, y: 46, fa: { t: 'لعاب عسلی', b: 'لعاب کهربایی روی گِل قرمز؛ در نور غروب پُررنگ‌تر می‌شود.' },
+                        en: { t: 'Honey glaze', b: 'An amber glaze over red clay that deepens in evening light.' } },
+        { x: 50, y: 67, fa: { t: 'کف', b: 'گنجایش ۱٫۶ لیتر، اندازهٔ یک پارچ شربت برای چهار نفر.' },
+                        en: { t: 'Base', b: '1.6 litres — one jug of sharbat for four.' } }
+      ] },
+
+    { sku: 'MV-310', ch: 2, subject: 'textile', palette: 'stone', price: 890000,
+      fa: { name: 'سفرهٔ نان «تنور»', line: 'سفرهٔ نان به اندازهٔ دو سنگک، با ریشهٔ گره‌زده.',
+            specs: [['اندازه', '۹۰ × ۱۴۰ سانتی‌متر'], ['جنس', 'پنبهٔ دست‌باف'], ['ریشه', 'گره‌زده']] },
+      en: { name: 'Tanur Bread Cloth', line: 'A bread cloth two loaves wide, finished with a knotted fringe.',
+            specs: [['Size', '90 × 140 cm'], ['Cloth', 'Hand-woven cotton'], ['Edge', 'Knotted fringe']] },
+      hot: [
+        { x: 50, y: 19, fa: { t: 'سرِ سفره', b: '۹۰ در ۱۴۰ سانتی‌متر؛ اندازهٔ دو نان سنگکِ کنار هم.' },
+                        en: { t: 'Head of the cloth', b: '900 × 1400 mm — two sangak loaves side by side.' } },
+        { x: 35, y: 36, fa: { t: 'رج‌های درشت', b: 'بافتِ درشت خرده‌نان را نگه نمی‌دارد؛ یک تکان کافی است.' },
+                        en: { t: 'Open weave', b: 'Coarse enough that crumbs fall out with one shake.' } },
+        { x: 50, y: 66, fa: { t: 'ریشه', b: 'ریشهٔ گره‌زده، بدون دوخت؛ باز شود دوباره گره می‌خورد.' },
+                        en: { t: 'Fringe', b: 'Knotted, not stitched; if it loosens you simply knot it again.' } }
+      ] }
+  ];
+
+  var lang = 'fa';
+  var inquiry = [];
+  var mast = document.getElementById('ed-mast');
+  var main = document.getElementById('ed-main');
+  var sheet = document.getElementById('ed-sheet');
+  var scrim = document.getElementById('ed-scrim');
+  var countEl = document.getElementById('ed-count');
+  var statusEl = document.getElementById('ed-inq-status');
+  var lastFocus = null;
+
+  function t(key) { return UI[lang][key]; }
+  function digits(s) { return lang === 'fa' ? CatalogKit.toFa(String(s)) : String(s); }
+
+  function money(v) {
+    var grouped = String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return lang === 'fa' ? CatalogKit.toFa(grouped).replace(/,/g, '٬') : grouped;
+  }
+
+  var ICON_CLOSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 5.7l-1.4-1.4L12 9.2 ' +
+    '7.1 4.3 5.7 5.7l4.9 4.9-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>';
+
+  /* ── page chrome ─────────────────────────────────────── */
+
+  function applyChrome() {
+    var i, nodes = document.querySelectorAll('[data-i18n]');
+    for (i = 0; i < nodes.length; i++) nodes[i].textContent = t(nodes[i].getAttribute('data-i18n'));
+    nodes = document.querySelectorAll('[data-i18n-label]');
+    for (i = 0; i < nodes.length; i++) nodes[i].setAttribute('aria-label', t(nodes[i].getAttribute('data-i18n-label')));
+
+    document.getElementById('ed-cover-art').alt = t('cover.alt');
+    mast.setAttribute('aria-label', t('mast.nav'));
+    document.querySelector('.ed-mast .cat-lang').setAttribute('aria-label', t('mast.lang'));
+    document.title = lang === 'fa'
+      ? 'میناوند — کاتالوگ پاییز ۱۴۰۵'
+      : 'Mināvand — Autumn 1405 Catalogue';
+  }
+
+  function buildJumpLinks() {
+    var host = document.getElementById('ed-jump');
+    host.innerHTML = '';
+    CHAPTERS.forEach(function (c) {
+      var a = document.createElement('a');
+      a.href = '#' + c.id;
+      a.setAttribute('data-jump', c.id);
+      host.appendChild(a);
+    });
+    var col = document.createElement('a');
+    col.href = '#ed-colophon';
+    col.setAttribute('data-jump', 'colophon');
+    host.appendChild(col);
+  }
+
+  function fillJumpLinks() {
+    var links = document.querySelectorAll('#ed-jump a');
+    for (var i = 0; i < links.length; i++) {
+      var key = links[i].getAttribute('data-jump');
+      links[i].textContent = key === 'colophon' ? t('col.title') : chapterByID(key)[lang].t;
+    }
+  }
+
+  function chapterByID(id) {
+    for (var i = 0; i < CHAPTERS.length; i++) if (CHAPTERS[i].id === id) return CHAPTERS[i];
+    return null;
+  }
+
+  /* ── bands ───────────────────────────────────────────── */
+
+  function buildPage() {
+    CHAPTERS.forEach(function (chapter, ci) {
+      var section = document.createElement('section');
+      section.className = 'ed-chapter';
+      section.id = chapter.id;
+
+      var head = document.createElement('header');
+      head.className = 'ed-chapter__head ed-wrap ed-grid12';
+      head.setAttribute('data-reveal', '');
+      head.innerHTML =
+        '<span class="ed-rule ed-rise" aria-hidden="true"></span>' +
+        '<p class="ed-chapter__num num ed-rise"></p>' +
+        '<h2 class="ed-chapter__title ed-rise"></h2>' +
+        '<p class="ed-chapter__line ed-rise ed-rise--late"></p>';
+      section.appendChild(head);
+      chapter._head = head;
+
+      PRODUCTS.forEach(function (p, pi) {
+        if (p.ch !== ci) return;
+        var band = document.createElement('article');
+        band.className = 'ed-band ed-wrap ed-grid12' + (pi % 2 ? ' ed-band--flip' : '');
+        band.id = p.sku;
+        band.setAttribute('data-reveal', '');
+        band.innerHTML =
+          '<div class="ed-band__media ed-rise">' +
+            '<div class="ed-band__drift"><div class="ed-band__frame"></div></div>' +
+          '</div>' +
+          '<div class="ed-band__text ed-rise ed-rise--late">' +
+            '<p class="ed-band__index"><span class="num"></span><span class="ed-rule"></span></p>' +
+            '<h3 class="ed-band__name"></h3>' +
+            '<p class="ed-band__line"></p>' +
+            '<dl class="ed-band__specs"></dl>' +
+            '<div class="ed-band__buy">' +
+              '<p class="ed-band__price"><span class="ed-band__amount"></span> ' +
+              '<span class="ed-band__unit"></span></p>' +
+              '<p class="cat-sku" dir="ltr">' + p.sku + '</p>' +
+            '</div>' +
+            '<div class="ed-band__acts">' +
+              '<button type="button" class="cat-btn cat-btn--ghost ed-band__add" aria-pressed="false"></button>' +
+              '<span class="ed-band__links">' +
+                '<button type="button" class="ed-link" data-open="0"></button>' +
+                '<button type="button" class="ed-link" data-open="1"></button>' +
+                '<button type="button" class="ed-link" data-open="2"></button>' +
+              '</span>' +
+            '</div>' +
+          '</div>';
+        section.appendChild(band);
+
+        p._band = band;
+        p._index = pi;
+        p._frame = band.querySelector('.ed-band__frame');
+        p._media = band.querySelector('.ed-band__media');
+
+        band.querySelector('.ed-band__add').addEventListener('click', function () { toggleInquiry(p); });
+        var links = band.querySelectorAll('.ed-link');
+        for (var i = 0; i < links.length; i++) {
+          links[i].addEventListener('click', function (e) {
+            CatalogKit.open(p._descriptors, { title: p[lang].name, sku: p.sku }, lang,
+              +e.currentTarget.getAttribute('data-open'));
+          });
+        }
+      });
+
+      main.appendChild(section);
+    });
+  }
+
+  function fillPage() {
+    CHAPTERS.forEach(function (c, i) {
+      c._head.querySelector('.ed-chapter__num').textContent = digits('0' + (i + 1));
+      c._head.querySelector('.ed-chapter__title').textContent = c[lang].t;
+      c._head.querySelector('.ed-chapter__line').textContent = c[lang].line;
+    });
+
+    PRODUCTS.forEach(function (p) {
+      var band = p._band, copy = p[lang];
+      band.querySelector('.ed-band__index .num').textContent = digits(p._index < 9 ? '0' + (p._index + 1) : p._index + 1);
+      band.querySelector('.ed-band__name').textContent = copy.name;
+      band.querySelector('.ed-band__line').textContent = copy.line;
+      band.querySelector('.ed-band__amount').textContent = money(p.price);
+      band.querySelector('.ed-band__unit').textContent = t('unit.toman');
+
+      var dl = band.querySelector('.ed-band__specs');
+      dl.innerHTML = '';
+      copy.specs.forEach(function (row) {
+        var wrap = document.createElement('div');
+        wrap.className = 'ed-spec';
+        var dt = document.createElement('dt');
+        dt.textContent = row[0];
+        var dd = document.createElement('dd');
+        dd.textContent = row[1];
+        if (lang === 'en') dd.className = 'num';
+        wrap.appendChild(dt);
+        wrap.appendChild(dd);
+        dl.appendChild(wrap);
+      });
+
+      var links = band.querySelectorAll('.ed-link');
+      links[0].textContent = t('act.detail');
+      links[1].textContent = t('act.video');
+      links[2].textContent = t('act.spin');
+      paintAddButton(p);
+      mountProduct(p);
+    });
+  }
+
+  function mountProduct(p) {
+    var hotspots = p.hot.map(function (h) {
+      return { x: h.x, y: h.y, title: h[lang].t, body: h[lang].b };
+    });
+    /* Re-mounting on a used host would stack a second set of listeners on it,
+       so each mount gets a clean element. */
+    var fresh = document.createElement('div');
+    fresh.className = 'ed-band__frame';
+    p._frame.parentNode.replaceChild(fresh, p._frame);
+    p._frame = fresh;
+    p._descriptors = CatalogKit.mountMedia(
+      fresh,
+      CatalogKit.defaultMedia(p.sku, hotspots, { subject: p.subject, palette: p.palette, duration: 10 }),
+      { title: p[lang].name, sku: p.sku },
+      lang
+    );
+  }
+
+  /* ── price inquiry ───────────────────────────────────── */
+
+  function inInquiry(p) { return inquiry.indexOf(p) !== -1; }
+
+  function paintAddButton(p) {
+    var btn = p._band.querySelector('.ed-band__add');
+    var on = inInquiry(p);
+    btn.textContent = on ? t('act.added') : t('act.add');
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+
+  function toggleInquiry(p) {
+    var at = inquiry.indexOf(p);
+    if (at === -1) inquiry.push(p); else inquiry.splice(at, 1);
+    paintAddButton(p);
+    paintInquiry();
+  }
+
+  function paintInquiry() {
+    countEl.textContent = digits(inquiry.length);
+    countEl.setAttribute('data-zero', inquiry.length ? 'false' : 'true');
+
+    var list = document.getElementById('ed-inq-list');
+    var empty = document.getElementById('ed-inq-empty');
+    list.innerHTML = '';
+    empty.hidden = inquiry.length > 0;
+
+    inquiry.forEach(function (p) {
+      var row = document.createElement('div');
+      row.className = 'cat-inquiry__row';
+
+      var img = document.createElement('img');
+      img.className = 'ed-inq-thumb';
+      img.src = CatalogKit.image(p.sku + '-a', { w: 112, h: 140, subject: p.subject, palette: p.palette });
+      img.alt = '';
+
+      var body = document.createElement('div');
+      var name = document.createElement('p');
+      name.className = 'ed-inq-name';
+      name.style.margin = '0';
+      name.textContent = p[lang].name;
+      var meta = document.createElement('p');
+      meta.className = 'ed-inq-meta';
+      meta.style.margin = '0';
+      meta.innerHTML = '<span class="cat-sku" dir="ltr">' + p.sku + '</span><span>' +
+        money(p.price) + ' ' + t('unit.toman') + '</span>';
+      body.appendChild(name);
+      body.appendChild(meta);
+
+      var drop = document.createElement('button');
+      drop.type = 'button';
+      drop.className = 'cat-btn cat-btn--quiet cat-btn--icon ed-inq-drop';
+      drop.setAttribute('aria-label', t('sheet.remove') + ' — ' + p[lang].name);
+      drop.innerHTML = ICON_CLOSE;
+      drop.addEventListener('click', function () {
+        toggleInquiry(p);
+        (document.getElementById('ed-inq-list').querySelector('button') ||
+          document.getElementById('ed-sheet-close')).focus();
+      });
+
+      row.appendChild(img);
+      row.appendChild(body);
+      row.appendChild(drop);
+      list.appendChild(row);
+    });
+
+    document.getElementById('ed-inq-total').textContent =
+      lang === 'fa' ? digits(inquiry.length) + ' قطعه در فهرست'
+                    : digits(inquiry.length) + (inquiry.length === 1 ? ' piece' : ' pieces') + ' listed';
+    document.getElementById('ed-inq-clear').disabled = inquiry.length === 0;
+    document.getElementById('ed-inq-copy').disabled = inquiry.length === 0;
+  }
+
+  function inquiryText() {
+    var head = lang === 'fa' ? 'میناوند — استعلام قیمت' : 'Mināvand — price inquiry';
+    return head + '\n' + inquiry.map(function (p) {
+      return p.sku + ' — ' + p[lang].name + ' — ' + money(p.price) + ' ' + t('unit.toman');
+    }).join('\n');
+  }
+
+  function copyInquiry() {
+    var text = inquiryText();
+    function done(ok) { statusEl.textContent = ok ? t('sheet.copied') : t('sheet.copyfail'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(legacyCopy(text)); });
+    } else {
+      done(legacyCopy(text));
+    }
+  }
+
+  function legacyCopy(text) {
+    var box = document.createElement('textarea');
+    box.value = text;
+    box.setAttribute('readonly', '');
+    box.style.position = 'fixed';
+    box.style.opacity = '0';
+    document.body.appendChild(box);
+    box.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+    document.body.removeChild(box);
+    return ok;
+  }
+
+  /* ── sheet ───────────────────────────────────────────── */
+
+  function openSheet() {
+    lastFocus = document.activeElement;
+    statusEl.textContent = '';
+    scrim.hidden = false;
+    sheet.hidden = false;
+    document.documentElement.classList.add('ed-locked');
+    document.getElementById('ed-sheet-close').focus();
+    document.addEventListener('keydown', sheetKeys);
+  }
+
+  function closeSheet() {
+    scrim.hidden = true;
+    sheet.hidden = true;
+    document.documentElement.classList.remove('ed-locked');
+    document.removeEventListener('keydown', sheetKeys);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function sheetKeys(e) {
+    if (e.key === 'Escape') { e.preventDefault(); closeSheet(); return; }
+    if (e.key !== 'Tab') return;
+    var focusable = sheet.querySelectorAll('button:not([disabled])');
+    if (!focusable.length) return;
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  /* ── language ────────────────────────────────────────── */
+
+  function setLang(next) {
+    lang = next;
+    var root = document.documentElement;
+    root.lang = next === 'fa' ? 'fa' : 'en';
+    root.dir = next === 'fa' ? 'rtl' : 'ltr';
+    document.getElementById('ed-lang-fa').setAttribute('aria-pressed', next === 'fa' ? 'true' : 'false');
+    document.getElementById('ed-lang-en').setAttribute('aria-pressed', next === 'en' ? 'true' : 'false');
+    applyChrome();
+    fillJumpLinks();
+    fillPage();
+    paintInquiry();
+  }
+
+  /* ── motion ──────────────────────────────────────────── */
+
+  var motionOK = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  function armReveal() {
+    var targets = document.querySelectorAll('[data-reveal]');
+    if (!('IntersectionObserver' in window)) {
+      for (var i = 0; i < targets.length; i++) targets[i].classList.add('is-in');
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    for (var j = 0; j < targets.length; j++) io.observe(targets[j]);
+  }
+
+  function armMasthead() {
+    if (!('IntersectionObserver' in window)) { mast.classList.add('is-on'); return; }
+    var cover = document.getElementById('ed-top');
+    var io = new IntersectionObserver(function (entries) {
+      mast.classList.toggle('is-on', !entries[0].isIntersecting);
+    }, { rootMargin: '-40% 0px 0px 0px' });
+    io.observe(cover);
+  }
+
+  var drifting = false;
+  function armParallax() {
+    if (!motionOK) return;
+    function update() {
+      drifting = false;
+      var vh = window.innerHeight;
+      PRODUCTS.forEach(function (p) {
+        var box = p._media.getBoundingClientRect();
+        if (box.bottom < -200 || box.top > vh + 200) return;
+        var mid = (box.top + box.height / 2 - vh / 2) / vh;
+        var shift = Math.max(-1, Math.min(1, mid)) * -9;
+        p._media.style.setProperty('--ed-drift', shift.toFixed(1) + 'px');
+      });
+    }
+    function request() { if (!drifting) { drifting = true; window.requestAnimationFrame(update); } }
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request);
+    update();
+  }
+
+  /* ── start ───────────────────────────────────────────── */
+
+  document.getElementById('ed-cover-art').src =
+    CatalogKit.image('MV-201-a', { w: 900, h: 1125, subject: 'vase', palette: 'stone' });
+
+  buildJumpLinks();
+  buildPage();
+  setLang('fa');
+  paintInquiry();
+
+  document.getElementById('ed-lang-fa').addEventListener('click', function () { setLang('fa'); });
+  document.getElementById('ed-lang-en').addEventListener('click', function () { setLang('en'); });
+  document.getElementById('ed-inq-open').addEventListener('click', openSheet);
+  document.getElementById('ed-sheet-close').addEventListener('click', closeSheet);
+  scrim.addEventListener('click', closeSheet);
+  document.getElementById('ed-inq-copy').addEventListener('click', copyInquiry);
+  document.getElementById('ed-inq-clear').addEventListener('click', function () {
+    inquiry.slice().forEach(function (p) { toggleInquiry(p); });
+    statusEl.textContent = '';
+    document.getElementById('ed-sheet-close').focus();
+  });
+
+  armReveal();
+  armMasthead();
+  armParallax();
+})();
+</script>
+</body>
+</html>

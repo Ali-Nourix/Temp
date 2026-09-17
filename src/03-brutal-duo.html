@@ -1,0 +1,1116 @@
+<!doctype html>
+<html dir="rtl" lang="fa" data-theme="brutal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ضرب — کاتالوگ دراپ ۰۵</title>
+<link rel="stylesheet" href="../shared/ds-core.css">
+<style>
+/* ════ ZARB / ضرب — two-column brutalist catalog ════════════
+   Structure is the ornament: every rule is a real border, every
+   category is a flat block of colour. Nothing here invents a
+   value the design system already names. */
+
+.zb {
+  /* Flat fills. Four come straight from the theme; four are the
+     polychrome hues this variant adds — dark enough for white type,
+     or light enough for ink. Nothing else in this file names a colour. */
+  --c-ink: var(--ink);
+  --c-paper: var(--surface);
+  --c-sun: var(--surface-alt);
+  --c-red: var(--accent);
+  --c-blue: oklch(0.45 0.18 258);
+  --c-green: oklch(0.46 0.13 158);
+  --c-violet: oklch(0.44 0.21 305);
+  --c-orange: oklch(0.74 0.17 62);
+  --c-on-dark: var(--on-accent);
+  --c-on-light: var(--ink);
+
+  --zb-rule: var(--border-w-strong);
+  --zb-nudge: var(--border-w-strong);   /* one hard step, never a glide */
+  --zb-pad: clamp(var(--s-3), 2.2vw, var(--s-6));
+  --zb-max: 1720px;
+  --zb-display: clamp(var(--t-2xl), 13.5vw, calc(var(--t-3xl) * 2.6));
+
+  --cat: var(--c-ink);
+  --cat-on: var(--c-paper);
+  background: var(--bg);
+}
+
+.zb [data-cat="tee"]   { --cat: var(--c-red);    --cat-on: var(--c-on-dark); }
+.zb [data-cat="hood"]  { --cat: var(--c-blue);   --cat-on: var(--c-on-dark); }
+.zb [data-cat="work"]  { --cat: var(--c-green);  --cat-on: var(--c-on-dark); }
+.zb [data-cat="carry"] { --cat: var(--c-violet); --cat-on: var(--c-on-dark); }
+.zb [data-cat="foot"]  { --cat: var(--c-orange); --cat-on: var(--c-on-light); }
+.zb [data-cat="goods"] { --cat: var(--c-sun);    --cat-on: var(--c-on-light); }
+
+.zb-shell { max-width: var(--zb-max); margin-inline: auto; }
+.zb-ltr { direction: ltr; unicode-bidi: isolate; text-align: start; }
+.zb-iso { unicode-bidi: isolate; }
+.zb-caps {
+  font-family: var(--font-en-ui); font-weight: var(--w-bold);
+  text-transform: uppercase; letter-spacing: var(--tracking-en-caps);
+}
+.zb p { max-width: none; margin: 0; }
+/* Figures: Persian digits belong to the UI face — the mono has none.
+   Latin numerals get the mono the moment the page flips to LTR. */
+.zb .zb-fig { font-family: var(--font-fa-ui); font-variant-numeric: tabular-nums; }
+[dir="ltr"] .zb .zb-fig { font-family: var(--font-num); }
+
+.zb-skip {
+  position: fixed; inset-block-start: var(--s-2); inset-inline-start: var(--s-2); z-index: 60;
+  padding: var(--s-3) var(--s-4); background: var(--c-ink); color: var(--c-paper);
+  text-decoration: none; transform: translateY(-200%);
+}
+.zb-skip:focus { transform: none; color: var(--c-paper); }
+
+/* ── top bar ─────────────────────────────────── */
+.zb-bar {
+  flex-wrap: wrap; gap: var(--s-3) var(--s-4); padding-inline: var(--zb-pad);
+  border-block-end-width: var(--zb-rule);
+}
+.zb .cat-lang, .zb-cart { flex: 0 0 auto; }
+@media (max-width: 560px) { .zb-bar__en { display: none; } }
+.zb-bar__mark { display: flex; align-items: baseline; gap: var(--s-2); margin-inline-end: auto; }
+.zb-bar__fa { font-family: var(--font-fa-display); font-size: var(--t-md); }
+.zb-bar__en { font-size: var(--t-sm); }
+.zb-bar__drop { font-size: var(--t-xs); color: var(--ink-muted); }
+@media (max-width: 720px) { .zb-bar__drop { display: none; } }
+
+.zb .cat-lang { border-radius: var(--radius-control); border-width: var(--zb-rule); }
+.zb .cat-lang > button {
+  min-height: var(--tap-min); padding-inline: var(--s-4);
+  font-family: var(--font-en-ui); font-weight: var(--w-bold);
+  letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.zb .cat-lang > button:hover { background: var(--c-sun); color: var(--ink); }
+.zb .cat-lang > button[aria-pressed="true"] { background: var(--c-ink); color: var(--c-paper); }
+
+.zb-cart__n {
+  min-width: 24px; padding-inline: var(--s-1);
+  background: var(--c-sun); color: var(--ink); border: var(--border-w) solid var(--c-ink);
+}
+
+/* ── buttons: rest, hover, and a press that lands on the shadow ── */
+.zb .cat-btn {
+  border-color: var(--c-ink); border-width: var(--zb-rule);
+  border-radius: var(--radius-control); box-shadow: var(--shadow-1);
+  font-weight: var(--w-bold); white-space: nowrap;
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+.zb .cat-btn:hover {
+  transform: translate(calc(var(--zb-nudge) * -1), calc(var(--zb-nudge) * -1));
+  box-shadow: var(--shadow-2);
+}
+.zb .cat-btn:active { transform: translate(var(--zb-nudge), var(--zb-nudge)); box-shadow: none; }
+.zb .cat-btn--ghost { background: var(--c-paper); }
+.zb .cat-btn--ghost:hover { background: var(--c-sun); }
+.zb .cat-btn svg { width: 15px; height: 15px; fill: currentColor; }
+
+/* ── masthead ────────────────────────────────── */
+.zb-mast { background: var(--c-ink); color: var(--c-paper); padding: var(--s-5) var(--zb-pad) var(--s-6); }
+.zb-mast__meta {
+  display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: baseline;
+  padding-block: var(--s-2);
+  border-block: var(--border-w-strong) solid var(--c-paper);
+  font-size: var(--t-xs);
+}
+.zb-mast__meta > :last-child { margin-inline-start: auto; }
+
+.zb-mast__body {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(200px, 0.3fr);
+  gap: var(--zb-pad); align-items: stretch; padding-block-start: var(--s-5);
+}
+@media (max-width: 860px) { .zb-mast__body { grid-template-columns: minmax(0, 1fr); } }
+
+.zb-word { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-6); }
+.zb-word__fa {
+  font-family: var(--font-fa-display); font-size: var(--zb-display);
+  font-weight: var(--w-black); line-height: 0.86; color: var(--c-sun);
+}
+.zb-word__en {
+  font-family: var(--font-en-display); font-size: var(--zb-display);
+  font-weight: var(--w-black); line-height: 0.82; letter-spacing: -0.035em;
+  direction: ltr;
+}
+.zb-word__en em { font-style: normal; color: var(--c-red); }
+.zb-tagline {
+  margin-block-start: var(--s-6); padding-block-start: var(--s-4);
+  border-block-start: var(--border-w-strong) solid var(--c-paper);
+  font-size: var(--t-lg); line-height: var(--lh-fa-tight); max-width: var(--measure-fa);
+}
+
+.zb-stamps { display: grid; grid-auto-rows: 1fr; gap: var(--zb-rule); align-content: stretch; }
+.zb-stamp-card {
+  display: grid; gap: var(--s-1); align-content: center; padding: var(--s-3) var(--s-4);
+  background: var(--cat); color: var(--cat-on);
+}
+.zb-stamp-card > span:first-child { font-size: var(--t-xs); }
+.zb-stamp-card > strong { font-size: var(--t-lg); font-weight: var(--w-bold); line-height: 1.1; }
+
+/* ── marquee tape ────────────────────────────── */
+.zb-tape {
+  display: flex; align-items: center; overflow: hidden; white-space: nowrap;
+  padding-block: var(--s-2);
+  background: var(--cat); color: var(--cat-on);
+  border-block: var(--zb-rule) solid var(--c-ink);
+  font-size: var(--t-sm); font-weight: var(--w-bold);
+}
+.zb-tape--in { grid-column: 1 / -1; border-block: 0; }
+.zb-tape__i { display: inline-flex; align-items: center; gap: var(--s-4); padding-inline-end: var(--s-4); }
+.zb-tape__i::after { content: ""; width: 0.5em; height: 0.5em; background: currentColor; }
+
+/* ── controls ────────────────────────────────── */
+.zb-controls {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 0.34fr);
+  gap: var(--zb-pad) var(--s-5); align-items: start;
+  padding: var(--zb-pad); background: var(--c-sun);
+  border-block-end: var(--zb-rule) solid var(--c-ink);
+}
+@media (max-width: 860px) { .zb-controls { grid-template-columns: minmax(0, 1fr); } }
+.zb-controls__side { display: grid; gap: var(--s-3); }
+.zb-controls__head { font-size: var(--t-sm); margin-block-end: var(--s-3); }
+
+.zb .cat-filters { gap: var(--zb-rule); }
+.zb .cat-chip {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-height: var(--tap-min); border-radius: var(--radius-control);
+  border-width: var(--zb-rule); border-color: var(--c-ink);
+  background: var(--c-paper); color: var(--ink); font-weight: var(--w-bold);
+}
+.zb .cat-chip:hover { background: var(--cat); color: var(--cat-on); }
+.zb .cat-chip[aria-pressed="true"] {
+  background: var(--cat); color: var(--cat-on); border-color: var(--c-ink);
+  box-shadow: var(--shadow-1);
+}
+.zb-chip__dot {
+  width: 12px; height: 12px; background: var(--cat);
+  border: var(--border-w) solid var(--c-ink); flex: 0 0 auto;
+}
+.zb .cat-chip:hover .zb-chip__dot,
+.zb .cat-chip[aria-pressed="true"] .zb-chip__dot { background: var(--cat-on); }
+.zb-chip__n { font-size: var(--t-xs); }
+
+.zb .cat-search {
+  border-width: var(--zb-rule); border-color: var(--c-ink);
+  border-radius: var(--radius-control); box-shadow: var(--shadow-1);
+}
+.zb .cat-search:focus-within { box-shadow: var(--shadow-2); }
+.zb .cat-search svg { width: 16px; height: 16px; fill: var(--ink); flex: 0 0 auto; }
+.zb-count {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-3);
+  padding: var(--s-2) var(--s-3); background: var(--c-ink); color: var(--c-paper);
+  font-size: var(--t-sm); font-weight: var(--w-bold);
+}
+
+/* ── the grid: two equal columns, lines everywhere ── */
+.zb-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--zb-rule); background: var(--c-ink);
+  border: var(--zb-rule) solid var(--c-ink);
+}
+@media (max-width: 720px) { .zb-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.zb-cell { container-type: inline-size; background: var(--c-paper); }
+.zb-cell[hidden], .zb-grid[hidden], .zb-empty[hidden], .zb-tape[hidden] { display: none; }
+.zb-cell__in { display: grid; grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr); height: 100%; }
+/* Stacked, the info row takes the slack so the media keeps its ratio
+   and the buy row still lands on the cell's bottom rule. */
+@container (max-width: 470px) {
+  .zb-cell__in { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+}
+
+.zb-media {
+  position: relative; padding: var(--s-3);
+  border-inline-end: var(--border-w-strong) solid var(--c-ink);
+}
+@container (max-width: 470px) {
+  .zb-media { border-inline-end: 0; border-block-end: var(--border-w-strong) solid var(--c-ink); }
+}
+.zb-shot {
+  aspect-ratio: var(--ratio-media); border: var(--border-w-strong) solid var(--c-ink);
+  background: var(--surface-alt); box-shadow: var(--s-2) var(--s-2) 0 var(--cat);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.zb-cell:hover .zb-shot { transform: translate(calc(var(--zb-nudge) * -1), calc(var(--zb-nudge) * -1)); }
+.zb-shot__host { width: 100%; height: 100%; }
+.zb .ck-cue, .zb .ck-bigplay { border-radius: var(--radius-control); }
+
+.zb-idx {
+  position: absolute; inset-block-start: 0; inset-inline-start: 0; pointer-events: none;
+  padding: var(--s-1) var(--s-3); background: var(--cat); color: var(--cat-on);
+  border: var(--border-w-strong) solid var(--c-ink);
+  font-size: var(--t-md); font-weight: var(--w-bold); line-height: 1.2;
+}
+.zb-stamp {
+  position: absolute; inset-block-end: var(--s-2); inset-inline-end: 0; pointer-events: none;
+  padding: var(--s-1) var(--s-3); background: var(--c-paper); color: var(--ink);
+  border: var(--border-w-strong) solid var(--c-ink); box-shadow: var(--shadow-1);
+  font-size: var(--t-xs); font-weight: var(--w-bold); rotate: -3deg;
+}
+
+.zb-info { display: grid; align-content: start; }
+.zb-band {
+  display: flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-2) var(--s-4); background: var(--cat); color: var(--cat-on);
+  border-block-end: var(--border-w-strong) solid var(--c-ink);
+  font-size: var(--t-xs); font-weight: var(--w-bold);
+}
+.zb-band__en { font-size: var(--t-xs); }
+.zb-band__sku { margin-inline-start: auto; font-family: var(--font-num); letter-spacing: var(--tracking-en); }
+
+.zb-head { padding: var(--s-4); }
+.zb-name { font-size: var(--t-xl); font-weight: var(--w-black); line-height: var(--lh-fa-tight); }
+.zb-name-alt { font-size: var(--t-sm); color: var(--ink-muted); }
+.zb-line { margin-block-start: var(--s-2); font-size: var(--t-sm); color: var(--ink-muted); }
+
+.zb-specs { margin: 0; padding: 0 var(--s-4) var(--s-3); font-size: var(--t-xs); }
+.zb-spec {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-3);
+  padding-block: var(--s-2); border-block-start: var(--border-w) dotted var(--c-ink);
+}
+.zb-spec dt { color: var(--ink-faint); }
+.zb-spec dd { margin: 0; color: var(--ink); text-align: end; }
+
+.zb-tags { display: flex; flex-wrap: wrap; gap: var(--s-2); padding: 0 var(--s-4) var(--s-3); }
+.zb .cat-tag {
+  min-height: 26px; border-radius: var(--radius-control);
+  border-color: var(--c-ink); border-width: var(--border-w); color: var(--ink);
+  font-size: var(--t-xs);
+}
+
+.zb-buy {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3);
+  margin-block-start: auto; padding: var(--s-3) var(--s-4);
+  border-block-start: var(--border-w-strong) solid var(--c-ink);
+}
+.zb .cat-price { font-weight: var(--w-bold); }
+.zb-acts { display: flex; gap: var(--s-2); margin-inline-start: auto; }
+.zb-acts .cat-btn { padding-inline: var(--s-4); font-size: var(--t-sm); }
+.zb .zb-act--add { background: var(--c-ink); color: var(--c-paper); }
+.zb .zb-act--add[data-in="true"] { background: var(--cat); color: var(--cat-on); }
+
+/* ── empty state ─────────────────────────────── */
+.zb-empty {
+  display: grid; gap: var(--s-4); justify-items: start;
+  padding: var(--s-8) var(--zb-pad); background: var(--c-ink); color: var(--c-paper);
+  border: var(--zb-rule) solid var(--c-ink);
+}
+.zb-empty__t { font-size: var(--t-xl); }
+.zb-empty__q { color: var(--c-sun); }
+
+/* ── footer ──────────────────────────────────── */
+.zb-foot {
+  padding: var(--s-7) var(--zb-pad) var(--s-8);
+  background: var(--c-ink); color: var(--c-paper);
+}
+.zb-foot__grid {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); gap: var(--s-5) var(--zb-pad);
+  align-items: end; padding-block-start: var(--s-4);
+  border-block-start: var(--border-w-strong) solid var(--c-paper);
+}
+@media (max-width: 860px) { .zb-foot__grid { grid-template-columns: minmax(0, 1fr); } }
+.zb-foot__word {
+  font-family: var(--font-en-display); font-size: var(--t-2xl); font-weight: var(--w-black);
+  letter-spacing: -0.03em; line-height: var(--lh-en-tight); direction: ltr;
+  margin-block-end: var(--s-5);
+}
+.zb-foot__cats { display: flex; flex-wrap: wrap; gap: var(--zb-rule); }
+.zb-foot__cat { padding: var(--s-1) var(--s-3); background: var(--cat); color: var(--cat-on); font-size: var(--t-xs); font-weight: var(--w-bold); }
+.zb-foot__note { font-size: var(--t-sm); opacity: 0.72; max-width: var(--measure-fa); }
+.zb-foot__studio { font-size: var(--t-sm); margin-block-end: var(--s-3); }
+
+/* ── price-inquiry drawer ────────────────────── */
+.zb-scrim { position: fixed; inset: 0; z-index: 30; background: var(--overlay); }
+.zb-drawer {
+  position: fixed; inset-block: 0; inset-inline-end: 0; z-index: 31;
+  width: min(420px, 100%); display: grid; grid-template-rows: auto 1fr auto;
+  background: var(--c-paper); border-inline-start: var(--zb-rule) solid var(--c-ink);
+  visibility: hidden; transform: translateX(100%);
+  transition: transform var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-fast);
+}
+[dir="rtl"] .zb-drawer { transform: translateX(-100%); }
+.zb-drawer[data-open="true"] { transform: none; visibility: visible; transition-delay: 0s; }
+
+.zb-drawer__top {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-4); background: var(--c-ink); color: var(--c-paper);
+}
+.zb-drawer__top h2 { font-size: var(--t-md); }
+.zb-drawer__n { margin-inline-start: auto; }
+.zb-drawer__list { overflow: auto; padding: var(--s-4); }
+.zb .cat-inquiry__row {
+  grid-template-columns: var(--tap-min) minmax(0, 1fr) auto;
+  border-width: var(--border-w-strong); border-color: var(--c-ink);
+  border-radius: var(--radius-control); box-shadow: var(--shadow-1);
+}
+.zb .cat-inquiry__empty {
+  border-width: var(--border-w-strong); border-color: var(--c-ink);
+  border-radius: var(--radius-control); color: var(--ink-muted);
+}
+.zb-row__idx {
+  display: grid; place-items: center; align-self: stretch; padding: var(--s-2);
+  background: var(--cat); color: var(--cat-on); font-weight: var(--w-bold);
+}
+.zb-row__name { font-size: var(--t-sm); font-weight: var(--w-bold); }
+.zb-row__meta { display: flex; gap: var(--s-3); font-size: var(--t-xs); color: var(--ink-muted); }
+.zb-row__price { font-size: var(--t-xs); }
+.zb-drawer__foot {
+  display: grid; gap: var(--s-3); padding: var(--s-4);
+  border-block-start: var(--zb-rule) solid var(--c-ink); background: var(--c-sun);
+}
+.zb-total { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-3); font-weight: var(--w-bold); }
+.zb-total__v { font-size: var(--t-md); }
+.zb-status { min-height: 1.2em; font-size: var(--t-xs); }
+
+@media print {
+  .zb-skip, .zb-drawer, .zb-scrim, .zb-tape, .zb-controls { display: none !important; }
+  .zb .ck-cue { display: none; }
+  .zb-mast, .zb-foot, .zb-empty { background: none; color: var(--ink); border-color: var(--ink); }
+  .zb-cell { break-inside: avoid; }
+  .zb-shot { box-shadow: none; }
+}
+</style>
+</head>
+
+<body class="zb">
+<a class="zb-skip" href="#grid" data-t="skip">پرش به فهرست محصول‌ها</a>
+
+<header class="cat-toolbar zb-bar no-print">
+  <div class="zb-bar__mark">
+    <span class="zb-bar__fa">ضرب</span>
+    <span class="zb-bar__en zb-caps zb-ltr">Zarb Press</span>
+  </div>
+  <span class="zb-bar__drop" id="bar-drop"></span>
+  <div class="cat-lang" role="group" data-t-al="langGroup">
+    <button type="button" data-lang="fa" aria-pressed="true">FA</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button type="button" class="cat-btn zb-cart" id="open-inquiry">
+    <span data-t="inquiry">استعلام قیمت</span>
+    <span class="zb-cart__n zb-fig" id="cart-n">۰</span>
+  </button>
+</header>
+
+<main>
+  <section class="zb-mast">
+    <div class="zb-shell">
+      <div class="zb-mast__meta zb-caps">
+        <span data-t="studio">استودیو چاپ دستی و پوشاک خیابانی</span>
+        <span data-t="city">تهران</span>
+        <span id="mast-drop"></span>
+      </div>
+      <div class="zb-mast__body">
+        <div>
+          <h1 class="zb-word">
+            <span class="zb-word__fa">ضرب</span>
+            <span class="zb-word__en">ZAR<em>B</em></span>
+          </h1>
+          <p class="zb-tagline" data-t="tagline">هر نقش یک بار روی تخته بسته می‌شود و بعد تخته شسته می‌شود. آنچه در این فهرست می‌بینی، همان دوره است.</p>
+        </div>
+        <div class="zb-stamps" id="mast-stamps"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="zb-tape" data-cat="goods" id="tape-a" aria-hidden="true"></div>
+
+  <section class="zb-controls">
+    <div>
+      <h2 class="zb-caps zb-controls__head" data-t="filterHead">دسته‌بندی</h2>
+      <div class="cat-filters" id="chips" role="group" data-t-al="filterHead"></div>
+    </div>
+    <div class="zb-controls__side">
+      <label class="cat-search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2a8 8 0 105 14.3l5.3 5.4 1.4-1.4-5.4-5.4A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg>
+        <input type="search" id="q" data-t-ph="searchPh" data-t-al="searchLabel" autocomplete="off">
+      </label>
+      <p class="zb-count" id="count" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <div class="zb-grid" id="grid" tabindex="-1"></div>
+
+  <section class="zb-empty" id="empty" hidden>
+    <h2 class="zb-empty__t" data-t="emptyT">چیزی پیدا نشد</h2>
+    <p data-t="emptyB">عبارت دیگری بنویس یا فیلترها را بردار.</p>
+    <p class="zb-empty__q zb-iso" id="empty-q"></p>
+    <button type="button" class="cat-btn cat-btn--ghost" id="clear" data-t="clear">پاک کردن فیلترها</button>
+  </section>
+
+  <div class="zb-tape" data-cat="tee" id="tape-b" aria-hidden="true"></div>
+</main>
+
+<footer class="zb-foot">
+  <div class="zb-shell">
+    <p class="zb-foot__word">ZARB PRESS — TEHRAN</p>
+    <div class="zb-foot__grid">
+      <div>
+        <p class="zb-foot__studio" data-t="studio">استودیو چاپ دستی و پوشاک خیابانی</p>
+        <div class="zb-foot__cats" id="foot-cats"></div>
+      </div>
+      <p class="zb-foot__note" data-t="footNote">تصویرهای این کاتالوگ جانگهدارِ تولیدشده‌اند و جای عکس واقعی محصول را می‌گیرند.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="zb-scrim no-print" id="scrim" hidden></div>
+<aside class="zb-drawer no-print" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-h" aria-hidden="true">
+  <div class="zb-drawer__top">
+    <h2 id="drawer-h" data-t="inquiryList">فهرست استعلام</h2>
+    <span class="zb-drawer__n zb-fig" id="drawer-n">۰</span>
+    <button type="button" class="cat-btn cat-btn--icon" id="close-drawer" data-t-al="close">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 5.7l-1.4-1.4L12 9.2 7.1 4.3 5.7 5.7l4.9 4.9-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>
+    </button>
+  </div>
+  <div class="zb-drawer__list"><div class="cat-inquiry" id="inquiry"></div></div>
+  <div class="zb-drawer__foot">
+    <p class="zb-total"><span data-t="total">جمع تخمینی</span><span class="zb-total__v zb-fig" id="total"></span></p>
+    <button type="button" class="cat-btn" id="copy" data-t="copy">کپی فهرست</button>
+    <p class="zb-status" id="status" role="status"></p>
+  </div>
+</aside>
+
+<script src="../shared/catalog-kit.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var K = window.CatalogKit;
+
+  /* ── one string table, two languages ─────────────────── */
+  var S = {
+    skip:        ['پرش به فهرست محصول‌ها', 'Skip to the product list'],
+    studio:      ['استودیو چاپ دستی و پوشاک خیابانی', 'Hand-press studio · streetwear'],
+    city:        ['تهران', 'Tehran'],
+    tagline:     ['هر نقش یک بار روی تخته بسته می‌شود و بعد تخته شسته می‌شود. آنچه در این فهرست می‌بینی، همان دوره است.',
+                  'Each plate is burned once, printed, then washed off. What you see in this list is that run.'],
+    langGroup:   ['زبان', 'Language'],
+    inquiry:     ['استعلام قیمت', 'Price inquiry'],
+    inquiryList: ['فهرست استعلام', 'Inquiry list'],
+    filterHead:  ['دسته‌بندی', 'Categories'],
+    all:         ['همه', 'All'],
+    searchLabel: ['جست‌وجو در نام، کد یا دسته', 'Search name, SKU or category'],
+    searchPh:    ['نام، کد یا دسته…', 'Name, SKU or category…'],
+    emptyT:      ['چیزی پیدا نشد', 'Nothing found'],
+    emptyB:      ['عبارت دیگری بنویس یا فیلترها را بردار.', 'Try another term, or drop the filters.'],
+    clear:       ['پاک کردن فیلترها', 'Clear the filters'],
+    details:     ['جزئیات', 'Details'],
+    add:         ['افزودن', 'Add'],
+    added:       ['در فهرست', 'On the list'],
+    addAria:     ['افزودن به فهرست استعلام', 'Add to the inquiry list'],
+    removeAria:  ['حذف از فهرست استعلام', 'Remove from the inquiry list'],
+    remove:      ['حذف', 'Remove'],
+    close:       ['بستن', 'Close'],
+    empty1:      ['فهرست خالی است.', 'The list is empty.'],
+    empty2:      ['از هر خانه دکمه‌ی افزودن را بزن.', 'Use the add button on any cell.'],
+    total:       ['جمع تخمینی', 'Estimated total'],
+    copy:        ['کپی فهرست', 'Copy the list'],
+    copied:      ['فهرست کپی شد.', 'List copied.'],
+    copyFail:    ['کپی نشد؛ فهرست انتخاب شد — با Ctrl+C بردار.', 'Copy blocked; the list is selected — press Ctrl+C.'],
+    unit:        ['تومان', 'toman'],
+    issue:       ['شماره', 'Issue'],
+    season:      ['فصل', 'Season'],
+    seasonV:     ['پاییز ۱۴۰۵', 'Autumn 2026'],
+    items:       ['قلم', 'Items'],
+    footNote:    ['تصویرهای این کاتالوگ جانگهدارِ تولیدشده‌اند و جای عکس واقعی محصول را می‌گیرند.',
+                  'The artwork here is generated placeholder standing in for real product photography.'],
+    tapeA:       ['چاپ دستی · تهران · دراپ ۰۵', 'Hand pulled · Tehran · Drop 05'],
+    tapeMid:     ['نیمه‌ی دوم فهرست · ۰۷ تا ۱۲', 'Second half of the list · 07 to 12'],
+    tapeB:       ['هر تخته یک دوره · بعد شسته می‌شود', 'One run per plate · then it is washed'],
+    ofTotal:     ['قلم از', 'shown of'],
+    resultLabel: ['نتیجه', 'Result']
+  };
+
+  var CATS = [
+    { id: 'tee',   code: 'TEE',   name: ['تی‌شرت', 'T-shirts'] },
+    { id: 'hood',  code: 'HOOD',  name: ['هودی و سویشرت', 'Hoods & crews'] },
+    { id: 'work',  code: 'WORK',  name: ['کار و اورکت', 'Workwear'] },
+    { id: 'carry', code: 'CARRY', name: ['کیف', 'Bags'] },
+    { id: 'foot',  code: 'FOOT',  name: ['کفش', 'Footwear'] },
+    { id: 'goods', code: 'GOODS', name: ['لوازم استودیو', 'Studio goods'] }
+  ];
+
+  var PRODUCTS = [
+    {
+      id: 'ZB-T01', cat: 'tee', price: 1280000, subject: 'textile', palette: 'ink',
+      name: ['تی‌شرت خط بنایی', 'Bannai Tee'], latin: 'BANNAI TEE',
+      line: ['چاپ سیلک سه‌رنگ روی پنبه‌ی شانه‌زده، برش جعبه‌ای.',
+             'Three-colour silkscreen on combed cotton, boxy cut.'],
+      stamp: ['دراپ ۰۵', 'Drop 05'],
+      specs: [
+        [['پارچه', 'Fabric'], ['پنبه ۲۴۰ گرم', '240 gsm cotton']],
+        [['چاپ', 'Print'], ['سیلک ۳ رنگ', '3-colour screen']],
+        [['سایز', 'Sizes'], ['S تا XXL', 'S–XXL']]
+      ],
+      tags: [['چاپ دستی', 'Hand pulled'], ['برش جعبه‌ای', 'Boxy fit']],
+      hotspots: [
+        { x: 50, y: 34, title: ['نقش سینه', 'Chest plate'], body: ['خط بنایی، سه بار عبور از تخته.', 'Bannai script, three passes over the screen.'] },
+        { x: 30, y: 52, title: ['درز پهلو', 'Side seam'], body: ['دوخت دوسوزنه، بدون درز شانه.', 'Twin-needle stitch, no shoulder seam.'] },
+        { x: 68, y: 60, title: ['بافت', 'Knit'], body: ['پنبه‌ی شانه‌زده‌ی ۲۴۰ گرم.', '240 gsm combed cotton jersey.'] }
+      ]
+    },
+    {
+      id: 'ZB-T02', cat: 'tee', price: 1780000, subject: 'textile', palette: 'amber',
+      name: ['تی‌شرت آستین‌بلند کوچه', 'Kucheh Long Sleeve'], latin: 'KUCHEH LONG SLEEVE',
+      line: ['چاپ روی آستین و پشت، یقه‌ی کش‌باف دوبل.',
+             'Sleeve and back print, double-ribbed collar.'],
+      stamp: ['چاپ دستی', 'Hand pulled'],
+      specs: [
+        [['پارچه', 'Fabric'], ['پنبه ۲۲۰ گرم', '220 gsm cotton']],
+        [['چاپ', 'Print'], ['سیلک ۲ رنگ', '2-colour screen']],
+        [['سایز', 'Sizes'], ['S تا XL', 'S–XL']]
+      ],
+      tags: [['آستین‌بلند', 'Long sleeve'], ['یقه دوبل', 'Double collar']],
+      hotspots: [
+        { x: 34, y: 38, title: ['چاپ آستین', 'Sleeve print'], body: ['نوار نوشته در طول آستین.', 'Type band running down the sleeve.'] },
+        { x: 56, y: 28, title: ['یقه', 'Collar'], body: ['کش‌باف دوبل با نوار پشت گردن.', 'Double rib with a taped back neck.'] },
+        { x: 50, y: 58, title: ['نقش پشت', 'Back plate'], body: ['چاپ بزرگ دو رنگ.', 'Large two-colour print.'] }
+      ]
+    },
+    {
+      id: 'ZB-H01', cat: 'hood', price: 4250000, subject: 'textile', palette: 'clay',
+      name: ['هودی آجر', 'Ajor Hoodie'], latin: 'AJOR HOODIE',
+      line: ['کلاه دولایه، بند پنبه‌ای، جیب کانگورویی.',
+             'Two-ply hood, cotton drawcord, kangaroo pocket.'],
+      stamp: ['کرک‌دار', 'Brushed back'],
+      specs: [
+        [['پارچه', 'Fabric'], ['کرک ۴۲۰ گرم', '420 gsm fleece']],
+        [['چاپ', 'Print'], ['چاپ تخته‌ای', 'Plate print']],
+        [['سایز', 'Sizes'], ['M تا XXL', 'M–XXL']]
+      ],
+      tags: [['جیب کانگورویی', 'Kangaroo pocket'], ['کلاه دولایه', 'Two-ply hood']],
+      hotspots: [
+        { x: 50, y: 30, title: ['کلاه', 'Hood'], body: ['دولایه با بند پنبه‌ای بافته.', 'Two-ply with a woven cotton cord.'] },
+        { x: 48, y: 56, title: ['جیب', 'Pocket'], body: ['کانگورویی با درز تقویتی.', 'Kangaroo pocket, bar-tacked.'] },
+        { x: 70, y: 44, title: ['نقش آستین', 'Sleeve mark'], body: ['مهر کوچک روی بازو.', 'Small stamp on the upper arm.'] }
+      ]
+    },
+    {
+      id: 'ZB-H02', cat: 'hood', price: 3650000, subject: 'textile', palette: 'indigo',
+      name: ['سویشرت میدان', 'Meydan Crewneck'], latin: 'MEYDAN CREWNECK',
+      line: ['کش‌باف سرشانه، گلدوزی کوچک روی سینه.',
+             'Ribbed shoulders, small chest embroidery.'],
+      stamp: ['گلدوزی', 'Embroidered'],
+      specs: [
+        [['پارچه', 'Fabric'], ['کرک ۳۸۰ گرم', '380 gsm fleece']],
+        [['نقش', 'Mark'], ['گلدوزی تخت', 'Flat embroidery']],
+        [['سایز', 'Sizes'], ['S تا XL', 'S–XL']]
+      ],
+      tags: [['یقه گرد', 'Crewneck'], ['کش‌باف', 'Ribbed']],
+      hotspots: [
+        { x: 44, y: 36, title: ['گلدوزی', 'Embroidery'], body: ['نشان ضرب، نخ دو رنگ.', 'Zarb mark in two thread colours.'] },
+        { x: 62, y: 52, title: ['کش‌باف', 'Rib'], body: ['کش‌باف ۲×۲ روی مچ و کمر.', '2×2 rib at cuff and hem.'] }
+      ]
+    },
+    {
+      id: 'ZB-W01', cat: 'work', price: 7900000, subject: 'textile', palette: 'sage',
+      name: ['کاپشن کار کارگاه', 'Kargah Work Jacket'], latin: 'KARGAH WORK JACKET',
+      line: ['کتان رنگرزی‌شده، چهار جیب، دکمه‌ی فلزی.',
+             'Piece-dyed canvas, four pockets, metal buttons.'],
+      stamp: ['رنگرزی دستی', 'Piece dyed'],
+      specs: [
+        [['پارچه', 'Fabric'], ['کتان ۳۲۰ گرم', '320 gsm canvas']],
+        [['رنگ', 'Dye'], ['رنگرزی راکتیو', 'Reactive dye']],
+        [['سایز', 'Sizes'], ['M تا XXL', 'M–XXL']]
+      ],
+      tags: [['چهار جیب', 'Four pockets'], ['دکمه فلزی', 'Metal buttons']],
+      hotspots: [
+        { x: 36, y: 42, title: ['جیب سینه', 'Chest pocket'], body: ['درِ جیب با دکمه‌ی فلزی.', 'Flap pocket with a metal button.'] },
+        { x: 50, y: 36, title: ['یقه', 'Collar'], body: ['یقه‌ی برگردان با دوخت سه‌ردیفه.', 'Camp collar, triple-stitched.'] },
+        { x: 58, y: 58, title: ['کتان', 'Canvas'], body: ['۳۲۰ گرم، پس از دوخت رنگرزی شده.', '320 gsm, dyed after assembly.'] },
+        { x: 30, y: 62, title: ['درز', 'Seam'], body: ['درز قفلی، تقویت‌شده در نقاط فشار.', 'Felled seam, bar-tacked at stress points.'] }
+      ]
+    },
+    {
+      id: 'ZB-W02', cat: 'work', price: 4950000, subject: 'textile', palette: 'warm',
+      name: ['شلوار کار پنج‌جیب', 'Panj Work Pant'], latin: 'PANJ WORK PANT',
+      line: ['فاق بلند، پاچه‌ی صاف، درزهای قفلی.',
+             'High rise, straight leg, felled seams.'],
+      stamp: ['تولید تهران', 'Made in Tehran'],
+      specs: [
+        [['پارچه', 'Fabric'], ['کتان ۳۴۰ گرم', '340 gsm canvas']],
+        [['دوخت', 'Stitch'], ['قفلی دورو', 'Double felled']],
+        [['سایز', 'Sizes'], ['۳۰ تا ۳۸', '30–38']]
+      ],
+      tags: [['پنج جیب', 'Five pockets'], ['پاچه صاف', 'Straight leg']],
+      hotspots: [
+        { x: 40, y: 40, title: ['جیب جلو', 'Front pocket'], body: ['دهانه‌ی صاف با پرچ.', 'Straight opening with a rivet.'] },
+        { x: 58, y: 56, title: ['درز پا', 'Inseam'], body: ['قفلی دورو، نخ ضخیم.', 'Double felled in heavy thread.'] },
+        { x: 48, y: 30, title: ['کمر', 'Waist'], body: ['فاق بلند با حلقه‌ی کمربند پهن.', 'High rise with wide belt loops.'] }
+      ]
+    },
+    {
+      id: 'ZB-C01', cat: 'carry', price: 890000, subject: 'bag', palette: 'rose',
+      name: ['توت‌بگ بازار', 'Bazaar Tote'], latin: 'BAZAAR TOTE',
+      line: ['کنف ضخیم، بند بلند، چاپ دوطرفه.',
+             'Heavy hemp, long handles, printed both sides.'],
+      stamp: ['چاپ دوطرفه', 'Both sides'],
+      specs: [
+        [['پارچه', 'Fabric'], ['کنف ۴۸۰ گرم', '480 gsm hemp']],
+        [['چاپ', 'Print'], ['۲ طرف، ۱ رنگ', '2 sides, 1 colour']],
+        [['ابعاد', 'Size'], ['۳۸×۴۲ سانتی‌متر', '38×42 cm']]
+      ],
+      tags: [['بند بلند', 'Long handle'], ['جیب داخلی', 'Inner pocket']],
+      hotspots: [
+        { x: 50, y: 30, title: ['بند', 'Handle'], body: ['نوار کنف، دوخت مثلثی.', 'Hemp webbing, triangle-stitched.'] },
+        { x: 50, y: 48, title: ['نقش', 'Print'], body: ['نشان بازار روی هر دو رو.', 'Bazaar mark on both faces.'] },
+        { x: 34, y: 58, title: ['کف', 'Base'], body: ['کف تاشو با درز تقویت‌شده.', 'Folded base with a reinforced seam.'] }
+      ]
+    },
+    {
+      id: 'ZB-C02', cat: 'carry', price: 2150000, subject: 'bag', palette: 'ink',
+      name: ['کیف کمری پیک', 'Peyk Hip Pack'], latin: 'PEYK HIP PACK',
+      line: ['نایلون ضدآب، زیپ فلزی، بند قابل تنظیم.',
+             'Coated nylon, metal zip, adjustable strap.'],
+      stamp: ['ضدآب', 'Water resistant'],
+      specs: [
+        [['پارچه', 'Shell'], ['نایلون ۶۰۰D', '600D nylon']],
+        [['زیپ', 'Zip'], ['فلزی، ضدآب', 'Coated metal']],
+        [['حجم', 'Volume'], ['۳ لیتر', '3 litres']]
+      ],
+      tags: [['بند تنظیم‌شونده', 'Adjustable'], ['آستر روشن', 'Bright lining']],
+      hotspots: [
+        { x: 46, y: 46, title: ['زیپ', 'Zip'], body: ['فلزی با زبانه‌ی نواری.', 'Metal zip with a webbing pull.'] },
+        { x: 62, y: 38, title: ['بند', 'Strap'], body: ['سگک آزادکننده‌ی سریع.', 'Quick-release buckle.'] }
+      ]
+    },
+    {
+      id: 'ZB-F01', cat: 'foot', price: 6400000, subject: 'shoe', palette: 'stone',
+      name: ['کتانی پیاده‌رو', 'Piaderow Sneaker'], latin: 'PIADEROW SNEAKER',
+      line: ['رویه‌ی چرم و بوم، زیره‌ی لاستیک ولکانیزه.',
+             'Leather and canvas upper, vulcanised rubber sole.'],
+      stamp: ['ولکانیزه', 'Vulcanised'],
+      specs: [
+        [['رویه', 'Upper'], ['چرم و بوم', 'Leather · canvas']],
+        [['زیره', 'Sole'], ['ولکانیزه', 'Vulcanised']],
+        [['سایز', 'Sizes'], ['۳۹ تا ۴۵', '39–45']]
+      ],
+      tags: [['آستر پنبه‌ای', 'Cotton lining'], ['بند صاف', 'Flat lace']],
+      hotspots: [
+        { x: 40, y: 44, title: ['رویه', 'Upper'], body: ['چرم روی پنجه، بوم روی ساق.', 'Leather toe, canvas quarter.'] },
+        { x: 56, y: 52, title: ['زیره', 'Sole'], body: ['لاستیک ولکانیزه با نوار دور.', 'Vulcanised rubber with a foxing tape.'] },
+        { x: 30, y: 50, title: ['پنجه', 'Toe cap'], body: ['پنجه‌ی تقویت‌شده‌ی دولایه.', 'Double-layer reinforced toe.'] }
+      ]
+    },
+    {
+      id: 'ZB-F02', cat: 'foot', price: 7200000, subject: 'shoe', palette: 'indigo',
+      name: ['کتانی ساق‌بلند شب‌رو', 'Shabrow High Top'], latin: 'SHABROW HIGH TOP',
+      line: ['ساق بلند، آستر پنبه‌ای، نوار پاشنه‌ی چاپی.',
+             'High collar, cotton lining, printed heel tape.'],
+      stamp: ['ساق بلند', 'High top'],
+      specs: [
+        [['رویه', 'Upper'], ['بوم ۱۲ اونس', '12 oz canvas']],
+        [['زیره', 'Sole'], ['ولکانیزه', 'Vulcanised']],
+        [['سایز', 'Sizes'], ['۴۰ تا ۴۶', '40–46']]
+      ],
+      tags: [['نوار پاشنه', 'Heel tape'], ['ساق پُردوخت', 'Stitched collar']],
+      hotspots: [
+        { x: 48, y: 40, title: ['ساق', 'Collar'], body: ['ساق بلند با لبه‌ی دوخته.', 'High collar with a stitched edge.'] },
+        { x: 62, y: 50, title: ['پاشنه', 'Heel'], body: ['نوار چاپی با نام دوره.', 'Printed tape carrying the run name.'] },
+        { x: 36, y: 52, title: ['بوم', 'Canvas'], body: ['بوم ۱۲ اونس، رنگرزی پیش از دوخت.', '12 oz canvas, dyed before cutting.'] }
+      ]
+    },
+    {
+      id: 'ZB-G01', cat: 'goods', price: 620000, subject: 'textile', palette: 'clay',
+      name: ['پوستر نقش ضرب', 'Zarb Poster'], latin: 'ZARB POSTER 50×70',
+      line: ['چاپ دستی دو رنگ روی کاغذ ۳۰۰ گرم.',
+             'Two-colour hand print on 300 gsm paper.'],
+      stamp: ['۵۰ نسخه', '50 prints'],
+      specs: [
+        [['کاغذ', 'Paper'], ['۳۰۰ گرم مات', '300 gsm matte']],
+        [['چاپ', 'Print'], ['۲ رنگ دستی', '2-colour hand print']],
+        [['ابعاد', 'Size'], ['۵۰×۷۰ سانتی‌متر', '50×70 cm']]
+      ],
+      tags: [['شماره‌دار', 'Numbered'], ['لوله‌ی مقوایی', 'Shipped in a tube']],
+      hotspots: [
+        { x: 50, y: 36, title: ['نقش', 'Plate'], body: ['دو رنگ، با هم‌پوشانی عمدی.', 'Two colours with a deliberate overlap.'] },
+        { x: 34, y: 60, title: ['شماره', 'Number'], body: ['هر نسخه با مداد شماره خورده.', 'Each print numbered in pencil.'] }
+      ]
+    },
+    {
+      id: 'ZB-G02', cat: 'goods', price: 1450000, subject: 'bottle', palette: 'sage',
+      name: ['قمقمه سفر', 'Safar Bottle'], latin: 'SAFAR BOTTLE 750',
+      line: ['فولاد دوجداره، درِ پیچی، حکاکی لیزری.',
+             'Double-walled steel, screw cap, laser-etched.'],
+      stamp: ['حکاکی لیزری', 'Laser etched'],
+      specs: [
+        [['بدنه', 'Body'], ['فولاد ۳۰۴', '304 steel']],
+        [['حجم', 'Volume'], ['۷۵۰ میلی‌لیتر', '750 ml']],
+        [['نقش', 'Mark'], ['حکاکی لیزری', 'Laser etch']]
+      ],
+      tags: [['دوجداره', 'Double wall'], ['درِ پیچی', 'Screw cap']],
+      hotspots: [
+        { x: 50, y: 24, title: ['در', 'Cap'], body: ['پیچی با واشر سیلیکونی.', 'Screw cap with a silicone gasket.'] },
+        { x: 50, y: 48, title: ['حکاکی', 'Etch'], body: ['نشان ضرب، حکاکی لیزری.', 'Zarb mark, laser etched.'] },
+        { x: 40, y: 66, title: ['کف', 'Base'], body: ['کف لاستیکی ضدلغزش.', 'Non-slip rubber base.'] }
+      ]
+    }
+  ];
+
+  var ICON = {
+    plus: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>',
+    check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 16.6L5 12l1.4-1.4 3.2 3.2 8-8L19 7.2z"/></svg>',
+    close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 5.7l-1.4-1.4L12 9.2 7.1 4.3 5.7 5.7l4.9 4.9-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>'
+  };
+
+  /* ── state ───────────────────────────────────────────── */
+  var lang = 'fa';
+  var activeCat = 'all';
+  var query = '';
+  var picked = [];
+  var media = {};            /* sku -> descriptors, so "details" reopens the same set */
+  var lastFocus = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var LI = function () { return lang === 'fa' ? 0 : 1; };
+  var t = function (key) { return S[key][LI()]; };
+  var L = function (pair) { return pair[LI()]; };
+  var num = function (v) { return lang === 'fa' ? K.toFa(v) : String(v); };
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+
+  function money(n) {
+    var sep = lang === 'fa' ? '٬' : ',';   /* Arabic thousands separator */
+    return num(String(n).replace(/\B(?=(\d{3})+(?!\d))/g, sep));
+  }
+
+  /* Search folding. Both spellings of ی and ک, both digit sets, ZWNJ,
+     tatweel and harakat all collapse — so «كاپشن» typed with an Arabic kaf,
+     and «۷۵۰» typed in Persian digits, each still find their product. */
+  var FOLD = [
+    [/[يى]/g, 'ی'],               /* Arabic yeh, alef maksura → ی */
+    [/ك/g, 'ک'],                       /* Arabic kaf → ک */
+    [/[آأإ]/g, 'ا'],         /* alef with madda or hamza → ا */
+    [/[ةۀ]/g, 'ه'],               /* teh marbuta, heh with hamza → ه */
+    [/ؤ/g, 'و'],                       /* waw with hamza → و */
+    [/[​-‏ـً-ْ]/g, '']  /* zero-widths, tatweel, harakat */
+  ];
+  function fold(s) {
+    var out = String(s);
+    FOLD.forEach(function (rule) { out = out.replace(rule[0], rule[1]); });
+    return out
+      .replace(/[۰-۹]/g, function (d) { return String.fromCharCode(d.charCodeAt(0) - 0x06F0 + 48); })
+      .replace(/[٠-٩]/g, function (d) { return String.fromCharCode(d.charCodeAt(0) - 0x0660 + 48); })
+      .toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+  /* A second, punctuation-free pass so "zbt01" finds ZB-T01. */
+  function slug(s) { return fold(s).replace(/[^a-z0-9؀-ۿ]+/g, ''); }
+
+  function catOf(id) {
+    for (var i = 0; i < CATS.length; i++) if (CATS[i].id === id) return CATS[i];
+    return CATS[0];
+  }
+  function countIn(id) {
+    return PRODUCTS.filter(function (p) { return p.cat === id; }).length;
+  }
+  function node(html) {
+    var box = document.createElement('div');
+    box.innerHTML = html.trim();
+    return box.firstElementChild;
+  }
+
+  /* ── static strings ──────────────────────────────────── */
+  function applyStrings(root) {
+    root.querySelectorAll('[data-t]').forEach(function (n) { n.textContent = t(n.dataset.t); });
+    root.querySelectorAll('[data-t-ph]').forEach(function (n) { n.placeholder = t(n.dataset.tPh); });
+    root.querySelectorAll('[data-t-al]').forEach(function (n) { n.setAttribute('aria-label', t(n.dataset.tAl)); });
+  }
+
+  function tape(el, key) {
+    var text = t(key);
+    var out = '';
+    for (var i = 0; i < 12; i++) out += '<span class="zb-tape__i">' + text + '</span>';
+    el.innerHTML = out;
+  }
+
+  function renderMast() {
+    var drop = lang === 'fa' ? 'دراپ ۰۵' : 'Drop 05';
+    $('mast-drop').textContent = drop + ' · ' + t('seasonV');
+    $('bar-drop').textContent = drop;
+    $('mast-stamps').innerHTML =
+      '<div class="zb-stamp-card" data-cat="goods"><span>' + t('issue') + '</span><strong>' + num('05') + '</strong></div>' +
+      '<div class="zb-stamp-card" data-cat="tee"><span>' + t('season') + '</span><strong>' + t('seasonV') + '</strong></div>' +
+      '<div class="zb-stamp-card" data-cat="hood"><span>' + t('items') + '</span><strong>' + num(PRODUCTS.length) + '</strong></div>';
+    $('foot-cats').innerHTML = CATS.map(function (c) {
+      return '<span class="zb-foot__cat" data-cat="' + c.id + '">' + L(c.name) + ' · ' + num(countIn(c.id)) + '</span>';
+    }).join('');
+    tape($('tape-a'), 'tapeA');
+    tape($('tape-b'), 'tapeB');
+  }
+
+  /* ── filters ─────────────────────────────────────────── */
+  function renderChips() {
+    var box = $('chips');
+    box.innerHTML = '';
+    var all = [{ id: 'all', name: [t('all'), t('all')], n: PRODUCTS.length }].concat(
+      CATS.map(function (c) { return { id: c.id, name: c.name, n: countIn(c.id) }; }));
+    all.forEach(function (c) {
+      var b = node(
+        '<button type="button" class="cat-chip" data-cat="' + c.id + '" aria-pressed="' + (c.id === activeCat) + '">' +
+        '<span class="zb-chip__dot" aria-hidden="true"></span>' +
+        '<span>' + L(c.name) + '</span>' +
+        '<span class="zb-chip__n zb-fig">' + num(c.n) + '</span></button>');
+      b.addEventListener('click', function () {
+        activeCat = c.id;
+        box.querySelectorAll('.cat-chip').forEach(function (n) {
+          n.setAttribute('aria-pressed', String(n.dataset.cat === activeCat));
+        });
+        applyFilter();
+      });
+      box.appendChild(b);
+    });
+  }
+
+  function matches(p) {
+    if (activeCat !== 'all' && p.cat !== activeCat) return false;
+    if (!query) return true;
+    var c = catOf(p.cat);
+    var hay = [p.name[0], p.name[1], p.latin, p.id, c.name[0], c.name[1], c.code].join(' ');
+    return fold(hay).indexOf(fold(query)) > -1 || slug(hay).indexOf(slug(query)) > -1;
+  }
+
+  function applyFilter() {
+    var shown = 0;
+    PRODUCTS.forEach(function (p) {
+      var cell = $('cell-' + p.id);
+      var ok = matches(p);
+      cell.hidden = !ok;
+      if (ok) shown++;
+    });
+    $('count').innerHTML = lang === 'fa'
+      ? '<span>' + t('resultLabel') + '</span><span><b class="zb-fig">' + num(shown) + '</b> ' + t('ofTotal') + ' <b class="zb-fig">' + num(PRODUCTS.length) + '</b></span>'
+      : '<span>' + t('resultLabel') + '</span><span><b class="zb-fig">' + shown + '</b> ' + t('ofTotal') + ' <b class="zb-fig">' + PRODUCTS.length + '</b></span>';
+    $('empty').hidden = shown > 0;
+    $('grid').hidden = shown === 0;
+    /* The divider marks the middle of the whole catalog, so it only means
+       something while the whole catalog is on screen. */
+    $('mid-tape').hidden = activeCat !== 'all' || !!query;
+    $('empty-q').textContent = query ? '«' + query + '»' : '';
+  }
+
+  /* ── one cell ────────────────────────────────────────── */
+  function cell(p, i) {
+    var c = catOf(p.cat);
+    var el = node(
+      '<article class="zb-cell" id="cell-' + p.id + '" data-cat="' + p.cat + '">' +
+        '<div class="zb-cell__in">' +
+          '<div class="zb-media">' +
+            '<div class="zb-shot"><div class="zb-shot__host"></div></div>' +
+            '<span class="zb-idx zb-fig">' + num(pad(i + 1)) + '</span>' +
+            '<span class="zb-stamp">' + L(p.stamp) + '</span>' +
+          '</div>' +
+          '<div class="zb-info">' +
+            '<p class="zb-band">' +
+              '<span>' + L(c.name) + '</span>' +
+              '<span class="zb-band__en zb-caps zb-ltr">' + c.code + '</span>' +
+              '<span class="zb-band__sku zb-ltr">' + p.id + '</span>' +
+            '</p>' +
+            '<div class="zb-head">' +
+              '<h3 class="zb-name">' + L(p.name) + '</h3>' +
+              (lang === 'fa'
+                ? '<p class="zb-name-alt zb-caps zb-ltr">' + p.latin + '</p>'
+                : '<p class="zb-name-alt zb-iso">' + p.name[0] + '</p>') +
+              '<p class="zb-line">' + L(p.line) + '</p>' +
+            '</div>' +
+            '<dl class="zb-specs">' + p.specs.map(function (s) {
+              return '<div class="zb-spec"><dt>' + L(s[0]) + '</dt><dd class="zb-fig">' + num(L(s[1])) + '</dd></div>';
+            }).join('') + '</dl>' +
+            '<div class="zb-tags">' + p.tags.map(function (g) {
+              return '<span class="cat-tag">' + L(g) + '</span>';
+            }).join('') + '</div>' +
+            '<div class="zb-buy">' +
+              '<p class="cat-price zb-fig">' + money(p.price) + '<span class="cat-price__unit">' + t('unit') + '</span></p>' +
+              '<div class="zb-acts">' +
+                '<button type="button" class="cat-btn cat-btn--ghost" data-act="detail">' + t('details') + '</button>' +
+                '<button type="button" class="cat-btn zb-act--add" data-act="add"></button>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</article>');
+
+    el.querySelector('[data-act="detail"]').addEventListener('click', function () {
+      K.open(media[p.id], { title: L(p.name), sku: p.id }, lang, 0);
+    });
+    el.querySelector('[data-act="add"]').addEventListener('click', function () { toggle(p.id); });
+    return el;
+  }
+
+  var HALF = 6;   /* where the mid-list divider goes, in an unfiltered grid */
+
+  function renderGrid() {
+    var grid = $('grid');
+    grid.innerHTML = '';
+    PRODUCTS.forEach(function (p, i) {
+      if (i === HALF) {
+        var band = node('<div class="zb-tape zb-tape--in" id="mid-tape" data-cat="hood" aria-hidden="true"></div>');
+        grid.appendChild(band);
+        tape(band, 'tapeMid');
+      }
+      grid.appendChild(cell(p, i));
+    });
+
+    /* Mount after the cells are in the document — the kit needs live nodes,
+       and a language switch rebuilds them so the viewer's own labels follow. */
+    PRODUCTS.forEach(function (p) {
+      var host = $('cell-' + p.id).querySelector('.zb-shot__host');
+      var spots = p.hotspots.map(function (h) {
+        return { x: h.x, y: h.y, title: L(h.title), body: L(h.body) };
+      });
+      var set = K.defaultMedia(p.id, spots, { subject: p.subject, palette: p.palette });
+      media[p.id] = K.mountMedia(host, set, { title: L(p.name), sku: p.id }, lang);
+    });
+    syncAdds();
+  }
+
+  /* ── inquiry ─────────────────────────────────────────── */
+  function toggle(id) {
+    var at = picked.indexOf(id);
+    if (at > -1) picked.splice(at, 1); else picked.push(id);
+    syncAdds();
+    renderInquiry();
+    $('status').textContent = '';
+  }
+
+  function syncAdds() {
+    PRODUCTS.forEach(function (p) {
+      var b = $('cell-' + p.id).querySelector('[data-act="add"]');
+      var on = picked.indexOf(p.id) > -1;
+      b.dataset.in = String(on);
+      b.innerHTML = (on ? ICON.check : ICON.plus) + '<span>' + (on ? t('added') : t('add')) + '</span>';
+      b.setAttribute('aria-pressed', String(on));
+      b.setAttribute('aria-label', (on ? t('removeAria') : t('addAria')) + ' — ' + L(p.name));
+    });
+    $('cart-n').textContent = num(picked.length);
+    $('drawer-n').textContent = num(picked.length);
+  }
+
+  function renderInquiry() {
+    var box = $('inquiry');
+    box.innerHTML = '';
+    if (!picked.length) {
+      box.appendChild(node('<div class="cat-inquiry__empty"><p>' + t('empty1') + '</p><p>' + t('empty2') + '</p></div>'));
+      $('total').textContent = money(0) + ' ' + t('unit');
+      $('copy').disabled = true;
+      return;
+    }
+    $('copy').disabled = false;
+    var sum = 0;
+    picked.forEach(function (id) {
+      var p = PRODUCTS.filter(function (x) { return x.id === id; })[0];
+      var i = PRODUCTS.indexOf(p);
+      sum += p.price;
+      var row = node(
+        '<div class="cat-inquiry__row" data-cat="' + p.cat + '">' +
+          '<span class="zb-row__idx zb-fig">' + num(pad(i + 1)) + '</span>' +
+          '<div>' +
+            '<p class="zb-row__name">' + L(p.name) + '</p>' +
+            '<p class="zb-row__meta"><span class="zb-ltr num">' + p.id + '</span>' +
+              '<span class="zb-row__price zb-fig">' + money(p.price) + ' ' + t('unit') + '</span></p>' +
+          '</div>' +
+          '<button type="button" class="cat-btn cat-btn--icon cat-btn--ghost">' + ICON.close + '</button>' +
+        '</div>');
+      var rm = row.querySelector('button');
+      rm.setAttribute('aria-label', t('removeAria') + ' — ' + L(p.name));
+      rm.addEventListener('click', function () { toggle(p.id); });
+      box.appendChild(row);
+    });
+    $('total').textContent = money(sum) + ' ' + t('unit');
+  }
+
+  function copyList() {
+    var lines = picked.map(function (id) {
+      var p = PRODUCTS.filter(function (x) { return x.id === id; })[0];
+      return p.id + ' — ' + L(p.name) + ' / ' + p.latin + ' — ' + money(p.price) + ' ' + t('unit');
+    });
+    var text = 'ZARB — ' + t('inquiryList') + '\n' + lines.join('\n');
+    var ok = function () { $('status').textContent = t('copied'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok, function () { fallbackCopy(text); });
+    } else { fallbackCopy(text); }
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.insetInlineStart = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    var done = false;
+    try { done = document.execCommand('copy'); } catch (e) { done = false; }
+    document.body.removeChild(ta);
+    $('status').textContent = done ? t('copied') : t('copyFail');
+  }
+
+  /* ── drawer ──────────────────────────────────────────── */
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    $('scrim').hidden = false;
+    var d = $('drawer');
+    d.dataset.open = 'true';
+    d.setAttribute('aria-hidden', 'false');
+    $('close-drawer').focus();
+    document.addEventListener('keydown', drawerKeys);
+  }
+  function closeDrawer() {
+    $('scrim').hidden = true;
+    var d = $('drawer');
+    d.dataset.open = 'false';
+    d.setAttribute('aria-hidden', 'true');
+    document.removeEventListener('keydown', drawerKeys);
+    if (lastFocus) lastFocus.focus();
+  }
+  function drawerKeys(e) {
+    if (e.key === 'Escape') { e.preventDefault(); closeDrawer(); return; }
+    if (e.key !== 'Tab') return;
+    var f = $('drawer').querySelectorAll('button:not([disabled]), [href], input');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  /* ── language ────────────────────────────────────────── */
+  function setLang(next) {
+    lang = next;
+    var root = document.documentElement;
+    root.lang = lang;
+    root.dir = lang === 'fa' ? 'rtl' : 'ltr';
+    document.title = lang === 'fa' ? 'ضرب — کاتالوگ دراپ ۰۵' : 'ZARB — Drop 05 catalogue';
+    document.querySelectorAll('.cat-lang > button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+    });
+    applyStrings(document);
+    renderMast();
+    renderChips();
+    renderGrid();
+    renderInquiry();
+    applyFilter();
+    $('status').textContent = '';
+  }
+
+  /* ── wiring ──────────────────────────────────────────── */
+  document.querySelectorAll('.cat-lang > button').forEach(function (b) {
+    b.addEventListener('click', function () { if (b.dataset.lang !== lang) setLang(b.dataset.lang); });
+  });
+  $('q').addEventListener('input', function (e) { query = e.target.value; applyFilter(); });
+  $('clear').addEventListener('click', function () {
+    query = ''; activeCat = 'all'; $('q').value = '';
+    renderChips(); applyFilter(); $('q').focus();
+  });
+  $('open-inquiry').addEventListener('click', openDrawer);
+  $('close-drawer').addEventListener('click', closeDrawer);
+  $('scrim').addEventListener('click', closeDrawer);
+  $('copy').addEventListener('click', copyList);
+
+  setLang('fa');
+})();
+</script>
+</body>
+</html>

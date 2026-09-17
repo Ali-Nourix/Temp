@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa" data-theme="editorial">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>آوند — مجموعه‌ی پاییز ۱۴۰۴</title>
+<meta name="description" content="کاتالوگ مجموعه‌ی پاییز آوند: سرامیک، چوب، نساجی، روشنایی، چرم و برنج.">
+<link rel="stylesheet" href="../shared/ds-core.css">
+<style>
+/* ─────────────────────────────────────────────────────────────
+   Fourteen compositions, one catalog. Each band lays the same
+   material out a different way; the type, colour and motion stay
+   constant so the arrangement is the only variable.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── shell ───────────────────────────────────────────────── */
+.av-wrap { max-width: var(--page-max); margin-inline: auto; padding-inline: var(--page-pad); }
+.av-bleed { padding-inline: var(--page-pad); }
+
+.av-band { padding-block: var(--s-9); border-block-end: var(--border-w) solid var(--line); }
+.av-band--tight { padding-block: var(--s-7); }
+.av-band--flush { padding-block: 0; }
+
+/* The marginal label a specimen sheet carries: number, name, and the
+   one line that says what the arrangement is for. */
+.av-label {
+  display: grid; gap: var(--s-2);
+  margin-block-end: var(--s-6);
+  padding-block-end: var(--s-3);
+  border-block-end: var(--border-w) solid var(--line);
+}
+.av-label__no {
+  font-family: var(--font-num); font-size: var(--t-xs);
+  letter-spacing: var(--tracking-en-caps); color: var(--ink-faint);
+}
+.av-label__name { font-family: var(--font-fa-display); font-size: var(--t-lg); line-height: var(--lh-fa-tight); }
+.av-label__use { font-size: var(--t-sm); color: var(--ink-muted); max-width: 54ch; margin: 0; }
+
+/* ── masthead ────────────────────────────────────────────── */
+.av-mast {
+  display: grid; gap: var(--s-6);
+  padding-block: var(--s-10) var(--s-8);
+  border-block-end: var(--border-w-strong) solid var(--line-strong);
+}
+.av-mast__brand {
+  font-family: var(--font-fa-display); font-weight: var(--w-black);
+  font-size: var(--t-3xl); line-height: 0.92; letter-spacing: -0.02em;
+}
+.av-mast__brand-en {
+  font-family: var(--font-en-display); font-size: var(--t-md);
+  letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+  color: var(--ink-faint); direction: ltr; text-align: start;
+}
+.av-mast__meta {
+  display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6);
+  font-size: var(--t-sm); color: var(--ink-muted);
+}
+.av-mast__meta > * { display: flex; gap: var(--s-2); }
+.av-mast__meta dt { color: var(--ink-faint); }
+.av-mast__lede {
+  font-family: var(--font-fa-display); font-size: var(--t-md);
+  line-height: 1.75; color: var(--ink-muted); max-width: 48ch; margin: 0;
+}
+
+/* ── toolbar ─────────────────────────────────────────────── */
+.av-bar {
+  position: sticky; inset-block-start: 0; z-index: 30;
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3);
+  padding: var(--s-3) var(--page-pad);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-block-end: var(--border-w) solid var(--line);
+}
+.av-bar__mark { font-family: var(--font-fa-display); font-weight: var(--w-bold); font-size: var(--t-base); }
+.av-bar__sep { flex: 1; }
+
+/* ── shared product atoms ────────────────────────────────── */
+.av-media {
+  position: relative; overflow: hidden;
+  aspect-ratio: var(--ratio-media);
+  background: var(--surface-alt); border-radius: var(--radius-media);
+}
+.av-media--wide { aspect-ratio: 3 / 2; }
+.av-media--square { aspect-ratio: 1; }
+.av-media--tall { aspect-ratio: 2 / 3; }
+
+.av-name { font-family: var(--font-fa-display); font-size: var(--t-md); line-height: var(--lh-fa-tight); }
+.av-name--lg { font-size: var(--t-xl); }
+.av-name--xl { font-size: var(--t-2xl); }
+.av-name-en {
+  font-family: var(--font-en-ui); font-size: var(--t-sm); color: var(--ink-muted);
+  letter-spacing: var(--tracking-en); direction: ltr; text-align: start;
+}
+.av-copy { font-size: var(--t-base); color: var(--ink-muted); line-height: var(--lh-fa-body); max-width: var(--measure-fa); margin: 0; }
+.av-copy--sm { font-size: var(--t-sm); }
+.av-line {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--s-4); padding-block-start: var(--s-3);
+  border-block-start: var(--border-w) solid var(--line);
+}
+.av-price { font-family: var(--font-num); font-size: var(--t-md); }
+.av-price small { font-size: var(--t-xs); color: var(--ink-muted); margin-inline-start: var(--s-1); }
+.av-code { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); direction: ltr; }
+.av-spec { display: grid; gap: var(--s-1); font-size: var(--t-sm); color: var(--ink-muted); }
+.av-spec > div { display: flex; gap: var(--s-3); }
+.av-spec dt { min-width: 7ch; color: var(--ink-faint); }
+.av-spec dd { margin: 0; font-family: var(--font-num); }
+
+/* ── 01 · single column, category bands ──────────────────── */
+.c01 { display: grid; gap: 0; }
+.c01__row {
+  display: grid; gap: var(--s-5);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  align-items: center;
+  padding-block: var(--s-7);
+  border-block-start: var(--border-w) solid var(--line);
+}
+.c01__row:first-child { border-block-start: 0; }
+.c01__row:last-child { border-block-end: var(--border-w) solid var(--line); }
+.c01__no { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
+.c01__text { display: grid; gap: var(--s-3); }
+.c01__title { font-family: var(--font-fa-display); font-size: var(--t-xl); line-height: var(--lh-fa-tight); }
+.c01__media { aspect-ratio: 16 / 7; }
+@media (max-width: 720px) { .c01__row { grid-template-columns: 1fr; } }
+
+/* ── 02 · single column, image over text ─────────────────── */
+.c02 { display: grid; gap: var(--s-9); justify-items: center; }
+.c02__item { display: grid; gap: var(--s-4); max-width: 62ch; width: 100%; }
+.c02__media { aspect-ratio: 3 / 2; }
+
+/* ── 03 · alternating image and text ─────────────────────── */
+.c03 { display: grid; gap: var(--s-8); }
+.c03__item {
+  display: grid; gap: var(--s-6); align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.c03__item:nth-child(even) > .c03__media { order: 2; }
+.c03__text { display: grid; gap: var(--s-4); align-content: center; }
+@media (max-width: 760px) {
+  .c03__item { grid-template-columns: 1fr; }
+  .c03__item:nth-child(even) > .c03__media { order: 0; }
+}
+
+/* ── 04 · two column ─────────────────────────────────────── */
+.c04 { display: grid; gap: var(--gutter) var(--s-7); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.c04__item { display: grid; gap: var(--s-3); align-content: start; }
+@media (max-width: 620px) { .c04 { grid-template-columns: 1fr; } }
+
+/* ── 05 · three column grid ──────────────────────────────── */
+.c05 { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.c05__item { display: grid; gap: var(--s-3); align-content: start; }
+
+/* ── 06 · hero with satellites ───────────────────────────── */
+.c06 { display: grid; gap: var(--gutter); grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; }
+.c06__side { display: grid; gap: var(--gutter); }
+.c06__hero { display: grid; gap: var(--s-4); }
+.c06__hero .av-media { aspect-ratio: 4 / 3; }
+.c06__small { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: var(--s-4); align-items: center; }
+.c06__small .av-media { aspect-ratio: 1; }
+@media (max-width: 800px) { .c06 { grid-template-columns: 1fr; } }
+
+/* ── 07 · horizontal strip ───────────────────────────────── */
+.c07 {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, 24vw);
+  gap: var(--gutter); overflow-x: auto; scroll-snap-type: x proximity;
+  padding-block-end: var(--s-4); scrollbar-width: thin;
+}
+.c07__item { scroll-snap-align: start; display: grid; gap: var(--s-3); align-content: start; }
+
+/* ── 08 · text over image ────────────────────────────────── */
+.c08 { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.c08__item { position: relative; isolation: isolate; }
+.c08__item .av-media { aspect-ratio: 3 / 4; }
+.c08__over {
+  position: absolute; inset-inline: 0; inset-block-end: 0; z-index: 1;
+  display: grid; gap: var(--s-2); padding: var(--s-5);
+  color: oklch(0.98 0.005 85);
+  background: linear-gradient(to top, oklch(0.16 0.01 80 / 0.82), oklch(0.16 0.01 80 / 0) 92%);
+  pointer-events: none;
+}
+.c08__over .av-name, .c08__over .av-price { color: inherit; }
+.c08__over .av-name-en { color: oklch(0.86 0.01 85); }
+
+/* ── 09 · full-bleed band ────────────────────────────────── */
+.c09 { position: relative; display: grid; align-items: center; gap: var(--s-6); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: var(--surface-alt); }
+.c09__media { aspect-ratio: 4 / 3; }
+.c09__text { display: grid; gap: var(--s-4); padding: var(--s-8) var(--page-pad); }
+@media (max-width: 760px) { .c09 { grid-template-columns: 1fr; } }
+
+/* ── 10 · horizontal card / list row ─────────────────────── */
+.c10 { display: grid; gap: 0; }
+.c10__item {
+  display: grid; gap: var(--s-5); align-items: center;
+  grid-template-columns: 132px minmax(0, 1fr) auto;
+  padding-block: var(--s-4);
+  border-block-start: var(--border-w) solid var(--line);
+}
+.c10__item:last-child { border-block-end: var(--border-w) solid var(--line); }
+.c10__item .av-media { aspect-ratio: 1; }
+.c10__text { display: grid; gap: var(--s-2); }
+.c10__end { display: grid; gap: var(--s-2); justify-items: end; text-align: end; }
+@media (max-width: 680px) {
+  .c10__item { grid-template-columns: 88px minmax(0, 1fr); }
+  .c10__end { grid-column: 2; justify-items: start; text-align: start; }
+}
+
+/* ── 11 · mosaic ─────────────────────────────────────────── */
+.c11 { display: grid; gap: var(--gutter); grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.c11__item { display: grid; gap: var(--s-3); align-content: start; }
+.c11__item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.c11__item:nth-child(1) .av-media { aspect-ratio: 1; }
+.c11__item:nth-child(6) { grid-column: span 2; }
+.c11__item:nth-child(6) .av-media { aspect-ratio: 2 / 1; }
+@media (max-width: 860px) {
+  .c11 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .c11__item:nth-child(1), .c11__item:nth-child(6) { grid-column: span 2; grid-row: auto; }
+}
+
+/* ── 12 · two-page spread ────────────────────────────────── */
+.c12 {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border: var(--border-w) solid var(--line-strong);
+  background: var(--surface);
+}
+.c12__page { padding: var(--s-6); display: grid; gap: var(--s-5); align-content: start; }
+.c12__page + .c12__page { border-inline-start: var(--border-w) solid var(--line-strong); }
+.c12__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); }
+.c12__running { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); letter-spacing: var(--tracking-en-caps); }
+.c12__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5); }
+.c12__cell { display: grid; gap: var(--s-2); }
+.c12__folio { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); text-align: center; padding-block-start: var(--s-3); border-block-start: var(--border-w) solid var(--line); }
+@media (max-width: 760px) {
+  .c12 { grid-template-columns: 1fr; }
+  .c12__page + .c12__page { border-inline-start: 0; border-block-start: var(--border-w) solid var(--line-strong); }
+}
+
+/* ── 13 · dense index ────────────────────────────────────── */
+.c13 { width: 100%; border-collapse: collapse; font-size: var(--t-sm); }
+.c13 th, .c13 td { padding: var(--s-3) var(--s-4); text-align: start; border-block-end: var(--border-w) solid var(--line); vertical-align: middle; }
+.c13 thead th { font-weight: var(--w-medium); color: var(--ink-faint); font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; }
+.c13 tbody tr:hover { background: var(--surface-alt); }
+.c13 .av-media { width: 56px; aspect-ratio: 1; }
+.c13 td:last-child, .c13 th:last-child { text-align: end; font-family: var(--font-num); }
+.c13__name { font-family: var(--font-fa-display); font-size: var(--t-base); }
+
+/* ── 14 · tall image, narrow column ──────────────────────── */
+.c14 { display: grid; gap: var(--s-7); grid-template-columns: minmax(0, 1fr) 30ch; align-items: start; }
+.c14__media { aspect-ratio: 16 / 10; }
+.c14__aside { display: grid; gap: var(--s-5); position: sticky; inset-block-start: calc(var(--tap-min) + var(--s-4)); }
+.c14__list { display: grid; gap: var(--s-4); }
+.c14__entry { display: grid; gap: var(--s-1); padding-block-end: var(--s-3); border-block-end: var(--border-w) solid var(--line); }
+@media (max-width: 860px) {
+  .c14 { grid-template-columns: 1fr; }
+  .c14__aside { position: static; }
+}
+
+/* ── colophon ────────────────────────────────────────────── */
+.av-colophon {
+  display: grid; gap: var(--s-5); grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  padding-block: var(--s-8) var(--s-10);
+}
+.av-colophon h3 { font-size: var(--t-sm); color: var(--ink-faint); font-weight: var(--w-regular); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; margin-block-end: var(--s-2); }
+.av-colophon p { font-size: var(--t-sm); color: var(--ink-muted); margin: 0; max-width: 34ch; }
+
+@media print {
+  .av-bar { display: none; }
+  .av-band { padding-block: var(--s-5); break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="av-bar">
+  <span class="av-bar__mark">آوند</span>
+  <span class="av-code">AW‑۱۴۰۴</span>
+  <span class="av-bar__sep"></span>
+  <div class="cat-lang" id="lang">
+    <button type="button" data-lang="fa" aria-pressed="true">فارسی</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <div class="cat-filters" id="themes"></div>
+</div>
+
+<header class="av-mast av-wrap">
+  <div>
+    <div class="av-mast__brand-en">Âvand · Autumn 1404</div>
+    <h1 class="av-mast__brand" data-t="brand">آوند</h1>
+  </div>
+  <p class="av-mast__lede" data-t="lede">
+    مجموعه‌ی پاییز از شش کارگاه در تهران، یزد و کاشان می‌آید. هر قطعه با دست
+    ساخته شده و شماره‌ی دیگ و تاریخ پخت روی برچسب زیر آن نوشته است.
+  </p>
+  <dl class="av-mast__meta">
+    <div><dt data-t="mQty">قطعه</dt><dd class="num" data-t="mQtyV">۱۳</dd></div>
+    <div><dt data-t="mCat">دسته</dt><dd class="num" data-t="mCatV">۶</dd></div>
+    <div><dt data-t="mMade">ساخت</dt><dd data-t="mMadeV">تهران · یزد · کاشان</dd></div>
+    <div><dt data-t="mLead">مهلت تحویل</dt><dd class="num" data-t="mLeadV">۳ تا ۵ هفته</dd></div>
+  </dl>
+</header>
+
+<main id="main"></main>
+
+<footer class="av-wrap av-colophon">
+  <div>
+    <h3 data-t="cMat">مواد</h3>
+    <p data-t="cMatV">خاک رس محلی، گردو و بلوط جنگل‌های شمال، پشم دست‌ریس، برنج بازیافتی.</p>
+  </div>
+  <div>
+    <h3 data-t="cCare">نگهداری</h3>
+    <p data-t="cCareV">سرامیک‌ها ماشین‌ظرفشویی‌پذیرند. چوب‌ها سالی یک بار روغن گیاهی بخورند.</p>
+  </div>
+  <div>
+    <h3 data-t="cOrder">سفارش</h3>
+    <p data-t="cOrderV">قیمت‌ها تا پایان آذر ۱۴۰۴ معتبرند. ارسال به سراسر کشور.</p>
+  </div>
+  <div>
+    <h3 data-t="cShop">کارگاه</h3>
+    <p data-t="cShopV">تهران، خیابان سی‌تیر، کوچه‌ی مسعود، پلاک ۱۴ — شنبه تا چهارشنبه.</p>
+  </div>
+</footer>
+
+<script src="../shared/catalog-kit.js"></script>
+<script>
+const THEMES = ['editorial', 'craft', 'press', 'mono', 'luxe', 'glass', 'spec', 'brutal'];
+
+const CATEGORIES = [
+  { id: 'ceramic', fa: 'سرامیک', en: 'Ceramics', faNote: 'لعاب خاکستر و پخت احیایی در کوره‌ی هیزمی یزد.', enNote: 'Ash glaze, reduction fired in the Yazd wood kiln.' },
+  { id: 'wood',    fa: 'چوب',    en: 'Wood',     faNote: 'گردو و بلوط خشک‌شده‌ی هوا، اتصال بدون پیچ.', enNote: 'Air-dried walnut and oak, joined without fasteners.' },
+  { id: 'textile', fa: 'نساجی',  en: 'Textile',  faNote: 'پشم دست‌ریس و رنگرزی گیاهی، دیگ‌به‌دیگ.', enNote: 'Handspun wool, plant-dyed lot by lot.' },
+  { id: 'light',   fa: 'روشنایی', en: 'Lighting', faNote: 'کاغذ دست‌ساز و فولاد پودری‌رنگ.', enNote: 'Handmade paper over powder-coated steel.' },
+  { id: 'leather', fa: 'چرم',    en: 'Leather',  faNote: 'دباغی گیاهی، دوخت زینی با نخ کتان موم‌زده.', enNote: 'Vegetable tanned, saddle-stitched in waxed linen.' },
+  { id: 'brass',   fa: 'برنج',   en: 'Brass',    faNote: 'ریخته‌گری ماسه‌ای از برنج بازیافتی، بدون آبکاری.', enNote: 'Sand-cast from reclaimed brass, unplated.' }
+];
+
+const PRODUCTS = [
+  {
+    code: 'AV-101', cat: 'ceramic', subject: 'vase', palette: 'warm',
+    fa: 'گلدان لعاب خاکستر', en: 'Ash-glaze vessel',
+    faCopy: 'لعاب از خاکستر چوب انگور گرفته می‌شود و رنگ هر دیگ با دیگ بعدی فرق دارد. سبزِ کم‌رنگ تا عسلی؛ هیچ دو قطعه‌ای یکی نیست.',
+    enCopy: 'The glaze is drawn from grapevine ash, so no two firings match. It runs from pale green to honey.',
+    price: '۲٬۴۸۰٬۰۰۰', priceEn: '2,480,000',
+    faSpec: [['ارتفاع', '۲۸ سانتی‌متر'], ['دهانه', '۱۱ سانتی‌متر'], ['پخت', '۱۲۸۰ درجه، احیایی']],
+    enSpec: [['Height', '28 cm'], ['Mouth', '11 cm'], ['Firing', '1280°C reduction']],
+    hot: [
+      { x: 50, y: 22, fa: ['لبه', 'لبه‌ی برگردان با ضخامت ۶ میلی‌متر.'], en: ['Rim', 'Rolled rim, 6 mm wall.'] },
+      { x: 62, y: 46, fa: ['لعاب', 'خاکستر چوب انگور، سه لایه.'], en: ['Glaze', 'Grapevine ash, three coats.'] },
+      { x: 44, y: 76, fa: ['پاخور', 'تراش‌خورده روی چرخ، قطر ۹ سانتی‌متر.'], en: ['Foot', 'Turned on the wheel, 9 cm.'] }
+    ]
+  },
+  {
+    code: 'AV-104', cat: 'ceramic', subject: 'vase', palette: 'stone',
+    fa: 'کاسه‌ی دست‌چرخ', en: 'Wheel-thrown bowl',
+    faCopy: 'برای برنج و خورش روزانه. رد انگشت سفالگر روی بدنه می‌ماند و بعد از لعاب هم دیده می‌شود.',
+    enCopy: 'Made for everyday rice and stew. The potter’s finger marks stay visible under the glaze.',
+    price: '۶۸۰٬۰۰۰', priceEn: '680,000',
+    faSpec: [['قطر', '۲۲ سانتی‌متر'], ['گنجایش', '۱٫۴ لیتر'], ['وزن', '۶۴۰ گرم']],
+    enSpec: [['Diameter', '22 cm'], ['Capacity', '1.4 L'], ['Weight', '640 g']],
+    hot: [
+      { x: 50, y: 34, fa: ['بدنه', 'رد چرخ دست‌نخورده مانده است.'], en: ['Body', 'Throwing rings left as they came.'] },
+      { x: 50, y: 72, fa: ['کف', 'کف بدون لعاب تا روی میز نلغزد.'], en: ['Base', 'Left unglazed so it grips the table.'] }
+    ]
+  },
+  {
+    code: 'AV-107', cat: 'ceramic', subject: 'vase', palette: 'sage',
+    fa: 'بشقاب لبه‌خام', en: 'Raw-edge plate',
+    faCopy: 'لبه بدون لعاب رها شده تا خاک زیرش پیدا باشد. برای نان و پنیر و چیزهای خشک.',
+    enCopy: 'The rim is left bare so the clay body shows. For bread, cheese, dry things.',
+    price: '۴۲۰٬۰۰۰', priceEn: '420,000',
+    faSpec: [['قطر', '۲۶ سانتی‌متر'], ['ضخامت', '۸ میلی‌متر'], ['خاک', 'رس محلی کاشان']],
+    enSpec: [['Diameter', '26 cm'], ['Thickness', '8 mm'], ['Clay', 'Local Kashan body']],
+    hot: [
+      { x: 30, y: 44, fa: ['لبه', 'بدون لعاب، خاک خام دیده می‌شود.'], en: ['Rim', 'Unglazed, the raw body shows.'] },
+      { x: 56, y: 58, fa: ['مرکز', 'لعاب شفاف روی خاک روشن.'], en: ['Centre', 'Clear glaze over a pale body.'] }
+    ]
+  },
+  {
+    code: 'AV-201', cat: 'wood', subject: 'chair', palette: 'warm',
+    fa: 'صندلی گردو', en: 'Walnut side chair',
+    faCopy: 'پشتی با بخار خم شده و بدون یک پیچ به بدنه نشسته است. روغن گیاهی خورده، نه لاک.',
+    enCopy: 'The back is steam-bent and seated without a single screw. Finished in oil, not lacquer.',
+    price: '۸٬۹۵۰٬۰۰۰', priceEn: '8,950,000',
+    faSpec: [['ارتفاع', '۸۲ سانتی‌متر'], ['نشیمن', '۴۵ سانتی‌متر'], ['وزن', '۴٫۲ کیلوگرم']],
+    enSpec: [['Height', '82 cm'], ['Seat', '45 cm'], ['Weight', '4.2 kg']],
+    hot: [
+      { x: 50, y: 26, fa: ['پشتی', 'تخته‌ی خم‌شده با بخار، ضخامت ۱۲ میلی‌متر.'], en: ['Back', 'Steam-bent panel, 12 mm.'] },
+      { x: 34, y: 58, fa: ['اتصال', 'فاق و زبانه‌ی کور، بدون پیچ.'], en: ['Joint', 'Blind mortise and tenon.'] },
+      { x: 66, y: 84, fa: ['پایه', 'مقطع ۲۲ میلی‌متر، روغن‌خورده.'], en: ['Leg', '22 mm section, oiled.'] }
+    ]
+  },
+  {
+    code: 'AV-205', cat: 'wood', subject: 'chair', palette: 'stone',
+    fa: 'میز کنار تخت', en: 'Bedside table',
+    faCopy: 'یک کشو و یک طبقه‌ی باز. کشو روی ریل چوبی می‌رود و صدایی ندارد.',
+    enCopy: 'One drawer, one open shelf. The drawer runs on a wooden slide and stays quiet.',
+    price: '۵٬۳۰۰٬۰۰۰', priceEn: '5,300,000',
+    faSpec: [['ارتفاع', '۵۶ سانتی‌متر'], ['عرض', '۴۰ سانتی‌متر'], ['عمق', '۳۵ سانتی‌متر']],
+    enSpec: [['Height', '56 cm'], ['Width', '40 cm'], ['Depth', '35 cm']],
+    hot: [
+      { x: 50, y: 40, fa: ['کشو', 'ریل چوبی، بدون یراق فلزی.'], en: ['Drawer', 'Wooden slide, no metal runner.'] },
+      { x: 50, y: 72, fa: ['طبقه', 'ارتفاع آزاد ۲۰ سانتی‌متر.'], en: ['Shelf', '20 cm clear height.'] }
+    ]
+  },
+  {
+    code: 'AV-208', cat: 'wood', subject: 'textile', palette: 'amber',
+    fa: 'سینی بلوط', en: 'Oak tray',
+    faCopy: 'از یک تکه بلوط درآمده، بدون درز. لبه‌ها آن‌قدر بلند است که فنجان سُر نخورد.',
+    enCopy: 'Cut from a single piece of oak, no seam. The lip is high enough to hold a cup.',
+    price: '۱٬۱۵۰٬۰۰۰', priceEn: '1,150,000',
+    faSpec: [['اندازه', '۴۲ × ۲۸ سانتی‌متر'], ['ارتفاع لبه', '۲ سانتی‌متر'], ['وزن', '۹۲۰ گرم']],
+    enSpec: [['Size', '42 × 28 cm'], ['Lip', '2 cm'], ['Weight', '920 g']],
+    hot: [
+      { x: 50, y: 50, fa: ['سطح', 'یک‌تکه، بدون درز چسبی.'], en: ['Surface', 'One piece, no glue line.'] },
+      { x: 26, y: 66, fa: ['لبه', 'گود شده با اسکنه.'], en: ['Lip', 'Hollowed with a gouge.'] }
+    ]
+  },
+  {
+    code: 'AV-301', cat: 'textile', subject: 'textile', palette: 'indigo',
+    fa: 'قالیچه‌ی پشم دست‌ریس', en: 'Handspun wool rug',
+    faCopy: 'چهل رج در هر دسی‌متر، گره فارسی. نیل طبیعی است، پس سال اول کمی رنگ می‌دهد و بعد ثابت می‌شود.',
+    enCopy: 'Forty rows to the decimetre, Persian knot. Natural indigo, so it gives a little in the first year and then holds.',
+    price: '۱۸٬۹۰۰٬۰۰۰', priceEn: '18,900,000',
+    faSpec: [['اندازه', '۱۵۰ × ۲۰۰ سانتی‌متر'], ['رجشمار', '۴۰ در دسی‌متر'], ['مدت بافت', '۱۱ هفته']],
+    enSpec: [['Size', '150 × 200 cm'], ['Density', '40 rows/dm'], ['Loom time', '11 weeks']],
+    hot: [
+      { x: 38, y: 34, fa: ['گره', 'گره فارسی، ۴۰ رج در دسی‌متر.'], en: ['Knot', 'Persian knot, 40 rows/dm.'] },
+      { x: 62, y: 60, fa: ['رنگرزی', 'نیل طبیعی، دیگ‌به‌دیگ.'], en: ['Dye', 'Natural indigo, lot-dyed.'] },
+      { x: 50, y: 86, fa: ['شیرازه', 'دست‌پیچ با پشم همان دیگ.'], en: ['Selvedge', 'Wrapped from the same lot.'] }
+    ]
+  },
+  {
+    code: 'AV-304', cat: 'textile', subject: 'textile', palette: 'stone',
+    fa: 'رومیزی کتان', en: 'Linen cloth',
+    faCopy: 'کتان شسته که از شست‌وشوی اول نرم می‌شود. لبه‌ها تا خورده و با دست دوخته شده‌اند.',
+    enCopy: 'Washed linen that softens from the first wash. The hems are folded and hand-sewn.',
+    price: '۱٬۸۴۰٬۰۰۰', priceEn: '1,840,000',
+    faSpec: [['اندازه', '۱۴۰ × ۲۴۰ سانتی‌متر'], ['وزن پارچه', '۱۹۰ گرم بر متر مربع'], ['جمع‌شدگی', 'از پیش شسته']],
+    enSpec: [['Size', '140 × 240 cm'], ['Weight', '190 gsm'], ['Shrinkage', 'Pre-washed']],
+    hot: [
+      { x: 44, y: 40, fa: ['بافت', 'کتان شسته، ۱۹۰ گرم.'], en: ['Weave', 'Washed linen, 190 gsm.'] },
+      { x: 62, y: 74, fa: ['لبه', 'تای دوبل، دوخت دست.'], en: ['Hem', 'Double fold, hand-sewn.'] }
+    ]
+  },
+  {
+    code: 'AV-307', cat: 'textile', subject: 'textile', palette: 'clay',
+    fa: 'پتوی کرک بز', en: 'Goat-down throw',
+    faCopy: 'کرک از شانه‌کردن بهاره‌ی گله‌های کرمان می‌آید. سبک است اما گرم‌تر از پشم هم‌وزنش.',
+    enCopy: 'The down is combed from Kerman herds each spring. Light, and warmer than wool of the same weight.',
+    price: '۷٬۲۰۰٬۰۰۰', priceEn: '7,200,000',
+    faSpec: [['اندازه', '۱۳۰ × ۱۸۰ سانتی‌متر'], ['وزن', '۷۸۰ گرم'], ['شست‌وشو', 'با دست، آب سرد']],
+    enSpec: [['Size', '130 × 180 cm'], ['Weight', '780 g'], ['Care', 'Hand wash, cold']],
+    hot: [
+      { x: 40, y: 46, fa: ['کرک', 'شانه‌ی بهاره، بدون چیدن.'], en: ['Down', 'Spring-combed, never shorn.'] },
+      { x: 64, y: 70, fa: ['حاشیه', 'ریشه‌ی تابیده‌ی دست.'], en: ['Border', 'Hand-twisted fringe.'] }
+    ]
+  },
+  {
+    code: 'AV-401', cat: 'light', subject: 'lamp', palette: 'sage',
+    fa: 'چراغ رومیزی کاغذی', en: 'Paper table lamp',
+    faCopy: 'کاغذ دست‌ساز روی رینگ فولادی نشسته و نور را نرم پخش می‌کند. کلید روی سیم است.',
+    enCopy: 'Handmade paper over a steel ring spreads the light softly. The switch sits on the cord.',
+    price: '۳٬۷۴۰٬۰۰۰', priceEn: '3,740,000',
+    faSpec: [['ارتفاع', '۴۸ سانتی‌متر'], ['قطر حباب', '۳۲ سانتی‌متر'], ['لامپ', 'E27، حداکثر ۸ وات']],
+    enSpec: [['Height', '48 cm'], ['Shade', '32 cm'], ['Lamp', 'E27, 8 W max']],
+    hot: [
+      { x: 50, y: 30, fa: ['حباب', 'کاغذ دست‌ساز روی رینگ فولادی.'], en: ['Shade', 'Handmade paper on a steel ring.'] },
+      { x: 50, y: 68, fa: ['ساقه', 'فولاد پودری‌رنگ، قطر ۱۲ میلی‌متر.'], en: ['Stem', 'Powder-coated steel, 12 mm.'] }
+    ]
+  },
+  {
+    code: 'AV-404', cat: 'light', subject: 'lamp', palette: 'amber',
+    fa: 'آویز مسی', en: 'Copper pendant',
+    faCopy: 'مس چکش‌خورده که با گذر زمان تیره می‌شود. داخلش سفید رنگ شده تا نور را برگرداند.',
+    enCopy: 'Hammered copper that darkens with time. Painted white inside to throw the light back down.',
+    price: '۴٬۹۵۰٬۰۰۰', priceEn: '4,950,000',
+    faSpec: [['قطر', '۲۶ سانتی‌متر'], ['طول سیم', '۱۸۰ سانتی‌متر'], ['لامپ', 'E27، حداکثر ۱۰ وات']],
+    enSpec: [['Diameter', '26 cm'], ['Cord', '180 cm'], ['Lamp', 'E27, 10 W max']],
+    hot: [
+      { x: 50, y: 36, fa: ['بدنه', 'مس چکش‌خورده، بدون لاک.'], en: ['Body', 'Hammered copper, unlacquered.'] },
+      { x: 50, y: 62, fa: ['داخل', 'رنگ سفید مات برای بازتاب نور.'], en: ['Interior', 'Matt white for reflected light.'] }
+    ]
+  },
+  {
+    code: 'AV-501', cat: 'leather', subject: 'bag', palette: 'clay',
+    fa: 'کیف چرم گیاهی', en: 'Veg-tan satchel',
+    faCopy: 'چرم دباغی گیاهی که با آفتاب و دست تیره می‌شود. قفل برنجی است و آبکاری ندارد.',
+    enCopy: 'Vegetable-tanned leather that darkens with sun and handling. The clasp is brass, left unplated.',
+    price: '۶٬۲۰۰٬۰۰۰', priceEn: '6,200,000',
+    faSpec: [['اندازه', '۳۶ × ۲۸ × ۱۰ سانتی‌متر'], ['ضخامت چرم', '۲٫۲ میلی‌متر'], ['بند', 'قابل تنظیم، ۹۰ تا ۱۳۰']],
+    enSpec: [['Size', '36 × 28 × 10 cm'], ['Leather', '2.2 mm'], ['Strap', 'Adjustable, 90–130 cm']],
+    hot: [
+      { x: 50, y: 24, fa: ['دسته', 'دوخت زینی دست، نخ کتان موم‌زده.'], en: ['Handle', 'Hand saddle-stitched, waxed linen.'] },
+      { x: 50, y: 52, fa: ['قفل', 'برنج ریخته‌گری، بدون آبکاری.'], en: ['Clasp', 'Cast brass, unplated.'] },
+      { x: 30, y: 70, fa: ['چرم', 'دباغی گیاهی، ۲٫۲ میلی‌متر.'], en: ['Leather', 'Vegetable tanned, 2.2 mm.'] }
+    ]
+  },
+  {
+    code: 'AV-601', cat: 'brass', subject: 'watch', palette: 'amber',
+    fa: 'شمعدان برنجی', en: 'Brass candle holder',
+    faCopy: 'از برنج بازیافتی در ماسه ریخته شده. سطحش خط‌های ریز ریخته‌گری را نگه داشته است.',
+    enCopy: 'Sand-cast from reclaimed brass. The surface keeps the fine marks of the mould.',
+    price: '۱٬۳۸۰٬۰۰۰', priceEn: '1,380,000',
+    faSpec: [['ارتفاع', '۱۴ سانتی‌متر'], ['قطر پایه', '۹ سانتی‌متر'], ['شمع', 'قطر ۲٫۲ سانتی‌متر']],
+    enSpec: [['Height', '14 cm'], ['Base', '9 cm'], ['Candle', '2.2 cm taper']],
+    hot: [
+      { x: 50, y: 40, fa: ['کاسه', 'ریخته‌گری ماسه‌ای، خط‌های قالب مانده.'], en: ['Cup', 'Sand-cast, mould marks kept.'] },
+      { x: 50, y: 74, fa: ['پایه', 'وزن‌دار تا شمع بلند نلرزد.'], en: ['Base', 'Weighted for a tall taper.'] }
+    ]
+  }
+];
+
+/* Every string that changes with language, in one table. */
+const S = {
+  fa: {
+    brand: 'آوند',
+    lede: 'مجموعه‌ی پاییز از شش کارگاه در تهران، یزد و کاشان می‌آید. هر قطعه با دست ساخته شده و شماره‌ی دیگ و تاریخ پخت روی برچسب زیر آن نوشته است.',
+    mQty: 'قطعه', mQtyV: '۱۳', mCat: 'دسته', mCatV: '۶',
+    mMade: 'ساخت', mMadeV: 'تهران · یزد · کاشان',
+    mLead: 'مهلت تحویل', mLeadV: '۳ تا ۵ هفته',
+    cMat: 'مواد', cMatV: 'خاک رس محلی، گردو و بلوط جنگل‌های شمال، پشم دست‌ریس، برنج بازیافتی.',
+    cCare: 'نگهداری', cCareV: 'سرامیک‌ها ماشین‌ظرفشویی‌پذیرند. چوب‌ها سالی یک بار روغن گیاهی بخورند.',
+    cOrder: 'سفارش', cOrderV: 'قیمت‌ها تا پایان آذر ۱۴۰۴ معتبرند. ارسال به سراسر کشور.',
+    cShop: 'کارگاه', cShopV: 'تهران، خیابان سی‌تیر، کوچه‌ی مسعود، پلاک ۱۴ — شنبه تا چهارشنبه.',
+    unit: 'تومان', code: 'کد', price: 'قیمت', name: 'نام', cat: 'دسته',
+    spread: 'صفحه', of: 'از'
+  },
+  en: {
+    brand: 'Âvand',
+    lede: 'The autumn collection comes from six workshops in Tehran, Yazd and Kashan. Every piece is made by hand, with its kiln number and firing date written on the label underneath.',
+    mQty: 'Pieces', mQtyV: '13', mCat: 'Categories', mCatV: '6',
+    mMade: 'Made in', mMadeV: 'Tehran · Yazd · Kashan',
+    mLead: 'Lead time', mLeadV: '3–5 weeks',
+    cMat: 'Materials', cMatV: 'Local clay, northern walnut and oak, handspun wool, reclaimed brass.',
+    cCare: 'Care', cCareV: 'The ceramics take the dishwasher. Oil the wood once a year.',
+    cOrder: 'Ordering', cOrderV: 'Prices hold to the end of Azar 1404. We ship nationwide.',
+    cShop: 'Workshop', cShopV: '14 Masoud Lane, Si-e Tir St, Tehran — Saturday to Wednesday.',
+    unit: 'IRT', code: 'Code', price: 'Price', name: 'Name', cat: 'Category',
+    spread: 'Page', of: 'of'
+  }
+};
+
+/* Fourteen arrangements. `use` is the note in the margin — what the
+   arrangement is good for, not an instruction to the reader. */
+const COMPOSITIONS = [
+  { no: '۰۱', noEn: '01', fa: 'تک‌ستونه — دسته‌بندی', en: 'Single column — categories',
+    faUse: 'سرصفحه‌ی مجموعه. هر دسته یک نوار تمام‌عرض با یک جمله و یک تصویر عریض.',
+    enUse: 'The opening of a collection: one full-width band per category, a line of copy and a wide image.',
+    build: c01 },
+  { no: '۰۲', noEn: '02', fa: 'تک‌ستونه — عکس بالا، متن پایین', en: 'Single column — image over text',
+    faUse: 'وقتی متن محصول خواندنی است و باید در عرض خوانا بماند.',
+    enUse: 'For when the copy is worth reading and needs to stay within a readable measure.',
+    build: c02 },
+  { no: '۰۳', noEn: '03', fa: 'عکس و متن کنار هم — متناوب', en: 'Image beside text — alternating',
+    faUse: 'ریتم می‌سازد و چشم را در صفحه‌ی بلند نگه می‌دارد.',
+    enUse: 'Builds a rhythm that carries the eye down a long page.',
+    build: c03 },
+  { no: '۰۴', noEn: '04', fa: 'دوستونه', en: 'Two column',
+    faUse: 'تعادل میان تصویر بزرگ و تعداد. برای مجموعه‌های کوچک.',
+    enUse: 'Balances image size against count. Suits a short collection.',
+    build: c04 },
+  { no: '۰۵', noEn: '05', fa: 'شبکه‌ی سه‌ستونه', en: 'Three column grid',
+    faUse: 'حالت پیش‌فرض فهرست. با عرض صفحه خودش را تنظیم می‌کند.',
+    enUse: 'The default index. It reflows with the page width.',
+    build: c05 },
+  { no: '۰۶', noEn: '06', fa: 'قطعه‌ی شاخص و اقمار', en: 'Hero and satellites',
+    faUse: 'وقتی یک قطعه باید جلوتر از بقیه بایستد.',
+    enUse: 'When one piece has to stand ahead of the rest.',
+    build: c06 },
+  { no: '۰۷', noEn: '07', fa: 'نوار افقی', en: 'Horizontal strip',
+    faUse: 'برای دسته‌ای که ادامه دارد و نباید ارتفاع صفحه را بگیرد.',
+    enUse: 'For a category that runs on without taking page height.',
+    build: c07 },
+  { no: '۰۸', noEn: '08', fa: 'متن روی عکس', en: 'Text over image',
+    faUse: 'وقتی تصویر خودش تمام حرف است و متن فقط نام و قیمت.',
+    enUse: 'When the image carries it and the text is only name and price.',
+    build: c08 },
+  { no: '۰۹', noEn: '09', fa: 'نوار تمام‌عرض', en: 'Full-bleed band',
+    faUse: 'مکث میان بخش‌ها؛ یک قطعه با فضای زیاد.',
+    enUse: 'A pause between sections: one piece, given room.',
+    build: c09 },
+  { no: '۱۰', noEn: '10', fa: 'ردیف افقی', en: 'Horizontal row',
+    faUse: 'فهرست خوانا با قیمت در انتهای هر ردیف. برای سفارش.',
+    enUse: 'A legible list with the price at the end of each row. For ordering.',
+    build: c10 },
+  { no: '۱۱', noEn: '11', fa: 'موزاییک', en: 'Mosaic',
+    faUse: 'وقتی اندازه‌ها باید نابرابر باشند و صفحه یکنواخت نشود.',
+    enUse: 'When the sizes should be unequal and the page should not go flat.',
+    build: c11 },
+  { no: '۱۲', noEn: '12', fa: 'صفحه‌ی باز', en: 'Two-page spread',
+    faUse: 'برای نسخه‌ی چاپی و برای کاتالوگ ورق‌خور.',
+    enUse: 'For the printed edition, and for a catalog you leaf through.',
+    build: c12 },
+  { no: '۱۳', noEn: '13', fa: 'فهرست فشرده', en: 'Dense index',
+    faUse: 'انتهای کاتالوگ: همه‌چیز در یک نگاه، با کد و قیمت.',
+    enUse: 'The back of the book: everything at a glance, with code and price.',
+    build: c13 },
+  { no: '۱۴', noEn: '14', fa: 'تصویر بزرگ و ستون باریک', en: 'Large image, narrow column',
+    faUse: 'برای قطعه‌ای که جزئیاتش باید بزرگ دیده شود و شرحش کنارش بماند.',
+    enUse: 'For a piece whose detail must be seen large, with its notes alongside.',
+    build: c14 }
+];
+
+let lang = 'fa';
+const root = document.documentElement;
+const main = document.getElementById('main');
+
+/* ── small builders ──────────────────────────────────────── */
+
+function t() { return S[lang]; }
+function pName(p) { return lang === 'fa' ? p.fa : p.en; }
+function pAlt(p) { return lang === 'fa' ? p.en : p.fa; }
+function pCopy(p) { return lang === 'fa' ? p.faCopy : p.enCopy; }
+function pPrice(p) { return lang === 'fa' ? p.price : p.priceEn; }
+function pSpec(p) { return lang === 'fa' ? p.faSpec : p.enSpec; }
+
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text != null) n.textContent = text;
+  return n;
+}
+
+/* The media box, wired to the shared kit. Every occurrence of a product
+   gets its own mount, so the same piece can appear in several
+   arrangements without them sharing state. */
+function media(p, modifier) {
+  const box = el('div', 'av-media' + (modifier ? ' av-media--' + modifier : ''));
+  queueMicrotask(() => {
+    const hot = p.hot.map((h) => ({
+      x: h.x, y: h.y,
+      title: (lang === 'fa' ? h.fa : h.en)[0],
+      body: (lang === 'fa' ? h.fa : h.en)[1]
+    }));
+    const set = CatalogKit.defaultMedia(p.code, hot, { subject: p.subject, palette: p.palette });
+    CatalogKit.mountMedia(box, set, { title: pName(p), sku: p.code }, lang);
+  });
+  return box;
+}
+
+function nameBlock(p, size) {
+  const frag = document.createDocumentFragment();
+  const n = el('h3', 'av-name' + (size ? ' av-name--' + size : ''), pName(p));
+  const a = el('div', 'av-name-en', pAlt(p));
+  a.dir = lang === 'fa' ? 'ltr' : 'rtl';
+  frag.append(n, a);
+  return frag;
+}
+
+function priceLine(p) {
+  const line = el('div', 'av-line');
+  const price = el('div', 'av-price');
+  price.append(document.createTextNode(pPrice(p)), el('small', null, t().unit));
+  line.append(price, el('div', 'av-code', p.code));
+  return line;
+}
+
+function specList(p, count) {
+  const dl = el('dl', 'av-spec');
+  for (const [k, v] of pSpec(p).slice(0, count || 3)) {
+    const row = el('div');
+    row.append(el('dt', null, k), el('dd', null, v));
+    dl.appendChild(row);
+  }
+  return dl;
+}
+
+function byCat(id) { return PRODUCTS.filter((p) => p.cat === id); }
+
+/* ── the fourteen arrangements ───────────────────────────── */
+
+function c01() {
+  const wrap = el('div', 'c01');
+  CATEGORIES.forEach((cat, i) => {
+    const row = el('div', 'c01__row');
+    const text = el('div', 'c01__text');
+    text.append(
+      el('div', 'c01__no', (lang === 'fa' ? CatalogKit.toFa(String(i + 1).padStart(2, '0')) : String(i + 1).padStart(2, '0'))),
+      el('h3', 'c01__title', lang === 'fa' ? cat.fa : cat.en),
+      el('p', 'av-copy', lang === 'fa' ? cat.faNote : cat.enNote)
+    );
+    const m = media(byCat(cat.id)[0], null);
+    m.classList.add('c01__media');
+    row.append(text, m);
+    wrap.appendChild(row);
+  });
+  return wrap;
+}
+
+function c02() {
+  const wrap = el('div', 'c02');
+  for (const p of PRODUCTS.slice(0, 3)) {
+    const item = el('div', 'c02__item');
+    const m = media(p, null);
+    m.classList.add('c02__media');
+    item.append(m, nameBlock(p, 'lg'), el('p', 'av-copy', pCopy(p)), specList(p), priceLine(p));
+    wrap.appendChild(item);
+  }
+  return wrap;
+}
+
+function c03() {
+  const wrap = el('div', 'c03');
+  for (const p of PRODUCTS.slice(3, 7)) {
+    const item = el('div', 'c03__item');
+    const m = media(p, 'wide');
+    m.classList.add('c03__media');
+    const text = el('div', 'c03__text');
+    text.append(nameBlock(p, 'lg'), el('p', 'av-copy', pCopy(p)), specList(p), priceLine(p));
+    item.append(m, text);
+    wrap.appendChild(item);
+  }
+  return wrap;
+}
+
+function c04() {
+  const wrap = el('div', 'c04');
+  for (const p of PRODUCTS.slice(0, 4)) {
+    const item = el('div', 'c04__item');
+    item.append(media(p, 'wide'), nameBlock(p), el('p', 'av-copy av-copy--sm', pCopy(p)), priceLine(p));
+    wrap.appendChild(item);
+  }
+  return wrap;
+}
+
+function c05() {
+  const wrap = el('div', 'c05');
+  for (const p of PRODUCTS.slice(0, 6)) {
+    const item = el('div', 'c05__item');
+    item.append(media(p), nameBlock(p), priceLine(p));
+    wrap.appendChild(item);
+  }
+  return wrap;
+}
+
+function c06() {
+  const wrap = el('div', 'c06');
+  const lead = PRODUCTS[6];
+  const hero = el('div', 'c06__hero');
+  hero.append(media(lead, null), nameBlock(lead, 'xl'), el('p', 'av-copy', pCopy(lead)), specList(lead), priceLine(lead));
+  const side = el('div', 'c06__side');
+  for (const p of [PRODUCTS[7], PRODUCTS[8], PRODUCTS[1], PRODUCTS[12]]) {
+    const row = el('div', 'c06__small');
+    const text = el('div');
+    text.append(nameBlock(p), priceLine(p));
+    row.append(media(p, 'square'), text);
+    side.appendChild(row);
+  }
+  wrap.append(hero, side);
+  return wrap;
+}
+
+function c07() {
+  const wrap = el('div', 'c07');
+  for (const p of PRODUCTS) {
+    const item = el('div', 'c07__item');
+    item.append(media(p, 'tall'), nameBlock(p), priceLine(p));
+    wrap.appendChild(item);
+  }
+  return wrap;
+}
+
+function c08() {
+  const wrap = el('div', 'c08');
+  for (const p of PRODUCTS.slice(9, 13)) {
+    const item = el('div', 'c08__item');
+    const over = el('div', 'c08__over');
+    over.append(nameBlock(p));
+    const price = el('div', 'av-price');
+    price.append(document.createTextNode(pPrice(p)), el('small', null, t().unit));
+    over.appendChild(price);
+    item.append(media(p, null), over);
+    wrap.appendChild(item);
+  }
+  return wrap;
+}
+
+function c09() {
+  const p = PRODUCTS[9];
+  const wrap = el('div', 'c09');
+  const m = media(p, null);
+  m.classList.add('c09__media');
+  const text = el('div', 'c09__text');
+  text.append(nameBlock(p, 'xl'), el('p', 'av-copy', pCopy(p)), specList(p), priceLine(p));
+  wrap.append(m, text);
+  return wrap;
+}
+
+function c10() {
+  const wrap = el('div', 'c10');
+  for (const p of PRODUCTS.slice(0, 6)) {
+    const item = el('div', 'c10__item');
+    const text = el('div', 'c10__text');
+    text.append(nameBlock(p), el('p', 'av-copy av-copy--sm', pCopy(p)));
+    const end = el('div', 'c10__end');
+    const price = el('div', 'av-price');
+    price.append(document.createTextNode(pPrice(p)), el('small', null, t().unit));
+    end.append(price, el('div', 'av-code', p.code));
+    item.append(media(p, 'square'), text, end);
+    wrap.appendChild(item);
+  }
+  return wrap;
+}
+
+function c11() {
+  const wrap = el('div', 'c11');
+  for (const p of PRODUCTS.slice(0, 8)) {
+    const item = el('div', 'c11__item');
+    item.append(media(p), nameBlock(p), priceLine(p));
+    wrap.appendChild(item);
+  }
+  return wrap;
+}
+
+function c12() {
+  const wrap = el('div', 'c12');
+  const pages = [PRODUCTS.slice(0, 4), PRODUCTS.slice(4, 8)];
+  pages.forEach((items, i) => {
+    const page = el('div', 'c12__page');
+    const head = el('div', 'c12__head');
+    head.append(
+      el('div', 'c12__running', lang === 'fa' ? 'آوند · پاییز ۱۴۰۴' : 'Âvand · Autumn 1404'),
+      el('div', 'c12__running', lang === 'fa' ? CATEGORIES[i].fa : CATEGORIES[i].en)
+    );
+    const grid = el('div', 'c12__grid');
+    for (const p of items) {
+      const cell = el('div', 'c12__cell');
+      cell.append(media(p), nameBlock(p), el('div', 'av-code', p.code));
+      grid.appendChild(cell);
+    }
+    const folio = el('div', 'c12__folio',
+      (lang === 'fa' ? CatalogKit.toFa(String(i + 12)) : String(i + 12)));
+    page.append(head, grid, folio);
+    wrap.appendChild(page);
+  });
+  return wrap;
+}
+
+function c13() {
+  const table = el('table', 'c13');
+  const head = el('thead');
+  const hr = el('tr');
+  for (const key of ['', 'name', 'cat', 'code', 'price']) {
+    hr.appendChild(el('th', null, key ? t()[key] : ''));
+  }
+  head.appendChild(hr);
+  const body = el('tbody');
+  for (const p of PRODUCTS) {
+    const tr = el('tr');
+    const tdMedia = el('td');
+    tdMedia.appendChild(media(p, 'square'));
+    const tdName = el('td');
+    tdName.append(el('div', 'c13__name', pName(p)), el('div', 'av-name-en', pAlt(p)));
+    const cat = CATEGORIES.find((c) => c.id === p.cat);
+    const tdPrice = el('td');
+    tdPrice.append(document.createTextNode(pPrice(p)), el('small', null, ' ' + t().unit));
+    tr.append(tdMedia, tdName, el('td', null, lang === 'fa' ? cat.fa : cat.en), el('td', 'av-code', p.code), tdPrice);
+    body.appendChild(tr);
+  }
+  table.append(head, body);
+  return table;
+}
+
+function c14() {
+  const wrap = el('div', 'c14');
+  const lead = PRODUCTS[0];
+  const m = media(lead, null);
+  m.classList.add('c14__media');
+  const aside = el('div', 'c14__aside');
+  aside.append(nameBlock(lead, 'lg'), el('p', 'av-copy av-copy--sm', pCopy(lead)));
+  const list = el('div', 'c14__list');
+  for (const [k, v] of pSpec(lead)) {
+    const entry = el('div', 'c14__entry');
+    entry.append(el('div', 'av-code', k), el('div', null, v));
+    list.appendChild(entry);
+  }
+  aside.append(list, priceLine(lead));
+  wrap.append(m, aside);
+  return wrap;
+}
+
+/* ── render ──────────────────────────────────────────────── */
+
+function render() {
+  main.innerHTML = '';
+  for (const comp of COMPOSITIONS) {
+    const band = el('section', 'av-band av-wrap');
+    const label = el('div', 'av-label');
+    label.append(
+      el('div', 'av-label__no', (lang === 'fa' ? comp.no : comp.noEn) + ' · ' + (lang === 'fa' ? comp.en : comp.fa)),
+      el('h2', 'av-label__name', lang === 'fa' ? comp.fa : comp.en),
+      el('p', 'av-label__use', lang === 'fa' ? comp.faUse : comp.enUse)
+    );
+    band.append(label, comp.build());
+    main.appendChild(band);
+  }
+  for (const node of document.querySelectorAll('[data-t]')) {
+    node.textContent = t()[node.dataset.t];
+  }
+}
+
+const themeBar = document.getElementById('themes');
+for (const name of THEMES) {
+  const b = el('button', 'cat-chip', name);
+  b.type = 'button';
+  b.setAttribute('aria-pressed', String(name === root.dataset.theme));
+  b.addEventListener('click', () => {
+    root.dataset.theme = name;
+    for (const other of themeBar.children) other.setAttribute('aria-pressed', String(other === b));
+  });
+  themeBar.appendChild(b);
+}
+
+document.getElementById('lang').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-lang]');
+  if (!btn || btn.dataset.lang === lang) return;
+  lang = btn.dataset.lang;
+  for (const other of btn.parentNode.children) other.setAttribute('aria-pressed', String(other === btn));
+  root.lang = lang;
+  root.dir = lang === 'fa' ? 'rtl' : 'ltr';
+  render();
+});
+
+render();
+</script>
+</body>
+</html>

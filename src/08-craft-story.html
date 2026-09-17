@@ -1,0 +1,1350 @@
+<!doctype html>
+<html dir="rtl" lang="fa" data-theme="craft">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>سپیدار — دفترِ بافت</title>
+<link rel="stylesheet" href="../shared/ds-core.css">
+<style>
+/* ── variant tokens ─────────────────────────────────────────
+   --sp-thread captures the theme accent before a chapter re-tints
+   --accent, so every chapter hue is a rotation of the same token
+   rather than a new colour. */
+:root {
+  --sp-thread: var(--accent);
+  --sp-bar: 68px;
+  --sp-top: calc(var(--sp-bar) + var(--s-5));
+  --sp-deck-h: min(72vh, 660px);
+  --sp-tint: var(--bg);
+  --sp-rule: var(--line);
+}
+
+body { overflow-wrap: break-word; }
+
+.sp-skip {
+  position: fixed; z-index: 90; inset-block-start: var(--s-3); inset-inline-start: var(--s-4);
+  padding: var(--s-3) var(--s-5); background: var(--surface); color: var(--ink);
+  border: var(--border-w) solid var(--line-strong); border-radius: var(--radius-control);
+  text-decoration: none; translate: 0 -200%;
+}
+.sp-skip:focus-visible { translate: 0 0; }
+
+/* ── masthead bar ───────────────────────────────────────── */
+.sp-bar { gap: var(--s-4); min-height: var(--tap-min); }
+.sp-bar__brand { display: flex; align-items: center; gap: var(--s-3); text-decoration: none; color: inherit; }
+.sp-bar__brand:hover { color: inherit; }
+.sp-mark { width: 30px; height: 30px; color: var(--accent); flex: 0 0 auto; }
+.sp-icon, .sp-mark, .sp-note__icon { display: inline-block; }
+.sp-icon > svg, .sp-mark > svg, .sp-note__icon > svg { width: 100%; height: 100%; display: block; }
+.cat-btn > svg { width: 18px; height: 18px; flex: 0 0 auto; }
+.cat-lang > button { min-height: var(--tap-min); }
+.sp-bar__name { font-family: var(--font-fa-display); font-size: var(--t-md); line-height: 1.2; }
+.sp-bar__place { display: block; font-size: var(--t-xs); color: var(--ink-faint); line-height: 1.4; }
+.sp-nav { display: flex; gap: var(--s-1); margin-inline-start: var(--s-5); }
+.sp-nav a {
+  display: inline-flex; align-items: center; min-height: var(--tap-min); padding-inline: var(--s-4);
+  font-size: var(--t-sm); color: var(--ink-muted); text-decoration: none;
+  border-radius: var(--radius-pill); transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.sp-nav a:hover { color: var(--ink); background: var(--surface-alt); }
+.sp-nav a[aria-current="true"] { color: var(--ink); background: var(--surface-alt); }
+.sp-bar__gap { flex: 1; }
+.sp-cart { position: relative; }
+.sp-cart__n {
+  min-width: 22px; height: 22px; padding-inline: 6px; border-radius: var(--radius-pill);
+  display: inline-grid; place-items: center; background: var(--on-accent); color: var(--accent);
+  font-family: var(--font-num); font-size: var(--t-xs);
+}
+
+/* ── cover ──────────────────────────────────────────────── */
+.sp-cover {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(32px, 5vw, 80px); align-items: end;
+  padding-block: clamp(40px, 8vh, 104px) clamp(40px, 7vh, 88px);
+}
+.sp-cover__kicker {
+  font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+  color: var(--ink-muted); margin-block-end: var(--s-5);
+}
+.sp-cover h1 { font-size: var(--t-3xl); font-weight: var(--w-light); letter-spacing: -0.01em; }
+.sp-cover__sub {
+  font-family: var(--font-fa-display); font-size: var(--t-lg); font-weight: var(--w-regular);
+  color: var(--ink-muted); margin-block: var(--s-2) var(--s-5);
+}
+.sp-cover__lead { font-size: var(--t-md); line-height: var(--lh-fa-body); max-width: 52ch; }
+.sp-cover__acts { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-block-start: var(--s-6); }
+.sp-cover__plate {
+  position: relative; margin: 0; aspect-ratio: var(--ratio-media); overflow: hidden;
+  background: var(--surface-alt); border: var(--border-w) solid var(--line);
+  border-radius: var(--radius-card); box-shadow: var(--shadow-2);
+}
+.sp-cover__plate img { width: 100%; height: 100%; object-fit: cover; }
+.sp-cover__stamp {
+  position: absolute; inset-block-end: var(--s-4); inset-inline-start: var(--s-4);
+  display: grid; gap: 2px; padding: var(--s-3) var(--s-4);
+  background: var(--surface); border-radius: var(--radius-control);
+  font-size: var(--t-xs); color: var(--ink-muted);
+}
+
+/* ── the three-fact strip ───────────────────────────────── */
+.sp-note {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter);
+  padding-block: var(--s-7); border-block: var(--border-w) solid var(--line);
+}
+.sp-note__item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-4); align-items: start; }
+.sp-note__icon { width: 30px; height: 30px; color: var(--accent); }
+.sp-note h2 { font-size: var(--t-base); font-weight: var(--w-medium); margin-block-end: var(--s-1); }
+.sp-note p { margin: 0; font-size: var(--t-sm); color: var(--ink-muted); }
+
+/* ── chapter shell ──────────────────────────────────────── */
+.sp-ch { background: var(--sp-tint); padding-block: clamp(48px, 8vh, 112px); }
+.sp-ch + .sp-ch { border-block-start: var(--border-w) solid var(--sp-rule); }
+
+@supports (color: oklch(from white l c h)) {
+  .sp-ch {
+    --accent: oklch(from var(--sp-thread) l c calc(h + var(--sp-turn, 0)));
+    --accent-soft: oklch(from var(--sp-thread) calc(l + 0.38) calc(c * 0.42) calc(h + var(--sp-turn, 0)));
+    --sp-tint: color-mix(in oklab, var(--bg) 94%, var(--accent));
+    --sp-rule: color-mix(in oklab, var(--line) 74%, var(--accent));
+  }
+  .sp-ch[data-ch="1"] { --sp-turn: -23; }
+  .sp-ch[data-ch="2"] { --sp-turn: 35; }
+  .sp-ch[data-ch="3"] { --sp-turn: 73; }
+}
+
+.sp-ch__head {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(20px, 3vw, 44px);
+  align-items: start; padding-block-end: clamp(32px, 5vh, 72px);
+}
+.sp-ch__n {
+  font-family: var(--font-num); font-size: var(--t-2xl); line-height: 1; color: var(--accent);
+  padding-block-start: 0.12em;
+}
+.sp-ch__kicker {
+  font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+  color: var(--ink-faint); margin-block-end: var(--s-3);
+}
+.sp-ch h2 { font-size: var(--t-xl); font-weight: var(--w-regular); }
+.sp-ch__lead { margin-block-start: var(--s-4); font-size: var(--t-md); color: var(--ink-muted); max-width: 58ch; }
+
+/* ── scrollytelling ─────────────────────────────────────── */
+.sp-scroll {
+  display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: clamp(28px, 4vw, 72px); align-items: start;
+}
+.sp-step { min-height: 82vh; display: grid; align-content: center; padding-block: var(--s-6); }
+.sp-step__body {
+  border-inline-start: var(--border-w-strong) solid transparent;
+  padding-inline-start: clamp(16px, 2vw, 32px);
+  opacity: 0.4; transition: opacity var(--dur-slow) var(--ease-soft), border-color var(--dur-slow) var(--ease-soft);
+}
+.sp-step[data-on="true"] .sp-step__body,
+.sp-step:focus-within .sp-step__body { opacity: 1; border-inline-start-color: var(--accent); }
+.sp-step__idx {
+  font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint);
+  letter-spacing: var(--tracking-en-caps);
+}
+.sp-step h3 { font-size: var(--t-lg); font-weight: var(--w-regular); margin-block-start: var(--s-2); }
+.sp-name-alt { font-size: var(--t-sm); color: var(--ink-muted); margin-block-start: var(--s-1); }
+.sp-name-alt[dir="ltr"] { font-family: var(--font-en-ui); letter-spacing: var(--tracking-en); direction: ltr; }
+.sp-name-alt[dir="rtl"] { font-family: var(--font-fa-ui); letter-spacing: var(--tracking-fa); direction: rtl; }
+.sp-step__copy { margin-block-start: var(--s-5); }
+.sp-step__copy p { font-size: var(--t-base); color: var(--ink); max-width: 46ch; }
+.sp-step__copy p + p { color: var(--ink-muted); }
+.sp-specs {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-2) var(--s-5);
+  margin: var(--s-5) 0 0; padding-block-start: var(--s-4);
+  border-block-start: var(--border-w) solid var(--sp-rule); font-size: var(--t-sm);
+}
+.sp-specs dt { color: var(--ink-faint); }
+.sp-specs dd { margin: 0; color: var(--ink-muted); }
+.sp-step__foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4);
+  margin-block-start: var(--s-5);
+}
+.sp-step__foot .cat-price { margin-inline-end: auto; }
+.sp-price-unit { font-size: var(--t-xs); color: var(--ink-muted); font-family: var(--font-fa-ui); }
+
+/* ── the pinned stage ───────────────────────────────────── */
+.sp-stage {
+  position: sticky; inset-block-start: var(--sp-top); align-self: start;
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-4);
+}
+.sp-deck {
+  position: relative; height: var(--sp-deck-h); overflow: hidden;
+  background: var(--surface); border: var(--border-w) solid var(--sp-rule);
+  border-radius: var(--radius-card); box-shadow: var(--shadow-2);
+}
+.sp-plate {
+  position: absolute; inset: 0; margin: 0;
+  display: grid; grid-template-rows: auto minmax(0, 1fr);
+  opacity: 0; transform: scale(1.015);
+  transition: opacity var(--dur-slow) var(--ease-soft), transform var(--dur-slow) var(--ease-soft);
+}
+.sp-plate[data-on="true"] { opacity: 1; transform: none; }
+.sp-plate__cap {
+  display: flex; align-items: baseline; gap: var(--s-3);
+  padding: var(--s-3) var(--s-4); background: var(--surface);
+  border-block-end: var(--border-w) solid var(--sp-rule);
+}
+.sp-plate__idx { font-family: var(--font-num); font-size: var(--t-xs); color: var(--accent); }
+.sp-plate__name { font-family: var(--font-fa-display); font-size: var(--t-base); }
+.sp-plate__hint { margin-inline-start: auto; font-size: var(--t-xs); color: var(--ink-faint); }
+.sp-plate__media { position: relative; overflow: hidden; }
+
+/* ── chapter progress rail ──────────────────────────────── */
+.sp-rail { position: relative; width: var(--tap-min); }
+.sp-rail::before {
+  content: ""; position: absolute; inset-block: 22px;
+  inset-inline-start: calc(var(--tap-min) / 2 - 1px); width: 2px;
+  background: var(--line); border-radius: var(--radius-pill);
+}
+.sp-rail__fill {
+  position: absolute; inset-block-start: 22px; height: calc(100% - 44px);
+  inset-inline-start: calc(var(--tap-min) / 2 - 1px); width: 2px;
+  background: var(--accent); border-radius: var(--radius-pill);
+  transform-origin: top; transform: scaleY(var(--sp-p, 0));
+}
+.sp-rail__ticks {
+  position: relative; display: flex; flex-direction: column; justify-content: space-between;
+  height: 100%; margin: 0; padding: 0; list-style: none;
+}
+.sp-tick {
+  width: var(--tap-min); height: var(--tap-min); display: grid; place-items: center;
+  padding: 0; background: none; border: 0; cursor: pointer;
+}
+.sp-tick__dot {
+  width: 9px; height: 9px; border-radius: var(--radius-pill);
+  background: var(--surface); border: var(--border-w-strong) solid var(--line-strong);
+  transition: transform var(--dur-base) var(--ease-soft), background var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+.sp-tick:hover .sp-tick__dot { border-color: var(--accent); }
+.sp-tick[aria-current="true"] .sp-tick__dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
+
+/* ── the product row between chapters ───────────────────── */
+.sp-shelf { margin-block-start: clamp(40px, 6vh, 88px); padding-block-start: var(--s-6); border-block-start: var(--border-w) solid var(--sp-rule); }
+.sp-shelf__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-4); margin-block-end: var(--s-5); }
+.sp-shelf__head h3 { font-size: var(--t-md); font-weight: var(--w-regular); }
+.sp-shelf__note { font-size: var(--t-sm); color: var(--ink-faint); margin-inline-start: auto; }
+.sp-shelf__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); }
+.sp-card { background: var(--surface); border-color: var(--sp-rule); }
+/* the kit stretches its host to fill; the card wants the media ratio kept */
+.sp-card .cat-card__media { flex: 0 0 auto; height: auto; }
+.sp-card__line { font-size: var(--t-sm); color: var(--ink-muted); }
+.sp-card__act { display: flex; gap: var(--s-2); }
+.sp-card__act .cat-btn { flex: 1; padding-inline: var(--s-3); font-size: var(--t-sm); }
+.sp-add[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+
+/* ── colophon ───────────────────────────────────────────── */
+.sp-colophon {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 4vw, 72px);
+  padding-block: clamp(48px, 8vh, 104px); border-block-start: var(--border-w) solid var(--line);
+}
+.sp-colophon h2 { font-size: var(--t-lg); font-weight: var(--w-regular); margin-block-end: var(--s-4); }
+.sp-colophon p { color: var(--ink-muted); }
+.sp-colophon__meta { display: grid; gap: var(--s-3); align-content: start; font-size: var(--t-sm); }
+.sp-colophon__meta div { display: flex; justify-content: space-between; gap: var(--s-4); padding-block-end: var(--s-3); border-block-end: var(--border-w) solid var(--line); }
+.sp-colophon__meta dt, .sp-colophon__meta span:first-child { color: var(--ink-faint); }
+
+/* ── price-inquiry sheet ────────────────────────────────── */
+.sp-scrim {
+  position: fixed; inset: 0; z-index: 55; background: var(--overlay);
+  opacity: 0; visibility: hidden; transition: opacity var(--dur-base) var(--ease-out), visibility var(--dur-base);
+}
+.sp-scrim[data-open="true"] { opacity: 1; visibility: visible; }
+.sp-sheet {
+  position: fixed; z-index: 56; inset-block: 0; inset-inline-end: 0;
+  width: min(430px, 100%); display: flex; flex-direction: column;
+  background: var(--surface); border-inline-start: var(--border-w) solid var(--line);
+  box-shadow: var(--shadow-lift);
+  translate: 100% 0; visibility: hidden;
+  transition: translate var(--dur-slow) var(--ease-soft), visibility var(--dur-slow);
+}
+[dir="rtl"] .sp-sheet { translate: -100% 0; }
+.sp-sheet[data-open="true"] { translate: 0 0; visibility: visible; }
+.sp-sheet__head {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-4) var(--s-5); border-block-end: var(--border-w) solid var(--line);
+}
+.sp-sheet__head h2 { font-size: var(--t-md); font-weight: var(--w-regular); }
+.sp-sheet__head .cat-btn { margin-inline-start: auto; }
+.sp-sheet__body { flex: 1; overflow: auto; padding: var(--s-5); }
+.sp-row {
+  display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: var(--s-4); align-items: center;
+  padding: var(--s-3); background: var(--bg-alt);
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-card);
+}
+.sp-row + .sp-row { margin-block-start: var(--s-3); }
+.sp-row img { width: 56px; aspect-ratio: var(--ratio-media); object-fit: cover; border-radius: var(--radius-media); }
+.sp-row__name { font-size: var(--t-sm); }
+.sp-row__meta { display: flex; flex-wrap: wrap; gap: var(--s-2); font-size: var(--t-xs); color: var(--ink-muted); }
+.sp-sheet__foot { padding: var(--s-5); border-block-start: var(--border-w) solid var(--line); display: grid; gap: var(--s-4); }
+.sp-sum { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); }
+.sp-sum__label { font-size: var(--t-sm); color: var(--ink-muted); }
+.sp-sheet__note { font-size: var(--t-xs); color: var(--ink-faint); margin: 0; }
+.sp-sheet textarea {
+  width: 100%; min-height: 128px; padding: var(--s-3); font: inherit; font-size: var(--t-xs);
+  font-family: var(--font-num); color: var(--ink); background: var(--bg-alt);
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-control); resize: vertical;
+}
+.sp-icon { width: 18px; height: 18px; flex: 0 0 auto; }
+
+/* ── linear layout: reduced motion, and any narrow screen ── */
+.sp-scroll[data-mode="linear"] { grid-template-columns: minmax(0, 1fr); gap: 0; }
+.sp-scroll[data-mode="linear"] .sp-stage { display: none; }
+.sp-scroll[data-mode="pinned"] .sp-step__slot { display: none; }
+.sp-scroll[data-mode="linear"] .sp-step {
+  min-height: 0; grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
+  gap: clamp(24px, 4vw, 64px); align-items: start; align-content: start;
+  padding-block: clamp(28px, 5vh, 56px);
+}
+.sp-scroll[data-mode="linear"] .sp-step + .sp-step { border-block-start: var(--border-w) solid var(--sp-rule); }
+.sp-scroll[data-mode="linear"] .sp-step__body { opacity: 1; border-inline-start-color: var(--accent); }
+.sp-scroll[data-mode="linear"] .sp-plate {
+  position: relative; inset: auto; opacity: 1; transform: none;
+  height: clamp(320px, 54vh, 520px); overflow: hidden;
+  background: var(--surface); border: var(--border-w) solid var(--sp-rule);
+  border-radius: var(--radius-card); box-shadow: var(--shadow-1);
+}
+
+@media (max-width: 1080px) {
+  .sp-shelf__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .sp-cover { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .sp-cover__plate { max-width: 420px; }
+  .sp-note { grid-template-columns: minmax(0, 1fr); gap: var(--s-5); }
+  .sp-nav { display: none; }
+  .sp-colophon { grid-template-columns: minmax(0, 1fr); }
+  .sp-scroll[data-mode="linear"] .sp-step { grid-template-columns: minmax(0, 1fr); }
+  .sp-scroll[data-mode="linear"] .sp-step__slot { order: -1; margin-block-end: var(--s-5); }
+}
+@media (max-width: 560px) {
+  .sp-shelf__grid { grid-template-columns: minmax(0, 1fr); }
+  .sp-sheet { width: 100%; }
+}
+
+@media print {
+  .sp-skip, .sp-scrim, .sp-sheet, .sp-rail, .cat-toolbar { display: none !important; }
+  .sp-stage { display: none; }
+  .sp-scroll { display: block; }
+  .sp-step { min-height: 0; padding-block: var(--s-4); break-inside: avoid; }
+  .sp-step__body { opacity: 1; }
+  .sp-shelf__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sp-ch { background: none; padding-block: var(--s-6); }
+}
+</style>
+</head>
+<body>
+
+<a class="sp-skip" href="#story" data-i="skip">پرش به روایت</a>
+
+<header class="cat-toolbar sp-bar" data-region>
+  <a class="sp-bar__brand" href="#top">
+    <span class="sp-mark" data-icon="loom" aria-hidden="true"></span>
+    <span>
+      <span class="sp-bar__name" data-i="brand">سپیدار</span>
+      <span class="sp-bar__place" data-i="place">کارگاه دستبافت · میبد و یزد</span>
+    </span>
+  </a>
+  <nav class="sp-nav" aria-label="فصل‌ها" data-i-label="chaptersNav" id="sp-nav"></nav>
+  <span class="sp-bar__gap"></span>
+  <div class="cat-lang" role="group" aria-label="زبان" data-i-label="language">
+    <button type="button" data-lang="fa" aria-pressed="true">فارسی</button>
+    <button type="button" data-lang="en" aria-pressed="false">English</button>
+  </div>
+  <button type="button" class="cat-btn cat-btn--quiet sp-cart" id="sp-open-sheet">
+    <span class="sp-icon" data-icon="list" aria-hidden="true"></span>
+    <span data-i="inquiry">استعلام قیمت</span>
+    <span class="sp-cart__n num" id="sp-count">۰</span>
+  </button>
+</header>
+
+<main id="top" data-region>
+  <div class="cat-page">
+
+    <section class="sp-cover">
+      <div>
+        <p class="sp-cover__kicker" data-i="coverKicker">کارگاه دستبافِ سپیدار · میبد و یزد</p>
+        <h1 data-i="coverTitle">سپیدار</h1>
+        <p class="sp-cover__sub" data-i="coverSub">دفترِ بافت — پاییز ۱۴۰۵</p>
+        <p class="sp-cover__lead" data-i="coverLead"></p>
+        <div class="sp-cover__acts">
+          <a class="cat-btn" href="#ch-1" data-i="coverCta">آغازِ روایت</a>
+          <a class="cat-btn cat-btn--ghost" href="#shelf-1" data-i="coverCta2">رفتن به قطعه‌ها</a>
+        </div>
+      </div>
+      <figure class="sp-cover__plate">
+        <img id="sp-cover-art" alt="">
+        <figcaption class="sp-cover__stamp">
+          <span data-i="coverStamp1">دوازده قطعه · سه فصل</span>
+          <span class="num" data-i="coverStamp2">۱۴۰۵</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="sp-note" id="sp-note" aria-label="کارگاه" data-i-label="workshop"></section>
+
+  </div>
+
+  <div id="story"></div>
+
+  <div class="cat-page">
+    <footer class="sp-colophon">
+      <div>
+        <h2 data-i="colophonTitle">سفارش و استعلام</h2>
+        <p data-i="colophonP1"></p>
+        <p data-i="colophonP2"></p>
+      </div>
+      <div class="sp-colophon__meta" id="sp-colophon-meta"></div>
+    </footer>
+  </div>
+</main>
+
+<div class="sp-scrim" id="sp-scrim"></div>
+
+<aside class="sp-sheet" id="sp-sheet" role="dialog" aria-modal="true" aria-labelledby="sp-sheet-title">
+  <div class="sp-sheet__head">
+    <h2 id="sp-sheet-title" data-i="inquiry">استعلام قیمت</h2>
+    <button type="button" class="cat-btn cat-btn--icon cat-btn--quiet" id="sp-close-sheet" data-i-label="close">
+      <span class="sp-icon" data-icon="close" aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="sp-sheet__body" id="sp-sheet-body"></div>
+  <div class="sp-sheet__foot">
+    <div class="sp-sum">
+      <span class="sp-sum__label" data-i="sumLabel">جمعِ فهرست</span>
+      <span class="cat-price"><span id="sp-sum" class="num">۰</span><span class="cat-price__unit" data-i="toman">تومان</span></span>
+    </div>
+    <p class="sp-sheet__note" data-i="sheetNote"></p>
+    <button type="button" class="cat-btn cat-btn--ghost" id="sp-text-toggle" aria-expanded="false" data-i="textList">نسخه‌ی متنیِ فهرست</button>
+    <textarea id="sp-text-out" readonly hidden dir="ltr" aria-labelledby="sp-text-toggle"></textarea>
+  </div>
+</aside>
+
+<script src="../shared/catalog-kit.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var K = window.CatalogKit;
+  var lang = 'fa';
+
+  /* ── strings ─────────────────────────────────────────── */
+
+  var STR = {
+    title:        { fa: 'سپیدار — دفترِ بافت', en: 'Sepidar — the weaving folio' },
+    brand:        { fa: 'سپیدار', en: 'Sepidar' },
+    place:        { fa: 'کارگاه دستبافت · میبد و یزد', en: 'Handweaving works · Meybod & Yazd' },
+    skip:         { fa: 'پرش به روایت', en: 'Skip to the story' },
+    chaptersNav:  { fa: 'فصل‌ها', en: 'Chapters' },
+    language:     { fa: 'زبان', en: 'Language' },
+    workshop:     { fa: 'کارگاه', en: 'The workshop' },
+    inquiry:      { fa: 'استعلام قیمت', en: 'Price inquiry' },
+    close:        { fa: 'بستن', en: 'Close' },
+    coverKicker:  { fa: 'کارگاه دستبافِ سپیدار · میبد و یزد', en: 'Sepidar handweaving works · Meybod & Yazd' },
+    coverTitle:   { fa: 'سپیدار', en: 'Sepidar' },
+    coverSub:     { fa: 'دفترِ بافت — پاییز ۱۴۰۵', en: 'The weaving folio — autumn 2026' },
+    coverLead: {
+      fa: 'سپیدار کارگاهی است با نُه دار در میبد و یک رنگرزخانه در حاشیه‌ی یزد. پشم را از گله‌های همان دشت می‌گیریم، خودمان می‌ریسیم و با ریشه و پوست و برگ رنگ می‌کنیم. این دفتر دوازده قطعه‌ی امسال را در سه فصل نشان می‌دهد: از خاک و رنگ تا داری که زیر دستِ بافنده جان می‌گیرد.',
+      en: 'Sepidar is a workshop of nine looms in Meybod and a dye house on the edge of Yazd. We take fleece from flocks on the same plain, spin it ourselves, and colour it with root, rind and leaf. This folio shows the twelve pieces of this year in three chapters: from earth and dye to the loom that comes alive under a weaver’s hand.'
+    },
+    coverCta:     { fa: 'آغازِ روایت', en: 'Begin the story' },
+    coverCta2:    { fa: 'رفتن به قطعه‌ها', en: 'Go to the pieces' },
+    coverStamp1:  { fa: 'دوازده قطعه · سه فصل', en: 'Twelve pieces · three chapters' },
+    coverStamp2:  { fa: '۱۴۰۵', en: '2026' },
+    noteTitle1:   { fa: 'نُه دار', en: 'Nine looms' },
+    noteBody1:    { fa: 'هر دار یک بافنده دارد و یک نقشه‌ی مخصوصِ خودش.', en: 'Each loom has one weaver and a cartoon of its own.' },
+    noteTitle2:   { fa: 'رنگرزی گیاهی', en: 'Plant dyeing' },
+    noteBody2:    { fa: 'روناس، اسپرک، پوستِ انار و گردو؛ هر دیگ یک دسته‌رنگ.', en: 'Madder, weld, pomegranate and walnut; each vat is one dye lot.' },
+    noteTitle3:   { fa: 'امضای بافنده', en: 'The weaver’s signature' },
+    noteBody3:    { fa: 'نامِ بافنده و تاریخِ پایان، پشتِ هر قطعه دوخته می‌شود.', en: 'The weaver’s name and the finishing date are stitched on the back.' },
+    chapterWord:  { fa: 'فصل', en: 'Chapter' },
+    shelfTitle:   { fa: 'قطعه‌های این فصل', en: 'The pieces of this chapter' },
+    shelfNote:    { fa: 'چهار قطعه · قیمت‌ها بدون حمل', en: 'Four pieces · prices exclude carriage' },
+    detail:       { fa: 'نمای نزدیک', en: 'Look closely' },
+    add:          { fa: 'افزودن به استعلام', en: 'Add to inquiry' },
+    added:        { fa: 'در فهرستِ استعلام', en: 'In the inquiry list' },
+    addShort:     { fa: 'افزودن', en: 'Add' },
+    addedShort:   { fa: 'افزوده شد', en: 'Added' },
+    remove:       { fa: 'برداشتن از فهرست', en: 'Remove from the list' },
+    toman:        { fa: 'تومان', en: 'toman' },
+    points:       { fa: 'نقطه‌ی بررسی', en: 'inspection points' },
+    goStep:       { fa: 'رفتن به', en: 'Go to' },
+    railLabel:    { fa: 'پیشرفتِ فصل', en: 'Chapter progress' },
+    empty:        { fa: 'هنوز چیزی انتخاب نکرده‌اید. زیرِ هر قطعه، «افزودن به استعلام» را بزنید تا اینجا جمع شود.', en: 'Nothing chosen yet. Use “Add to inquiry” under any piece and it collects here.' },
+    sumLabel:     { fa: 'جمعِ فهرست', en: 'List total' },
+    sheetNote:    { fa: 'قیمت‌ها برای قطعه‌ی موجود است؛ سفارشِ اندازه‌ی دیگر، روزِ بافت قیمت می‌خورد.', en: 'Prices are for the piece in hand; a commission in another size is priced on the day of weaving.' },
+    textList:     { fa: 'نسخه‌ی متنیِ فهرست', en: 'Plain-text list' },
+    hideList:     { fa: 'بستنِ نسخه‌ی متنی', en: 'Hide the plain-text list' },
+    colophonTitle:{ fa: 'سفارش و استعلام', en: 'Orders and inquiries' },
+    colophonP1: {
+      fa: 'قطعه‌های این دفتر موجودند و هرکدام یک نسخه بیشتر نیست. فهرستِ استعلام را بسازید و برای کارگاه بفرستید؛ زمانِ تحویل و هزینه‌ی بسته‌بندی را همان هفته اعلام می‌کنیم.',
+      en: 'The pieces in this folio are in hand and each exists once. Build the inquiry list and send it to the workshop; we answer with a delivery time and packing cost the same week.'
+    },
+    colophonP2: {
+      fa: 'برای سفارشِ اندازه‌ی دیگر، نقشه را دوباره می‌بندیم و پیش از شروع، یک نمونه‌ی بیست سانتی‌متری می‌بافیم تا رنگ را از نزدیک ببینید.',
+      en: 'For another size we re-set the cartoon and weave a twenty-centimetre sample before starting, so you see the colour in the hand first.'
+    },
+    metaK1:       { fa: 'زمانِ بافت', en: 'Time at the loom' },
+    metaV1:       { fa: 'دو تا بیست‌وسه ماه', en: 'Two to twenty-three months' },
+    metaK2:       { fa: 'رنگرزی', en: 'Dyeing' },
+    metaV2:       { fa: 'گیاهی، در دیگِ کارگاه', en: 'Plant dyes, in the workshop vat' },
+    metaK3:       { fa: 'تعمیر', en: 'Repair' },
+    metaV3:       { fa: 'شیرازه و ریشه، رایگان تا سه سال', en: 'Selvedge and fringe, free for three years' },
+    metaK4:       { fa: 'این دفتر', en: 'This folio' },
+    metaV4:       { fa: 'پاییز ۱۴۰۵ · ۱۲ قطعه', en: 'Autumn 2026 · 12 pieces' }
+  };
+
+  function t(key) { return (STR[key] && STR[key][lang]) || ''; }
+
+  /* ── icons ───────────────────────────────────────────── */
+
+  var ICONS = {
+    loom: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M8 3v18M12 3v18M16 3v18M3 9h18M3 15h18"/></svg>',
+    vat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 9h14l-1.2 9.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M3 9h18M9 6c0-1.7 1.3-3 3-3s3 1.3 3 3"/></svg>',
+    needle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M20 4 9.5 14.5"/><path d="m4 20 3.5-1.2L9.5 14.5"/><circle cx="18.5" cy="5.5" r="2"/></svg>',
+    list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01"/></svg>',
+    close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+    plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>',
+    zoom: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"/></svg>'
+  };
+
+  function icon(name, cls) {
+    return '<span class="' + (cls || 'sp-icon') + '" aria-hidden="true">' + ICONS[name] + '</span>';
+  }
+
+  /* ── catalogue ───────────────────────────────────────── */
+
+  var CHAPTERS = [
+    {
+      n: 1,
+      fa: {
+        kicker: 'فصلِ یک', title: 'خاک و رنگ',
+        lead: 'کار از چراگاه شروع می‌شود، نه از دار. پشمِ بهاره را می‌شوییم، آفتاب می‌دهیم و با دوک می‌ریسیم؛ بعد نوبتِ دیگ است. رنگِ گیاهی هیچ‌وقت دو بار یکسان درنمی‌آید، و ما این را عیب نمی‌دانیم: هر دسته‌رنگ، تاریخِ خودش را روی نخ می‌نویسد.'
+      },
+      en: {
+        kicker: 'Chapter one', title: 'Earth and dye',
+        lead: 'The work starts in the pasture, not at the loom. We wash the spring clip, dry it in the sun and spin it on a spindle; then comes the vat. A plant dye never comes out the same twice, and we do not count that a fault: every dye lot writes its own date onto the yarn.'
+      }
+    },
+    {
+      n: 2,
+      fa: {
+        kicker: 'فصلِ دو', title: 'دار و دست',
+        lead: 'چله‌کشی یک روزِ کامل است و هیچ‌کس در آن روز حرف نمی‌زند: اگر تارها یکدست کشیده نشوند، قطعه تا آخر کج می‌ماند. بعد از آن، کار می‌شود تکرار — گره، پود، شانه — و همین تکرار است که ماه‌ها طول می‌کشد.'
+      },
+      en: {
+        kicker: 'Chapter two', title: 'Loom and hand',
+        lead: 'Warping the loom takes a whole day and nobody talks through it: if the warps are not drawn at one tension the piece stays crooked to the end. After that the work becomes repetition — knot, weft, comb — and it is the repetition that takes months.'
+      }
+    },
+    {
+      n: 3,
+      fa: {
+        kicker: 'فصلِ سه', title: 'خانه و کار',
+        lead: 'قطعه وقتی تمام می‌شود که از کارگاه بیرون برود. بعضی‌ها زیرِ پا می‌روند و هر روز ساییده می‌شوند، بعضی‌ها سالی یک بار روی سفره پهن می‌شوند. ما این دو را یک‌جور نمی‌بافیم؛ تراکم، ضخامتِ پود و شیرازه برای کاری انتخاب می‌شود که قطعه قرار است بکند.'
+      },
+      en: {
+        kicker: 'Chapter three', title: 'House and use',
+        lead: 'A piece is finished when it leaves the workshop. Some go underfoot and are worn every day, some are spread on a cloth once a year. We do not weave the two the same way; density, weft thickness and selvedge are chosen for the work the piece will do.'
+      }
+    }
+  ];
+
+  var PRODUCTS = [
+    {
+      id: 'p01', ch: 1, sku: 'SP-1101', price: 38500000, subject: 'textile', palette: 'clay',
+      fa: {
+        name: 'گلیمِ روناس', line: 'گلیمِ پشمی، رنگ‌شده با ریشه‌ی روناس.',
+        p1: 'ریشه‌ی روناسِ سه‌ساله را خرد می‌کنیم و یک شب در آب نرم می‌ماند. صبح دیگ را آرام تا مرزِ جوش می‌بریم و کلاف‌های زاج‌خورده را می‌اندازیم؛ رنگ از نوکِ الیاف بالا می‌آید و تا عصر می‌نشیند.',
+        p2: 'این گلیم از یک دیگ درآمده است. اگر دقت کنید، یک‌سومِ بالای زمینه یک پرده روشن‌تر است — کلاف‌هایی که دیرتر واردِ دیگ شدند. بافنده نخواسته این تفاوت را پنهان کند؛ نقشه را طوری بسته که رگه در جای خودش بنشیند.',
+        specs: [['ابعاد', '۱۵۰×۲۲۰ سانتی‌متر'], ['الیاف', 'پشمِ دست‌ریس روی تارِ پنبه'], ['رنگ', 'روناس و پوستِ انار']]
+      },
+      en: {
+        name: 'Madder Kilim', line: 'Wool kilim, dyed with madder root.',
+        p1: 'We crush three-year madder root and let it soften overnight. In the morning the vat is brought slowly to the edge of a boil and the alum-mordanted skeins go in; the colour climbs from the tips of the fibre and settles by evening.',
+        p2: 'This kilim came out of a single vat. Look closely and the upper third of the ground is one shade lighter — skeins that went into the dye later. The weaver did not hide the difference; the cartoon was set so the band falls where it belongs.',
+        specs: [['Size', '150 × 220 cm'], ['Fibre', 'Hand-spun wool on cotton warp'], ['Dye', 'Madder and pomegranate rind']]
+      },
+      hot: [
+        { x: 24, y: 28, fa: ['تارِ پنبه', 'تارها پنبه‌ی تابیده‌ی دولا هستند؛ پشم کششِ لازم را ندارد.'], en: ['Cotton warp', 'The warps are two-ply cotton; wool has not the tension for it.'] },
+        { x: 52, y: 44, fa: ['پودِ پشمی', 'پود، پشمِ بهاره است و در هر رج دو بار کوبیده می‌شود.'], en: ['Wool weft', 'The weft is spring wool, beaten down twice in every row.'] },
+        { x: 74, y: 34, fa: ['دسته‌رنگ', 'این نوار یک پرده روشن‌تر است: کلاف‌هایِ دیگِ دوم.'], en: ['Dye lot', 'This band is a shade lighter: skeins from the second vat.'] },
+        { x: 50, y: 62, fa: ['شیرازه', 'لبه با همان نخِ تار دوخته شده تا گلیم وا نرود.'], en: ['Selvedge', 'The edge is oversewn with the warp yarn so the kilim cannot open.'] }
+      ]
+    },
+    {
+      id: 'p02', ch: 1, sku: 'SP-1102', price: 12400000, subject: 'textile', palette: 'stone',
+      fa: {
+        name: 'شالِ کُرک', line: 'شالِ کُرک با رنگِ پوستِ گردو.',
+        p1: 'کُرک، نرم‌ترین لایه‌ی زیرِ پشمِ بز است که هر بهار با شانه جدا می‌شود. از هر بز کمتر از دویست گرم به دست می‌آید، و همان دویست گرم باید یک شبِ کامل زیرِ انگشت پاک شود تا مویِ زبر در آن نماند.',
+        p2: 'نخ را نازک می‌ریسیم و شال را روی دارِ ساده می‌بافیم؛ بی‌نقشه، فقط با شمارش. رنگ، پوستِ گردوی تازه است: قهوه‌ای خاکستری‌ای که در نورِ پنجره سبز می‌زند و بعد از چند بار شست‌وشو آرام‌تر می‌شود.',
+        specs: [['ابعاد', '۷۰×۲۰۰ سانتی‌متر'], ['الیاف', 'کُرکِ بز'], ['رنگ', 'پوستِ گردو']]
+      },
+      en: {
+        name: 'Kurk Shawl', line: 'Kurk shawl in walnut-husk brown.',
+        p1: 'Kurk is the softest undercoat of the goat, combed out each spring. A single animal gives less than two hundred grams, and those two hundred grams take a whole evening under the fingers before the coarse hair is gone.',
+        p2: 'We spin the yarn fine and weave the shawl on a plain loom — no cartoon, only counting. The colour is fresh walnut husk: a grey-brown that turns green in window light and quietens after a few washes.',
+        specs: [['Size', '70 × 200 cm'], ['Fibre', 'Goat kurk'], ['Dye', 'Walnut husk']]
+      },
+      hot: [
+        { x: 30, y: 30, fa: ['نخِ کُرک', 'هر سانتی‌متر از عرضِ شال، نُه تار دارد.'], en: ['Kurk yarn', 'Nine warps to the centimetre across the width.'] },
+        { x: 58, y: 46, fa: ['بافتِ ساده', 'یک زیر، یک رو؛ بی‌نقشه، نظمِ کار از شمارش می‌آید.'], en: ['Plain weave', 'One under, one over; no cartoon, the order comes from counting.'] },
+        { x: 48, y: 62, fa: ['ریشه‌ی تابیده', 'ریشه‌ها چهارتایی تابیده و گره خورده‌اند.'], en: ['Twisted fringe', 'The fringes are twisted in fours and knotted.'] }
+      ]
+    },
+    {
+      id: 'p03', ch: 1, sku: 'SP-1103', price: 21800000, subject: 'textile', palette: 'amber',
+      fa: {
+        name: 'جاجیمِ اسپرک', line: 'چهار تخته‌ی باریک، دوخته به هم.',
+        p1: 'جاجیم را در چهار تخته‌ی باریک می‌بافیم، چون دارِ خانگی پهن‌تر از شصت سانتی‌متر نیست. تخته‌ها بعد کنارِ هم دوخته می‌شوند و درز، خودش بخشی از نقش است؛ راه‌راه‌ها باید سر بخورند و درست روبه‌روی هم بنشینند.',
+        p2: 'زردِ این قطعه از اسپرکِ دشت است، همان علفی که تیرماه گل می‌دهد. برای سبزِ باریکِ کنارِ راه‌راه‌ها، کلافِ زرد را دوباره در نیل می‌زنیم؛ عمقِ سبز به این بستگی دارد که چند ثانیه در دیگ بماند.',
+        specs: [['ابعاد', '۱۲۰×۱۸۰ سانتی‌متر'], ['بافت', 'چهار تخته‌ی دوخته'], ['رنگ', 'اسپرک و نیل']]
+      },
+      en: {
+        name: 'Weld Jajim', line: 'Four narrow panels, sewn into one.',
+        p1: 'A jajim is woven in four narrow panels, because a house loom is no wider than sixty centimetres. The panels are sewn together afterwards and the seam becomes part of the pattern; the stripes have to slide into place and meet exactly.',
+        p2: 'The yellow here is weld from the plain, the weed that flowers in July. For the thin green beside the stripes the yellow skein goes back into the indigo vat; how deep the green runs depends on a few seconds in the dye.',
+        specs: [['Size', '120 × 180 cm'], ['Weave', 'Four sewn panels'], ['Dye', 'Weld and indigo']]
+      },
+      hot: [
+        { x: 38, y: 30, fa: ['درزِ تخته‌ها', 'دو تخته با کوکِ مورب به هم دوخته شده‌اند.'], en: ['Panel seam', 'Two panels joined with a slanted stitch.'] },
+        { x: 62, y: 46, fa: ['راه‌راهِ اسپرک', 'زردِ اسپرک با زاجِ سفید ثابت شده است.'], en: ['Weld stripe', 'The weld yellow is fixed with alum.'] },
+        { x: 28, y: 58, fa: ['نخِ سبز', 'کلافِ زرد، چند ثانیه در دیگِ نیل رفته است.'], en: ['Green thread', 'The yellow skein spent a few seconds in the indigo vat.'] }
+      ]
+    },
+    {
+      id: 'p04', ch: 1, sku: 'SP-1104', price: 6900000, subject: 'textile', palette: 'rose',
+      fa: {
+        name: 'پشتیِ انار', line: 'پشتیِ گره‌باف با پشتِ باز.',
+        p1: 'پوستِ انار را بعد از فصل خشک نگه می‌داریم. رنگش به‌تنهایی خاکی و کم‌جان است؛ اما کنارِ روناس می‌نشیند و آن سرخِ آجری را یک پله گرم‌تر می‌کند. برای این پشتی، دو کلاف از دو دیگ کنارِ هم بافته شده‌اند.',
+        p2: 'پشتی کوچک است و همین آن را برای آزمایش مناسب می‌کند: نقشه‌های تازه اول اینجا بافته می‌شوند و اگر جواب داد، به قالیچه می‌رسند. پشتِ کار را نبسته‌ایم تا گره‌ها پیدا باشند.',
+        specs: [['ابعاد', '۶۰×۹۰ سانتی‌متر'], ['بافت', 'گرهِ فارسی'], ['رنگ', 'پوستِ انار و روناس']]
+      },
+      en: {
+        name: 'Pomegranate Poshti', line: 'Knotted cushion with an open back.',
+        p1: 'Pomegranate rind is kept dry after the season. On its own the colour is dusty and faint; set beside madder it warms that brick red by one step. For this cushion two skeins from two vats were woven side by side.',
+        p2: 'A poshti is small, which makes it the right place to try things: new cartoons are woven here first and only reach a rug if they hold. The back is left unlined so the knots stay visible.',
+        specs: [['Size', '60 × 90 cm'], ['Weave', 'Asymmetric knot'], ['Dye', 'Pomegranate rind and madder']]
+      },
+      hot: [
+        { x: 45, y: 36, fa: ['گرهِ فارسی', 'گرهِ نامتقارن؛ نقش را نرم‌تر می‌کند.'], en: ['Persian knot', 'The asymmetric knot; it softens the figure.'] },
+        { x: 70, y: 50, fa: ['پشتِ باز', 'پشتِ کار بسته نشده تا ردیفِ گره‌ها دیده شود.'], en: ['Open back', 'The back is left unlined so the rows of knots show.'] },
+        { x: 30, y: 60, fa: ['نوارِ انار', 'این نوار از دیگِ پوستِ انار است، یک پله گرم‌تر.'], en: ['Pomegranate band', 'This band came from the pomegranate vat, one step warmer.'] }
+      ]
+    },
+    {
+      id: 'p05', ch: 2, sku: 'SP-2201', price: 62000000, subject: 'textile', palette: 'warm',
+      fa: {
+        name: 'قالیچه‌ی درختِ زندگی', line: 'قالیچه‌ی نقشه‌خوان، رج‌شمارِ ۴۰.',
+        p1: 'نقشه روی کاغذِ شطرنجی است و هر خانه یک گره. بافنده خط به خط می‌خواند و بلند می‌گوید تا ردیف تمام شود؛ در کارگاه، صدای نقشه‌خوانی از صدای شانه بیشتر است.',
+        p2: 'درختِ وسط از پنج رنگ درست شده و هیچ‌کدام خالص نیستند: هر رنگ با کمی از رنگِ همسایه‌اش شکسته شده تا لبه‌ها نبُرند. رج‌شمار چهل است؛ برای این اندازه یعنی نزدیک به هفت ماه پای دار.',
+        specs: [['ابعاد', '۱۰۰×۱۵۰ سانتی‌متر'], ['رج‌شمار', '۴۰ رج'], ['زمانِ بافت', '۷ ماه']]
+      },
+      en: {
+        name: 'Tree-of-Life Rug', line: 'Cartoon-read rug, forty rows.',
+        p1: 'The cartoon is on squared paper and every square is one knot. The weaver reads it line by line, calling it out until the row is done; in the workshop the chant of the cartoon is louder than the comb.',
+        p2: 'The tree at the centre is built from five colours and none of them is pure: each is broken with a little of its neighbour so the edges do not cut. The density is forty rows; at this size that means close to seven months at the loom.',
+        specs: [['Size', '100 × 150 cm'], ['Density', '40 rows'], ['Time', '7 months']]
+      },
+      hot: [
+        { x: 50, y: 32, fa: ['سرِ درخت', 'شاخه‌ها با چهار رنگِ شکسته بافته شده‌اند.'], en: ['Crown of the tree', 'The branches are woven in four broken colours.'] },
+        { x: 28, y: 46, fa: ['رج‌شمار', 'چهل رج در هر گره؛ روی‌هم‌رفته نزدیک به نیم‌میلیون گره.'], en: ['Density', 'Forty rows to the gereh; close to half a million knots in all.'] },
+        { x: 72, y: 50, fa: ['گوشه‌بندی', 'حاشیه در هر گوشه می‌شکند؛ سخت‌ترین بخشِ نقشه همین است.'], en: ['Corner solution', 'The border breaks at each corner; that is the hardest part of the cartoon.'] },
+        { x: 50, y: 62, fa: ['ریشه', 'ریشه‌ها ادامه‌ی تارند، نه نخِ اضافه.'], en: ['Fringe', 'The fringes are the warps themselves, not added thread.'] }
+      ]
+    },
+    {
+      id: 'p06', ch: 2, sku: 'SP-2202', price: 26500000, subject: 'textile', palette: 'sage',
+      fa: {
+        name: 'زیلوی میبد', line: 'زیلوی پنبه‌ای دو رو، نقشِ طاق‌بندی.',
+        p1: 'زیلو پنبه است، نه پشم؛ و گره ندارد. نقش از رفت‌وآمدِ پود ساخته می‌شود و هر رو، رویِ دیگر را وارونه نشان می‌دهد. برای همین یک زیلو دو رو دارد و هر دو رو قابلِ استفاده است.',
+        p2: 'این نقش «طاق‌بندی» است، همان چیزی که کفِ مسجدهای قدیمِ میبد را می‌پوشاند. زیلو خنک است و زیرِ پا صدا نمی‌دهد؛ تابستان روی قالی می‌اندازند و پاییز جمع می‌کنند.',
+        specs: [['ابعاد', '۱۳۰×۲۰۰ سانتی‌متر'], ['الیاف', 'پنبه‌ی تابیده'], ['نقش', 'طاق‌بندی']]
+      },
+      en: {
+        name: 'Meybod Zilu', line: 'Two-faced cotton zilu, taq-bandi pattern.',
+        p1: 'A zilu is cotton, not wool, and it has no knots. The pattern is made by the travel of the weft, and each face shows the other in reverse. That is why a zilu has two sides and both of them are usable.',
+        p2: 'This is the taq-bandi pattern, the one that covers the floors of the old mosques of Meybod. A zilu stays cool and makes no sound underfoot; in summer it goes over the carpet and in autumn it is rolled away.',
+        specs: [['Size', '130 × 200 cm'], ['Fibre', 'Plied cotton'], ['Pattern', 'Taq-bandi']]
+      },
+      hot: [
+        { x: 34, y: 32, fa: ['تارِ پنبه', 'تارها آهار خورده‌اند تا هنگامِ بافت پرز ندهند.'], en: ['Cotton warp', 'The warps are sized so they do not fluff on the loom.'] },
+        { x: 60, y: 46, fa: ['رو و پشت', 'هر نقشی که اینجاست، رویِ دیگر وارونه‌اش را نشان می‌دهد.'], en: ['Face and back', 'Whatever stands here, the other face shows in reverse.'] },
+        { x: 50, y: 62, fa: ['لبه‌ی چله', 'سرِ چله را بافته برمی‌گردانند؛ زیلو ریشه ندارد.'], en: ['Warp edge', 'The warp ends are woven back; a zilu has no fringe.'] }
+      ]
+    },
+    {
+      id: 'p07', ch: 2, sku: 'SP-2203', price: 17200000, subject: 'bag', palette: 'warm',
+      fa: {
+        name: 'خورجینِ دوتایی', line: 'خورجینِ سوماک با بندِ تابیده.',
+        p1: 'خورجین دو کیسه است که با یک پشتِ یکپارچه به هم می‌رسند و روی دوش یا روی زین می‌افتد. کیسه‌ها را با سوماک می‌بافیم — پودی که دورِ تار می‌پیچد و بافت را سفت و برجسته می‌کند.',
+        p2: 'دهانه ده جفت حلقه‌ی بافته دارد که با یک بندِ چرمی بسته می‌شود. پشتِ کار گلیمِ ساده است تا سنگین نشود؛ بندها را از همان نخِ تار می‌تابیم، چون باید بیشتر از کیسه دوام بیاورند.',
+        specs: [['ابعاد', '۵۰×۱۱۰ سانتی‌متر'], ['بافت', 'سوماک روی گلیم'], ['بند', 'چرم و نخِ تار']]
+      },
+      en: {
+        name: 'Double Khorjin', line: 'Soumak saddlebag with twisted straps.',
+        p1: 'A khorjin is two bags joined by one continuous back, carried on a shoulder or over a saddle. The bags are woven in soumak — a weft that wraps around the warp and leaves the surface tight and raised.',
+        p2: 'The mouth has ten pairs of woven loops closed with a leather thong. The back is plain kilim so the weight stays down; the straps are twisted from the warp yarn itself, because they have to outlast the bag.',
+        specs: [['Size', '50 × 110 cm'], ['Weave', 'Soumak over kilim'], ['Straps', 'Leather and warp yarn']]
+      },
+      hot: [
+        { x: 50, y: 36, fa: ['دهانه و حلقه‌ها', 'ده جفت حلقه‌ی بافته، بستِ خورجین است.'], en: ['Mouth and loops', 'Ten pairs of woven loops close the bag.'] },
+        { x: 40, y: 50, fa: ['بافتِ سوماک', 'پود دورِ هر تار می‌پیچد و سطح را برجسته می‌کند.'], en: ['Soumak', 'The weft wraps each warp and leaves the surface raised.'] },
+        { x: 62, y: 58, fa: ['پشتِ گلیم‌باف', 'پشت ساده بافته شده تا خورجین سنگین نشود.'], en: ['Kilim back', 'The back is plain so the bag stays light.'] }
+      ]
+    },
+    {
+      id: 'p08', ch: 2, sku: 'SP-2204', price: 4300000, subject: 'shoe', palette: 'stone',
+      fa: {
+        name: 'گیوه‌ی ملکی', line: 'گیوه‌ی دست‌دوز با زیره‌ی چرم.',
+        p1: 'رویه‌ی گیوه را با سوزن و نخِ تابیده‌ی پنبه‌ای می‌دوزند؛ یک جفت، حدودِ چهل هزار کوک است و دو روز کار. الگو در کار نیست — اندازه را روی قالبِ چوبی درمی‌آورند.',
+        p2: 'زیره، چرمِ گاویِ دباغی‌شده است که با درفش و نخ محکم به رویه می‌خورد. گیوه‌ی نو کمی سفت است و بعد از یک هفته پوشیدن، قالبِ پای خودش را پیدا می‌کند.',
+        specs: [['سایز', '۳۸ تا ۴۴'], ['رویه', 'نخِ تابیده‌ی پنبه'], ['زیره', 'چرمِ دباغی']]
+      },
+      en: {
+        name: 'Malaki Giveh', line: 'Hand-sewn giveh on a leather sole.',
+        p1: 'The upper of a giveh is sewn with a needle and twisted cotton thread; one pair is about forty thousand stitches and two days of work. There is no pattern — the size is taken off a wooden last.',
+        p2: 'The sole is tanned cowhide, driven onto the upper with an awl and heavy thread. A new pair is stiff, and after a week of wear it finds the shape of its own foot.',
+        specs: [['Size', '38 to 44'], ['Upper', 'Twisted cotton thread'], ['Sole', 'Tanned hide']]
+      },
+      hot: [
+        { x: 46, y: 50, fa: ['رویه‌ی نخ‌دوز', 'هر جفت حدودِ چهل هزار کوک دارد.'], en: ['Sewn upper', 'About forty thousand stitches to the pair.'] },
+        { x: 55, y: 57, fa: ['درزِ زیره', 'درفش از چرم رد می‌شود و نخ دولا کشیده می‌شود.'], en: ['Sole seam', 'The awl goes through the hide and the thread is drawn double.'] },
+        { x: 63, y: 52, fa: ['پاشنه', 'پاشنه یک لایه چرمِ اضافه دارد.'], en: ['Heel', 'The heel carries one extra layer of hide.'] }
+      ]
+    },
+    {
+      id: 'p09', ch: 3, sku: 'SP-3301', price: 3800000, subject: 'textile', palette: 'stone',
+      fa: {
+        name: 'سفره‌ی نان', line: 'سفره‌ی کتان با لبه‌ی دست‌دوز.',
+        p1: 'سفره‌ی نان باید سبک باشد و تا بخورد، پس تار و پود هر دو نازک‌اند و بافت ساده. لبه‌ها را دو بار برمی‌گردانیم و با دست می‌دوزیم؛ ماشین در این ضخامت، لبه را موج می‌اندازد.',
+        p2: 'یک نخِ سرخ در فاصله‌ی معین بافته شده تا هنگامِ تا کردن بدانید کجا را بگیرید — نشانه‌ای که مادربزرگ‌ها می‌گذاشتند. سفره را سرد بشویید و در سایه پهن کنید.',
+        specs: [['ابعاد', '۸۰×۱۲۰ سانتی‌متر'], ['الیاف', 'کتان و پنبه'], ['لبه', 'دست‌دوزِ دولا']]
+      },
+      en: {
+        name: 'Bread Cloth', line: 'Linen cloth with a hand-sewn hem.',
+        p1: 'A bread cloth has to be light and fold flat, so warp and weft are both fine and the weave is plain. The edges are turned twice and hemmed by hand; at this thickness a machine leaves the edge wavy.',
+        p2: 'A red thread is woven in at a set interval so you know where to take hold when folding — a mark the grandmothers left. Wash it cold and dry it in the shade.',
+        specs: [['Size', '80 × 120 cm'], ['Fibre', 'Linen and cotton'], ['Edge', 'Double hand-sewn hem']]
+      },
+      hot: [
+        { x: 30, y: 30, fa: ['پودِ کتان', 'کتان از پنبه محکم‌تر است و با شست‌وشو نرم می‌شود.'], en: ['Linen weft', 'Linen is stronger than cotton and softens with washing.'] },
+        { x: 56, y: 46, fa: ['نخِ نشانه', 'نخِ سرخ، جایِ تا خوردن را نشان می‌دهد.'], en: ['Marker thread', 'The red thread marks where the cloth folds.'] },
+        { x: 50, y: 62, fa: ['لبه‌ی دولا', 'لبه دو بار برگشته و با دست دوخته شده است.'], en: ['Double hem', 'The edge is turned twice and hemmed by hand.'] }
+      ]
+    },
+    {
+      id: 'p10', ch: 3, sku: 'SP-3302', price: 14600000, subject: 'textile', palette: 'amber',
+      fa: {
+        name: 'ترمه‌ی یزد', line: 'رومیزیِ ترمه با بته‌ی بزرگ.',
+        p1: 'ترمه را روی دارِ مخصوصِ خودش می‌بافند، با پودهای رنگیِ اضافه که فقط در محدوده‌ی نقش رفت‌وآمد می‌کنند. پشتِ کار پر از نخِ شناور است؛ همان چیزی که ترمه را سنگین و گرم می‌کند.',
+        p2: 'بته‌جقه‌های این رومیزی از یک نقشه‌ی قدیمیِ کارگاه درآمده‌اند که تاریخش ۱۳۴۸ است. اندازه‌ی بته را بزرگ‌تر کرده‌ایم تا روی میزِ بلند هم خوانده شود.',
+        specs: [['ابعاد', '۴۰×۱۶۰ سانتی‌متر'], ['الیاف', 'پشم و ابریشم'], ['نقش', 'بته‌جقه']]
+      },
+      en: {
+        name: 'Yazd Termeh', line: 'Termeh runner with an enlarged boteh.',
+        p1: 'Termeh is woven on a loom of its own, with extra coloured wefts that travel only inside the figure. The back is full of floating threads; that is what makes termeh heavy and warm.',
+        p2: 'The boteh on this runner come from an old workshop cartoon dated 1348. We drew the figure larger so it still reads across a long table.',
+        specs: [['Size', '40 × 160 cm'], ['Fibre', 'Wool and silk'], ['Pattern', 'Boteh']]
+      },
+      hot: [
+        { x: 42, y: 34, fa: ['بته‌جقه', 'نوکِ بته همیشه به یک سمت خم می‌شود.'], en: ['Boteh', 'The tip of the boteh always bends to one side.'] },
+        { x: 64, y: 48, fa: ['پودِ اضافه', 'پودِ رنگی فقط داخلِ نقش رفت‌وآمد می‌کند.'], en: ['Extra weft', 'The coloured weft travels only inside the figure.'] },
+        { x: 50, y: 62, fa: ['پشتِ شناور', 'نخ‌های پشت بریده نمی‌شوند؛ گرمای ترمه از همین است.'], en: ['Floating back', 'The floats behind are not cut; that is where termeh gets its weight.'] }
+      ]
+    },
+    {
+      id: 'p11', ch: 3, sku: 'SP-3303', price: 185000000, subject: 'textile', palette: 'warm',
+      fa: {
+        name: 'قالیِ گلدانی', line: 'قالیِ دو در سه، بافتِ بیست‌وسه ماه.',
+        p1: 'این بزرگ‌ترین قطعه‌ی امسال است: دو متر در سه متر، رج‌شمارِ پنجاه، و دو بافنده که بیست‌وسه ماه کنارِ هم نشسته‌اند. در قالیِ بزرگ، هماهنگیِ دستِ دو نفر از خودِ نقشه سخت‌تر است.',
+        p2: 'گلدانِ مرکزی از تیره‌ترین رنگِ کار است تا وسطِ اتاق را نگه دارد. حاشیه سه لایه دارد و لایه‌ی بیرونی عمداً ساده مانده؛ اگر هر سه شلوغ بودند، قالی زیرِ مبل گم می‌شد.',
+        specs: [['ابعاد', '۲۰۰×۳۰۰ سانتی‌متر'], ['رج‌شمار', '۵۰ رج'], ['زمانِ بافت', '۲۳ ماه']]
+      },
+      en: {
+        name: 'Vase Carpet', line: 'Two by three metres, twenty-three months.',
+        p1: 'This is the largest piece of the year: two metres by three, fifty rows to the gereh, and two weavers sitting side by side for twenty-three months. On a large carpet, keeping two hands even is harder than the cartoon itself.',
+        p2: 'The central vase is the darkest colour in the work so it holds the middle of the room. The border runs in three bands and the outer one is deliberately plain; with all three busy, the carpet would disappear under the furniture.',
+        specs: [['Size', '200 × 300 cm'], ['Density', '50 rows'], ['Time', '23 months']]
+      },
+      hot: [
+        { x: 50, y: 40, fa: ['گلدانِ مرکزی', 'تیره‌ترین رنگِ کار، تا مرکزِ اتاق را نگه دارد.'], en: ['Central vase', 'The darkest colour in the work, to hold the middle of the room.'] },
+        { x: 27, y: 50, fa: ['رج‌شمارِ ۵۰', 'در هر ده سانتی‌مترِ مربع، نزدیک به پانصد گره.'], en: ['Fifty rows', 'Close to five hundred knots in every ten square centimetres.'] },
+        { x: 73, y: 44, fa: ['حاشیه‌ی سه‌لایه', 'لایه‌ی بیرونی عمداً ساده مانده است.'], en: ['Three-band border', 'The outer band is deliberately left plain.'] },
+        { x: 50, y: 62, fa: ['پرداختِ سطح', 'سطح سه بار قیچی شده تا نقش بیرون بزند.'], en: ['Shearing', 'The pile was sheared three times to bring the figure out.'] }
+      ]
+    },
+    {
+      id: 'p12', ch: 3, sku: 'SP-3304', price: 74000000, subject: 'textile', palette: 'clay',
+      fa: {
+        name: 'کناره‌ی راهرو', line: 'کناره‌ی راهرو با شیرازه‌ی دوبل.',
+        p1: 'کناره برای راهرو بافته شده، جایی که قطعه هر روز زیرِ پا می‌رود. گرهِ ترکی زده‌ایم چون سفت‌تر می‌نشیند، و پودِ ضخیم‌تری استفاده کرده‌ایم تا سطح زودتر ساییده نشود.',
+        p2: 'شیرازه را دوبل بافته‌ایم و ریشه‌ها گره خورده‌اند؛ دو جایی که یک کناره اول از همه خراب می‌شود. هر سه سال یک بار، شیرازه را برایتان دوباره می‌دوزیم.',
+        specs: [['ابعاد', '۸۰×۳۰۰ سانتی‌متر'], ['بافت', 'گرهِ ترکی'], ['شیرازه', 'دوبل']]
+      },
+      en: {
+        name: 'Hall Runner', line: 'Hall runner with a doubled selvedge.',
+        p1: 'The runner is woven for a hallway, where a piece goes underfoot every day. We used the symmetric knot because it sits tighter, and a heavier weft so the surface wears down slower.',
+        p2: 'The selvedge is doubled and the fringes are knotted — the two places a runner fails first. Every three years we re-sew the selvedge for you.',
+        specs: [['Size', '80 × 300 cm'], ['Weave', 'Symmetric knot'], ['Selvedge', 'Doubled']]
+      },
+      hot: [
+        { x: 50, y: 32, fa: ['گرهِ ترکی', 'گرهِ متقارن سفت‌تر می‌نشیند و دیرتر باز می‌شود.'], en: ['Symmetric knot', 'The symmetric knot sits tighter and loosens later.'] },
+        { x: 27, y: 50, fa: ['شیرازه‌ی دوبل', 'لبه دو بار دوخته شده، چون اول از همه می‌ساید.'], en: ['Doubled selvedge', 'The edge is sewn twice, because it wears first.'] },
+        { x: 50, y: 62, fa: ['ریشه‌ی گره‌خورده', 'ریشه‌ها گره خورده‌اند تا رج‌ها باز نشوند.'], en: ['Knotted fringe', 'The fringes are knotted so the rows cannot open.'] }
+      ]
+    }
+  ];
+
+  /* ── small helpers ───────────────────────────────────── */
+
+  var updaters = [];
+  function bind(fn) { updaters.push(fn); fn(); }
+
+  function el(tag, cls, html) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html != null) n.innerHTML = html;
+    return n;
+  }
+
+  function digits(str) { return lang === 'fa' ? K.toFa(String(str)).replace(/,/g, '٬') : String(str); }
+  function money(v) { return digits(v.toLocaleString('en-US')); }
+  function pad(n) { return digits(n < 10 ? '0' + n : String(n)); }
+
+  function media(p) {
+    var hot = p.hot.map(function (h) {
+      return { x: h.x, y: h.y, title: h[lang][0], body: h[lang][1] };
+    });
+    return [
+      { type: 'photo', seed: p.sku + '-a', hotspots: hot, subject: p.subject, palette: p.palette },
+      { type: 'video', seed: p.sku + '-a', duration: 12, subject: p.subject, palette: p.palette },
+      { type: 'spin', seed: p.sku + '-a', subject: p.subject, palette: p.palette },
+      { type: 'photo', seed: p.sku + '-b', hotspots: [], subject: p.subject, palette: p.palette }
+    ];
+  }
+
+  var mounts = [];
+  function mount(host, p) {
+    mounts.push({ host: host, cls: host.className, p: p });
+    K.mountMedia(host, media(p), { title: p[lang].name, sku: p.sku }, lang);
+  }
+
+  /* mountMedia binds its own click handler every time it runs, and the
+     handler holds the viewer of the language it was mounted in. Swapping
+     in a fresh node before re-mounting keeps a language change from
+     leaving the old viewer stacked behind the new one. */
+  function remount() {
+    mounts.forEach(function (m) {
+      var fresh = document.createElement(m.host.tagName);
+      fresh.className = m.cls;
+      m.host.replaceWith(fresh);
+      m.host = fresh;
+      K.mountMedia(fresh, media(m.p), { title: m.p[lang].name, sku: m.p.sku }, lang);
+    });
+  }
+
+  function openDetail(p) { K.open(media(p), { title: p[lang].name, sku: p.sku }, lang, 0); }
+
+  /* ── the price-inquiry list ──────────────────────────── */
+
+  var list = [];
+  var sheet = document.getElementById('sp-sheet');
+  var scrim = document.getElementById('sp-scrim');
+  var sheetBody = document.getElementById('sp-sheet-body');
+  var countEl = document.getElementById('sp-count');
+  var sumEl = document.getElementById('sp-sum');
+  var textOut = document.getElementById('sp-text-out');
+  var textToggle = document.getElementById('sp-text-toggle');
+  var openSheetBtn = document.getElementById('sp-open-sheet');
+  var lastFocus = null;
+  var addButtons = [];
+
+  function inList(p) { return list.indexOf(p) > -1; }
+
+  function toggleItem(p) {
+    var i = list.indexOf(p);
+    if (i > -1) list.splice(i, 1); else list.push(p);
+    renderList();
+  }
+
+  function renderList() {
+    countEl.textContent = digits(list.length);
+    sumEl.textContent = money(list.reduce(function (s, p) { return s + p.price; }, 0));
+    addButtons.forEach(function (b) { b.sync(); });
+
+    sheetBody.innerHTML = '';
+    if (!list.length) {
+      sheetBody.appendChild(el('p', 'cat-inquiry__empty', t('empty')));
+    } else {
+      var wrap = el('div', 'cat-inquiry');
+      list.forEach(function (p) {
+        var row = el('div', 'sp-row');
+        var img = el('img');
+        img.src = K.thumb({ seed: p.sku + '-a', subject: p.subject, palette: p.palette });
+        img.alt = '';
+        var mid = el('div');
+        mid.appendChild(el('div', 'sp-row__name', p[lang].name));
+        mid.appendChild(el('div', 'sp-row__meta',
+          '<span class="cat-sku num">' + p.sku + '</span><span class="num">' + money(p.price) + ' ' + t('toman') + '</span>'));
+        var rm = el('button', 'cat-btn cat-btn--icon cat-btn--quiet', ICONS.close);
+        rm.type = 'button';
+        rm.setAttribute('aria-label', t('remove') + ' — ' + p[lang].name);
+        rm.addEventListener('click', function () { toggleItem(p); });
+        row.appendChild(img); row.appendChild(mid); row.appendChild(rm);
+        wrap.appendChild(row);
+      });
+      sheetBody.appendChild(wrap);
+    }
+
+    textOut.value = list.map(function (p) {
+      return p.sku + '  ' + p.en.name + '  ' + p.price.toLocaleString('en-US') + ' toman';
+    }).join('\n');
+    textToggle.disabled = !list.length;
+  }
+
+  function setSheet(open) {
+    sheet.dataset.open = open ? 'true' : 'false';
+    scrim.dataset.open = open ? 'true' : 'false';
+    sheet.setAttribute('aria-hidden', open ? 'false' : 'true');
+    document.querySelectorAll('[data-region]').forEach(function (n) { n.inert = open; });
+    if (open) {
+      lastFocus = document.activeElement;
+      document.getElementById('sp-close-sheet').focus();
+    } else if (lastFocus) {
+      lastFocus.focus();
+      lastFocus = null;
+    }
+  }
+
+  openSheetBtn.addEventListener('click', function () { setSheet(true); });
+  document.getElementById('sp-close-sheet').addEventListener('click', function () { setSheet(false); });
+  scrim.addEventListener('click', function () { setSheet(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.dataset.open === 'true') { e.preventDefault(); setSheet(false); }
+  });
+  textToggle.addEventListener('click', function () {
+    var show = textOut.hidden;
+    textOut.hidden = !show;
+    textToggle.setAttribute('aria-expanded', show ? 'true' : 'false');
+    textToggle.textContent = show ? t('hideList') : t('textList');
+    if (show) textOut.select();
+  });
+
+  function addButton(p, short) {
+    var b = el('button', 'cat-btn cat-btn--ghost sp-add');
+    b.type = 'button';
+    b.sync = function () {
+      var on = inList(p);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.innerHTML = (on ? ICONS.check : ICONS.plus).replace('<svg', '<svg class="sp-icon"') +
+        '<span>' + t(on ? (short ? 'addedShort' : 'added') : (short ? 'addShort' : 'add')) + '</span>';
+    };
+    b.addEventListener('click', function () { toggleItem(p); });
+    addButtons.push(b);
+    bind(b.sync);
+    return b;
+  }
+
+  /* ── page chrome ─────────────────────────────────────── */
+
+  function paintStatic() {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+    document.title = t('title');
+    document.querySelectorAll('[data-i]').forEach(function (n) { n.textContent = t(n.dataset.i); });
+    document.querySelectorAll('[data-i-label]').forEach(function (n) { n.setAttribute('aria-label', t(n.dataset.iLabel)); });
+    document.querySelectorAll('[data-icon]').forEach(function (n) { n.innerHTML = ICONS[n.dataset.icon]; });
+    textToggle.textContent = textOut.hidden ? t('textList') : t('hideList');
+  }
+
+  document.getElementById('sp-cover-art').src =
+    K.image('sepidar-cover', { w: 900, h: 1125, subject: 'textile', palette: 'warm', t: 0.32 });
+
+  var noteHost = document.getElementById('sp-note');
+  [['loom', 1], ['vat', 2], ['needle', 3]].forEach(function (pair) {
+    var item = el('div', 'sp-note__item');
+    item.innerHTML = icon(pair[0], 'sp-note__icon') +
+      '<div><h2 data-i="noteTitle' + pair[1] + '"></h2><p data-i="noteBody' + pair[1] + '"></p></div>';
+    noteHost.appendChild(item);
+  });
+
+  var metaHost = document.getElementById('sp-colophon-meta');
+  [1, 2, 3, 4].forEach(function (i) {
+    metaHost.appendChild(el('div', '', '<span data-i="metaK' + i + '"></span><span data-i="metaV' + i + '"></span>'));
+  });
+
+  var navHost = document.getElementById('sp-nav');
+  CHAPTERS.forEach(function (c) {
+    var a = el('a');
+    a.href = '#ch-' + c.n;
+    a.dataset.chLink = String(c.n);
+    bind(function () { a.textContent = c[lang].title; });
+    navHost.appendChild(a);
+  });
+
+  /* ── the chapters ────────────────────────────────────── */
+
+  var story = document.getElementById('story');
+  var chapters = [];
+  var shelves = [];
+
+  CHAPTERS.forEach(function (c) {
+    var items = PRODUCTS.filter(function (p) { return p.ch === c.n; });
+
+    var section = el('section', 'sp-ch');
+    section.id = 'ch-' + c.n;
+    section.dataset.ch = String(c.n);
+    var page = el('div', 'cat-page');
+    section.appendChild(page);
+
+    var head = el('div', 'sp-ch__head');
+    var num = el('p', 'sp-ch__n');
+    var headText = el('div');
+    var kicker = el('p', 'sp-ch__kicker');
+    var h2 = el('h2');
+    var lead = el('p', 'sp-ch__lead');
+    headText.appendChild(kicker); headText.appendChild(h2); headText.appendChild(lead);
+    head.appendChild(num); head.appendChild(headText);
+    page.appendChild(head);
+    bind(function () {
+      num.textContent = pad(c.n);
+      kicker.textContent = c[lang].kicker;
+      h2.textContent = c[lang].title;
+      lead.textContent = c[lang].lead;
+    });
+
+    var scroll = el('div', 'sp-scroll');
+    scroll.dataset.mode = 'pinned';
+    var track = el('div', 'sp-track');
+    var stage = el('aside', 'sp-stage');
+    var rail = el('nav', 'sp-rail');
+    var deck = el('div', 'sp-deck');
+    rail.innerHTML = '<span class="sp-rail__fill"></span>';
+    var ticks = el('ol', 'sp-rail__ticks');
+    rail.appendChild(ticks);
+    bind(function () { rail.setAttribute('aria-label', t('railLabel')); });
+    stage.appendChild(rail); stage.appendChild(deck);
+    scroll.appendChild(track); scroll.appendChild(stage);
+    page.appendChild(scroll);
+
+    var steps = [];
+
+    items.forEach(function (p, i) {
+      /* one step of story text */
+      var step = el('article', 'sp-step');
+      step.id = 'step-' + p.id;
+      var body = el('div', 'sp-step__body');
+      var idx = el('p', 'sp-step__idx');
+      var name = el('h3');
+      var alt = el('p', 'sp-name-alt');
+      var copy = el('div', 'sp-step__copy');
+      var para1 = el('p');
+      var para2 = el('p');
+      copy.appendChild(para1); copy.appendChild(para2);
+      var specs = el('dl', 'sp-specs');
+      var foot = el('div', 'sp-step__foot');
+      var price = el('p', 'cat-price');
+      var priceN = el('span', 'num');
+      var unit = el('span', 'cat-price__unit sp-price-unit');
+      price.appendChild(priceN); price.appendChild(unit);
+      var detail = el('button', 'cat-btn cat-btn--quiet');
+      detail.type = 'button';
+      detail.addEventListener('click', function () { openDetail(p); });
+      foot.appendChild(price); foot.appendChild(detail); foot.appendChild(addButton(p));
+      body.appendChild(idx); body.appendChild(name); body.appendChild(alt);
+      body.appendChild(copy); body.appendChild(specs); body.appendChild(foot);
+      var slot = el('div', 'sp-step__slot');
+      step.appendChild(body); step.appendChild(slot);
+      track.appendChild(step);
+
+      /* the plate this step pins to the stage */
+      var plate = el('figure', 'sp-plate');
+      var cap = el('figcaption', 'sp-plate__cap');
+      var capIdx = el('span', 'sp-plate__idx');
+      var capName = el('span', 'sp-plate__name');
+      var capHint = el('span', 'sp-plate__hint');
+      cap.appendChild(capIdx); cap.appendChild(capName); cap.appendChild(capHint);
+      var host = el('div', 'sp-plate__media');
+      plate.appendChild(cap); plate.appendChild(host);
+      plate.inert = true;
+      deck.appendChild(plate);
+
+      var tick = el('button', 'sp-tick', '<span class="sp-tick__dot"></span>');
+      tick.type = 'button';
+      tick.addEventListener('click', function () {
+        step.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
+      });
+      var li = document.createElement('li');
+      li.appendChild(tick);
+      ticks.appendChild(li);
+
+      bind(function () {
+        var s = p[lang];
+        idx.textContent = pad(i + 1) + ' / ' + pad(items.length);
+        name.textContent = s.name;
+        alt.textContent = (lang === 'fa' ? p.en : p.fa).name;
+        alt.dir = lang === 'fa' ? 'ltr' : 'rtl';
+        para1.textContent = s.p1;
+        para2.textContent = s.p2;
+        specs.innerHTML = s.specs.map(function (row) {
+          return '<dt>' + row[0] + '</dt><dd>' + row[1] + '</dd>';
+        }).join('');
+        priceN.textContent = money(p.price);
+        unit.textContent = t('toman');
+        detail.innerHTML = ICONS.zoom.replace('<svg', '<svg class="sp-icon"') + '<span>' + t('detail') + '</span>';
+        capIdx.textContent = pad(i + 1);
+        capName.textContent = s.name;
+        capHint.textContent = digits(p.hot.length) + ' ' + t('points');
+        tick.setAttribute('aria-label', t('goStep') + ' ' + s.name);
+      });
+
+      mount(host, p);
+      steps.push({ el: step, plate: plate, slot: slot, tick: tick });
+    });
+
+    /* the conventional row, so the chapter ends as a catalogue page */
+    var shelf = el('section', 'sp-shelf');
+    shelf.id = 'shelf-' + c.n;
+    var shelfHead = el('div', 'sp-shelf__head');
+    var shelfTitle = el('h3');
+    var shelfNote = el('p', 'sp-shelf__note');
+    shelfHead.appendChild(shelfTitle); shelfHead.appendChild(shelfNote);
+    var grid = el('div', 'sp-shelf__grid');
+    shelf.appendChild(shelfHead); shelf.appendChild(grid);
+    page.appendChild(shelf);
+    bind(function () { shelfTitle.textContent = t('shelfTitle'); shelfNote.textContent = t('shelfNote'); });
+
+    items.forEach(function (p) {
+      var card = el('article', 'cat-card sp-card');
+      var cardMedia = el('div', 'cat-card__media');
+      var cName = el('h4', 'cat-card__name');
+      var cAlt = el('p', 'cat-card__name-en sp-name-alt');
+      var cLine = el('p', 'sp-card__line');
+      var meta = el('div', 'cat-card__meta');
+      var cPrice = el('p', 'cat-price');
+      var cPriceN = el('span', 'num');
+      var cUnit = el('span', 'cat-price__unit sp-price-unit');
+      cPrice.appendChild(cPriceN); cPrice.appendChild(cUnit);
+      var sku = el('span', 'cat-sku num', p.sku);
+      meta.appendChild(cPrice); meta.appendChild(sku);
+      var acts = el('div', 'sp-card__act');
+      var cDetail = el('button', 'cat-btn cat-btn--quiet');
+      cDetail.type = 'button';
+      cDetail.addEventListener('click', function () { openDetail(p); });
+      acts.appendChild(cDetail); acts.appendChild(addButton(p, true));
+      card.appendChild(cardMedia); card.appendChild(cName); card.appendChild(cAlt);
+      card.appendChild(cLine); card.appendChild(meta); card.appendChild(acts);
+      grid.appendChild(card);
+
+      bind(function () {
+        var s = p[lang];
+        cName.textContent = s.name;
+        cAlt.textContent = (lang === 'fa' ? p.en : p.fa).name;
+        cAlt.dir = lang === 'fa' ? 'ltr' : 'rtl';
+        cLine.textContent = s.line;
+        cPriceN.textContent = money(p.price);
+        cUnit.textContent = t('toman');
+        cDetail.textContent = t('detail');
+      });
+
+      mount(cardMedia, p);
+    });
+
+    story.appendChild(section);
+    shelves.push(grid);
+    chapters.push({ n: c.n, el: section, scroll: scroll, stage: stage, deck: deck, steps: steps, live: false, shown: 0, target: 0, active: -1 });
+  });
+
+  /* The staggered entrance is only worth spending when the row is about
+     to be looked at. */
+  var shelfObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('cat-stagger');
+      shelfObserver.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -12% 0px' });
+  shelves.forEach(function (g) { shelfObserver.observe(g); });
+
+  /* ── scrollytelling ──────────────────────────────────────
+     The stage is a plain sticky box: nothing hijacks the wheel and
+     nothing is repositioned by script, so fast scrolling and resizes
+     cost only the observer work below. An IntersectionObserver over a
+     band across the middle of the stage drives which step is current;
+     geometry inside the callback settles ties when several steps cross
+     the band between two frames. */
+
+  function reduced() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  var stepIndex = new Map();
+  chapters.forEach(function (ch) {
+    ch.steps.forEach(function (s, i) { stepIndex.set(s.el, { ch: ch, i: i }); });
+  });
+
+  var inBand = new Set();
+  var stepObserver = null;
+
+  function focusLine() {
+    var live = chapters.find(function (ch) { return ch.live; }) || chapters[0];
+    var box = live.stage.getBoundingClientRect();
+    var mid = box.height ? box.top + box.height / 2 : window.innerHeight * 0.45;
+    return Math.min(Math.max(mid, window.innerHeight * 0.25), window.innerHeight * 0.75);
+  }
+
+  function buildStepObserver() {
+    if (stepObserver) stepObserver.disconnect();
+    inBand.clear();
+    var vh = window.innerHeight;
+    var line = focusLine();
+    var band = Math.max(60, vh * 0.12);
+    var top = Math.round(line - band / 2);
+    var bottom = Math.round(vh - line - band / 2);
+    stepObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) inBand.add(e.target); else inBand.delete(e.target);
+      });
+      var touched = new Set();
+      entries.forEach(function (e) {
+        var rec = stepIndex.get(e.target);
+        if (rec) touched.add(rec.ch);
+      });
+      touched.forEach(resolve);
+      schedule();
+    }, { rootMargin: -top + 'px 0px ' + -bottom + 'px 0px', threshold: 0 });
+    chapters.forEach(function (ch) {
+      ch.steps.forEach(function (s) { stepObserver.observe(s.el); });
+    });
+  }
+
+  function setActive(ch, i) {
+    if (ch.active === i) return;
+    ch.active = i;
+    ch.steps.forEach(function (s, j) {
+      var on = j === i;
+      s.el.dataset.on = on ? 'true' : 'false';
+      s.plate.dataset.on = on ? 'true' : 'false';
+      s.plate.inert = !on && ch.scroll.dataset.mode === 'pinned';
+      s.tick.setAttribute('aria-current', on ? 'true' : 'false');
+    });
+  }
+
+  function resolve(ch) {
+    var line = focusLine();
+    var best = -1, dist = Infinity;
+    ch.steps.forEach(function (s, i) {
+      var box = s.el.getBoundingClientRect();
+      var banded = inBand.has(s.el);
+      var d = Math.abs(box.top + box.height / 2 - line) - (banded ? 1e6 : 0);
+      if (d < dist) { dist = d; best = i; }
+    });
+    if (best > -1) setActive(ch, best);
+  }
+
+  function progressOf(ch) {
+    var box = ch.scroll.getBoundingClientRect();
+    var line = focusLine();
+    if (!box.height) return 0;
+    return Math.min(Math.max((line - box.top) / box.height, 0), 1);
+  }
+
+  var frame = 0;
+  function schedule() { if (!frame) frame = requestAnimationFrame(tick); }
+
+  function tick() {
+    frame = 0;
+    var again = false;
+    var soft = !reduced();
+    chapters.forEach(function (ch) {
+      if (!ch.live) return;
+      ch.target = progressOf(ch);
+      var gap = ch.target - ch.shown;
+      if (!soft || Math.abs(gap) < 0.001) ch.shown = ch.target;
+      else { ch.shown += gap * 0.16; again = true; }
+      ch.el.style.setProperty('--sp-p', ch.shown.toFixed(4));
+      resolve(ch);
+    });
+    if (again) schedule();
+  }
+
+  var chapterObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var ch = chapters.find(function (c) { return c.el === e.target; });
+      if (!ch) return;
+      ch.live = e.isIntersecting;
+      if (ch.live) { ch.shown = progressOf(ch); resolve(ch); }
+      var link = navHost.querySelector('[data-ch-link="' + ch.n + '"]');
+      if (link) link.setAttribute('aria-current', ch.live ? 'true' : 'false');
+    });
+    schedule();
+  }, { threshold: 0 });
+  chapters.forEach(function (ch) { chapterObserver.observe(ch.el); });
+
+  /* Pinning only makes sense with room beside the text, and it is the
+     wrong idea entirely when motion is unwelcome: in both cases each
+     plate moves back into its own step and the column reads straight
+     down. */
+  function layout() {
+    var linear = reduced() || window.innerWidth < 900;
+    chapters.forEach(function (ch) {
+      var mode = linear ? 'linear' : 'pinned';
+      if (ch.scroll.dataset.mode === mode) return;
+      ch.scroll.dataset.mode = mode;
+      ch.steps.forEach(function (s) {
+        (linear ? s.slot : ch.deck).appendChild(s.plate);
+        s.plate.inert = false;
+        if (linear) { s.plate.dataset.on = 'true'; s.el.dataset.on = 'true'; }
+      });
+      if (!linear) { ch.active = -1; resolve(ch); }
+    });
+    buildStepObserver();
+    schedule();
+  }
+
+  var barBox = new ResizeObserver(function (entries) {
+    var h = entries[0].target.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--sp-bar', Math.round(h) + 'px');
+  });
+  barBox.observe(document.querySelector('.sp-bar'));
+
+  var resizeTimer = 0;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(layout, 120);
+    schedule();
+  });
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', layout);
+
+  /* ── language ────────────────────────────────────────── */
+
+  function setLang(next) {
+    if (next === lang) return;
+    lang = next;
+    document.querySelectorAll('[data-lang]').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false');
+    });
+    paintStatic();
+    updaters.forEach(function (fn) { fn(); });
+    renderList();
+    remount();
+    schedule();
+  }
+
+  document.querySelectorAll('[data-lang]').forEach(function (b) {
+    b.addEventListener('click', function () { setLang(b.dataset.lang); });
+  });
+
+  paintStatic();
+  renderList();
+  layout();
+  schedule();
+})();
+</script>
+</body>
+</html>

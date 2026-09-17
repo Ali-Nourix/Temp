@@ -951,8 +951,17 @@ a:hover { color: var(--ink); }
     }
   };
 
+  /* Subjects are drawn in a fixed 1000-wide space, standing on a baseline
+     at y=845 and rising to about y=190. Keeping those constants here lets
+     a frame of any shape re-place the same drawing. */
+  var SUBJECT_BASE = 845;
+  var SUBJECT_RISE = 660;
+
   /* Build one SVG frame. `t` (0..1) drives the synthetic video: the light
-     sweeps and the subject drifts, so successive frames read as footage. */
+     sweeps and the subject drifts, so successive frames read as footage.
+     The frame is composed for the requested aspect rather than cropped to
+     it — a wide box gets a small object in a wide room, not a portrait
+     shot with its top and bottom sliced off. */
   function svgFrame(seed, opts) {
     opts = opts || {};
     var r = rng(seed);
@@ -961,11 +970,18 @@ a:hover { color: var(--ink); }
     var t = opts.t || 0;
     var spin = opts.spin || 0;
     var w = opts.w || 1000, h = opts.h || 1250;
+    var ratio = opts.ratio || (w / h);
+    var vh = round(1000 / ratio, 1);
     var id = 'g' + hash(seed + ':' + subject).toString(36);
 
+    /* Stand the subject on a baseline set below centre, scaled to leave
+       headroom. Capped at 1 so the default portrait frame is unchanged. */
+    var baseline = vh * 0.78;
+    var fit = Math.min(1, (vh * 0.60) / SUBJECT_RISE);
+
     var lightX = 30 + Math.sin(t * Math.PI * 2) * 22;
-    var drift = Math.sin(t * Math.PI * 2) * 12;
-    var scale = 1 + Math.sin(t * Math.PI * 2 + 1) * 0.02;
+    var drift = Math.sin(t * Math.PI * 2) * 12 * fit;
+    var breathe = 1 + Math.sin(t * Math.PI * 2 + 1) * 0.02;
     /* A 360 spin narrows the subject and shifts its highlight — enough to
        read as rotation without pretending to be a real photogrammetry set. */
     var spinSquash = 0.78 + Math.abs(Math.cos(spin * Math.PI / 180)) * 0.22;
@@ -974,13 +990,17 @@ a:hover { color: var(--ink); }
     var body = draw[subject] ? draw[subject](r, pal) : draw.vase(r, pal);
     var grain = '';
     var gr = rng(seed + ':grain');
-    for (var i = 0; i < 90; i++) {
-      grain += '<circle cx="' + round(gr() * 1000, 1) + '" cy="' + round(gr() * 1250, 1) +
+    var grains = Math.round(90 * Math.min(1, vh / 1250));
+    for (var i = 0; i < grains; i++) {
+      grain += '<circle cx="' + round(gr() * 1000, 1) + '" cy="' + round(gr() * vh, 1) +
         '" r="' + round(0.6 + gr() * 1.6, 2) + '" fill="#000" opacity="' + round(0.02 + gr() * 0.05, 3) + '"/>';
     }
 
+    var sx = round(fit * spinSquash * breathe, 4);
+    var sy = round(fit * breathe, 4);
+
     return (
-      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="' + w + '" height="' + h +
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 ' + vh + '" width="' + w + '" height="' + h +
       '" preserveAspectRatio="xMidYMid slice" role="img">' +
       '<defs>' +
       '<linearGradient id="bg' + id + '" x1="0" y1="0" x2="0.4" y2="1">' +
@@ -996,14 +1016,16 @@ a:hover { color: var(--ink); }
       '<stop offset="0.55" stop-color="#000" stop-opacity="0"/>' +
       '<stop offset="1" stop-color="#000" stop-opacity="0.22"/></radialGradient>' +
       '</defs>' +
-      '<rect width="1000" height="1250" fill="url(#bg' + id + ')"/>' +
-      '<rect width="1000" height="1250" fill="url(#key' + id + ')"/>' +
+      '<rect width="1000" height="' + vh + '" fill="url(#bg' + id + ')"/>' +
+      '<rect width="1000" height="' + vh + '" fill="url(#key' + id + ')"/>' +
       /* the surface the object sits on */
-      '<rect y="880" width="1000" height="370" fill="' + pal.deep + '" opacity="0.07"/>' +
-      '<ellipse cx="500" cy="' + (872 + drift * 0.4) + '" rx="' + round(300 * spinSquash) + '" ry="34" fill="' + pal.deep + '" opacity="0.2"/>' +
-      '<g transform="translate(0 ' + round(drift) + ') translate(500 640) scale(' + round(spinSquash * scale, 3) + ' ' + round(scale, 3) + ') translate(-500 -640)">' +
+      '<rect y="' + round(baseline + 30 * fit, 1) + '" width="1000" height="' + vh + '" fill="' + pal.deep + '" opacity="0.07"/>' +
+      '<ellipse cx="500" cy="' + round(baseline + 24 * fit + drift * 0.4, 1) + '" rx="' + round(300 * spinSquash * fit, 1) +
+      '" ry="' + round(34 * fit, 1) + '" fill="' + pal.deep + '" opacity="0.2"/>' +
+      '<g transform="translate(0 ' + round(drift, 2) + ') translate(500 ' + round(baseline, 1) + ') scale(' + sx + ' ' + sy +
+      ') translate(-500 -' + SUBJECT_BASE + ')">' +
       body + '</g>' +
-      '<rect width="1000" height="1250" fill="url(#vig' + id + ')"/>' +
+      '<rect width="1000" height="' + vh + '" fill="url(#vig' + id + ')"/>' +
       grain +
       '</svg>'
     );
@@ -1041,16 +1063,32 @@ a:hover { color: var(--ink); }
     return svgUrl(d.seed, { w: 1000, h: 1250, palette: d.palette, subject: d.subject, t: t || 0 });
   }
 
+  /* The poster a card shows is composed for that card's box, so a wide or
+     square slot gets artwork made for it rather than a portrait shot
+     cropped by object-fit. */
+  function posterUrl(d, ratio) {
+    if (d.poster) return d.poster;
+    if (d.src && d.type === 'photo') return d.src;
+    var h = Math.round(1000 / (ratio || 0.8));
+    return svgUrl(d.seed, { w: 1000, h: h, ratio: ratio || 0.8, palette: d.palette, subject: d.subject });
+  }
+
+  function boxRatio(node) {
+    var r = node.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 ? r.width / r.height : 0.8;
+  }
+
   /* ── synthetic video ──────────────────────────────────────
      No footage yet, but the transport must be real: play, pause, scrub,
      seek, loop, mute, and a time readout that tracks the timeline. The
      canvas renders frames of the procedural scene against a wall clock,
      so swapping in <video src> later changes nothing above this layer. */
 
-  function SyntheticClip(canvas, descriptor) {
+  function SyntheticClip(canvas, descriptor, ratio) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.d = descriptor;
+    this.ratio = ratio || 0.8;
     this.duration = descriptor.duration;
     this.time = 0;
     this.playing = false;
@@ -1067,10 +1105,12 @@ a:hover { color: var(--ink); }
 
   SyntheticClip.prototype._buildFrames = function () {
     var n = SyntheticClip.FRAMES;
+    var w = 800, h = Math.round(800 / this.ratio);
     for (var i = 0; i < n; i++) {
       var img = new Image();
       img.src = svgUrl(this.d.seed, {
-        w: 800, h: 1000, palette: this.d.palette, subject: this.d.subject, t: i / n
+        w: w, h: h, ratio: this.ratio,
+        palette: this.d.palette, subject: this.d.subject, t: i / n
       });
       this._frames.push(img);
     }
@@ -1782,7 +1822,8 @@ a:hover { color: var(--ink); }
     }
     host.setAttribute('aria-label', (meta.title || '') + ' — ' + t.detail);
 
-    var img = el('img', '', { src: d.poster || fullUrl(d), alt: meta.title || '', loading: 'lazy' });
+    var ratio = boxRatio(host);
+    var img = el('img', '', { src: posterUrl(d, ratio), alt: meta.title || '', loading: 'lazy' });
     host.appendChild(img);
 
     var cue = el('span', 'ck-cue');
@@ -1807,7 +1848,7 @@ a:hover { color: var(--ink); }
         if (!preview) {
           var c = el('canvas');
           host.appendChild(c);
-          preview = new SyntheticClip(c, d);
+          preview = new SyntheticClip(c, d, boxRatio(host));
           preview.duration = d.duration;
         }
         host.classList.add('ck-previewing');
