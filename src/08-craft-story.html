@@ -20,6 +20,12 @@
 }
 
 body { overflow-wrap: break-word; }
+/* the design system flips type on [dir="ltr"], but body's own font rule
+   outranks it once dir lives on <html> — restate it for the Latin pass */
+[dir="ltr"] body {
+  font-family: var(--font-en-ui); line-height: var(--lh-en-body); letter-spacing: var(--tracking-en);
+}
+[dir="ltr"] h4 { font-family: var(--font-en-display); line-height: var(--lh-en-tight); }
 
 .sp-skip {
   position: fixed; z-index: 90; inset-block-start: var(--s-3); inset-inline-start: var(--s-4);
@@ -69,9 +75,10 @@ body { overflow-wrap: break-word; }
   gap: clamp(32px, 5vw, 80px); align-items: end;
   padding-block: clamp(40px, 8vh, 104px) clamp(40px, 7vh, 88px);
 }
-.sp-cover__kicker {
-  font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
-  color: var(--ink-muted); margin-block-end: var(--s-5);
+.sp-cover__kicker { font-size: var(--t-xs); color: var(--ink-muted); margin-block-end: var(--s-5); }
+/* caps tracking belongs to the Latin side only — Persian keeps its joins */
+[dir="ltr"] .sp-cover__kicker, [dir="ltr"] .sp-ch__kicker, [dir="ltr"] .sp-stage__ch {
+  letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
 }
 .sp-cover h1 { font-size: var(--t-3xl); font-weight: var(--w-light); letter-spacing: -0.01em; }
 .sp-cover__sub {
@@ -127,10 +134,7 @@ body { overflow-wrap: break-word; }
   font-family: var(--font-num); font-size: var(--t-2xl); line-height: 1; color: var(--accent);
   padding-block-start: 0.12em;
 }
-.sp-ch__kicker {
-  font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
-  color: var(--ink-faint); margin-block-end: var(--s-3);
-}
+.sp-ch__kicker { font-size: var(--t-xs); color: var(--ink-faint); margin-block-end: var(--s-3); }
 .sp-ch h2 { font-size: var(--t-xl); font-weight: var(--w-regular); }
 .sp-ch__lead { margin-block-start: var(--s-4); font-size: var(--t-md); color: var(--ink-muted); max-width: 58ch; }
 
@@ -147,10 +151,7 @@ body { overflow-wrap: break-word; }
 }
 .sp-step[data-on="true"] .sp-step__body,
 .sp-step:focus-within .sp-step__body { opacity: 1; border-inline-start-color: var(--accent); }
-.sp-step__idx {
-  font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint);
-  letter-spacing: var(--tracking-en-caps);
-}
+.sp-step__idx { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
 .sp-step h3 { font-size: var(--t-lg); font-weight: var(--w-regular); margin-block-start: var(--s-2); }
 .sp-name-alt { font-size: var(--t-sm); color: var(--ink-muted); margin-block-start: var(--s-1); }
 .sp-name-alt[dir="ltr"] { font-family: var(--font-en-ui); letter-spacing: var(--tracking-en); direction: ltr; }
@@ -169,7 +170,7 @@ body { overflow-wrap: break-word; }
   display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4);
   margin-block-start: var(--s-5);
 }
-.sp-step__foot .cat-price { margin-inline-end: auto; }
+.sp-step__acts { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-inline-start: auto; }
 .sp-price-unit { font-size: var(--t-xs); color: var(--ink-muted); font-family: var(--font-fa-ui); }
 
 /* ── the pinned stage ───────────────────────────────────── */
@@ -181,7 +182,7 @@ body { overflow-wrap: break-word; }
   grid-column: 2; grid-row: 2; display: flex; flex-wrap: wrap; gap: var(--s-3);
   align-items: baseline; font-size: var(--t-xs); color: var(--ink-faint);
 }
-.sp-stage__ch { color: var(--accent); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; }
+.sp-stage__ch { color: var(--accent); }
 .sp-stage__hint { margin-inline-start: auto; }
 .sp-deck {
   grid-column: 2; grid-row: 1;
@@ -1095,7 +1096,9 @@ body { overflow-wrap: break-word; }
       var detail = el('button', 'cat-btn cat-btn--quiet');
       detail.type = 'button';
       detail.addEventListener('click', function () { openDetail(p); });
-      foot.appendChild(price); foot.appendChild(detail); foot.appendChild(addButton(p));
+      var acts = el('div', 'sp-step__acts');
+      acts.appendChild(detail); acts.appendChild(addButton(p));
+      foot.appendChild(price); foot.appendChild(acts);
       body.appendChild(idx); body.appendChild(name); body.appendChild(alt);
       body.appendChild(copy); body.appendChild(specs); body.appendChild(foot);
       var slot = el('div', 'sp-step__slot');

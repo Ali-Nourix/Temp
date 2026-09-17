@@ -736,10 +736,11 @@ html { scroll-padding-block-start: var(--s-9); }
 /* ── chapter opener ─────────────────────────────────────── */
 .ed-chapter__head { padding-block: clamp(var(--s-8), 8vw, var(--s-10)) var(--s-7); }
 .ed-chapter__head .ed-rule { grid-column: 1 / -1; margin-block-end: var(--s-6); background: var(--accent); }
-.ed-chapter__num { grid-column: 1 / 2; font-size: var(--t-sm); color: var(--accent); }
-.ed-chapter__title { grid-column: 2 / 8; font-size: var(--t-2xl); font-weight: var(--w-light); }
+/* Number, title and standfirst share the title's first baseline. */
+.ed-chapter__num { grid-column: 1 / 2; align-self: baseline; margin: 0; font-size: var(--t-sm); color: var(--accent); }
+.ed-chapter__title { grid-column: 2 / 8; align-self: baseline; font-size: var(--t-2xl); font-weight: var(--w-light); }
 .ed-chapter__line {
-  grid-column: 9 / 13; align-self: end; margin: 0;
+  grid-column: 9 / 13; align-self: baseline; margin: 0;
   font-size: var(--t-sm); color: var(--ink-muted);
 }
 
@@ -976,7 +977,7 @@ html { scroll-padding-block-start: var(--s-9); }
       </div>
       <div class="ed-colophon__col">
         <p class="ed-eyebrow" data-i18n="col.kilnLabel">کارگاه</p>
-        <p data-i18n="col.kiln">کاشان، محلهٔ سلطان‌امیر احمد. کوره‌ی گازی، پخت دوم در ۱۲۴۰ درجه. اختلاف رنگ و اندازه تا پنج درصد طبیعی است.</p>
+        <p data-i18n="col.kiln">کاشان، محلهٔ سلطان‌امیر احمد. کورهٔ گازی، پخت دوم در ۱۲۴۰ درجه. اختلاف رنگ و اندازه تا پنج درصد طبیعی است.</p>
       </div>
       <div class="ed-colophon__col">
         <p class="ed-eyebrow" data-i18n="col.codeLabel">کدها</p>
@@ -2238,7 +2239,7 @@ html { scroll-padding-block-start: var(--s-9); }
       'col.title': 'شناسنامه',
       'col.about': 'میناوند کارگاه کوچکی است در کاشان. هر قطعه روی چرخ شکل می‌گیرد، دو بار پخته می‌شود و پیش از بسته‌بندی وزن و اندازه‌اش ثبت می‌شود.',
       'col.kilnLabel': 'کارگاه',
-      'col.kiln': 'کاشان، محلهٔ سلطان‌امیر احمد. کوره‌ی گازی، پخت دوم در ۱۲۴۰ درجه. اختلاف رنگ و اندازه تا پنج درصد طبیعی است.',
+      'col.kiln': 'کاشان، محلهٔ سلطان‌امیر احمد. کورهٔ گازی، پخت دوم در ۱۲۴۰ درجه. اختلاف رنگ و اندازه تا پنج درصد طبیعی است.',
       'col.codeLabel': 'کدها',
       'col.code': 'کدها با MV آغاز می‌شوند؛ رقم نخست شمارهٔ فصل و دو رقم بعد شمارهٔ قطعه در آن فصل است.',
       'col.artLabel': 'تصویرها',
@@ -2307,13 +2308,13 @@ html { scroll-padding-block-start: var(--s-9); }
       en: { name: 'Āvand Water Carafe', line: 'A narrow mouth that pours clean — for the everyday table.',
             specs: [['Height', '24 cm'], ['Capacity', '1.2 L'], ['Glaze', 'Wood ash']] },
       hot: [
-        { x: 50, y: 18, fa: { t: 'لبهٔ ریزش', b: 'دهانهٔ سه سانتی‌متری، لبه‌اش کمی به بیرون برگشته تا آب چکه نکند.' },
+        { x: 50, y: 20, fa: { t: 'لبهٔ ریزش', b: 'دهانهٔ سه سانتی‌متری، لبه‌اش کمی به بیرون برگشته تا آب چکه نکند.' },
                         en: { t: 'Pour lip', b: 'A 30 mm mouth with the rim turned out, so the water does not dribble.' } },
         { x: 50, y: 27, fa: { t: 'گردن', b: 'گردن را کوتاه و پهن می‌کشیم تا با یک دست گرفته شود.' },
                         en: { t: 'Neck', b: 'Thrown short and wide, so one hand is enough to hold it.' } },
         { x: 38, y: 44, fa: { t: 'لعاب خاکستر', b: 'خاکستر چوب انگور با گِل محلی، پختِ دوم در ۱۲۴۰ درجه.' },
                         en: { t: 'Ash glaze', b: 'Vine ash over local clay, second-fired at 1240 °C.' } },
-        { x: 50, y: 66, fa: { t: 'کفِ بی‌لعاب', b: 'کف را لعاب نمی‌زنیم تا روی سنگ میز سُر نخورد.' },
+        { x: 36, y: 64, fa: { t: 'کفِ بی‌لعاب', b: 'کف را لعاب نمی‌زنیم تا روی سنگ میز سُر نخورد.' },
                         en: { t: 'Unglazed foot', b: 'Left bare so it will not slide on a stone table.' } }
       ] },
 
@@ -2323,7 +2324,7 @@ html { scroll-padding-block-start: var(--s-9); }
       en: { name: 'Kāshāne Oil Bottle', line: 'Keeps the oil beside the stove, not at the back of a cupboard.',
             specs: [['Height', '21 cm'], ['Capacity', '500 ml'], ['Stopper', 'Natural cork']] },
       hot: [
-        { x: 50, y: 19, fa: { t: 'چوب‌پنبه', b: 'درِ چوب‌پنبهٔ ۲۲ میلی‌متری؛ جداگانه هم فروخته می‌شود.' },
+        { x: 50, y: 20, fa: { t: 'چوب‌پنبه', b: 'درِ چوب‌پنبهٔ ۲۲ میلی‌متری؛ جداگانه هم فروخته می‌شود.' },
                         en: { t: 'Cork', b: 'A 22 mm natural cork; sold separately as well.' } },
         { x: 50, y: 30, fa: { t: 'گردنِ باریک', b: 'جریان روغن را کند می‌کند تا با چشم اندازه بگیرید.' },
                         en: { t: 'Narrow neck', b: 'Slows the oil so you can measure by eye.' } },
@@ -2337,11 +2338,11 @@ html { scroll-padding-block-start: var(--s-9); }
       en: { name: 'Anbār Pickling Jar', line: 'A water-sealed jar for pickles and brine, with a clay lid.',
             specs: [['Height', '32 cm'], ['Capacity', '4 L'], ['Rim', 'Water seal']] },
       hot: [
-        { x: 50, y: 17, fa: { t: 'لبهٔ آب‌بند', b: 'شیارِ دورِ دهانه آب می‌گیرد و هوا را پشتِ در نگه می‌دارد.' },
+        { x: 50, y: 20, fa: { t: 'لبهٔ آب‌بند', b: 'شیارِ دورِ دهانه آب می‌گیرد و هوا را پشتِ در نگه می‌دارد.' },
                         en: { t: 'Water seal', b: 'A channel at the rim holds water and keeps air behind the lid.' } },
         { x: 36, y: 45, fa: { t: 'دیوارهٔ ضخیم', b: 'نُه میلی‌متر ضخامت؛ دمای درون را آرام نگه می‌دارد.' },
                         en: { t: 'Thick wall', b: 'Nine millimetres — it keeps the temperature inside steady.' } },
-        { x: 50, y: 67, fa: { t: 'کفِ پهن', b: 'قطر کف ۱۶ سانتی‌متر؛ پُر هم روی طبقه نمی‌لغزد.' },
+        { x: 36, y: 64, fa: { t: 'کفِ پهن', b: 'قطر کف ۱۶ سانتی‌متر؛ پُر هم روی طبقه نمی‌لغزد.' },
                         en: { t: 'Wide foot', b: 'A 160 mm base; it stays put on a shelf even when full.' } }
       ] },
 
@@ -2427,7 +2428,7 @@ html { scroll-padding-block-start: var(--s-9); }
       hot: [
         { x: 50, y: 30, fa: { t: 'کلاهک سرامیکی', b: 'سرامیک را نازک می‌کشیم تا نور از آن رد شود و زرد بماند.' },
                         en: { t: 'Ceramic shade', b: 'Thrown thin, so the light passes through and stays warm.' } },
-        { x: 38, y: 38, fa: { t: 'لبهٔ کلاهک', b: 'قطر ۲۶ سانتی‌متر؛ دایرهٔ نور را روی میز می‌ریزد.' },
+        { x: 38, y: 36, fa: { t: 'لبهٔ کلاهک', b: 'قطر ۲۶ سانتی‌متر؛ دایرهٔ نور را روی میز می‌ریزد.' },
                         en: { t: 'Shade edge', b: '260 mm across, dropping the circle of light onto the table.' } },
         { x: 50, y: 53, fa: { t: 'بدنه', b: 'لولهٔ سفالی با سیمِ پارچه‌ای که از درونش رد می‌شود.' },
                         en: { t: 'Stem', b: 'A clay tube with a braided cloth cord running inside it.' } },
@@ -2461,7 +2462,7 @@ html { scroll-padding-block-start: var(--s-9); }
                         en: { t: 'Short neck', b: 'Kept short so a full jug lifts with one hand.' } },
         { x: 39, y: 46, fa: { t: 'لعاب عسلی', b: 'لعاب کهربایی روی گِل قرمز؛ در نور غروب پُررنگ‌تر می‌شود.' },
                         en: { t: 'Honey glaze', b: 'An amber glaze over red clay that deepens in evening light.' } },
-        { x: 50, y: 67, fa: { t: 'کف', b: 'گنجایش ۱٫۶ لیتر، اندازهٔ یک پارچ شربت برای چهار نفر.' },
+        { x: 36, y: 64, fa: { t: 'کف', b: 'گنجایش ۱٫۶ لیتر، اندازهٔ یک پارچ شربت برای چهار نفر.' },
                         en: { t: 'Base', b: '1.6 litres — one jug of sharbat for four.' } }
       ] },
 
@@ -2669,6 +2670,10 @@ html { scroll-padding-block-start: var(--s-9); }
       { title: p[lang].name, sku: p.sku },
       lang
     );
+    /* The artwork is a data URI, so deferring it saves no request — and on a
+       page this long, lazy frames come up empty when it is printed or when
+       someone jumps straight to a band. */
+    fresh.querySelector('img').loading = 'eager';
   }
 
   /* ── price inquiry ───────────────────────────────────── */

@@ -422,7 +422,7 @@ body { font-size: var(--t-sm); }
 
     <dl class="sp-block">
       <div><dt data-i="fDoc">سند</dt><dd class="num">ARS-AF-04</dd></div>
-      <div><dt data-i="fRev">ویرایش</dt><dd class="num">04</dd></div>
+      <div><dt data-i="fRev">ویرایش</dt><dd class="num" data-v="rev">04</dd></div>
       <div><dt data-i="fDate">تاریخ</dt><dd class="num" data-v="date">1405/06</dd></div>
       <div><dt data-i="fUnit">واحد ابعاد</dt><dd class="num">mm</dd></div>
       <div><dt data-i="fStd">استاندارد</dt><dd class="num">EN 1906 · 1935 · 1670</dd></div>
@@ -1307,13 +1307,13 @@ body { font-size: var(--t-sm); }
     K.mountMedia(fresh, media(a), { title: a.name[L], sku: a.code }, lang());
   }
 
-  function paintNode(node, a, thumbClass) {
+  function paintNode(node, a, thumbClass, withUnit) {
     var r = node._parts;
     r.name.textContent = a.name[L];
     r.alt.textContent = a.name[1 - L];
     r.alt.setAttribute('lang', L === 0 ? 'en' : 'fa');
     r.stock.replaceChildren(stockCell(a));
-    r.price.replaceChildren(priceCell(a));
+    r.price.replaceChildren(priceCell(a, withUnit));
     r.pick.setAttribute('aria-label', t('compare') + ' — ' + a.code);
     paintAddButton(r.add, a.code);
     remount(r, thumbClass, a);
@@ -1323,7 +1323,7 @@ body { font-size: var(--t-sm); }
     var r = rows[a.code]._parts;
     r.mat.textContent = matLabel(a.mat);
     r.fin.textContent = a.finish[L];
-    paintNode(rows[a.code], a, 'sp-thumb');
+    paintNode(rows[a.code], a, 'sp-thumb', false);
   }
 
   function paintCard(a) {
@@ -1331,7 +1331,7 @@ body { font-size: var(--t-sm); }
     r.dds[0].textContent = matLabel(a.mat) + ' · ' + a.finish[L];
     r.dds[1].replaceChildren(text('span', 'num', a.dim + ' mm'));
     r.dds[2].replaceChildren(text('span', 'num', a.load));
-    paintNode(cards[a.code], a, 'sp-card__media');
+    paintNode(cards[a.code], a, 'sp-card__media', true);
   }
 
   /* ── comparison ───────────────────────────────────────── */
@@ -1614,7 +1614,8 @@ body { font-size: var(--t-sm); }
     document.querySelectorAll('[data-i]').forEach(function (n) { n.textContent = t(n.getAttribute('data-i')); });
     document.querySelectorAll('[data-i-ph]').forEach(function (n) { n.placeholder = t(n.getAttribute('data-i-ph')); });
     document.querySelectorAll('[data-i-label]').forEach(function (n) { n.setAttribute('aria-label', t(n.getAttribute('data-i-label'))); });
-    document.querySelector('[data-v="date"]').textContent = L === 0 ? '1405/06' : '2026-09';
+    document.querySelector('[data-v="rev"]').textContent = num('04');
+    document.querySelector('[data-v="date"]').textContent = num(L === 0 ? '1405/06' : '2026-09');
     document.querySelectorAll('.sp-langswitch button').forEach(function (b) {
       b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang() ? 'true' : 'false');
     });

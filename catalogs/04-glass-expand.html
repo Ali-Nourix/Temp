@@ -904,6 +904,14 @@ body { position: relative; min-height: 100vh; }
   .gx-bar__gap { display: none; }
   .gx-bar { flex-wrap: wrap; row-gap: var(--s-2); }
   .gx-search { flex: 1 1 100%; order: 1; }
+  /* Two columns still read as a catalogue on a phone; one reads as a feed. */
+  .gx-grid { --col-min: 148px; gap: var(--s-3); }
+  .gx-face { padding: var(--s-2); }
+  .gx-filters { margin-inline-start: 0; }
+  /* The label stays in the accessible name but gives up its pixels, so the
+     sticky bar costs two rows instead of three. */
+  .gx-inq__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .gx-inq { min-width: var(--tap-min); padding-inline: var(--s-3); }
 }
 
 @media print {
@@ -933,7 +941,7 @@ body { position: relative; min-height: 100vh; }
   </div>
   <button type="button" class="cat-btn cat-btn--quiet gx-inq" id="gx-inq" aria-expanded="false" aria-controls="gx-sheet" data-empty="yes">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v2H4V5zm0 6h16v2H4v-2zm0 6h10v2H4v-2z"/></svg>
-    <span data-t="inquiry">استعلام قیمت</span>
+    <span class="gx-inq__label" data-t="inquiry">استعلام قیمت</span>
     <span class="gx-inq__count gx-num" id="gx-count">۰</span>
   </button>
 </header>

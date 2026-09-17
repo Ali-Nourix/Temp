@@ -807,7 +807,7 @@ html, body { height: 100%; overflow: hidden; }
   padding-block-end: var(--s-2);
   border-block-end: var(--border-w-strong) solid var(--line-strong);
 }
-.ps-sect h2 { font-size: var(--t-lg); line-height: var(--lh-fa-tight); }
+.ps-sect h2 { font-size: var(--t-md); line-height: var(--lh-fa-tight); }
 .ps-sect__unit { display: block; margin-block-start: var(--s-1); font-size: var(--t-xs); color: var(--ink-faint); }
 
 /* ── product grid ─────────────────────────────────────────── */
@@ -818,7 +818,7 @@ html, body { height: 100%; overflow: hidden; }
 }
 .ps-grid > .cat-card {
   display: grid;
-  grid-template-columns: minmax(70px, 37%) minmax(0, 1fr);
+  grid-template-columns: minmax(68px, 34%) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) auto;
   gap: var(--s-2);
   padding: var(--s-2);
@@ -840,6 +840,7 @@ html, body { height: 100%; overflow: hidden; }
 .ps-cut .ck-cue svg { width: 9px; height: 9px; }
 
 .ps-cell__text { min-width: 0; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 3px; }
+.ps-cell__text > * { flex: none; }
 .ps-cell__title { display: flex; align-items: baseline; gap: var(--s-2); flex-wrap: wrap; }
 .ps-cell__name {
   font-size: var(--t-sm); line-height: var(--lh-fa-tight); font-weight: var(--w-bold);
@@ -855,7 +856,7 @@ html, body { height: 100%; overflow: hidden; }
   margin: 0; max-width: none;
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
 }
-.ps-specs { display: grid; gap: 1px; margin: auto 0 0; font-size: var(--t-xs); line-height: 1.45; }
+.ps-specs { display: grid; gap: 1px; margin: auto 0 0; font-size: var(--t-xs); line-height: 1.35; }
 .ps-specs dt { color: var(--ink-faint); white-space: nowrap; }
 .ps-specs dd { margin: 0; min-width: 0; }
 .ps-specs .ps-lead { min-width: 0; }
@@ -2366,7 +2367,7 @@ html, body { height: 100%; overflow: hidden; }
       sku: 'AW-2140', model: 'ZAGROS', section: 'wear', subject: 'textile', palette: 'ink', price: 4250000, sale: false,
       fa: {
         name: 'کاپشن کار ضدآب زاگرس',
-        line: 'آستر گرم و درزهای جوش‌خورده، برای کار بیرونی نیم‌سال دوم.',
+        line: 'آستر گرم و درزهای جوش‌خورده، برای کار بیرونی.',
         specs: [['پارچه', 'کردورا ۶۰۰D'], ['آب‌بندی', 'درزبند حرارتی'], ['سایز', 'S تا 3XL']],
         hot: [
           [50, 24, 'یقهٔ ایستاده', 'کلاه در یقه جمع می‌شود؛ بند کشی دو سر با قفل پلاستیکی.'],
@@ -2376,7 +2377,7 @@ html, body { height: 100%; overflow: hidden; }
       },
       en: {
         name: 'Zagros waterproof work jacket',
-        line: 'Warm-lined with taped seams, for outdoor work in the cold half of the year.',
+        line: 'Warm-lined, taped seams, for outdoor work.',
         specs: [['Shell', '600D Cordura'], ['Seams', 'heat-taped'], ['Sizes', 'S to 3XL']],
         hot: [
           [50, 24, 'Stand collar', 'The hood rolls into the collar; two-point drawcord with a moulded lock.'],
@@ -2389,8 +2390,8 @@ html, body { height: 100%; overflow: hidden; }
       sku: 'AW-2215', model: 'ATASHKAR', section: 'wear', subject: 'textile', palette: 'stone', price: 3690000, sale: true,
       fa: {
         name: 'سرهمی جوشکاری آتشکار',
-        line: 'پنبهٔ ضد شعله با پوشش ثابت و جیب‌های درزدار برای کار بالای سر.',
-        specs: [['پارچه', 'ضد شعله ۳۲۰ گرم'], ['استاندارد', 'EN ISO 11611'], ['سایز', '۴۶ تا ۶۰']],
+        line: 'پنبهٔ ضد شعله با پوشش ثابت و جیب‌های درزدار.',
+        specs: [['پارچه', 'ضد شعله ۳۲۰ گرم'], ['نشان', 'EN ISO 11611'], ['سایز', '۴۶ تا ۶۰']],
         hot: [
           [48, 26, 'یقهٔ بسته', 'چفت فلزی پوشیده؛ هیچ فلزی بیرون نمی‌زند.'],
           [36, 58, 'جیب درزدار', 'دهانه زیر پر پارچه است تا جرقه داخل نرود.'],
@@ -2399,8 +2400,8 @@ html, body { height: 100%; overflow: hidden; }
       },
       en: {
         name: 'Atashkar welder’s coverall',
-        line: 'Flame-retardant cotton with a permanent finish and covered pockets for overhead work.',
-        specs: [['Cloth', 'FR cotton, 320 g'], ['Standard', 'EN ISO 11611'], ['Sizes', '46 to 60']],
+        line: 'Flame-retardant cotton, covered pockets.',
+        specs: [['Cloth', 'FR cotton, 320 g'], ['Mark', 'EN ISO 11611'], ['Sizes', '46 to 60']],
         hot: [
           [48, 26, 'Closed collar', 'Concealed metal fastener; nothing metal sits proud of the cloth.'],
           [36, 58, 'Covered pocket', 'The opening sits under a flap so spatter cannot drop in.'],
@@ -2422,7 +2423,7 @@ html, body { height: 100%; overflow: hidden; }
       },
       en: {
         name: 'Alborz six-pocket work trouser',
-        line: 'Heavy twill with a side tool pocket and a doubled knee.',
+        line: 'Heavy twill, side tool pocket, doubled knee.',
         specs: [['Cloth', 'twill, 260 g'], ['Knee', 'knee-pad sleeve'], ['Sizes', '46 to 60']],
         hot: [
           [40, 42, 'Tool pocket', 'Two bays for tape and bits, on a triple-needle seam.'],
@@ -2436,7 +2437,7 @@ html, body { height: 100%; overflow: hidden; }
       fa: {
         name: 'پوتین ایمنی پنجه‌فولادی سهند',
         line: 'چرم گاوی روغن‌خورده با زیرهٔ دو تزریق ضد لغزش.',
-        specs: [['پنجه', 'فولاد ۲۰۰ ژول'], ['زیره', 'PU دو تزریق'], ['استاندارد', 'EN ISO 20345 S3']],
+        specs: [['پنجه', 'فولاد ۲۰۰ ژول'], ['زیره', 'PU دو تزریق'], ['نشان', 'EN ISO 20345 S3']],
         hot: [
           [38, 46, 'پنجهٔ فولادی', 'تحمل ضربهٔ ۲۰۰ ژول با پوشش ضد زنگ.'],
           [58, 74, 'زیرهٔ دو تزریق', 'میان‌زیرهٔ نرم و رویهٔ سایشی جدا تزریق شده‌اند.'],
@@ -2445,8 +2446,8 @@ html, body { height: 100%; overflow: hidden; }
       },
       en: {
         name: 'Sahand steel-toe safety boot',
-        line: 'Oiled full-grain leather on a dual-density slip-resistant sole.',
-        specs: [['Toecap', 'steel, 200 J'], ['Sole', 'dual-density PU'], ['Standard', 'EN ISO 20345 S3']],
+        line: 'Oiled leather on a dual-density sole.',
+        specs: [['Toecap', 'steel, 200 J'], ['Sole', 'dual-density PU'], ['Mark', 'EN ISO 20345 S3']],
         hot: [
           [38, 46, 'Steel toecap', 'Rated to 200 J impact, with a rust-resistant coating.'],
           [58, 74, 'Dual-density sole', 'Soft midsole and hard-wearing outsole, injected separately.'],
@@ -2491,7 +2492,7 @@ html, body { height: 100%; overflow: hidden; }
       },
       en: {
         name: 'Barbar 16-inch canvas tool bag',
-        line: 'Coated canvas on a hard moulded base, with fourteen pockets.',
+        line: 'Coated canvas, hard base, fourteen pockets.',
         specs: [['Size', '40 × 22 × 26 cm'], ['Canvas', '600D, PVC-coated'], ['Pockets', '14 bays']],
         hot: [
           [50, 30, 'Steel handle', '16 mm tube under a rubber grip.'],
@@ -2504,7 +2505,7 @@ html, body { height: 100%; overflow: hidden; }
       sku: 'HT-6015', model: 'DEQAT', section: 'tools', subject: 'watch', palette: 'ink', price: 980000, sale: true,
       fa: {
         name: 'کولیس ورنیه ۱۵۰ میلی‌متر دقت',
-        line: 'فولاد زنگ‌نزن سخت‌کاری‌شده با ورنیهٔ ۰٫۰۲ میلی‌متر.',
+        line: 'فولاد زنگ‌نزن سخت‌کاری‌شده با ورنیهٔ دقیق.',
         specs: [['بازه', '۰ تا ۱۵۰ میلی‌متر'], ['دقت', '۰٫۰۲ میلی‌متر'], ['بدنه', 'فولاد زنگ‌نزن']],
         hot: [
           [50, 40, 'ورنیه', 'خط‌کشی نیم‌رخ‌دار؛ خوانش تا دو صدم میلی‌متر.'],
@@ -2537,7 +2538,7 @@ html, body { height: 100%; overflow: hidden; }
       },
       en: {
         name: 'Arsan 125 mm bench vise',
-        line: 'Grey cast iron with replaceable jaws and an anvil at the back.',
+        line: 'Grey cast iron, replaceable jaws, rear anvil.',
         specs: [['Jaw width', '125 mm'], ['Opening', '130 mm'], ['Weight', '14.5 kg']],
         hot: [
           [46, 44, 'Replaceable jaws', 'Cross-hatched and hardened to 52 HRC.'],
@@ -2550,8 +2551,8 @@ html, body { height: 100%; overflow: hidden; }
       sku: 'SF-2201', model: 'TAV', section: 'safety', subject: 'vase', palette: 'ink', price: 590000, sale: false,
       fa: {
         name: 'کلاه ایمنی چهاربنده تاو',
-        line: 'پوستهٔ ABS با کلاهک چهاربنده و تنظیم چرخشی پشت سر.',
-        specs: [['پوسته', 'ABS ضد ضربه'], ['بند', 'چهار نقطه، چرخشی'], ['استاندارد', 'EN 397']],
+        line: 'پوستهٔ ABS با کلاهک چهاربنده و تنظیم چرخشی.',
+        specs: [['پوسته', 'ABS ضد ضربه'], ['بند', 'چهار نقطه، چرخشی'], ['نشان', 'EN 397']],
         hot: [
           [50, 30, 'پوسته', 'تاج شیاردار، ضربه را روی بدنه پخش می‌کند.'],
           [44, 60, 'کلاهک چهاربنده', 'نوار عرق‌گیر تعویض‌پذیر بدون ابزار.'],
@@ -2560,8 +2561,8 @@ html, body { height: 100%; overflow: hidden; }
       },
       en: {
         name: 'Tav four-point hard hat',
-        line: 'ABS shell with a four-point harness and a ratchet at the back.',
-        specs: [['Shell', 'impact ABS'], ['Harness', 'four-point, ratchet'], ['Standard', 'EN 397']],
+        line: 'ABS shell, four-point harness, rear ratchet.',
+        specs: [['Shell', 'impact ABS'], ['Harness', 'four-point, ratchet'], ['Mark', 'EN 397']],
         hot: [
           [50, 30, 'Shell', 'The ribbed crown spreads the blow across the body of the hat.'],
           [44, 60, 'Four-point harness', 'Sweatband changes without tools.'],
@@ -2574,7 +2575,7 @@ html, body { height: 100%; overflow: hidden; }
       fa: {
         name: 'دستکش جوشکاری چرم بزی شعله',
         line: 'کف چرم بزی و ساق چرم گاوی با آستر پنبه.',
-        specs: [['کف', 'چرم بزی یک‌تکه'], ['ساق', '۱۵ سانتی‌متر'], ['استاندارد', 'EN 388 / EN 407']],
+        specs: [['کف', 'چرم بزی یک‌تکه'], ['ساق', '۱۵ سانتی‌متر'], ['نشان', 'EN 388/407']],
         hot: [
           [44, 46, 'کف بی‌درز', 'یک تکه چرم؛ روی گودی کف هیچ درزی نیست.'],
           [58, 66, 'ساق بلند', 'پانزده سانتی‌متر پوشش مچ و ساعد.'],
@@ -2584,7 +2585,7 @@ html, body { height: 100%; overflow: hidden; }
       en: {
         name: 'Shole goatskin welding glove',
         line: 'Goatskin palm and cowhide cuff over a cotton lining.',
-        specs: [['Palm', 'one-piece goatskin'], ['Cuff', '150 mm'], ['Standard', 'EN 388 / EN 407']],
+        specs: [['Palm', 'one-piece goatskin'], ['Cuff', '150 mm'], ['Mark', 'EN 388/407']],
         hot: [
           [44, 46, 'Seamless palm', 'One piece of leather; no seam crosses the hollow of the hand.'],
           [58, 66, 'Long cuff', '150 mm over the wrist and forearm.'],
@@ -2606,7 +2607,7 @@ html, body { height: 100%; overflow: hidden; }
       },
       en: {
         name: 'Mahtab 20 W rechargeable work light',
-        line: 'Aluminium body with a magnet and a hook, charged over USB-C.',
+        line: 'Aluminium body, magnet and hook, USB-C.',
         specs: [['Output', '2000 lumen'], ['Battery', '7400 mAh'], ['Runtime', 'to 7 hours']],
         hot: [
           [50, 34, 'Light panel', '120-degree spread behind a matte diffuser, with no dark spot.'],
@@ -2620,7 +2621,7 @@ html, body { height: 100%; overflow: hidden; }
       fa: {
         name: 'عینک ایمنی ضد خش دید',
         line: 'عدسی پلی‌کربنات یک‌تکه با پوشش ضد بخار و ضد خش.',
-        specs: [['عدسی', 'پلی‌کربنات ۲٫۲ میلی‌متر'], ['پوشش', 'ضد بخار و ضد خش'], ['استاندارد', 'EN 166 1F']],
+        specs: [['عدسی', 'پلی‌کربنات ۲٫۲ میلی‌متر'], ['پوشش', 'ضد بخار و ضد خش'], ['نشان', 'EN 166 1F']],
         hot: [
           [50, 44, 'عدسی یک‌تکه', 'میدان دید باز، بدون درز میانی روی خط نگاه.'],
           [34, 52, 'دستهٔ نرم', 'نوک لاستیکی با زاویهٔ تنظیم‌شونده.'],
@@ -2629,8 +2630,8 @@ html, body { height: 100%; overflow: hidden; }
       },
       en: {
         name: 'Did anti-scratch safety glasses',
-        line: 'One-piece polycarbonate lens with an anti-fog and anti-scratch coating.',
-        specs: [['Lens', '2.2 mm polycarbonate'], ['Coating', 'anti-fog, anti-scratch'], ['Standard', 'EN 166 1F']],
+        line: 'One-piece lens, anti-fog and anti-scratch.',
+        specs: [['Lens', '2.2 mm polycarbonate'], ['Coating', 'anti-fog, anti-scratch'], ['Mark', 'EN 166 1F']],
         hot: [
           [50, 44, 'One-piece lens', 'Open field of view with no joint across the line of sight.'],
           [34, 52, 'Soft temple', 'Rubber tip on an adjustable angle.'],

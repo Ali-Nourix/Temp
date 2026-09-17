@@ -27,7 +27,6 @@
   --mg-caps: var(--tracking-en-caps);
 }
 
-body { background: var(--bg); }
 .mg-fig { font-family: var(--mg-num); font-variant-numeric: tabular-nums; }
 /* One small label, used wherever a field needs naming. */
 .mg-seg__label, .mg-meta dt, .mg-sum__k, .mg-foot dt {
@@ -39,7 +38,8 @@ body { background: var(--bg); }
   position: absolute; inset-block-start: 0; inset-inline-start: -9999px; z-index: 60;
   padding: var(--s-3) var(--s-4); background: var(--ink); color: var(--bg);
 }
-.mg-skip:focus { inset-inline-start: 0; color: var(--bg); }
+.mg-skip:focus { inset-inline-start: 0; }
+.mg-skip:hover { color: var(--bg); }
 
 /* ── masthead ────────────────────────────────────────────── */
 .mg-mast { border-block-end: var(--border-w-strong) solid var(--line-strong); }
@@ -134,7 +134,7 @@ body { background: var(--bg); }
 .mg-cell__frame > .mg-cell__media { position: absolute; inset: 0; }
 /* Every face is a photo, so the kit's cue would repeat one word sixteen times.
    The mark stays, the word goes — the host still carries it as its label. */
-.mg-cell .ck-cue { border-radius: var(--radius-none); padding: 6px; }
+.mg-cell .ck-cue { border-radius: var(--radius-none); padding: var(--s-2); }
 .mg-cell .ck-cue span { display: none; }
 .mg-cell__foot { display: grid; gap: var(--s-1); padding: var(--s-3) var(--mg-inset) var(--s-4); }
 .mg-cell__name { font-family: var(--mg-display); font-size: var(--t-md); line-height: var(--lh-fa-tight); }
@@ -238,7 +238,7 @@ body { background: var(--bg); }
 .mg-row { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto; gap: var(--s-3); align-items: center;
   padding: var(--s-3) var(--mg-inset); border-block-end: var(--border-w) solid var(--ink-muted); }
 .mg-row img { width: 44px; aspect-ratio: 1; object-fit: cover; }
-.mg-row__id { display: grid; gap: 2px; }
+.mg-row__id { display: grid; gap: var(--s-1); }
 .mg-row__name { font-family: var(--mg-display); font-size: var(--t-sm); line-height: var(--lh-fa-tight); }
 .mg-row__code { font-family: var(--font-num); font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); color: var(--ink-faint); }
 .mg-row__price { font-family: var(--mg-num); font-size: var(--t-sm); font-variant-numeric: tabular-nums; }

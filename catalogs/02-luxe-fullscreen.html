@@ -898,8 +898,8 @@ a:hover { color: var(--ink); }
   .lx-plates { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; }
   .lx-sect--title .lx-veil {
     background:
-      radial-gradient(58% 46% at 50% 45%, color-mix(in oklab, var(--bg) 90%, transparent),
-        color-mix(in oklab, var(--bg) 42%, transparent) 62%, transparent),
+      radial-gradient(62% 52% at 50% 44%, color-mix(in oklab, var(--bg) 96%, transparent),
+        color-mix(in oklab, var(--bg) 58%, transparent) 60%, transparent),
       linear-gradient(to bottom, color-mix(in oklab, var(--bg) 92%, transparent), transparent 30%),
       linear-gradient(to top, color-mix(in oklab, var(--bg) 94%, transparent) 2%, transparent 48%);
   }
@@ -992,7 +992,7 @@ a:hover { color: var(--ink); }
   .lx-dialog__head p { margin: 0; color: var(--ink-muted); font-size: var(--t-sm); }
   .lx-dialog .cat-inquiry__row { background: var(--bg); border-color: var(--line); margin-block-end: var(--s-5); }
   .lx-dialog .cat-inquiry__row img { width: 56px; aspect-ratio: var(--ratio-media); object-fit: cover; }
-  .lx-row__name { display: grid; gap: 2px; }
+  .lx-row__name { display: grid; justify-items: start; gap: 2px; }
   .lx-row__name b { font-family: var(--font-fa-display); font-size: var(--t-md); font-weight: var(--w-medium); }
   [dir="ltr"] .lx-row__name b { font-family: var(--font-en-display); }
   .lx-form { display: grid; gap: var(--s-4); }
@@ -2975,10 +2975,12 @@ a:hover { color: var(--ink); }
 
   function renderDialog() {
     var p = dialogState.product;
+    var lede = dialogState.sent && p ? p[lang].name + '، ' + p.sku
+      : p ? t('dialogLede') : t('dialogLedeAll');
     var head =
       '<div class="lx-dialog__head">' +
         '<h2 id="dialog-title">' + esc(t('dialogTitle')) + '</h2>' +
-        '<p>' + esc(p ? t('dialogLede') : t('dialogLedeAll')) + '</p>' +
+        '<p>' + esc(lede) + '</p>' +
       '</div>';
 
     if (dialogState.sent) {
