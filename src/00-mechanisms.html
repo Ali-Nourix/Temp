@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa" data-theme="editorial">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مکانیزم‌های رسانه — نمونه‌ی زنده</title>
+<meta name="description" content="زوم روی نقطه، نقطه‌های جزئیات، پخش ویدیو و چرخش ۳۶۰ — همان مکانیزمی که در هر هشت کاتالوگ کار می‌کند.">
+<link rel="stylesheet" href="../shared/ds-core.css">
+<style>
+  .mx-head {
+    display: grid; gap: var(--s-4);
+    padding: var(--s-8) var(--page-pad) var(--s-6);
+    border-block-end: var(--border-w) solid var(--line);
+  }
+  .mx-kicker {
+    font-family: var(--font-num); font-size: var(--t-xs);
+    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .mx-head h1 { font-size: var(--t-2xl); max-width: 20ch; }
+  .mx-head p { font-size: var(--t-md); color: var(--ink-muted); max-width: var(--measure-fa); margin: 0; }
+
+  .mx-bar {
+    position: sticky; inset-block-start: 0; z-index: 20;
+    display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4);
+    padding: var(--s-3) var(--page-pad);
+    background: var(--bg); border-block-end: var(--border-w) solid var(--line);
+  }
+  .mx-bar__label { font-size: var(--t-xs); color: var(--ink-faint); }
+  .mx-themes { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
+  .mx-section { padding: var(--s-7) var(--page-pad); border-block-end: var(--border-w) solid var(--line); }
+  .mx-section > .mx-inner { max-width: var(--page-max); margin-inline: auto; display: grid; gap: var(--s-5); }
+  .mx-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-4); }
+  .mx-h span { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
+  .mx-h h2 { font-size: var(--t-lg); }
+  .mx-h p { margin: 0; font-size: var(--t-sm); color: var(--ink-muted); max-width: var(--measure-fa); }
+
+  .mx-grid {
+    display: grid; gap: var(--gutter);
+    grid-template-columns: repeat(auto-fill, minmax(var(--col-min), 1fr));
+  }
+
+  .mx-keys { display: grid; gap: var(--s-2); }
+  .mx-key { display: flex; align-items: baseline; gap: var(--s-3); font-size: var(--t-sm); color: var(--ink-muted); }
+  .mx-key kbd {
+    font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink);
+    background: var(--surface-alt); border: var(--border-w) solid var(--line);
+    border-radius: var(--radius-control); padding: 2px 8px; min-width: 52px; text-align: center;
+  }
+
+  .mx-swap {
+    display: grid; gap: var(--s-3);
+    padding: var(--s-5); background: var(--surface);
+    border: var(--border-w) solid var(--line); border-radius: var(--radius-card);
+  }
+  .mx-swap pre {
+    margin: 0; overflow-x: auto; direction: ltr; text-align: start;
+    font-family: var(--font-num); font-size: var(--t-xs); line-height: 1.85;
+    color: var(--ink-muted);
+  }
+</style>
+</head>
+<body>
+
+<header class="mx-head">
+  <div class="mx-kicker">Media mechanisms · live</div>
+  <h1>همان مکانیزمی که در هر هشت کاتالوگ کار می‌کند</h1>
+  <p>
+    روی هر تصویر کلیک کنید. این صفحه فقط برای امتحان کردن است — هشت کاتالوگ
+    همین رفتار را دارند، با ظاهر و چیدمان متفاوت. تم را از نوار بالا عوض کنید
+    تا ببینید هیچ‌کدام از این رفتارها به تم وابسته نیست.
+  </p>
+</header>
+
+<div class="mx-bar">
+  <span class="mx-bar__label">تم</span>
+  <div class="mx-themes" id="themes"></div>
+  <div style="flex:1"></div>
+  <div class="cat-lang" id="lang">
+    <button type="button" data-lang="fa" aria-pressed="true">فارسی</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+</div>
+
+<section class="mx-section">
+  <div class="mx-inner">
+    <div class="mx-h">
+      <span>01</span>
+      <h2 data-t="s1">جزئیات روی عکس</h2>
+      <p data-t="s1p">کلیک روی تصویر، بزرگ‌نمایی روی همان نقطه‌ای که کلیک کردید. نقطه‌های شماره‌دار به بخش واقعی محصول چسبیده‌اند و با زوم همراه می‌شوند.</p>
+    </div>
+    <div class="mx-grid cat-stagger" id="grid"></div>
+  </div>
+</section>
+
+<section class="mx-section">
+  <div class="mx-inner">
+    <div class="mx-h">
+      <span>02</span>
+      <h2 data-t="s2">صفحه‌کلید</h2>
+      <p data-t="s2p">نمایشگر جزئیات کامل با صفحه‌کلید کار می‌کند و فوکوس داخلش می‌ماند.</p>
+    </div>
+    <div class="mx-keys">
+      <div class="mx-key"><kbd>Esc</kbd><span data-t="k1">بستن</span></div>
+      <div class="mx-key"><kbd>← →</kbd><span data-t="k2">رفتن بین رسانه‌ها — و در حالت ویدیو، جابه‌جایی روی تایم‌لاین</span></div>
+      <div class="mx-key"><kbd>Space</kbd><span data-t="k3">پخش و مکث ویدیو</span></div>
+      <div class="mx-key"><kbd>+ −</kbd><span data-t="k4">زوم</span></div>
+      <div class="mx-key"><kbd>Tab</kbd><span data-t="k5">گشتن بین کنترل‌ها؛ فوکوس از نمایشگر بیرون نمی‌رود</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="mx-section">
+  <div class="mx-inner">
+    <div class="mx-h">
+      <span>03</span>
+      <h2 data-t="s3">گذاشتن عکس و ویدیوی واقعی</h2>
+      <p data-t="s3p">تصویرها جانگهدارِ ساخته‌شده‌اند. برای فایل واقعی فقط src را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.</p>
+    </div>
+    <div class="mx-swap">
+<pre>{ type: 'photo', src: 'assets/SK-101-front.jpg',
+  hotspots: [ { x: 50, y: 38, title: 'بدنه', body: 'سرامیک لعاب‌دار.' } ] }
+
+{ type: 'video', src: 'assets/SK-101.mp4',
+  poster: 'assets/SK-101-poster.jpg' }</pre>
+    </div>
+  </div>
+</section>
+
+<script src="../shared/catalog-kit.js"></script>
+<script>
+const THEMES = ['editorial', 'luxe', 'brutal', 'glass', 'press', 'spec', 'craft', 'mono'];
+
+/* Six products, each demonstrating a different subject and palette so the
+   procedural artwork shows its range. Hotspots name real parts, because a
+   hotspot that says "detail 1" teaches nothing about the mechanism. */
+const PRODUCTS = [
+  {
+    sku: 'SK-101', subject: 'vase', palette: 'warm',
+    fa: 'گلدان لعاب خاکستر', en: 'Ash-glaze vessel',
+    price: '۲٬۴۸۰٬۰۰۰', priceEn: '2,480,000',
+    hotspots: [
+      { x: 50, y: 22, fa: ['لبه', 'لبه‌ی برگردان، ضخامت ۶ میلی‌متر.'], en: ['Rim', 'Rolled rim, 6 mm wall.'] },
+      { x: 62, y: 45, fa: ['لعاب', 'لعاب خاکستر چوب، پخت احیایی ۱۲۸۰ درجه.'], en: ['Glaze', 'Wood-ash glaze, reduction fired at 1280°C.'] },
+      { x: 44, y: 76, fa: ['پاخور', 'پاخور تراش‌خورده، قطر ۹ سانتی‌متر.'], en: ['Foot ring', 'Turned foot, 9 cm diameter.'] }
+    ]
+  },
+  {
+    sku: 'SK-204', subject: 'chair', palette: 'stone',
+    fa: 'صندلی گردو', en: 'Walnut side chair',
+    price: '۸٬۹۵۰٬۰۰۰', priceEn: '8,950,000',
+    hotspots: [
+      { x: 50, y: 28, fa: ['پشتی', 'تخته‌ی خم‌شده با بخار، ضخامت ۱۲ میلی‌متر.'], en: ['Back', 'Steam-bent panel, 12 mm.'] },
+      { x: 34, y: 58, fa: ['اتصال', 'فاق و زبانه‌ی کور، بدون پیچ.'], en: ['Joint', 'Blind mortise and tenon, no fasteners.'] },
+      { x: 66, y: 82, fa: ['پایه', 'گردو روغن‌خورده، مقطع ۲۲ میلی‌متر.'], en: ['Leg', 'Oiled walnut, 22 mm section.'] }
+    ]
+  },
+  {
+    sku: 'SK-330', subject: 'bag', palette: 'clay',
+    fa: 'کیف چرم گیاهی', en: 'Veg-tan satchel',
+    price: '۶٬۲۰۰٬۰۰۰', priceEn: '6,200,000',
+    hotspots: [
+      { x: 50, y: 24, fa: ['دسته', 'دوخت زینی دستی، نخ کتان موم‌زده.'], en: ['Handle', 'Hand saddle-stitched, waxed linen.'] },
+      { x: 50, y: 52, fa: ['قفل', 'برنج ریخته‌گری، بدون آبکاری.'], en: ['Clasp', 'Cast brass, unplated.'] },
+      { x: 30, y: 70, fa: ['چرم', 'دباغی گیاهی، ضخامت ۲٫۲ میلی‌متر.'], en: ['Leather', 'Vegetable tanned, 2.2 mm.'] }
+    ]
+  },
+  {
+    sku: 'SK-412', subject: 'lamp', palette: 'sage',
+    fa: 'چراغ رومیزی کاغذی', en: 'Paper table lamp',
+    price: '۳٬۷۴۰٬۰۰۰', priceEn: '3,740,000',
+    hotspots: [
+      { x: 50, y: 30, fa: ['حباب', 'کاغذ دست‌ساز روی رینگ فولادی.'], en: ['Shade', 'Handmade paper on steel ring.'] },
+      { x: 50, y: 68, fa: ['ساقه', 'فولاد پودری‌رنگ، قطر ۱۲ میلی‌متر.'], en: ['Stem', 'Powder-coated steel, 12 mm.'] }
+    ]
+  },
+  {
+    sku: 'SK-508', subject: 'watch', palette: 'ink',
+    fa: 'ساعت مینای سرمه‌ای', en: 'Indigo enamel watch',
+    price: '۲۴٬۶۰۰٬۰۰۰', priceEn: '24,600,000',
+    hotspots: [
+      { x: 50, y: 44, fa: ['صفحه', 'مینای آتشی، سه لایه پخت.'], en: ['Dial', 'Fired enamel, three firings.'] },
+      { x: 68, y: 52, fa: ['عقربه', 'فولاد آبی‌شده با حرارت.'], en: ['Hands', 'Heat-blued steel.'] },
+      { x: 50, y: 76, fa: ['بند', 'چرم ساغری، عرض ۱۸ میلی‌متر.'], en: ['Strap', 'Shagreen, 18 mm lug.'] }
+    ]
+  },
+  {
+    sku: 'SK-615', subject: 'textile', palette: 'indigo',
+    fa: 'قالیچه‌ی پشم دست‌ریس', en: 'Handspun wool rug',
+    price: '۱۸٬۹۰۰٬۰۰۰', priceEn: '18,900,000',
+    hotspots: [
+      { x: 38, y: 34, fa: ['گره', 'گره فارسی، ۴۰ رج در دسی‌متر.'], en: ['Knot', 'Persian knot, 40 rows/dm.'] },
+      { x: 62, y: 60, fa: ['رنگرزی', 'نیل طبیعی، رنگرزی دیگ‌به‌دیگ.'], en: ['Dye', 'Natural indigo, lot-dyed.'] },
+      { x: 50, y: 86, fa: ['شیرازه', 'شیرازه‌پیچ دستی با پشم همان دیگ.'], en: ['Selvedge', 'Hand-wrapped in the same lot.'] }
+    ]
+  }
+];
+
+const STRINGS = {
+  fa: {
+    s1: 'جزئیات روی عکس',
+    s1p: 'کلیک روی تصویر، بزرگ‌نمایی روی همان نقطه‌ای که کلیک کردید. نقطه‌های شماره‌دار به بخش واقعی محصول چسبیده‌اند و با زوم همراه می‌شوند.',
+    s2: 'صفحه‌کلید',
+    s2p: 'نمایشگر جزئیات کامل با صفحه‌کلید کار می‌کند و فوکوس داخلش می‌ماند.',
+    s3: 'گذاشتن عکس و ویدیوی واقعی',
+    s3p: 'تصویرها جانگهدارِ ساخته‌شده‌اند. برای فایل واقعی فقط src را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.',
+    k1: 'بستن', k2: 'رفتن بین رسانه‌ها — و در حالت ویدیو، جابه‌جایی روی تایم‌لاین',
+    k3: 'پخش و مکث ویدیو', k4: 'زوم', k5: 'گشتن بین کنترل‌ها؛ فوکوس از نمایشگر بیرون نمی‌رود',
+    unit: 'تومان', detail: 'جزئیات'
+  },
+  en: {
+    s1: 'Detail on the image',
+    s1p: 'Click the image and it zooms to the point you clicked. Numbered hotspots are pinned to the part they name and travel with the zoom.',
+    s2: 'Keyboard',
+    s2p: 'The detail viewer is fully keyboard operable and traps focus while open.',
+    s3: 'Dropping in real photography',
+    s3p: 'The artwork is a generated placeholder. Give a descriptor a src and the same mechanism plays the real file.',
+    k1: 'Close', k2: 'Move between media — and seek the timeline in video mode',
+    k3: 'Play and pause', k4: 'Zoom', k5: 'Cycle the controls; focus stays inside the viewer',
+    unit: 'IRT', detail: 'Details'
+  }
+};
+
+let lang = 'fa';
+const root = document.documentElement;
+const grid = document.getElementById('grid');
+
+const themeBar = document.getElementById('themes');
+for (const name of THEMES) {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'cat-chip';
+  b.textContent = name;
+  b.setAttribute('aria-pressed', String(name === root.dataset.theme));
+  b.addEventListener('click', () => {
+    root.dataset.theme = name;
+    for (const other of themeBar.children) {
+      other.setAttribute('aria-pressed', String(other === b));
+    }
+  });
+  themeBar.appendChild(b);
+}
+
+document.getElementById('lang').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-lang]');
+  if (!btn || btn.dataset.lang === lang) return;
+  lang = btn.dataset.lang;
+  for (const other of btn.parentNode.children) {
+    other.setAttribute('aria-pressed', String(other === btn));
+  }
+  root.lang = lang;
+  root.dir = lang === 'fa' ? 'rtl' : 'ltr';
+  for (const node of document.querySelectorAll('[data-t]')) {
+    node.textContent = STRINGS[lang][node.dataset.t];
+  }
+  render();
+});
+
+function render() {
+  const t = STRINGS[lang];
+  grid.innerHTML = '';
+  for (const p of PRODUCTS) {
+    const card = document.createElement('article');
+    card.className = 'cat-card';
+
+    const media = document.createElement('div');
+    card.appendChild(media);
+
+    const name = document.createElement('h3');
+    name.className = 'cat-card__name';
+    name.textContent = lang === 'fa' ? p.fa : p.en;
+
+    const alt = document.createElement('div');
+    alt.className = 'cat-card__name-en';
+    alt.dir = lang === 'fa' ? 'ltr' : 'rtl';
+    alt.textContent = lang === 'fa' ? p.en : p.fa;
+
+    const meta = document.createElement('div');
+    meta.className = 'cat-card__meta';
+    const price = document.createElement('div');
+    price.className = 'cat-price';
+    price.innerHTML = '<span></span><span class="cat-price__unit"></span>';
+    price.firstChild.textContent = lang === 'fa' ? p.price : p.priceEn;
+    price.lastChild.textContent = t.unit;
+    const sku = document.createElement('div');
+    sku.className = 'cat-sku';
+    sku.textContent = p.sku;
+    meta.append(price, sku);
+
+    const open = document.createElement('button');
+    open.type = 'button';
+    open.className = 'cat-btn cat-btn--ghost';
+    open.textContent = t.detail;
+
+    card.append(name, alt, meta, open);
+    grid.appendChild(card);
+
+    /* The media element has to be in the document before it is mounted,
+       so this runs after the card is appended. */
+    media.className = 'cat-card__media';
+    const hotspots = p.hotspots.map((h) => ({
+      x: h.x, y: h.y,
+      title: (lang === 'fa' ? h.fa : h.en)[0],
+      body: (lang === 'fa' ? h.fa : h.en)[1]
+    }));
+    const set = CatalogKit.defaultMedia(p.sku, hotspots, {
+      subject: p.subject, palette: p.palette
+    });
+    const meta2 = { title: lang === 'fa' ? p.fa : p.en, sku: p.sku };
+    CatalogKit.mountMedia(media, set, meta2, lang);
+    open.addEventListener('click', () => CatalogKit.open(set, meta2, lang, 0));
+  }
+}
+
+render();
+</script>
+</body>
+</html>
