@@ -49,12 +49,20 @@ def build(path: Path) -> Path:
         body = guard(read_asset(match.group(1)), "</script>")
         return f"<script>\n/* inlined from shared/{match.group(1)} */\n{body}\n</script>\n"
 
+    # Check the source, not the output: the inlined assets mention their own
+    # paths in comments, which a naive scan of the result would flag.
+    referenced = set(LINK.findall(doc)) | set(SCRIPT.findall(doc))
+    every_ref = set(re.findall(r'(?:href|src)="(?:\.\./)*shared/([^"]+)"', doc))
+    unresolved = every_ref - referenced
+    if unresolved:
+        raise SystemExit(
+            f"{path.name}: shared asset(s) referenced by a tag the build does not "
+            f"inline: {sorted(unresolved)}. Use a plain <link rel=\"stylesheet\" "
+            f"href=\"../shared/...\"> or <script src=\"../shared/...\"></script>."
+        )
+
     doc = LINK.sub(css, doc)
     doc = SCRIPT.sub(js, doc)
-
-    if 'shared/' in doc:
-        leftover = re.findall(r'["\'][^"\']*shared/[^"\']+["\']', doc)
-        raise SystemExit(f"{path.name}: unresolved shared reference(s): {leftover}")
 
     OUT.mkdir(exist_ok=True)
     target = OUT / path.name
