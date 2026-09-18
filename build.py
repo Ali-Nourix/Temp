@@ -19,6 +19,7 @@ ROOT = Path(__file__).parent
 SRC = ROOT / "src"
 SHARED = ROOT / "shared"
 OUT = ROOT / "catalogs"
+ROOT_PAGES = {"index.html", "hub.html"}
 
 LINK = re.compile(r'[ \t]*<link[^>]+href="(?:\.\./)*shared/([^"]+)"[^>]*>[ \t]*\n?')
 SCRIPT = re.compile(r'[ \t]*<script[^>]+src="(?:\.\./)*shared/([^"]+)"[^>]*>\s*</script>[ \t]*\n?')
@@ -64,10 +65,11 @@ def build(path: Path) -> Path:
     doc = LINK.sub(css, doc)
     doc = SCRIPT.sub(js, doc)
 
-    # The hub lands at the repository root, because that is what GitHub
-    # Pages serves at the site's own URL. Everything else sits in catalogs/.
-    if path.name == "index.html":
-        target = ROOT / "index.html"
+    # Pages the site serves at its own URL land at the repository root:
+    # the showcase (index.html) and the hub of variants (hub.html).
+    # Everything else sits in catalogs/.
+    if path.name in ROOT_PAGES:
+        target = ROOT / path.name
     else:
         OUT.mkdir(exist_ok=True)
         target = OUT / path.name

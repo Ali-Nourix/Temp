@@ -7,8 +7,10 @@ shared design system and one shared interaction layer.
 
 **<https://ali-nourix.github.io/Temp/>**
 
-صفحه‌ی اول همه‌ی نمونه‌ها را فهرست می‌کند. اگر لینک باز نشد، یعنی GitHub Pages
-هنوز روشن نشده است:
+صفحه‌ی اول، نمایش قابلیت‌هاست: شانزده بخش، هر کدام یک قابلیت HTML، CSS یا
+JavaScript برای کاتالوگ دیجیتال، زنده و قابل امتحان. فهرست نمونه‌های دیگر در
+**<https://ali-nourix.github.io/Temp/hub.html>** است. اگر لینک باز نشد، یعنی
+GitHub Pages هنوز روشن نشده است:
 
 > Settings ← Pages ← زیر **Build and deployment**، در Source گزینه‌ی
 > **Deploy from a branch** و بعد برنچ `claude/vigilant-davinci-gomzs5` و
@@ -24,10 +26,11 @@ shared design system and one shared interaction layer.
 
 | | |
 |---|---|
+| [`index.html`](index.html) | نمایش قابلیت‌ها: ۱۶ بخش زنده، از فیلتر و زوم تا ورق‌زدن سه‌بعدی، View Transitions، Popover، dialog، حالت تیره و چاپ |
+| [`hub.html`](hub.html) | فهرست همه‌ی نمونه‌ها با پیش‌نمایش هر کدام در تم خودش |
 | [`catalogs/avand.html`](catalogs/avand.html) | نسخه‌ی طراحی‌شده‌ی کاتالوگ آوند: پالت از خود محصول‌ها، نمایش نسخ، قطعه‌ی حاشیه‌نویسی‌شده، حالت تیره، استعلام قیمت |
 | [`catalogs/compositions.html`](catalogs/compositions.html) | ورقِ نمونه: یک برند، ۱۴ ترکیب‌بندی، هر کدام با انیمیشن ورود خودش |
 | [`catalogs/00-mechanisms.html`](catalogs/00-mechanisms.html) | مکانیزم‌های رسانه به‌تنهایی: زوم، جزئیات، ویدیو، چرخش |
-| [`index.html`](index.html) | فهرست همه، با پیش‌نمایش هر نمونه در تم خودش |
 
 ## نمونه‌ها
 
@@ -74,7 +77,8 @@ shared design system and one shared interaction layer.
 ## ساختار
 
 ```
-index.html              فهرست — ساخته می‌شود، ریشه چون Pages همین را سرو می‌کند
+index.html              نمایش قابلیت‌ها — ریشه، چون Pages همین را سرو می‌کند
+hub.html                فهرست نمونه‌ها
 catalogs/*.html         خروجی — هر کدام یک فایل مستقل و کامل
 shared/ds-core.css      توکن‌ها، ۸ تم، و لایه‌ی کامپوننت‌های .cat-*
 shared/catalog-kit.js   تصویرسازی، نمایشگر جزئیات، پخش‌کننده، چرخش

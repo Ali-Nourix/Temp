@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa" data-theme="editorial">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>هشت کاتالوگ دیجیتال — نمونه‌ها</title>
+<meta name="description" content="هشت نمونه‌ی کاتالوگ دیجیتال با چیدمان، تراکم، رنگ و حرکت متفاوت.">
+<link rel="stylesheet" href="../shared/ds-core.css">
+<style>
+  /* Each card previews its variant in that variant's own theme, so the
+     page shows eight design languages rather than eight descriptions. */
+  .hub-head {
+    display: grid; gap: var(--s-5);
+    padding: var(--s-9) var(--page-pad) var(--s-7);
+    border-block-end: var(--border-w) solid var(--line);
+  }
+  .hub-kicker {
+    font-family: var(--font-num); font-size: var(--t-xs);
+    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .hub-head h1 { font-size: var(--t-3xl); max-width: 18ch; }
+  .hub-head p { font-size: var(--t-md); color: var(--ink-muted); max-width: var(--measure-fa); }
+
+  .hub-axes {
+    display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5);
+    font-size: var(--t-sm); color: var(--ink-muted);
+  }
+  .hub-axes b { color: var(--ink); font-weight: var(--w-medium); }
+
+  /* The Âvand catalog's own palette, so its preview is drawn in the real
+     colours rather than borrowed from the nearest system theme. */
+  [data-theme="avand"] {
+    --bg: #f2f4f1; --surface: #f8f9f7; --surface-alt: #e5e9e4;
+    --ink: #15181a; --ink-muted: #4c5358; --ink-faint: #5a6268;
+    --line: #c9cfcb; --accent: #2c3e78;
+    --font-fa-display: var(--fam-markazi);
+    --radius-card: 0px; --shadow-1: none;
+  }
+
+  .hub-section { max-width: var(--page-max); margin-inline: auto; padding: var(--s-7) var(--page-pad) var(--s-5); }
+  .hub-section:last-of-type { padding-block-end: var(--s-9); }
+  .hub-heading {
+    font-family: var(--font-num); font-size: var(--t-xs);
+    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+    font-weight: var(--w-regular); color: var(--ink-faint);
+    padding-block-end: var(--s-3); margin-block-end: var(--s-5);
+    border-block-end: var(--border-w) solid var(--line);
+  }
+
+  .hub-grid {
+    display: grid; gap: var(--s-6);
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+  /* The two studies carry the most weight, so they get the wider cells. */
+  .hub-grid--wide { grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); }
+  @media (max-width: 520px) { .hub-grid--wide { grid-template-columns: 1fr; } }
+
+  .hub-card {
+    display: flex; flex-direction: column;
+    border: var(--border-w) solid var(--line);
+    background: var(--surface);
+    text-decoration: none; color: inherit;
+    transition: transform var(--dur-base) var(--ease-out),
+                box-shadow var(--dur-base) var(--ease-out),
+                border-color var(--dur-base) var(--ease-out);
+  }
+  .hub-card:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--shadow-2); border-color: var(--line-strong); }
+  .hub-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+  /* The preview strip re-declares the variant's theme, so the swatches and
+     mock below are drawn with that variant's real tokens. */
+  .hub-prev {
+    position: relative; aspect-ratio: 16 / 10; overflow: hidden;
+    background: var(--bg); color: var(--ink);
+    border-block-end: var(--border-w) solid var(--line);
+    padding: var(--s-4);
+    display: grid; gap: var(--s-2); align-content: start;
+  }
+  .hub-prev__bar { display: flex; gap: 4px; align-items: center; }
+  .hub-prev__dot { width: 10px; height: 10px; border-radius: var(--radius-pill); background: var(--accent); }
+  .hub-prev__rule { flex: 1; height: var(--border-w); background: var(--line); }
+  .hub-prev__type { font-family: var(--font-fa-display); font-size: var(--t-md); line-height: var(--lh-fa-tight); }
+  .hub-prev__mock { display: grid; gap: 5px; margin-block-start: auto; }
+  .hub-prev__row { display: grid; gap: 5px; }
+  .hub-prev__cell {
+    background: var(--surface); border: var(--border-w) solid var(--line);
+    border-radius: var(--radius-card); box-shadow: var(--shadow-1);
+    min-height: 14px;
+  }
+  .hub-prev__cell--media { background: var(--surface-alt); aspect-ratio: 4 / 5; }
+  .hub-prev__cell--accent { background: var(--accent); border-color: var(--accent); }
+
+  .hub-body { display: grid; gap: var(--s-3); padding: var(--s-5); }
+  .hub-no { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
+  .hub-name { font-family: var(--font-fa-display); font-size: var(--t-lg); line-height: var(--lh-fa-tight); }
+  .hub-name-en {
+    font-family: var(--font-en-ui); font-size: var(--t-sm); color: var(--ink-muted);
+    direction: ltr; text-align: start; letter-spacing: var(--tracking-en);
+  }
+  .hub-note { font-size: var(--t-sm); color: var(--ink-muted); margin: 0; }
+  .hub-tags { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-block-start: auto; }
+
+  .hub-foot {
+    padding: var(--s-7) var(--page-pad) var(--s-9);
+    border-block-start: var(--border-w) solid var(--line);
+    background: var(--bg-alt);
+  }
+  .hub-foot > div { max-width: var(--page-max); margin-inline: auto; display: grid; gap: var(--s-4); }
+  .hub-foot h2 { font-size: var(--t-lg); }
+  .hub-foot ol { margin: 0; padding-inline-start: var(--s-5); display: grid; gap: var(--s-2); }
+  .hub-foot li { font-size: var(--t-sm); color: var(--ink-muted); max-width: var(--measure-fa); }
+  .hub-foot code {
+    font-family: var(--font-num); font-size: var(--t-xs);
+    background: var(--surface-alt); padding: 1px 6px; border-radius: var(--radius-control);
+  }
+</style>
+</head>
+<body>
+
+<header class="hub-head">
+  <div class="hub-kicker"><a href="index.html" style="color:inherit">صفحه‌ی اصلی: نمایش قابلیت‌ها</a></div>
+  <h1>هشت کاتالوگ دیجیتال، هشت زبان طراحی</h1>
+  <p>
+    همه روی یک سیستم طراحی و یک لایه‌ی تعامل مشترک ساخته شده‌اند. آنچه فرق می‌کند
+    چیدمان، تراکم، رنگ و حرکت است. هر نمونه یک فایل مستقل است — بازش کنید، بچرخید
+    در آن، و روی همان نمونه بازخورد بدهید.
+  </p>
+  <div class="hub-axes">
+    <span><b>چیدمان</b> تک‌ستونه · دوستونه · شبکه · اسپرد · تمام‌صفحه · بازشونده · روایی</span>
+    <span><b>تراکم</b> مینیمال تا ماکسیمال</span>
+    <span><b>رنگ</b> تک‌رنگ تا چندرنگ</span>
+    <span><b>حرکت</b> بی‌حرکت · ساده · نرم · سینمایی</span>
+  </div>
+  <p class="hub-note">
+    در هر هشت نمونه، روی هر تصویر محصول کلیک کنید: بزرگ‌نمایی روی همان نقطه، کشیدن
+    برای جابه‌جایی، نقطه‌های جزئیات روی خود تصویر، پخش ویدیو با نوار زمان واقعی، و
+    چرخش ۳۶۰ درجه با کشیدن. تصویرها فعلاً جانگهدارِ ساخته‌شده‌اند؛ مکانیزم‌ها واقعی‌اند.
+  </p>
+</header>
+
+<section class="hub-section">
+  <h2 class="hub-heading">شروع از اینجا</h2>
+  <div class="hub-grid hub-grid--wide" id="studies"></div>
+</section>
+
+<section class="hub-section">
+  <h2 class="hub-heading">هشت سبک</h2>
+  <div class="hub-grid" id="grid"></div>
+</section>
+
+<footer class="hub-foot">
+  <div>
+    <h2>بازخورد چطور اعمال می‌شود</h2>
+    <ol>
+      <li>نمونه‌ای را باز کنید و بگویید کدام‌ها را نگه داریم و کدام‌ها را کنار بگذاریم.</li>
+      <li>روی هر نمونه جداگانه بازخورد بدهید — چیدمان، تراکم، رنگ، سرعت حرکت، یا هر جزء.</li>
+      <li>می‌شود دو نمونه را ترکیب کرد: مثلاً چیدمان نمونه‌ی ۶ با حرکت و رنگ نمونه‌ی ۸.</li>
+      <li>برای جایگزینی عکس و ویدیوی واقعی، در توصیف‌گر رسانه <code>src</code> را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.</li>
+    </ol>
+  </div>
+</footer>
+
+<script src="../shared/catalog-kit.js"></script>
+<script>
+/* This page is served from the repository root; the catalogs sit one
+   directory down. */
+const DIR = 'catalogs/';
+
+/* The two studies that stand apart from the eight style variants: one
+   varies only the arrangement, the other only demonstrates the shared
+   media mechanisms. */
+const STUDIES = [
+  {
+    no: '★', file: 'avand.html', theme: 'avand',
+    fa: 'آوند، کاتالوگ کامل', en: 'Âvand, the full catalog',
+    note: 'نسخه‌ی طراحی‌شده: نیل طبیعی روی سفیدِ لعاب، نمایش نسخ، و قطعه‌ی حاشیه‌نویسی‌شده روی کاور. همان چیدمان‌ها، این بار در خدمت یک کاتالوگ واقعی. حالت تیره و استعلام قیمت هم دارد.',
+    tags: ['کاتالوگ واقعی', 'نیل و لعاب', 'حالت تیره', 'استعلام'],
+    mock: 'study'
+  },
+  {
+    no: '◇', file: 'compositions.html', theme: 'editorial',
+    fa: 'چهارده ترکیب‌بندی', en: 'Fourteen compositions',
+    note: 'ورقِ نمونه: یک برند، چهارده چیدمان پشت سر هم روی همان محصولات؛ تنها متغیر، ترکیب‌بندی است. هر کدام انیمیشن ورود مخصوص خودش را دارد.',
+    tags: ['۱۴ چیدمان', 'یک برند', 'انیمیشن اسکرول', '۸ تم'],
+    mock: 'expand'
+  },
+  {
+    no: '◆', file: '00-mechanisms.html', theme: 'craft',
+    fa: 'مکانیزم‌های رسانه', en: 'Media mechanisms',
+    note: 'بزرگ‌نمایی روی نقطه، نقطه‌های جزئیات، پخش ویدیو با نوار زمان، و چرخش ۳۶۰ — همان رفتاری که در همه‌ی نمونه‌ها کار می‌کند.',
+    tags: ['زوم و جزئیات', 'ویدیو', 'چرخش ۳۶۰', 'صفحه‌کلید'],
+    mock: 'single'
+  }
+];
+
+/* One row per variant: the file, its theme, and where it sits on each of
+   the four axes the set is meant to explore. */
+const VARIANTS = [
+  {
+    no: '۰۱', file: '01-editorial-single.html', theme: 'editorial',
+    fa: 'ادیتوریال تک‌ستونه', en: 'Editorial — single column',
+    note: 'هر محصول یک بند تمام‌عرض. فضای سفید زیاد، خط‌های مویی، ورود نرم با اسکرول.',
+    tags: ['تک‌ستونه', 'مینیمال', 'دو-رنگ', 'حرکت نرم'],
+    mock: 'single'
+  },
+  {
+    no: '۰۲', file: '02-luxe-fullscreen.html', theme: 'luxe',
+    fa: 'لوکس تمام‌صفحه', en: 'Luxe — fullscreen',
+    note: 'هر محصول یک صفحه‌ی کامل با اسنپ عمودی. تیره و طلایی، حرکت کند و سینمایی.',
+    tags: ['تمام‌صفحه', 'ماکسیمال', 'تیره/طلایی', 'حرکت سینمایی'],
+    mock: 'full'
+  },
+  {
+    no: '۰۳', file: '03-brutal-duo.html', theme: 'brutal',
+    fa: 'بروتال دوستونه', en: 'Brutal — two column',
+    note: 'دو ستون با خطوط ضخیم و سایه‌ی سخت. پرترین حالت رنگی، حرکت تند و یک‌پله.',
+    tags: ['دوستونه', 'ماکسیمال', 'چندرنگ', 'حرکت ساده'],
+    mock: 'duo'
+  },
+  {
+    no: '۰۴', file: '04-glass-expand.html', theme: 'glass',
+    fa: 'شیشه‌ای بازشونده', en: 'Glass — expandable',
+    note: 'کاشی‌ها در جای خودشان باز می‌شوند و جزئیات را نشان می‌دهند؛ گذارِ عنصر مشترک.',
+    tags: ['بازشونده', 'متوسط', 'چندرنگ ملایم', 'حرکت نرم'],
+    mock: 'expand'
+  },
+  {
+    no: '۰۵', file: '05-press-spread.html', theme: 'press',
+    fa: 'مطبوعاتی، صفحه‌ی باز', en: 'Press — two-page spread',
+    note: 'کاتالوگ چاپی: دو صفحه‌ی روبه‌رو، ورق‌زدن واقعی، تراکم بالای روزنامه‌ای.',
+    tags: ['اسپرد', 'متراکم', 'تک‌رنگ', 'ورق‌زدن'],
+    mock: 'spread'
+  },
+  {
+    no: '۰۶', file: '06-mono-grid.html', theme: 'mono',
+    fa: 'تک‌رنگ شبکه‌ای', en: 'Mono — dense grid',
+    note: 'شبکه‌ی لبه‌تا‌لبه با چگالی قابل تنظیم. سیاه و سفید محض، کمینه‌ی حرکت.',
+    tags: ['شبکه', 'مینیمال', 'تک‌رنگ', 'کمینه‌ی حرکت'],
+    mock: 'grid'
+  },
+  {
+    no: '۰۷', file: '07-spec-sheet.html', theme: 'spec',
+    fa: 'فنی، جدول مشخصات', en: 'Spec — technical sheet',
+    note: 'جدول مرتب‌شونده، فیلتر، و مقایسه‌ی کنار‌هم تا سه محصول. رنگ فقط کارکردی.',
+    tags: ['جدول', 'متراکم', 'رنگ کارکردی', 'حرکت ساده'],
+    mock: 'table'
+  },
+  {
+    no: '۰۸', file: '08-craft-story.html', theme: 'craft',
+    fa: 'روایی، دست‌ساز', en: 'Craft — scrollytelling',
+    note: 'صحنه‌ی چسبان و متن روان: هر بخش محصول خودش را نشان می‌دهد. رنگ گرم و متغیر.',
+    tags: ['روایی', 'متوسط', 'چندرنگ گرم', 'حرکت نرم'],
+    mock: 'story'
+  }
+];
+
+/* Each mock is a few boxes arranged the way that variant arranges itself —
+   enough to recognise the layout at thumbnail size. */
+const MOCKS = {
+  single: [{ cols: '1fr', cells: ['media'] }, { cols: '2fr 1fr', cells: ['', ''] }],
+  full:   [{ cols: '1fr', cells: ['media'] }],
+  duo:    [{ cols: '1fr 1fr', cells: ['media', 'media'] }, { cols: '1fr 1fr', cells: ['accent', ''] }],
+  expand: [{ cols: '1fr 1fr 1fr', cells: ['', '', ''] }, { cols: '2fr 1fr', cells: ['media', ''] }],
+  spread: [{ cols: '1fr 1fr', cells: ['', ''] }, { cols: '1fr 1fr 1fr 1fr', cells: ['', '', '', ''] }],
+  grid:   [{ cols: 'repeat(5,1fr)', cells: ['', '', '', '', ''] }, { cols: 'repeat(5,1fr)', cells: ['', '', '', '', ''] }],
+  table:  [{ cols: '1fr', cells: [''] }, { cols: '1fr', cells: [''] }, { cols: '1fr', cells: [''] }, { cols: '1fr', cells: ['accent'] }],
+  story:  [{ cols: '1fr 1fr', cells: ['media', ''] }]
+};
+
+const grid = document.getElementById('grid');
+
+function buildCard(v) {
+  const card = document.createElement('a');
+  card.className = 'hub-card';
+  card.href = DIR + v.file;
+
+  const prev = document.createElement('div');
+  prev.className = 'hub-prev';
+  prev.setAttribute('data-theme', v.theme);
+
+  const bar = document.createElement('div');
+  bar.className = 'hub-prev__bar';
+  bar.innerHTML = '<span class="hub-prev__dot"></span><span class="hub-prev__rule"></span>';
+  prev.appendChild(bar);
+
+  const type = document.createElement('div');
+  type.className = 'hub-prev__type';
+  type.textContent = v.fa;
+  prev.appendChild(type);
+
+  const mock = document.createElement('div');
+  mock.className = 'hub-prev__mock';
+  for (const row of MOCKS[v.mock]) {
+    const r = document.createElement('div');
+    r.className = 'hub-prev__row';
+    r.style.gridTemplateColumns = row.cols;
+    for (const kind of row.cells) {
+      const cell = document.createElement('div');
+      cell.className = 'hub-prev__cell' + (kind ? ' hub-prev__cell--' + kind : '');
+      r.appendChild(cell);
+    }
+    mock.appendChild(r);
+  }
+  prev.appendChild(mock);
+  card.appendChild(prev);
+
+  const body = document.createElement('div');
+  body.className = 'hub-body';
+  const no = document.createElement('div');
+  no.className = 'hub-no';
+  no.textContent = v.no + ' · ' + v.theme;
+  const name = document.createElement('div');
+  name.className = 'hub-name';
+  name.textContent = v.fa;
+  const nameEn = document.createElement('div');
+  nameEn.className = 'hub-name-en';
+  nameEn.textContent = v.en;
+  const note = document.createElement('p');
+  note.className = 'hub-note';
+  note.textContent = v.note;
+  const tags = document.createElement('div');
+  tags.className = 'hub-tags';
+  for (const t of v.tags) {
+    const tag = document.createElement('span');
+    tag.className = 'cat-tag';
+    tag.textContent = t;
+    tags.appendChild(tag);
+  }
+  body.append(no, name, nameEn, note, tags);
+  card.appendChild(body);
+  return card;
+}
+
+for (const v of STUDIES) document.getElementById('studies').appendChild(buildCard(v));
+for (const v of VARIANTS) grid.appendChild(buildCard(v));
+</script>
+</body>
+</html>

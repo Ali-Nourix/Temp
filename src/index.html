@@ -1,339 +1,1295 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="fa" data-theme="editorial">
+<html dir="rtl" lang="fa" data-theme="showcase" data-scheme="auto" data-motion="auto">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>هشت کاتالوگ دیجیتال — نمونه‌ها</title>
-<meta name="description" content="هشت نمونه‌ی کاتالوگ دیجیتال با چیدمان، تراکم، رنگ و حرکت متفاوت.">
+<meta name="color-scheme" content="light dark">
+<title>کاتالوگ دیجیتال با HTML: نمایش قابلیت‌ها</title>
+<meta name="description" content="شانزده قابلیت HTML، CSS و JavaScript برای کاتالوگ دیجیتال، هر کدام زنده و قابل امتحان: فیلتر، زوم، ویدیو، چرخش، مقایسه، ورق‌زدن، روایت اسکرولی، جدول، دیالوگ، حالت تیره، چاپ و دسترس‌پذیری.">
 <link rel="stylesheet" href="../shared/ds-core.css">
+<script>document.documentElement.classList.add('js');</script>
 <style>
-  /* Each card previews its variant in that variant's own theme, so the
-     page shows eight design languages rather than eight descriptions. */
-  .hub-head {
-    display: grid; gap: var(--s-5);
-    padding: var(--s-9) var(--page-pad) var(--s-7);
-    border-block-end: var(--border-w) solid var(--line);
-  }
-  .hub-kicker {
-    font-family: var(--font-num); font-size: var(--t-xs);
-    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
-    color: var(--ink-faint);
-  }
-  .hub-head h1 { font-size: var(--t-3xl); max-width: 18ch; }
-  .hub-head p { font-size: var(--t-md); color: var(--ink-muted); max-width: var(--measure-fa); }
+/* ═══════════════════════════════════════════════════════════════
+   A digital catalog as a demonstration of the web platform.
+   Sixteen numbered sections, each one capability, each one live.
+   Tokens come from the design system; this page adds the showcase
+   theme (indigo on ash), a light/dark override, and the frame:
+   progress bar, index rail, scheme and motion controls.
+   ═══════════════════════════════════════════════════════════════ */
 
-  .hub-axes {
-    display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5);
-    font-size: var(--t-sm); color: var(--ink-muted);
+[data-theme="showcase"] {
+  --bg: #f2f4f1; --bg-alt: #f8f9f7; --surface: #f8f9f7; --surface-alt: #e5e9e4;
+  --ink: #15181a; --ink-muted: #4c5358; --ink-faint: #5a6268;
+  --line: #c9cfcb; --line-strong: #15181a;
+  --accent: #2c3e78; --accent-soft: #dde2f1; --on-accent: #f2f4f1; --focus: #2c3e78;
+  --overlay: rgb(21 24 26 / 0.62);
+  --font-fa-display: var(--fam-markazi); --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-cormorant); --font-en-ui: var(--fam-manrope); --font-num: var(--fam-plexmono);
+  --radius-media: 0px; --radius-card: 0px; --radius-control: 0px;
+  --shadow-1: none; --shadow-2: 0 18px 44px -24px rgb(21 24 26 / 0.22); --shadow-lift: 0 26px 60px -28px rgb(21 24 26 / 0.28);
+  --hover-media-scale: 1.02; --gutter: 24px; --lh-fa-tight: 1.25;
+  --bar-h: 60px;
+  color-scheme: light;
+}
+/* Dark follows the system unless the page-level control says otherwise. */
+@media (prefers-color-scheme: dark) {
+  [data-theme="showcase"]:not([data-scheme="light"]) {
+    --bg: #161a1c; --bg-alt: #1b2022; --surface: #1b2022; --surface-alt: #1f2427;
+    --ink: #eceeeb; --ink-muted: #b4bab7; --ink-faint: #9aa19e;
+    --line: #343b3f; --line-strong: #eceeeb;
+    --accent: #9fb0e6; --accent-soft: #263050; --on-accent: #0f1320; --focus: #9fb0e6;
+    --overlay: rgb(8 10 12 / 0.74);
+    --shadow-2: 0 18px 44px -24px rgb(0 0 0 / 0.6); --shadow-lift: 0 26px 60px -28px rgb(0 0 0 / 0.7);
+    color-scheme: dark;
   }
-  .hub-axes b { color: var(--ink); font-weight: var(--w-medium); }
+}
+[data-theme="showcase"][data-scheme="dark"] {
+  --bg: #161a1c; --bg-alt: #1b2022; --surface: #1b2022; --surface-alt: #1f2427;
+  --ink: #eceeeb; --ink-muted: #b4bab7; --ink-faint: #9aa19e;
+  --line: #343b3f; --line-strong: #eceeeb;
+  --accent: #9fb0e6; --accent-soft: #263050; --on-accent: #0f1320; --focus: #9fb0e6;
+  --overlay: rgb(8 10 12 / 0.74);
+  --shadow-2: 0 18px 44px -24px rgb(0 0 0 / 0.6); --shadow-lift: 0 26px 60px -28px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
 
-  /* The Âvand catalog's own palette, so its preview is drawn in the real
-     colours rather than borrowed from the nearest system theme. */
-  [data-theme="avand"] {
-    --bg: #f2f4f1; --surface: #f8f9f7; --surface-alt: #e5e9e4;
-    --ink: #15181a; --ink-muted: #4c5358; --ink-faint: #5a6268;
-    --line: #c9cfcb; --accent: #2c3e78;
-    --font-fa-display: var(--fam-markazi);
-    --radius-card: 0px; --shadow-1: none;
-  }
+html { scroll-behavior: smooth; scroll-padding-block-start: calc(var(--bar-h) + 16px); }
+html, body { overflow-x: clip; }
+body { background: var(--bg); }
+[dir="ltr"] .fa-display, .en-display { font-family: var(--font-en-display); }
 
-  .hub-section { max-width: var(--page-max); margin-inline: auto; padding: var(--s-7) var(--page-pad) var(--s-5); }
-  .hub-section:last-of-type { padding-block-end: var(--s-9); }
-  .hub-heading {
-    font-family: var(--font-num); font-size: var(--t-xs);
-    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
-    font-weight: var(--w-regular); color: var(--ink-faint);
-    padding-block-end: var(--s-3); margin-block-end: var(--s-5);
-    border-block-end: var(--border-w) solid var(--line);
-  }
+.skip { position: absolute; inset-block-start: -100%; inset-inline-start: var(--s-4); padding: var(--s-3) var(--s-4); background: var(--accent); color: var(--on-accent); z-index: 100; }
+.skip:focus { inset-block-start: var(--s-3); }
 
-  .hub-grid {
-    display: grid; gap: var(--s-6);
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  }
-  /* The two studies carry the most weight, so they get the wider cells. */
-  .hub-grid--wide { grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); }
-  @media (max-width: 520px) { .hub-grid--wide { grid-template-columns: 1fr; } }
+/* ── frame: progress, bar, index rail ─────────────────────── */
+.progress { position: fixed; inset-block-start: 0; inset-inline: 0; height: 3px; z-index: 40; background: transparent; pointer-events: none; }
+.progress__bar { height: 100%; background: var(--accent); transform: scaleX(0); transform-origin: right center; }
+[dir="ltr"] .progress__bar { transform-origin: left center; }
+@supports (animation-timeline: scroll()) {
+  .js .progress__bar { animation: grow linear both; animation-timeline: scroll(root); }
+}
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
-  .hub-card {
-    display: flex; flex-direction: column;
-    border: var(--border-w) solid var(--line);
-    background: var(--surface);
-    text-decoration: none; color: inherit;
-    transition: transform var(--dur-base) var(--ease-out),
-                box-shadow var(--dur-base) var(--ease-out),
-                border-color var(--dur-base) var(--ease-out);
-  }
-  .hub-card:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--shadow-2); border-color: var(--line-strong); }
-  .hub-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.bar {
+  position: sticky; inset-block-start: 0; z-index: 30;
+  display: flex; align-items: center; gap: var(--s-3); min-height: var(--bar-h);
+  padding: var(--s-2) var(--page-pad);
+  background: color-mix(in oklab, var(--bg) 88%, transparent); backdrop-filter: blur(10px);
+  border-block-end: var(--border-w) solid var(--line);
+}
+@supports not (backdrop-filter: blur(1px)) { .bar { background: var(--bg); } }
+@media (prefers-reduced-transparency: reduce) { .bar { background: var(--bg); backdrop-filter: none; } }
+.bar__mark { font-family: var(--font-fa-display); font-size: var(--t-lg); line-height: 1; white-space: nowrap; }
+.bar__sep { flex: 1; }
+.bar .cat-btn, .bar .cat-chip, .seg > button { white-space: nowrap; }
+.seg { display: inline-flex; border: var(--border-w) solid var(--line-strong); border-radius: var(--radius-pill); overflow: hidden; }
+.seg > button { min-height: 36px; padding: 0 var(--s-3); font: inherit; font-size: var(--t-sm); background: transparent; color: var(--ink-muted); border: 0; cursor: pointer; }
+.seg > button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.badge { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding-inline: 6px; font-family: var(--font-num); font-size: var(--t-xs); line-height: 1; background: var(--accent); color: var(--on-accent); border-radius: var(--radius-pill); }
+.badge:empty { display: none; }
+.only-wide { display: none; }
+@media (min-width: 900px) { .only-wide { display: inline-flex; } .only-narrow { display: none; } }
+.menu__settings { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); margin-block-end: var(--s-5); padding-block-end: var(--s-4); border-block-end: var(--border-w) solid var(--line); }
 
-  /* The preview strip re-declares the variant's theme, so the swatches and
-     mock below are drawn with that variant's real tokens. */
-  .hub-prev {
-    position: relative; aspect-ratio: 16 / 10; overflow: hidden;
-    background: var(--bg); color: var(--ink);
-    border-block-end: var(--border-w) solid var(--line);
-    padding: var(--s-4);
-    display: grid; gap: var(--s-2); align-content: start;
-  }
-  .hub-prev__bar { display: flex; gap: 4px; align-items: center; }
-  .hub-prev__dot { width: 10px; height: 10px; border-radius: var(--radius-pill); background: var(--accent); }
-  .hub-prev__rule { flex: 1; height: var(--border-w); background: var(--line); }
-  .hub-prev__type { font-family: var(--font-fa-display); font-size: var(--t-md); line-height: var(--lh-fa-tight); }
-  .hub-prev__mock { display: grid; gap: 5px; margin-block-start: auto; }
-  .hub-prev__row { display: grid; gap: 5px; }
-  .hub-prev__cell {
-    background: var(--surface); border: var(--border-w) solid var(--line);
-    border-radius: var(--radius-card); box-shadow: var(--shadow-1);
-    min-height: 14px;
-  }
-  .hub-prev__cell--media { background: var(--surface-alt); aspect-ratio: 4 / 5; }
-  .hub-prev__cell--accent { background: var(--accent); border-color: var(--accent); }
+.shell { display: grid; grid-template-columns: minmax(0, 1fr); max-width: var(--page-max); margin-inline: auto; padding-inline: var(--page-pad); }
+@media (min-width: 1100px) { .shell { grid-template-columns: 200px minmax(0, 1fr); column-gap: var(--s-8); } }
+.toc { display: none; }
+@media (min-width: 1100px) {
+  .toc { display: block; position: sticky; inset-block-start: calc(var(--bar-h) + var(--s-6)); align-self: start; max-height: calc(100vh - var(--bar-h) - var(--s-8)); overflow: auto; padding-block: var(--s-6); scrollbar-width: none; }
+}
+.toc ol, .toc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.toc a, .toc-list a { display: grid; grid-template-columns: 3ch 1fr; gap: var(--s-2); padding: 6px var(--s-2); font-size: var(--t-sm); color: var(--ink-muted); text-decoration: none; border-inline-start: 2px solid transparent; transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out); }
+.toc a .n, .toc-list a .n { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
+.toc a:hover, .toc-list a:hover { color: var(--ink); background: var(--surface-alt); }
+.toc a[aria-current="true"] { color: var(--accent); border-color: var(--accent); }
 
-  .hub-body { display: grid; gap: var(--s-3); padding: var(--s-5); }
-  .hub-no { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
-  .hub-name { font-family: var(--font-fa-display); font-size: var(--t-lg); line-height: var(--lh-fa-tight); }
-  .hub-name-en {
-    font-family: var(--font-en-ui); font-size: var(--t-sm); color: var(--ink-muted);
-    direction: ltr; text-align: start; letter-spacing: var(--tracking-en);
-  }
-  .hub-note { font-size: var(--t-sm); color: var(--ink-muted); margin: 0; }
-  .hub-tags { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-block-start: auto; }
+/* ── hero ─────────────────────────────────────────────────── */
+.hero { display: grid; gap: var(--s-6); padding-block: var(--s-9) var(--s-8); min-height: min(78vh, 720px); align-content: center; }
+.hero__kicker { font-size: var(--t-base); color: var(--ink-muted); }
+.hero__title { font-family: var(--font-fa-display); font-weight: var(--w-regular); font-size: var(--t-3xl); line-height: 1.05; letter-spacing: -0.01em; max-width: 22ch; text-wrap: balance; }
+[dir="ltr"] .hero__title { font-family: var(--font-en-display); }
+.hero__lede { margin: 0; font-size: var(--t-md); line-height: 1.8; color: var(--ink-muted); max-width: 52ch; }
+.hero__meta { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.hero__meta code { font-family: var(--font-num); font-size: var(--t-xs); padding: 4px 8px; background: var(--surface-alt); color: var(--ink-muted); }
+@supports (animation-timeline: scroll()) {
+  .js .hero__inner { animation: hero-out linear both; animation-timeline: scroll(root); animation-range: 0 70vh; }
+}
+@keyframes hero-out { to { opacity: 0.25; transform: translateY(-28px); } }
 
-  .hub-foot {
-    padding: var(--s-7) var(--page-pad) var(--s-9);
-    border-block-start: var(--border-w) solid var(--line);
-    background: var(--bg-alt);
-  }
-  .hub-foot > div { max-width: var(--page-max); margin-inline: auto; display: grid; gap: var(--s-4); }
-  .hub-foot h2 { font-size: var(--t-lg); }
-  .hub-foot ol { margin: 0; padding-inline-start: var(--s-5); display: grid; gap: var(--s-2); }
-  .hub-foot li { font-size: var(--t-sm); color: var(--ink-muted); max-width: var(--measure-fa); }
-  .hub-foot code {
-    font-family: var(--font-num); font-size: var(--t-xs);
-    background: var(--surface-alt); padding: 1px 6px; border-radius: var(--radius-control);
-  }
+/* ── sections ─────────────────────────────────────────────── */
+.sec { padding-block: var(--s-9); border-block-start: var(--border-w) solid var(--line); scroll-margin-block-start: calc(var(--bar-h) + 12px); }
+.sec__head { display: grid; grid-template-columns: auto 1fr; gap: var(--s-3) var(--s-5); align-items: baseline; margin-block-end: var(--s-6); }
+.sec__no { font-family: var(--font-num); font-size: var(--t-md); color: var(--accent); }
+.sec__title { font-family: var(--font-fa-display); font-weight: var(--w-regular); font-size: var(--t-2xl); line-height: 1.1; }
+[dir="ltr"] .sec__title { font-family: var(--font-en-display); }
+.sec__lede { grid-column: 2; margin: 0; font-size: var(--t-base); color: var(--ink-muted); max-width: 64ch; }
+.tech { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
+.tech__k { font-size: var(--t-xs); color: var(--ink-faint); }
+.tech code { font-family: var(--font-num); font-size: var(--t-xs); padding: 3px 8px; border: var(--border-w) solid var(--line); color: var(--ink-muted); direction: ltr; }
+@media (max-width: 600px) { .sec__head { grid-template-columns: 1fr; } .sec__lede, .tech { grid-column: 1; } }
+
+/* ── product atoms ────────────────────────────────────────── */
+.media { position: relative; overflow: hidden; aspect-ratio: var(--ratio-media); background: var(--surface-alt); }
+.media--wide { aspect-ratio: 3 / 2; } .media--square { aspect-ratio: 1; } .media--tall { aspect-ratio: 2 / 3; }
+@media (hover: hover) { .ck-cue { opacity: 0; } .ck-media:hover .ck-cue, .ck-media:focus-visible .ck-cue { opacity: 1; } }
+.name { font-family: var(--font-fa-display); font-weight: var(--w-regular); font-size: var(--t-lg); line-height: 1.2; }
+[dir="ltr"] .name { font-family: var(--font-en-display); font-weight: var(--w-medium); }
+.name--xl { font-size: var(--t-2xl); }
+.alt { font-family: var(--font-en-ui); font-size: var(--t-sm); color: var(--ink-muted); direction: ltr; text-align: right; }
+[dir="ltr"] .alt { font-family: var(--font-fa-ui); direction: rtl; text-align: left; }
+.copy { margin: 0; font-size: var(--t-base); color: var(--ink-muted); line-height: var(--lh-fa-body); max-width: var(--measure-fa); }
+.copy--sm { font-size: var(--t-sm); }
+.price { font-family: var(--font-num); font-size: var(--t-md); color: var(--ink); }
+.price small { font-size: var(--t-xs); color: var(--ink-muted); margin-inline-start: var(--s-1); }
+.code { font-family: var(--font-num); font-size: var(--t-sm); color: var(--ink-faint); direction: ltr; }
+.row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); padding-block-start: var(--s-3); }
+.spec { display: grid; gap: var(--s-1); font-size: var(--t-sm); color: var(--ink-muted); }
+.spec > div { display: flex; gap: var(--s-3); } .spec dt { min-width: 8ch; color: var(--ink-faint); } .spec dd { margin: 0; font-family: var(--font-num); color: var(--ink); }
+.add { min-height: 40px; padding-inline: var(--s-4); font-size: var(--t-sm); }
+.add[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.status { font-size: var(--t-sm); color: var(--ink-muted); min-height: 1.5em; }
+
+/* 01 · grid with live filter. Cards are custom elements that lay
+   themselves out by their own width, not the viewport's. */
+.filters { display: grid; gap: var(--s-4); margin-block-end: var(--s-6); }
+.filters__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
+.filters .cat-search { flex: 1 1 220px; max-width: 360px; }
+.filters select { min-height: var(--tap-min); padding: 0 var(--s-3); font: inherit; font-size: var(--t-sm); color: var(--ink); background: var(--surface); border: var(--border-w) solid var(--line); }
+.filters__clear { visibility: hidden; }
+.filters:has(.cat-chip[aria-pressed="true"]:not([data-cat="all"])) .filters__clear,
+.filters:has(input:not(:placeholder-shown)) .filters__clear { visibility: visible; }
+.grid { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+catalog-card { display: block; container: card / inline-size; }
+catalog-card[hidden] { display: none; }
+.card { display: grid; gap: var(--s-3); align-content: start; height: 100%; }
+.card__body { display: grid; gap: var(--s-2); align-content: start; }
+@container card (min-width: 440px) { .card { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--s-5); } }
+.empty { padding: var(--s-8); text-align: center; color: var(--ink-faint); border: var(--border-w) dashed var(--line); }
+
+/* 02 · close view with inline hotspots */
+.study { display: grid; gap: var(--s-7); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+.study__frame { position: relative; aspect-ratio: var(--ratio-media); background: var(--surface-alt); }
+.study__frame .media { position: absolute; inset: 0; aspect-ratio: auto; }
+.dot { position: absolute; z-index: 2; width: 30px; height: 30px; margin: -15px 0 0 -15px; padding: 0; display: grid; place-items: center; cursor: pointer; font-family: var(--font-num); font-size: 12px; background: var(--accent); color: var(--on-accent); border: 2px solid var(--bg); border-radius: var(--radius-pill); transition: transform var(--dur-fast) var(--ease-out); }
+.dot::after { content: ""; position: absolute; inset: -6px; border-radius: inherit; border: 1px solid var(--accent); opacity: 0.5; transition: inset var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out); }
+.dot:hover, .dot[aria-pressed="true"] { transform: scale(1.12); } .dot[aria-pressed="true"]::after { inset: -10px; opacity: 1; }
+.notes { display: grid; border-block-start: var(--border-w) solid var(--line); }
+.note { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: var(--s-4); align-items: baseline; padding-block: var(--s-4); border: 0; border-block-end: var(--border-w) solid var(--line); background: none; text-align: start; font: inherit; color: inherit; cursor: pointer; transition: background var(--dur-fast) var(--ease-out); }
+.note:hover { background: var(--surface-alt); } .note[aria-pressed="true"] { background: var(--accent-soft); }
+.note__n { font-family: var(--font-num); font-size: var(--t-sm); color: var(--accent); }
+.note__t { font-family: var(--font-fa-display); font-size: var(--t-lg); line-height: 1.2; } [dir="ltr"] .note__t { font-family: var(--font-en-display); }
+.note__b { grid-column: 2; margin: 0; font-size: var(--t-sm); color: var(--ink-muted); }
+.study__side { display: grid; gap: var(--s-5); }
+@media (max-width: 800px) { .study { grid-template-columns: 1fr; } }
+
+/* 03 · video and spin, side by side */
+.pair { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+.pair__item { display: grid; gap: var(--s-3); }
+
+/* 04 · before / after */
+.cmp { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-alt); direction: ltr; --x: 50%; touch-action: none; }
+.cmp img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; user-select: none; -webkit-user-drag: none; }
+.cmp__after { clip-path: inset(0 0 0 var(--x)); }
+.cmp__handle { position: absolute; inset-block: 0; left: var(--x); width: 2px; margin-left: -1px; background: var(--bg); pointer-events: none; }
+.cmp__handle::after { content: ""; position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; translate: -50% -50%; border-radius: 999px; background: var(--bg); border: 2px solid var(--accent); box-shadow: var(--shadow-2); }
+.cmp__range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+.cmp__range:focus-visible ~ .cmp__handle::after { outline: 2px solid var(--focus); outline-offset: 3px; }
+.cmp__label { position: absolute; bottom: 12px; padding: 4px 10px; font-size: var(--t-xs); background: var(--bg); color: var(--ink); }
+.cmp__label--a { left: 12px; } .cmp__label--b { right: 12px; }
+
+/* 05 · variants */
+.sw { display: grid; gap: var(--s-6); grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; }
+.sw__stage { position: relative; aspect-ratio: var(--ratio-media); overflow: hidden; background: var(--surface-alt); }
+.sw__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity var(--dur-slow) var(--ease-out); }
+.sw__stage img[data-out] { opacity: 0; }
+.sw__side { display: grid; gap: var(--s-4); }
+.sw__name { display: flex; align-items: baseline; gap: var(--s-2); flex-wrap: wrap; }
+.sw__var { font-family: var(--font-fa-display); font-size: var(--t-lg); color: var(--accent); } [dir="ltr"] .sw__var { font-family: var(--font-en-display); }
+@media (max-width: 760px) { .sw { grid-template-columns: 1fr; } }
+
+/* 06 · expanding card with View Transitions */
+.vt { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+.vt__card { display: grid; gap: var(--s-2); align-content: start; text-align: start; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
+.vt__card:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.vt__detail { grid-column: 1 / -1; display: grid; gap: var(--s-6); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: var(--s-6); background: var(--surface); border: var(--border-w) solid var(--line); }
+.vt__detail .media { aspect-ratio: 1; }
+.vt__text { display: grid; gap: var(--s-4); align-content: start; }
+@media (max-width: 700px) { .vt__detail { grid-template-columns: 1fr; } }
+::view-transition-group(*) { animation-duration: var(--dur-page); animation-timing-function: var(--ease-inout); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--dur-base); }
+
+/* 07 · quick view with the Popover API */
+.qv-grid { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+[popover].qv { inset: 0; margin: auto; width: min(680px, 92vw); max-height: 88vh; overflow: auto; padding: var(--s-6); background: var(--surface); color: var(--ink); border: var(--border-w) solid var(--line-strong); box-shadow: var(--shadow-lift); }
+[popover].qv::backdrop { background: var(--overlay); }
+.qv__grid { display: grid; gap: var(--s-5); grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+@media (max-width: 600px) { .qv__grid { grid-template-columns: 1fr; } }
+.qv__text { display: grid; gap: var(--s-3); align-content: start; }
+.qv__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-4); margin-block-end: var(--s-4); }
+/* Entry and exit are real transitions on a top-layer element, including
+   the discrete display and overlay steps. */
+[popover].qv { opacity: 0; transform: translateY(10px) scale(0.985); transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), overlay var(--dur-base) allow-discrete, display var(--dur-base) allow-discrete; }
+[popover].qv:popover-open { opacity: 1; transform: none; }
+@starting-style { [popover].qv:popover-open { opacity: 0; transform: translateY(10px) scale(0.985); } }
+[popover].qv::backdrop { opacity: 0; transition: opacity var(--dur-base) var(--ease-out), overlay var(--dur-base) allow-discrete, display var(--dur-base) allow-discrete; }
+[popover].qv:popover-open::backdrop { opacity: 1; }
+@starting-style { [popover].qv:popover-open::backdrop { opacity: 0; } }
+
+/* 08 · snap gallery */
+.snap { position: relative; }
+.snap__track { display: flex; gap: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-block-end: var(--s-2); }
+.snap__track::-webkit-scrollbar { display: none; }
+.snap__item { flex: 0 0 min(100%, 640px); scroll-snap-align: center; display: grid; gap: var(--s-3); }
+.snap__item .media { aspect-ratio: 3 / 2; }
+.snap__nav { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); margin-block-start: var(--s-4); }
+.snap__dots { display: flex; gap: 8px; }
+.snap__dots button { width: 10px; height: 10px; padding: 0; border-radius: 999px; border: var(--border-w) solid var(--ink-faint); background: transparent; cursor: pointer; transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+.snap__dots button[aria-current="true"] { background: var(--accent); border-color: var(--accent); transform: scale(1.25); }
+
+/* 09 · the book */
+.book { position: relative; display: grid; grid-template-columns: 1fr 1fr; aspect-ratio: 3 / 2; max-width: 980px; margin-inline: auto; perspective: 2400px; border: var(--border-w) solid var(--line-strong); background: var(--surface); }
+.book__page { position: relative; padding: var(--s-6); display: grid; gap: var(--s-4); align-content: start; overflow: hidden; }
+.book__page + .book__page { border-inline-start: var(--border-w) solid var(--line-strong); }
+.book__page .media { aspect-ratio: 4 / 3; }
+.book__folio { margin-block-start: auto; padding-block-start: var(--s-3); border-block-start: var(--border-w) solid var(--line); font-family: var(--font-num); font-size: var(--t-sm); color: var(--ink-faint); text-align: center; }
+.book__leaf { position: absolute; inset-block: 0; width: 50%; transform-style: preserve-3d; transition: transform 900ms var(--ease-inout); z-index: 3; }
+.book__leaf--left { left: 0; transform-origin: right center; }
+.book__leaf--right { right: 0; transform-origin: left center; }
+.book__leaf--left.turn { transform: rotateY(180deg); }
+.book__leaf--right.turn { transform: rotateY(-180deg); }
+.book__face { position: absolute; inset: 0; backface-visibility: hidden; background: var(--surface); }
+.book__face--back { transform: rotateY(180deg); }
+.book__face .book__page { height: 100%; }
+.book__nav { display: flex; justify-content: center; align-items: center; gap: var(--s-4); margin-block-start: var(--s-5); }
+.book__count { font-family: var(--font-num); font-size: var(--t-sm); color: var(--ink-muted); }
+@media (max-width: 700px) { .book { aspect-ratio: auto; grid-template-columns: 1fr; } .book__page + .book__page { border-inline-start: 0; border-block-start: var(--border-w) solid var(--line-strong); } .book__leaf { display: none; } }
+
+/* 10 · scrollytelling */
+.story { display: grid; gap: var(--s-8); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+.story__stage { position: sticky; inset-block-start: calc(var(--bar-h) + var(--s-5)); display: grid; gap: var(--s-3); }
+.story__frame { position: relative; aspect-ratio: 4 / 5; max-height: calc(100vh - var(--bar-h) - 140px); overflow: hidden; background: var(--surface-alt); }
+.story__frame .media { position: absolute; inset: 0; aspect-ratio: auto; opacity: 0; transition: opacity var(--dur-slow) var(--ease-out); }
+.story__frame .media.is-active { opacity: 1; }
+.story__bar { height: 2px; background: var(--line); }
+.story__bar > div { height: 100%; width: var(--p, 0%); background: var(--accent); transition: width var(--dur-slow) var(--ease-out); }
+.story__steps { display: grid; gap: var(--s-6); }
+.story__step { min-height: 62vh; display: grid; gap: var(--s-4); align-content: center; opacity: 0.35; transition: opacity var(--dur-slow) var(--ease-out); }
+.story__step.is-active { opacity: 1; }
+@media (max-width: 800px) { .story { grid-template-columns: 1fr; } .story__frame { max-height: 42vh; aspect-ratio: 3 / 2; } .story__step { min-height: 0; opacity: 1; } .story__stage { inset-block-start: var(--bar-h); z-index: 2; background: var(--bg); padding-block: var(--s-3); } }
+
+/* 11 · comparison table */
+.tbl-wrap { overflow-x: auto; }
+.tbl { width: 100%; border-collapse: collapse; font-size: var(--t-sm); }
+.tbl th, .tbl td { padding: var(--s-3) var(--s-3); text-align: start; vertical-align: middle; border-block-end: var(--border-w) solid var(--line); }
+.tbl thead th { position: sticky; inset-block-start: var(--bar-h); background: var(--bg); z-index: 1; font-weight: var(--w-medium); color: var(--ink-muted); border-block-end: var(--border-w) solid var(--line-strong); }
+.tbl thead button { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
+.tbl thead button::after { content: "↕"; font-size: 11px; color: var(--ink-faint); }
+.tbl thead th[aria-sort="ascending"] button::after { content: "↑"; color: var(--accent); }
+.tbl thead th[aria-sort="descending"] button::after { content: "↓"; color: var(--accent); }
+/* Keyboard focus scrolls a row into view; the margin keeps it from
+   landing under the sticky header and the bar above it. */
+.tbl tbody td { scroll-margin-block-start: calc(var(--bar-h) + 64px); }
+.tbl tbody tr:hover { background: var(--surface-alt); }
+.tbl tbody tr:has(input:checked) { background: var(--accent-soft); }
+.tbl .media { width: 44px; aspect-ratio: 1; }
+.tbl .num { font-family: var(--font-num); direction: ltr; text-align: end; }
+.tbl meter { width: 84px; height: 10px; }
+.tbl input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent); }
+.tray { display: none; position: sticky; inset-block-end: var(--s-4); z-index: 5; align-items: center; gap: var(--s-4); margin-block-start: var(--s-5); padding: var(--s-3) var(--s-4); background: var(--ink); color: var(--bg); }
+.sec:has(.tbl input:checked) .tray { display: flex; }
+.tray__n { font-family: var(--font-num); }
+.tray .cat-btn { background: var(--bg); color: var(--ink); }
+.cmp-tbl { width: 100%; border-collapse: collapse; font-size: var(--t-sm); }
+.cmp-tbl th, .cmp-tbl td { padding: var(--s-3); border-block-end: var(--border-w) solid var(--line); text-align: start; vertical-align: top; }
+.cmp-tbl th { color: var(--ink-faint); font-weight: var(--w-regular); width: 20%; }
+.cmp-tbl thead th { color: var(--ink); }
+.cmp-tbl thead .name { font-size: var(--t-base); margin-block-start: var(--s-2); }
+.cmp-tbl td.num { font-family: var(--font-num); direction: ltr; text-align: end; }
+.cmp-tbl td.diff { background: var(--accent-soft); color: var(--accent); }
+.tbl__name { display: flex; gap: var(--s-3); align-items: center; }
+.tbl__name .name { font-size: var(--t-base); }
+
+/* 12 · details */
+.acc { display: grid; gap: 0; border-block-start: var(--border-w) solid var(--line-strong); }
+.acc details { border-block-end: var(--border-w) solid var(--line); }
+.acc summary { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); padding: var(--s-4) 0; cursor: pointer; list-style: none; font-family: var(--font-fa-display); font-size: var(--t-lg); }
+[dir="ltr"] .acc summary { font-family: var(--font-en-display); }
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary::after { content: "+"; font-family: var(--font-num); color: var(--accent); transition: transform var(--dur-base) var(--ease-out); }
+.acc details[open] summary::after { transform: rotate(45deg); }
+.acc__body { display: grid; gap: var(--s-4); grid-template-columns: 120px minmax(0, 1fr); padding-block: 0 var(--s-5); }
+.acc__body .media { aspect-ratio: 1; }
+@media (max-width: 520px) { .acc__body { grid-template-columns: 1fr; } }
+
+/* 13 · dialog */
+dialog.dlg { inset: 0; margin: auto; width: min(760px, 92vw); max-height: 88vh; padding: var(--s-6); background: var(--surface); color: var(--ink); border: var(--border-w) solid var(--line-strong); box-shadow: var(--shadow-lift); }
+dialog.dlg::backdrop { background: var(--overlay); }
+dialog.dlg { opacity: 0; transform: translateY(10px); transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), overlay var(--dur-base) allow-discrete, display var(--dur-base) allow-discrete; }
+dialog.dlg[open] { opacity: 1; transform: none; }
+@starting-style { dialog.dlg[open] { opacity: 0; transform: translateY(10px); } }
+.dlg__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-4); margin-block-end: var(--s-5); }
+.dlg__head h2 { font-size: var(--t-xl); font-weight: var(--w-regular); }
+.dlg__row { grid-template-columns: 56px minmax(0, 1fr) auto; }
+.dlg__row .media { aspect-ratio: 1; }
+.dlg__foot { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; justify-content: space-between; padding-block-start: var(--s-4); margin-block-start: var(--s-4); border-block-start: var(--border-w) solid var(--line); }
+.dlg__total { font-family: var(--font-num); font-size: var(--t-md); } .dlg__total small { font-size: var(--t-xs); color: var(--ink-muted); margin-inline-start: var(--s-1); }
+.inq-demo { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; }
+
+/* 14 · picture and scheme */
+.pic { display: grid; gap: var(--s-6); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+.pic picture, .pic img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--surface-alt); }
+.pic__side { display: grid; gap: var(--s-4); }
+.kv { display: grid; gap: var(--s-2); font-size: var(--t-sm); }
+.kv div { display: flex; justify-content: space-between; gap: var(--s-4); padding-block: var(--s-2); border-block-end: var(--border-w) solid var(--line); }
+.kv dt { color: var(--ink-faint); } .kv dd { margin: 0; font-family: var(--font-num); direction: ltr; }
+@media (max-width: 760px) { .pic { grid-template-columns: 1fr; } }
+
+/* 15 · print and share */
+.actions { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; }
+
+/* 16 · access */
+.keys { display: grid; gap: var(--s-2); grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.keys div { display: flex; align-items: baseline; gap: var(--s-3); font-size: var(--t-sm); color: var(--ink-muted); padding-block: var(--s-2); border-block-end: var(--border-w) solid var(--line); }
+kbd { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink); background: var(--surface-alt); border: var(--border-w) solid var(--line); padding: 2px 8px; min-width: 52px; text-align: center; direction: ltr; }
+
+/* ── footer ───────────────────────────────────────────────── */
+.foot { display: grid; gap: var(--s-5); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); padding-block: var(--s-8) var(--s-10); border-block-start: var(--border-w) solid var(--line); }
+.foot h3 { font-family: var(--font-fa-display); font-weight: var(--w-regular); font-size: var(--t-md); margin-block-end: var(--s-2); } [dir="ltr"] .foot h3 { font-family: var(--font-en-display); }
+.foot p, .foot li { font-size: var(--t-sm); color: var(--ink-muted); } .foot p { margin: 0; max-width: 36ch; } .foot ul { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s-1); }
+
+/* ── reveals: one quiet entrance, compositor properties only ── */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); transition-delay: calc(var(--i, 0) * var(--stagger)); }
+.js .rv.in { opacity: 1; transform: none; }
+.js .rv--pop { transform: translateY(12px) scale(0.975); transition-timing-function: var(--ease-out), var(--ease-soft); }
+.js .rv--pop.in { transform: none; }
+
+/* Reduced motion, from the system or from the page's own control. The
+   rules are the same; CSS cannot express the OR, so they appear twice. */
+@media (prefers-reduced-motion: reduce) {
+  .js .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .js .progress__bar, .js .hero__inner { animation: none !important; }
+  .book__leaf { transition: none !important; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+:root[data-motion="reduce"] .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+:root[data-motion="reduce"] .progress__bar, :root[data-motion="reduce"] .hero__inner { animation: none !important; }
+:root[data-motion="reduce"] .book__leaf { transition: none !important; }
+:root[data-motion="reduce"] :is(.dot, .note, .sw__stage img, .story__frame .media, .story__step, .snap__dots button, [popover].qv, dialog.dlg) { transition: none !important; }
+
+/* ── print: the page becomes the printed catalog ─────────── */
+@media print {
+  .progress, .bar, .toc, .skip, .tech, .filters, .snap__nav, .book__nav, .tray, .actions, .add, .ck-cue, .dot, .cmp__range, .cmp__handle, .keys, .only-narrow { display: none !important; }
+  .shell { display: block; }
+  .sec { padding-block: 24pt; break-inside: avoid; border: 0; }
+  .grid { grid-template-columns: repeat(3, 1fr) !important; }
+  catalog-card[hidden] { display: block !important; }
+  .rv { opacity: 1 !important; transform: none !important; }
+  .story__stage { position: static; } .story__frame .media { position: static; opacity: 1; aspect-ratio: 4 / 5; }
+  .story__step { min-height: 0; opacity: 1; }
+  .snap__track { display: grid; grid-template-columns: 1fr 1fr; overflow: visible; }
+  .book__leaf { display: none; }
+  a[href]::after { content: none; }
+}
 </style>
 </head>
 <body>
 
-<header class="hub-head">
-  <div class="hub-kicker">Digital Catalog Studies · ۸ نمونه</div>
-  <h1>هشت کاتالوگ دیجیتال، هشت زبان طراحی</h1>
-  <p>
-    همه روی یک سیستم طراحی و یک لایه‌ی تعامل مشترک ساخته شده‌اند. آنچه فرق می‌کند
-    چیدمان، تراکم، رنگ و حرکت است. هر نمونه یک فایل مستقل است — بازش کنید، بچرخید
-    در آن، و روی همان نمونه بازخورد بدهید.
-  </p>
-  <div class="hub-axes">
-    <span><b>چیدمان</b> تک‌ستونه · دوستونه · شبکه · اسپرد · تمام‌صفحه · بازشونده · روایی</span>
-    <span><b>تراکم</b> مینیمال تا ماکسیمال</span>
-    <span><b>رنگ</b> تک‌رنگ تا چندرنگ</span>
-    <span><b>حرکت</b> بی‌حرکت · ساده · نرم · سینمایی</span>
+<a class="skip" href="#main" data-t="skip">رفتن به محتوا</a>
+<div class="progress" aria-hidden="true"><div class="progress__bar" id="progress"></div></div>
+
+<!-- Wide screens carry every control in the bar; narrow ones fold the
+     scheme, motion and language controls into the index menu. Both sets
+     share data attributes and one delegated handler. -->
+<header class="bar">
+  <span class="bar__mark fa-display" data-t="brand">آوند</span>
+  <span class="bar__sep"></span>
+  <div class="seg only-wide" role="group" aria-label="colour scheme">
+    <button type="button" data-scheme="auto" aria-pressed="true" data-t="auto">سیستم</button>
+    <button type="button" data-scheme="light" aria-pressed="false" data-t="light">روشن</button>
+    <button type="button" data-scheme="dark" aria-pressed="false" data-t="dark">تیره</button>
   </div>
-  <p class="hub-note">
-    در هر هشت نمونه، روی هر تصویر محصول کلیک کنید: بزرگ‌نمایی روی همان نقطه، کشیدن
-    برای جابه‌جایی، نقطه‌های جزئیات روی خود تصویر، پخش ویدیو با نوار زمان واقعی، و
-    چرخش ۳۶۰ درجه با کشیدن. تصویرها فعلاً جانگهدارِ ساخته‌شده‌اند؛ مکانیزم‌ها واقعی‌اند.
-  </p>
+  <button type="button" class="cat-chip only-wide" data-motion aria-pressed="false" data-t="motion">کاهش حرکت</button>
+  <button type="button" class="cat-btn cat-btn--ghost" id="inq-open"><span data-t="inquiry">استعلام</span> <span class="badge" id="inq-n" aria-live="polite"></span></button>
+  <div class="cat-lang only-wide" role="group" aria-label="language">
+    <button type="button" data-lang="fa" aria-pressed="true">فارسی</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button type="button" class="cat-chip only-narrow" popovertarget="menu" data-t="index">فهرست</button>
 </header>
 
-<section class="hub-section">
-  <h2 class="hub-heading">شروع از اینجا</h2>
-  <div class="hub-grid hub-grid--wide" id="studies"></div>
-</section>
-
-<section class="hub-section">
-  <h2 class="hub-heading">هشت سبک</h2>
-  <div class="hub-grid" id="grid"></div>
-</section>
-
-<footer class="hub-foot">
-  <div>
-    <h2>بازخورد چطور اعمال می‌شود</h2>
-    <ol>
-      <li>نمونه‌ای را باز کنید و بگویید کدام‌ها را نگه داریم و کدام‌ها را کنار بگذاریم.</li>
-      <li>روی هر نمونه جداگانه بازخورد بدهید — چیدمان، تراکم، رنگ، سرعت حرکت، یا هر جزء.</li>
-      <li>می‌شود دو نمونه را ترکیب کرد: مثلاً چیدمان نمونه‌ی ۶ با حرکت و رنگ نمونه‌ی ۸.</li>
-      <li>برای جایگزینی عکس و ویدیوی واقعی، در توصیف‌گر رسانه <code>src</code> را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.</li>
-    </ol>
+<div popover id="menu" class="qv">
+  <div class="qv__head"><strong data-t="index">فهرست</strong><button type="button" class="cat-btn cat-btn--ghost" popovertarget="menu" popovertargetaction="hide" data-t="close">بستن</button></div>
+  <div class="menu__settings menu__settings--top">
+    <div class="seg" role="group" aria-label="colour scheme">
+      <button type="button" data-scheme="auto" aria-pressed="true" data-t="auto">سیستم</button>
+      <button type="button" data-scheme="light" aria-pressed="false" data-t="light">روشن</button>
+      <button type="button" data-scheme="dark" aria-pressed="false" data-t="dark">تیره</button>
+    </div>
+    <button type="button" class="cat-chip" data-motion aria-pressed="false" data-t="motion">کاهش حرکت</button>
+    <div class="cat-lang" role="group" aria-label="language">
+      <button type="button" data-lang="fa" aria-pressed="true">فارسی</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
   </div>
-</footer>
+  <ol class="toc-list" id="toc-list-narrow"></ol>
+</div>
+
+<div class="shell">
+  <nav class="toc" aria-label="index"><ol id="toc-list"></ol></nav>
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero__inner" style="display:grid;gap:var(--s-5)">
+        <div class="hero__kicker" data-t="kicker">کاتالوگ دیجیتال با HTML، CSS و JavaScript</div>
+        <h1 class="hero__title" data-t="title">شانزده قابلیت وب برای یک کاتالوگ دیجیتال، همه زنده</h1>
+        <p class="hero__lede" data-t="lede">هر بخش یک قابلیت را زنده نشان می‌دهد: از فیلتر و بزرگ‌نمایی تا ورق‌زدن سه‌بعدی، دیالوگ بومی، حالت تیره و چاپ.</p>
+        <div class="hero__meta" id="hero-meta"></div>
+      </div>
+    </section>
+    <div id="sections"></div>
+  </main>
+</div>
+
+<footer class="shell"><div class="foot" id="foot" style="grid-column: 1 / -1"></div></footer>
+
+<div popover id="qv" class="qv"></div>
+<dialog class="dlg" id="inq" aria-labelledby="inq-title"></dialog>
+<dialog class="dlg" id="cmpdlg" aria-labelledby="cmp-title"></dialog>
+
+<template id="card-tpl">
+  <article class="card">
+    <div class="media"></div>
+    <div class="card__body">
+      <h3 class="name"></h3>
+      <div class="alt"></div>
+      <p class="copy copy--sm"></p>
+      <div class="row"><div class="price"></div><div class="code"></div></div>
+      <button type="button" class="cat-btn cat-btn--ghost add"></button>
+    </div>
+  </article>
+</template>
 
 <script src="../shared/catalog-kit.js"></script>
 <script>
-/* This page is served from the repository root; the catalogs sit one
-   directory down. */
-const DIR = 'catalogs/';
-
-/* The two studies that stand apart from the eight style variants: one
-   varies only the arrangement, the other only demonstrates the shared
-   media mechanisms. */
-const STUDIES = [
-  {
-    no: '★', file: 'avand.html', theme: 'avand',
-    fa: 'آوند، کاتالوگ کامل', en: 'Âvand, the full catalog',
-    note: 'نسخه‌ی طراحی‌شده: نیل طبیعی روی سفیدِ لعاب، نمایش نسخ، و قطعه‌ی حاشیه‌نویسی‌شده روی کاور. همان چیدمان‌ها، این بار در خدمت یک کاتالوگ واقعی. حالت تیره و استعلام قیمت هم دارد.',
-    tags: ['کاتالوگ واقعی', 'نیل و لعاب', 'حالت تیره', 'استعلام'],
-    mock: 'study'
-  },
-  {
-    no: '◇', file: 'compositions.html', theme: 'editorial',
-    fa: 'چهارده ترکیب‌بندی', en: 'Fourteen compositions',
-    note: 'ورقِ نمونه: یک برند، چهارده چیدمان پشت سر هم روی همان محصولات؛ تنها متغیر، ترکیب‌بندی است. هر کدام انیمیشن ورود مخصوص خودش را دارد.',
-    tags: ['۱۴ چیدمان', 'یک برند', 'انیمیشن اسکرول', '۸ تم'],
-    mock: 'expand'
-  },
-  {
-    no: '◆', file: '00-mechanisms.html', theme: 'craft',
-    fa: 'مکانیزم‌های رسانه', en: 'Media mechanisms',
-    note: 'بزرگ‌نمایی روی نقطه، نقطه‌های جزئیات، پخش ویدیو با نوار زمان، و چرخش ۳۶۰ — همان رفتاری که در همه‌ی نمونه‌ها کار می‌کند.',
-    tags: ['زوم و جزئیات', 'ویدیو', 'چرخش ۳۶۰', 'صفحه‌کلید'],
-    mock: 'single'
-  }
+/* ── data ─────────────────────────────────────────────────── */
+const CATEGORIES = [
+  { id: 'ceramic', fa: 'سرامیک', en: 'Ceramics' }, { id: 'wood', fa: 'چوب', en: 'Wood' },
+  { id: 'textile', fa: 'نساجی', en: 'Textile' }, { id: 'light', fa: 'روشنایی', en: 'Lighting' },
+  { id: 'leather', fa: 'چرم و برنج', en: 'Leather and brass' }
+];
+const PRODUCTS = [
+  { code: 'AV-101', cat: 'ceramic', subject: 'vase', palette: 'sage', stock: 7, material: ['خاک رس', 'Clay'], size: 28,
+    fa: 'گلدان لعاب خاکستر', en: 'Ash-glaze vessel',
+    faCopy: 'لعاب از خاکستر چوب انگور گرفته می‌شود و رنگ هر دیگ با دیگ بعدی فرق دارد: از سبز کم‌رنگ تا عسلی.',
+    enCopy: 'The glaze is drawn from grapevine ash, so no two firings match. It runs from pale green to honey.',
+    price: 2480000,
+    faSpec: [['ارتفاع', '۲۸ سانتی‌متر'], ['دهانه', '۱۱ سانتی‌متر'], ['پخت', '۱۲۸۰ درجه، احیایی']],
+    enSpec: [['Height', '28 cm'], ['Mouth', '11 cm'], ['Firing', '1280°C reduction']],
+    hot: [
+      { x: 50, y: 32, fa: ['لبه', 'لبه‌ی برگردان، ضخامت شش میلی‌متر. جایی که لعاب نازک می‌شود و رنگ خاک پیدا می‌شود.'], en: ['Rim', 'Rolled rim, six millimetres. Where the glaze thins and the clay shows.'] },
+      { x: 65, y: 54, fa: ['لعاب', 'خاکستر چوب انگور، سه لایه. در پخت احیایی سبز می‌شود.'], en: ['Glaze', 'Grapevine ash, three coats. Reduction turns it green.'] },
+      { x: 46, y: 75, fa: ['پاخور', 'روی چرخ تراش خورده، قطر نه سانتی‌متر. زیرش بدون لعاب مانده تا شماره‌ی دیگ روی آن بنشیند.'], en: ['Foot', 'Turned on the wheel, nine centimetres. Left bare for the kiln number.'] } ] },
+  { code: 'AV-104', cat: 'ceramic', subject: 'vase', palette: 'stone', stock: 12, material: ['خاک رس', 'Clay'], size: 22,
+    fa: 'کاسه‌ی دست‌چرخ', en: 'Wheel-thrown bowl',
+    faCopy: 'برای برنج و خورش روزانه. رد انگشت سفالگر روی بدنه می‌ماند و بعد از لعاب هم دیده می‌شود.',
+    enCopy: 'Made for everyday rice and stew. The potter’s finger marks stay visible under the glaze.',
+    price: 680000,
+    faSpec: [['قطر', '۲۲ سانتی‌متر'], ['گنجایش', '۱٫۴ لیتر'], ['وزن', '۶۴۰ گرم']], enSpec: [['Diameter', '22 cm'], ['Capacity', '1.4 L'], ['Weight', '640 g']],
+    hot: [ { x: 50, y: 34, fa: ['بدنه', 'رد چرخ دست‌نخورده مانده است.'], en: ['Body', 'Throwing rings left as they came.'] }, { x: 50, y: 72, fa: ['کف', 'بدون لعاب، تا روی میز نلغزد.'], en: ['Base', 'Unglazed so it grips the table.'] } ] },
+  { code: 'AV-107', cat: 'ceramic', subject: 'vase', palette: 'ink', stock: 2, material: ['خاک رس', 'Clay'], size: 26,
+    fa: 'بشقاب لبه‌خام', en: 'Raw-edge plate',
+    faCopy: 'لبه بدون لعاب رها شده تا خاک زیرش پیدا باشد. برای نان و پنیر و چیزهای خشک.',
+    enCopy: 'The rim is left bare so the clay body shows. For bread, cheese, dry things.',
+    price: 420000,
+    faSpec: [['قطر', '۲۶ سانتی‌متر'], ['ضخامت', '۸ میلی‌متر'], ['خاک', 'رس محلی کاشان']], enSpec: [['Diameter', '26 cm'], ['Thickness', '8 mm'], ['Clay', 'Local Kashan body']],
+    hot: [ { x: 30, y: 44, fa: ['لبه', 'بدون لعاب؛ خاک خام دیده می‌شود.'], en: ['Rim', 'Unglazed; the raw body shows.'] }, { x: 56, y: 58, fa: ['مرکز', 'لعاب شفاف روی خاک روشن.'], en: ['Centre', 'Clear glaze over a pale body.'] } ] },
+  { code: 'AV-201', cat: 'wood', subject: 'chair', palette: 'warm', stock: 4, material: ['گردو', 'Walnut'], size: 82,
+    fa: 'صندلی گردو', en: 'Walnut side chair',
+    faCopy: 'پشتی با بخار خم شده و بدون یک پیچ به بدنه نشسته است. روغن گیاهی خورده، نه لاک.',
+    enCopy: 'The back is steam-bent and seated without a single screw. Finished in oil, not lacquer.',
+    price: 8950000,
+    faSpec: [['ارتفاع', '۸۲ سانتی‌متر'], ['نشیمن', '۴۵ سانتی‌متر'], ['وزن', '۴٫۲ کیلوگرم']], enSpec: [['Height', '82 cm'], ['Seat', '45 cm'], ['Weight', '4.2 kg']],
+    hot: [ { x: 50, y: 26, fa: ['پشتی', 'تخته‌ی خم‌شده با بخار، دوازده میلی‌متر.'], en: ['Back', 'Steam-bent panel, twelve millimetres.'] }, { x: 34, y: 58, fa: ['اتصال', 'فاق و زبانه‌ی کور، بدون پیچ.'], en: ['Joint', 'Blind mortise and tenon.'] }, { x: 66, y: 84, fa: ['پایه', 'مقطع بیست‌ودو میلی‌متر، روغن‌خورده.'], en: ['Leg', 'Twenty-two millimetre section, oiled.'] } ] },
+  { code: 'AV-205', cat: 'wood', subject: 'chair', palette: 'stone', stock: 6, material: ['بلوط', 'Oak'], size: 56,
+    fa: 'میز کنار تخت', en: 'Bedside table',
+    faCopy: 'یک کشو و یک طبقه‌ی باز. کشو روی ریل چوبی می‌رود و صدایی ندارد.',
+    enCopy: 'One drawer, one open shelf. The drawer runs on a wooden slide and stays quiet.',
+    price: 5300000,
+    faSpec: [['ارتفاع', '۵۶ سانتی‌متر'], ['عرض', '۴۰ سانتی‌متر'], ['عمق', '۳۵ سانتی‌متر']], enSpec: [['Height', '56 cm'], ['Width', '40 cm'], ['Depth', '35 cm']],
+    hot: [ { x: 50, y: 40, fa: ['کشو', 'ریل چوبی، بدون یراق فلزی.'], en: ['Drawer', 'Wooden slide, no metal runner.'] }, { x: 50, y: 72, fa: ['طبقه', 'ارتفاع آزاد بیست سانتی‌متر.'], en: ['Shelf', 'Twenty centimetres clear.'] } ] },
+  { code: 'AV-208', cat: 'wood', subject: 'textile', palette: 'amber', stock: 9, material: ['بلوط', 'Oak'], size: 42,
+    fa: 'سینی بلوط', en: 'Oak tray',
+    faCopy: 'از یک تکه بلوط درآمده، بدون درز. لبه‌ها آن‌قدر بلند است که فنجان سُر نخورد.',
+    enCopy: 'Cut from a single piece of oak, no seam. The lip is high enough to hold a cup.',
+    price: 1150000,
+    faSpec: [['اندازه', '۴۲ × ۲۸ سانتی‌متر'], ['ارتفاع لبه', '۲ سانتی‌متر'], ['وزن', '۹۲۰ گرم']], enSpec: [['Size', '42 × 28 cm'], ['Lip', '2 cm'], ['Weight', '920 g']],
+    hot: [ { x: 50, y: 50, fa: ['سطح', 'یک‌تکه، بدون درز چسبی.'], en: ['Surface', 'One piece, no glue line.'] }, { x: 26, y: 66, fa: ['لبه', 'گود شده با اسکنه.'], en: ['Lip', 'Hollowed with a gouge.'] } ] },
+  { code: 'AV-301', cat: 'textile', subject: 'textile', palette: 'indigo', stock: 1, material: ['پشم', 'Wool'], size: 200,
+    fa: 'قالیچه‌ی پشم دست‌ریس', en: 'Handspun wool rug',
+    faCopy: 'چهل رج در هر دسی‌متر، گره فارسی. نیل طبیعی است، پس سال اول کمی رنگ می‌دهد و بعد ثابت می‌شود.',
+    enCopy: 'Forty rows to the decimetre, Persian knot. Natural indigo, so it gives a little in the first year and then holds.',
+    price: 18900000,
+    faSpec: [['اندازه', '۱۵۰ × ۲۰۰ سانتی‌متر'], ['رجشمار', '۴۰ در دسی‌متر'], ['مدت بافت', '۱۱ هفته']], enSpec: [['Size', '150 × 200 cm'], ['Density', '40 rows/dm'], ['Loom time', '11 weeks']],
+    hot: [ { x: 38, y: 34, fa: ['گره', 'گره فارسی، چهل رج در دسی‌متر.'], en: ['Knot', 'Persian knot, forty rows/dm.'] }, { x: 62, y: 60, fa: ['رنگرزی', 'نیل طبیعی، دیگ‌به‌دیگ.'], en: ['Dye', 'Natural indigo, lot-dyed.'] }, { x: 50, y: 86, fa: ['شیرازه', 'دست‌پیچ با پشم همان دیگ.'], en: ['Selvedge', 'Wrapped from the same lot.'] } ] },
+  { code: 'AV-304', cat: 'textile', subject: 'textile', palette: 'stone', stock: 8, material: ['کتان', 'Linen'], size: 240,
+    fa: 'رومیزی کتان', en: 'Linen cloth',
+    faCopy: 'کتان شسته که از شست‌وشوی اول نرم می‌شود. لبه‌ها تا خورده و با دست دوخته شده‌اند.',
+    enCopy: 'Washed linen that softens from the first wash. The hems are folded and hand-sewn.',
+    price: 1840000,
+    faSpec: [['اندازه', '۱۴۰ × ۲۴۰ سانتی‌متر'], ['وزن پارچه', '۱۹۰ گرم بر متر مربع'], ['جمع‌شدگی', 'از پیش شسته']], enSpec: [['Size', '140 × 240 cm'], ['Weight', '190 gsm'], ['Shrinkage', 'Pre-washed']],
+    hot: [ { x: 44, y: 40, fa: ['بافت', 'کتان شسته، صد و نود گرم.'], en: ['Weave', 'Washed linen, 190 gsm.'] }, { x: 62, y: 74, fa: ['لبه', 'تای دوبل، دوخت دست.'], en: ['Hem', 'Double fold, hand-sewn.'] } ] },
+  { code: 'AV-307', cat: 'textile', subject: 'textile', palette: 'clay', stock: 3, material: ['کرک بز', 'Goat down'], size: 180,
+    fa: 'پتوی کرک بز', en: 'Goat-down throw',
+    faCopy: 'کرک از شانه‌کردن بهاره‌ی گله‌های کرمان می‌آید. سبک است اما گرم‌تر از پشم هم‌وزنش.',
+    enCopy: 'The down is combed from Kerman herds each spring. Light, and warmer than wool of the same weight.',
+    price: 7200000,
+    faSpec: [['اندازه', '۱۳۰ × ۱۸۰ سانتی‌متر'], ['وزن', '۷۸۰ گرم'], ['شست‌وشو', 'با دست، آب سرد']], enSpec: [['Size', '130 × 180 cm'], ['Weight', '780 g'], ['Care', 'Hand wash, cold']],
+    hot: [ { x: 40, y: 46, fa: ['کرک', 'شانه‌ی بهاره، بدون چیدن.'], en: ['Down', 'Spring-combed, never shorn.'] }, { x: 64, y: 70, fa: ['حاشیه', 'ریشه‌ی تابیده‌ی دست.'], en: ['Border', 'Hand-twisted fringe.'] } ] },
+  { code: 'AV-401', cat: 'light', subject: 'lamp', palette: 'sage', stock: 5, material: ['کاغذ و فولاد', 'Paper and steel'], size: 48,
+    fa: 'چراغ رومیزی کاغذی', en: 'Paper table lamp',
+    faCopy: 'کاغذ دست‌ساز روی رینگ فولادی نشسته و نور را نرم پخش می‌کند. کلید روی سیم است.',
+    enCopy: 'Handmade paper over a steel ring spreads the light softly. The switch sits on the cord.',
+    price: 3740000,
+    faSpec: [['ارتفاع', '۴۸ سانتی‌متر'], ['قطر حباب', '۳۲ سانتی‌متر'], ['لامپ', 'E27، حداکثر ۸ وات']], enSpec: [['Height', '48 cm'], ['Shade', '32 cm'], ['Lamp', 'E27, 8 W max']],
+    hot: [ { x: 50, y: 30, fa: ['حباب', 'کاغذ دست‌ساز روی رینگ فولادی.'], en: ['Shade', 'Handmade paper on a steel ring.'] }, { x: 50, y: 68, fa: ['ساقه', 'فولاد پودری‌رنگ، دوازده میلی‌متر.'], en: ['Stem', 'Powder-coated steel, twelve millimetres.'] } ] },
+  { code: 'AV-404', cat: 'light', subject: 'lamp', palette: 'amber', stock: 0, material: ['مس', 'Copper'], size: 26,
+    fa: 'آویز مسی', en: 'Copper pendant',
+    faCopy: 'مس چکش‌خورده که با گذر زمان تیره می‌شود. داخلش سفید رنگ شده تا نور را برگرداند.',
+    enCopy: 'Hammered copper that darkens with time. Painted white inside to throw the light back down.',
+    price: 4950000,
+    faSpec: [['قطر', '۲۶ سانتی‌متر'], ['طول سیم', '۱۸۰ سانتی‌متر'], ['لامپ', 'E27، حداکثر ۱۰ وات']], enSpec: [['Diameter', '26 cm'], ['Cord', '180 cm'], ['Lamp', 'E27, 10 W max']],
+    hot: [ { x: 50, y: 36, fa: ['بدنه', 'مس چکش‌خورده، بدون لاک.'], en: ['Body', 'Hammered copper, unlacquered.'] }, { x: 50, y: 62, fa: ['داخل', 'رنگ سفید مات برای بازتاب نور.'], en: ['Interior', 'Matt white for reflected light.'] } ] },
+  { code: 'AV-501', cat: 'leather', subject: 'bag', palette: 'clay', stock: 6, material: ['چرم', 'Leather'], size: 36,
+    fa: 'کیف چرم گیاهی', en: 'Veg-tan satchel',
+    faCopy: 'چرم دباغی گیاهی که با آفتاب و دست تیره می‌شود. قفل برنجی است و آبکاری ندارد.',
+    enCopy: 'Vegetable-tanned leather that darkens with sun and handling. The clasp is brass, left unplated.',
+    price: 6200000,
+    faSpec: [['اندازه', '۳۶ × ۲۸ × ۱۰ سانتی‌متر'], ['ضخامت چرم', '۲٫۲ میلی‌متر'], ['بند', 'قابل تنظیم، ۹۰ تا ۱۳۰']], enSpec: [['Size', '36 × 28 × 10 cm'], ['Leather', '2.2 mm'], ['Strap', 'Adjustable, 90 to 130 cm']],
+    hot: [ { x: 50, y: 24, fa: ['دسته', 'دوخت زینی دست، نخ کتان موم‌زده.'], en: ['Handle', 'Hand saddle-stitched, waxed linen.'] }, { x: 50, y: 52, fa: ['قفل', 'برنج ریخته‌گری، بدون آبکاری.'], en: ['Clasp', 'Cast brass, unplated.'] }, { x: 30, y: 70, fa: ['چرم', 'دباغی گیاهی، دو و دو دهم میلی‌متر.'], en: ['Leather', 'Vegetable tanned, 2.2 mm.'] } ] },
+  { code: 'AV-601', cat: 'leather', subject: 'watch', palette: 'amber', stock: 10, material: ['برنج', 'Brass'], size: 14,
+    fa: 'شمعدان برنجی', en: 'Brass candle holder',
+    faCopy: 'از برنج بازیافتی در ماسه ریخته شده. سطحش خط‌های ریز ریخته‌گری را نگه داشته است.',
+    enCopy: 'Sand-cast from reclaimed brass. The surface keeps the fine marks of the mould.',
+    price: 1380000,
+    faSpec: [['ارتفاع', '۱۴ سانتی‌متر'], ['قطر پایه', '۹ سانتی‌متر'], ['شمع', 'قطر ۲٫۲ سانتی‌متر']], enSpec: [['Height', '14 cm'], ['Base', '9 cm'], ['Candle', '2.2 cm taper']],
+    hot: [ { x: 50, y: 40, fa: ['کاسه', 'ریخته‌گری ماسه‌ای؛ خط‌های قالب مانده.'], en: ['Cup', 'Sand-cast; the mould marks are kept.'] }, { x: 50, y: 74, fa: ['پایه', 'وزن‌دار، تا شمع بلند نلرزد.'], en: ['Base', 'Weighted, so a tall taper stands still.'] } ] }
 ];
 
-/* One row per variant: the file, its theme, and where it sits on each of
-   the four axes the set is meant to explore. */
-const VARIANTS = [
-  {
-    no: '۰۱', file: '01-editorial-single.html', theme: 'editorial',
-    fa: 'ادیتوریال تک‌ستونه', en: 'Editorial — single column',
-    note: 'هر محصول یک بند تمام‌عرض. فضای سفید زیاد، خط‌های مویی، ورود نرم با اسکرول.',
-    tags: ['تک‌ستونه', 'مینیمال', 'دو-رنگ', 'حرکت نرم'],
-    mock: 'single'
+/* ── strings ──────────────────────────────────────────────── */
+const S = {
+  fa: {
+    brand: 'آوند', skip: 'رفتن به محتوا', index: 'فهرست', close: 'بستن', auto: 'سیستم', light: 'روشن', dark: 'تیره', motion: 'کاهش حرکت',
+    inquiry: 'استعلام', kicker: 'کاتالوگ دیجیتال با HTML، CSS و JavaScript',
+    title: 'شانزده قابلیت وب برای یک کاتالوگ دیجیتال، همه زنده',
+    lede: 'هر بخش یک قابلیت را زنده نشان می‌دهد: از فیلتر و بزرگ‌نمایی تا ورق‌زدن سه‌بعدی، دیالوگ بومی، حالت تیره و چاپ.',
+    tech: 'تکنیک', unit: 'تومان', add: 'افزودن به استعلام', added: 'در استعلام', all: 'همه', search: 'جست‌وجوی نام یا کد', clear: 'پاک کردن',
+    sort: 'ترتیب', sortName: 'نام', sortPriceAsc: 'بها، کم به زیاد', sortPriceDesc: 'بها، زیاد به کم', sortStock: 'موجودی',
+    results: (n) => n === 0 ? 'هیچ قطعه‌ای با این شرط نیست.' : `${num(n)} قطعه`,
+    open: 'نمای نزدیک، ویدیو و چرخش', video: 'ویدیو', spin: 'چرخش ۳۶۰', play: 'پخش در نمایشگر',
+    before: 'خام', after: 'لعاب‌خورده', variantOf: 'رنگ',
+    detail: 'جزئیات', back: 'بازگشت', quick: 'نمای سریع', prev: 'قبلی', next: 'بعدی', pageOf: (a, b) => `صفحه‌ی ${num(a)} از ${num(b)}`,
+    running: 'آوند، پاییز ۱۴۰۴', story: ['گره', 'رنگرزی', 'شیرازه', 'روی زمین'],
+    storyText: [
+      'چهل رج در هر دسی‌متر. هر گره را دو دست می‌زنند و می‌کشند و می‌برند؛ یازده هفته تا یک قالیچه‌ی یک‌ونیم در دو.',
+      'نیل طبیعی، دیگ‌به‌دیگ. پشم را چند بار در دیگ فرو می‌کنند و بیرون می‌آورند؛ در هوا سبز است و در چند ثانیه آبی می‌شود.',
+      'شیرازه با پشم همان دیگ دست‌پیچ می‌شود تا رنگش هرگز با بدنه فرق نکند.',
+      'روی زمین، سال اول کمی رنگ می‌دهد. بعد ثابت می‌شود و با نور، آرام روشن‌تر.'
+    ],
+    thPick: 'مقایسه', thName: 'قطعه', thMaterial: 'جنس', thSize: 'اندازه (cm)', thPrice: 'بها', thStock: 'موجودی', compare: 'مقایسه', compareN: (n) => `${num(n)} قطعه انتخاب شده`, maxCompare: 'حداکثر سه قطعه',
+    inqTitle: 'استعلام قیمت', inqEmpty: 'هنوز چیزی اضافه نشده. از کنار هر قطعه «افزودن به استعلام» را بزنید.', remove: 'حذف', total: 'جمع', send: 'فرستادن استعلام', persisted: 'این لیست در همین مرورگر می‌ماند.',
+    picLight: 'روشن', picDark: 'تیره', chosen: 'نسخه‌ای که مرورگر برداشت', scheme: 'حالت رنگ فعال', viewport: 'عرض پنجره',
+    print: 'چاپ کاتالوگ', share: 'اشتراک‌گذاری', copied: 'نشانی کپی شد.', shared: 'فرستاده شد.', shareFail: 'اشتراک‌گذاری در این مرورگر در دسترس نیست؛ نشانی کپی شد.',
+    keys: [['Tab', 'حرکت بین کنترل‌ها؛ حلقه‌ی فوکوس همیشه دیده می‌شود'], ['Esc', 'بستن نمایشگر، دیالوگ و نمای سریع'], ['← →', 'رسانه‌ی بعدی و قبلی؛ در ویدیو جابه‌جایی روی زمان'], ['Space', 'پخش و مکث'], ['+ −', 'بزرگ‌نمایی در نمایشگر'], ['Enter', 'باز کردن کارت یا نقطه‌ی جزئیات']],
+    fMore: 'نمونه‌های دیگر', fMoreV: ['هشت سبک کاتالوگ در یک نگاه', 'چهارده ترکیب‌بندی روی یک برند', 'کاتالوگ آوند، نسخه‌ی طراحی‌شده', 'مکانیزم‌های رسانه به‌تنهایی'],
+    fBuilt: 'ساخت', fBuiltV: 'یک فایل HTML، بدون فریم‌ورک و بدون وابستگی. فونت‌ها از Google Fonts با fallback سیستمی. تصویرها جانگهدارِ ساخته‌شده‌اند و با src واقعی جایگزین می‌شوند.',
+    fSource: 'سورس', fSourceV: 'github.com/Ali-Nourix/Temp'
   },
-  {
-    no: '۰۲', file: '02-luxe-fullscreen.html', theme: 'luxe',
-    fa: 'لوکس تمام‌صفحه', en: 'Luxe — fullscreen',
-    note: 'هر محصول یک صفحه‌ی کامل با اسنپ عمودی. تیره و طلایی، حرکت کند و سینمایی.',
-    tags: ['تمام‌صفحه', 'ماکسیمال', 'تیره/طلایی', 'حرکت سینمایی'],
-    mock: 'full'
-  },
-  {
-    no: '۰۳', file: '03-brutal-duo.html', theme: 'brutal',
-    fa: 'بروتال دوستونه', en: 'Brutal — two column',
-    note: 'دو ستون با خطوط ضخیم و سایه‌ی سخت. پرترین حالت رنگی، حرکت تند و یک‌پله.',
-    tags: ['دوستونه', 'ماکسیمال', 'چندرنگ', 'حرکت ساده'],
-    mock: 'duo'
-  },
-  {
-    no: '۰۴', file: '04-glass-expand.html', theme: 'glass',
-    fa: 'شیشه‌ای بازشونده', en: 'Glass — expandable',
-    note: 'کاشی‌ها در جای خودشان باز می‌شوند و جزئیات را نشان می‌دهند؛ گذارِ عنصر مشترک.',
-    tags: ['بازشونده', 'متوسط', 'چندرنگ ملایم', 'حرکت نرم'],
-    mock: 'expand'
-  },
-  {
-    no: '۰۵', file: '05-press-spread.html', theme: 'press',
-    fa: 'مطبوعاتی، صفحه‌ی باز', en: 'Press — two-page spread',
-    note: 'کاتالوگ چاپی: دو صفحه‌ی روبه‌رو، ورق‌زدن واقعی، تراکم بالای روزنامه‌ای.',
-    tags: ['اسپرد', 'متراکم', 'تک‌رنگ', 'ورق‌زدن'],
-    mock: 'spread'
-  },
-  {
-    no: '۰۶', file: '06-mono-grid.html', theme: 'mono',
-    fa: 'تک‌رنگ شبکه‌ای', en: 'Mono — dense grid',
-    note: 'شبکه‌ی لبه‌تا‌لبه با چگالی قابل تنظیم. سیاه و سفید محض، کمینه‌ی حرکت.',
-    tags: ['شبکه', 'مینیمال', 'تک‌رنگ', 'کمینه‌ی حرکت'],
-    mock: 'grid'
-  },
-  {
-    no: '۰۷', file: '07-spec-sheet.html', theme: 'spec',
-    fa: 'فنی، جدول مشخصات', en: 'Spec — technical sheet',
-    note: 'جدول مرتب‌شونده، فیلتر، و مقایسه‌ی کنار‌هم تا سه محصول. رنگ فقط کارکردی.',
-    tags: ['جدول', 'متراکم', 'رنگ کارکردی', 'حرکت ساده'],
-    mock: 'table'
-  },
-  {
-    no: '۰۸', file: '08-craft-story.html', theme: 'craft',
-    fa: 'روایی، دست‌ساز', en: 'Craft — scrollytelling',
-    note: 'صحنه‌ی چسبان و متن روان: هر بخش محصول خودش را نشان می‌دهد. رنگ گرم و متغیر.',
-    tags: ['روایی', 'متوسط', 'چندرنگ گرم', 'حرکت نرم'],
-    mock: 'story'
+  en: {
+    brand: 'Âvand', skip: 'Skip to content', index: 'Index', close: 'Close', auto: 'System', light: 'Light', dark: 'Dark', motion: 'Reduce motion',
+    inquiry: 'Inquiry', kicker: 'A digital catalog in HTML, CSS and JavaScript',
+    title: 'Sixteen web capabilities for a digital catalog, all live',
+    lede: 'Each section shows one capability, live: filtering and zoom, a 3D page turn, native dialogs, dark mode and print.',
+    tech: 'Technique', unit: 'IRT', add: 'Add to inquiry', added: 'In inquiry', all: 'All', search: 'Search name or code', clear: 'Clear',
+    sort: 'Sort', sortName: 'Name', sortPriceAsc: 'Price, low to high', sortPriceDesc: 'Price, high to low', sortStock: 'Stock',
+    results: (n) => n === 0 ? 'Nothing matches.' : `${n} pieces`,
+    open: 'Close view, video and spin', video: 'Video', spin: '360 spin', play: 'Open in the viewer',
+    before: 'Raw', after: 'Glazed', variantOf: 'Colour',
+    detail: 'Details', back: 'Back', quick: 'Quick view', prev: 'Previous', next: 'Next', pageOf: (a, b) => `Page ${a} of ${b}`,
+    running: 'Âvand, Autumn 1404', story: ['Knot', 'Dye', 'Selvedge', 'On the floor'],
+    storyText: [
+      'Forty rows to the decimetre. Every knot is tied, pulled and cut by two hands; eleven weeks for a rug of one and a half by two.',
+      'Natural indigo, lot by lot. The wool goes into the vat and out again; it comes up green and turns blue in the air within seconds.',
+      'The selvedge is hand-wrapped in wool from the same vat, so its colour never drifts from the body.',
+      'On the floor it gives a little colour in the first year. Then it holds, and slowly brightens in the light.'
+    ],
+    thPick: 'Compare', thName: 'Piece', thMaterial: 'Material', thSize: 'Size (cm)', thPrice: 'Price', thStock: 'Stock', compare: 'Compare', compareN: (n) => `${n} selected`, maxCompare: 'Three at most',
+    inqTitle: 'Price inquiry', inqEmpty: 'Nothing added yet. Use “Add to inquiry” beside any piece.', remove: 'Remove', total: 'Total', send: 'Send inquiry', persisted: 'This list is kept in this browser.',
+    picLight: 'Light', picDark: 'Dark', chosen: 'Candidate the browser picked', scheme: 'Active colour scheme', viewport: 'Viewport width',
+    print: 'Print the catalog', share: 'Share', copied: 'Link copied.', shared: 'Shared.', shareFail: 'Sharing is not available here; the link was copied.',
+    keys: [['Tab', 'Move between controls; the focus ring is always visible'], ['Esc', 'Close the viewer, a dialog or the quick view'], ['← →', 'Next and previous media; in video, seek'], ['Space', 'Play and pause'], ['+ −', 'Zoom in the viewer'], ['Enter', 'Open a card or a detail point']],
+    fMore: 'More studies', fMoreV: ['Eight catalog styles at a glance', 'Fourteen compositions on one brand', 'The Âvand catalog, designed', 'The media mechanisms alone'],
+    fBuilt: 'Built with', fBuiltV: 'One HTML file, no framework, no dependencies. Fonts from Google Fonts with system fallbacks. The artwork is a generated placeholder; a real src replaces it.',
+    fSource: 'Source', fSourceV: 'github.com/Ali-Nourix/Temp'
   }
-];
-
-/* Each mock is a few boxes arranged the way that variant arranges itself —
-   enough to recognise the layout at thumbnail size. */
-const MOCKS = {
-  single: [{ cols: '1fr', cells: ['media'] }, { cols: '2fr 1fr', cells: ['', ''] }],
-  full:   [{ cols: '1fr', cells: ['media'] }],
-  duo:    [{ cols: '1fr 1fr', cells: ['media', 'media'] }, { cols: '1fr 1fr', cells: ['accent', ''] }],
-  expand: [{ cols: '1fr 1fr 1fr', cells: ['', '', ''] }, { cols: '2fr 1fr', cells: ['media', ''] }],
-  spread: [{ cols: '1fr 1fr', cells: ['', ''] }, { cols: '1fr 1fr 1fr 1fr', cells: ['', '', '', ''] }],
-  grid:   [{ cols: 'repeat(5,1fr)', cells: ['', '', '', '', ''] }, { cols: 'repeat(5,1fr)', cells: ['', '', '', '', ''] }],
-  table:  [{ cols: '1fr', cells: [''] }, { cols: '1fr', cells: [''] }, { cols: '1fr', cells: [''] }, { cols: '1fr', cells: ['accent'] }],
-  story:  [{ cols: '1fr 1fr', cells: ['media', ''] }]
 };
 
-const grid = document.getElementById('grid');
+/* ── the sixteen sections ─────────────────────────────────── */
+const SECTIONS = [
+  { id: 'filter', fa: 'شبکه با فیلتر زنده', en: 'Grid with live filtering', faLede: 'کارت‌ها عنصر سفارشی‌اند و چیدمانشان را از عرض خودشان می‌گیرند، نه از عرض پنجره. فیلتر، جست‌وجو و ترتیب روی همان داده کار می‌کنند و شمارنده برای صفحه‌خوان اعلام می‌شود.', enLede: 'Cards are custom elements that lay themselves out by their own width, not the viewport’s. Filter, search and sort work on the same data; the count is announced to screen readers.', tech: ['customElements', '<template>', '@container', ':has()', '<datalist>', 'aria-live'], build: secFilter },
+  { id: 'zoom', fa: 'نمای نزدیک و نقاط جزئیات', en: 'Close view and detail points', faLede: 'نقطه‌های شماره‌دار روی خودِ تصویر نشسته‌اند و با یادداشت‌ها یکدیگر را انتخاب می‌کنند. کلیک روی تصویر، نمایشگر را باز می‌کند: زوم روی نقطه‌ی کلیک، کشیدن، چرخ ماوس و pinch.', enLede: 'Numbered points sit on the artwork and select their notes, and vice versa. Clicking the image opens the viewer: zoom to the click point, drag, wheel and pinch.', tech: ['pointer events', 'transform', 'aria-pressed', 'focus trap'], build: secZoom },
+  { id: 'video', fa: 'ویدیو و چرخش ۳۶۰', en: 'Video and 360 spin', faLede: 'پخش‌کننده کنترل‌های خودش را دارد: پخش، مکث، نوار زمان، بی‌صدا. تا فایل واقعی نرسیده، کلیپ روی canvas رندر می‌شود و همان کنترل‌ها کار می‌کنند. چرخش با کشیدن، زاویه را نشان می‌دهد.', enLede: 'The player owns its controls: play, pause, timeline, mute. Until real footage lands the clip is rendered to canvas and the same controls work. Drag to rotate; the angle reads out.', tech: ['<video>', '<canvas>', 'requestAnimationFrame', 'pointer capture'], build: secVideo },
+  { id: 'compare', fa: 'مقایسه‌ی قبل و بعد', en: 'Before and after', faLede: 'دو تصویر روی هم؛ تصویر بالایی با clip-path بریده می‌شود و یک range بومی آن را می‌راند. با صفحه‌کلید هم کار می‌کند.', enLede: 'Two images stacked; the top one is cut with clip-path and driven by a native range input. Works from the keyboard too.', tech: ['clip-path', '<input type=range>', 'CSS custom properties'], build: secCompare },
+  { id: 'variants', fa: 'تنوع رنگ', en: 'Colour variants', faLede: 'انتخاب رنگ، تصویر را دوباره می‌سازد و با cross-fade جای قبلی می‌نشیند. نام و کد همان لحظه عوض می‌شوند.', enLede: 'Picking a colour regenerates the image and cross-fades it in. Name and code update at once.', tech: ['img.decode()', 'opacity transition', 'aria-pressed'], build: secVariants },
+  { id: 'expand', fa: 'کارت بازشونده', en: 'Expanding card', faLede: 'کارت در جای خودش به پنل جزئیات تبدیل می‌شود و تصویر از کارت به پنل «می‌رود». این جابه‌جایی را View Transitions انجام می‌دهد؛ در مرورگرهای بدون آن، جابه‌جایی فوری است.', enLede: 'The card becomes its detail panel in place, and the image travels from one to the other. View Transitions animate the change; browsers without it switch instantly.', tech: ['document.startViewTransition', 'view-transition-name', '::view-transition-group'], build: secExpand },
+  { id: 'popover', fa: 'نمای سریع', en: 'Quick view', faLede: 'یک عنصر با صفت popover: بدون JavaScript باز و بسته می‌شود، در بالاترین لایه می‌نشیند، با Esc و کلیک بیرون بسته می‌شود و ورودش انیمیشن واقعی دارد.', enLede: 'One element with the popover attribute: opens and closes without JavaScript, sits in the top layer, dismisses on Esc and outside click, and its entrance is a real transition.', tech: ['popover', 'popovertarget', '@starting-style', 'transition-behavior: allow-discrete'], build: secPopover },
+  { id: 'snap', fa: 'گالری اسنپ', en: 'Snap gallery', faLede: 'اسکرول افقی که روی هر قطعه می‌نشیند. نقطه‌ها با IntersectionObserver دنبالش می‌کنند و دکمه‌ها با scrollBy جابه‌جا می‌کنند.', enLede: 'Horizontal scroll that settles on each piece. The dots follow with IntersectionObserver; the buttons move it with scrollBy.', tech: ['scroll-snap-type', 'IntersectionObserver', 'scrollBy'], build: secSnap },
+  { id: 'book', fa: 'دفتر ورق‌خور', en: 'The page-turning book', faLede: 'دو صفحه‌ی روبه‌رو و ورقی که واقعاً می‌چرخد: perspective، preserve-3d و backface-visibility. با کلیدهای جهت هم ورق می‌خورد.', enLede: 'Two facing pages and a leaf that really turns: perspective, preserve-3d and backface-visibility. The arrow keys turn it too.', tech: ['perspective', 'transform-style: preserve-3d', 'backface-visibility', 'transitionend'], build: secBook },
+  { id: 'story', fa: 'روایت اسکرولی', en: 'Scrollytelling', faLede: 'صحنه می‌چسبد و متن از کنارش می‌گذرد؛ هر گام که وسط پنجره برسد، تصویر عوض می‌شود و نوار پیشرفت جلو می‌رود.', enLede: 'The stage sticks while the text scrolls past; each step that reaches the middle swaps the image and advances the progress bar.', tech: ['position: sticky', 'IntersectionObserver', 'opacity cross-fade'], build: secStory },
+  { id: 'table', fa: 'جدول مقایسه', en: 'Comparison table', faLede: 'جدول واقعی با سرستون چسبان و مرتب‌سازی. موجودی با عنصر meter نشان داده می‌شود. تا سه قطعه را تیک بزنید و کنار هم مقایسه کنید؛ خانه‌های متفاوت روشن می‌شوند.', enLede: 'A real table with a sticky header and sorting. Stock is a meter element. Tick up to three pieces and compare them side by side; the cells that differ light up.', tech: ['<table>', 'aria-sort', '<meter>', ':has(:checked)', '<dialog>'], build: secTable },
+  { id: 'details', fa: 'مشخصات بازشونده', en: 'Disclosure specs', faLede: 'آکاردئون بدون JavaScript: details و summary. صفت name باعث می‌شود همیشه فقط یکی باز باشد.', enLede: 'An accordion with no JavaScript: details and summary. The name attribute keeps exactly one open.', tech: ['<details name>', '<summary>', 'CSS-only'], build: secDetails },
+  { id: 'dialog', fa: 'استعلام قیمت با دیالوگ بومی', en: 'Inquiry in a native dialog', faLede: 'دیالوگ بومی: showModal، backdrop، فوکوس محبوس، بستن با Esc، فرم با method=dialog. لیست در localStorage می‌ماند.', enLede: 'A native dialog: showModal, a backdrop, trapped focus, Esc to close, a form with method=dialog. The list persists in localStorage.', tech: ['<dialog>', 'showModal()', '::backdrop', 'form method=dialog', 'localStorage'], build: secDialog },
+  { id: 'picture', fa: 'تصویر واکنش‌گرا و حالت تیره', en: 'Responsive image and dark mode', faLede: 'یک picture با سه نسخه‌ی اندازه و یک منبع تیره. مرورگر بر اساس عرض و تنظیمات سیستم انتخاب می‌کند؛ این‌جا می‌بینید چه برداشت.', enLede: 'One picture with three sizes and a dark source. The browser chooses by width and system setting; here you can see what it picked.', tech: ['<picture>', 'srcset', 'sizes', 'prefers-color-scheme', 'color-scheme'], build: secPicture },
+  { id: 'print', fa: 'چاپ و اشتراک‌گذاری', en: 'Print and share', faLede: 'همین صفحه با @media print به کاتالوگ چاپی تبدیل می‌شود: کنترل‌ها می‌روند، شبکه سه‌ستونه می‌شود. اشتراک‌گذاری از Web Share استفاده می‌کند و اگر نبود، نشانی را کپی می‌کند.', enLede: 'This page becomes the printed catalog through @media print: controls go, the grid becomes three columns. Sharing uses Web Share and falls back to copying the link.', tech: ['@media print', 'window.print()', 'navigator.share', 'navigator.clipboard'], build: secPrint },
+  { id: 'access', fa: 'دسترس‌پذیری، صفحه‌کلید، دو زبان', en: 'Accessibility, keyboard, two languages', faLede: 'همه‌چیز با صفحه‌کلید کار می‌کند. حرکت با تنظیم سیستم یا کلید بالای صفحه کم می‌شود. زبان با یک کلید عوض می‌شود و همه‌ی چیدمان با ویژگی‌های منطقی برمی‌گردد.', enLede: 'Everything works from the keyboard. Motion collapses with the system setting or the control at the top. Language switches with one control and the whole layout mirrors through logical properties.', tech: ['focus-visible', 'prefers-reduced-motion', 'dir + logical properties', 'skip link', '<kbd>'], build: secAccess }
+];
 
-function buildCard(v) {
-  const card = document.createElement('a');
-  card.className = 'hub-card';
-  card.href = DIR + v.file;
+/* ── state and helpers ────────────────────────────────────── */
+let lang = 'fa';
+const root = document.documentElement;
+const inquiry = new Set(JSON.parse(safeGet('avand-inquiry') || '[]'));
+const t = () => S[lang];
+const fa = () => lang === 'fa';
+const num = (n) => fa() ? CatalogKit.toFa(String(n)) : String(n);
+const money = (n) => { const s = n.toLocaleString('en-US'); return fa() ? CatalogKit.toFa(s).replace(/,/g, '٬') : s; };
+const name = (p) => fa() ? p.fa : p.en;
+const alt = (p) => fa() ? p.en : p.fa;
+const copy = (p) => fa() ? p.faCopy : p.enCopy;
+const specs = (p) => fa() ? p.faSpec : p.enSpec;
+const catName = (id) => { const c = CATEGORIES.find((c) => c.id === id); return fa() ? c.fa : c.en; };
+const byCode = (code) => PRODUCTS.find((p) => p.code === code);
+const hotspots = (p) => p.hot.map((h) => ({ x: h.x, y: h.y, title: (fa() ? h.fa : h.en)[0], body: (fa() ? h.fa : h.en)[1] }));
+const mediaSet = (p) => CatalogKit.defaultMedia(p.code, hotspots(p), { subject: p.subject, palette: p.palette });
+const art = (p, o) => CatalogKit.image(p.code + '-a', Object.assign({ subject: p.subject, palette: p.palette, w: 800, h: 1000 }, o));
 
-  const prev = document.createElement('div');
-  prev.className = 'hub-prev';
-  prev.setAttribute('data-theme', v.theme);
+function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
 
-  const bar = document.createElement('div');
-  bar.className = 'hub-prev__bar';
-  bar.innerHTML = '<span class="hub-prev__dot"></span><span class="hub-prev__rule"></span>';
-  prev.appendChild(bar);
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text != null) n.textContent = text;
+  return n;
+}
+function media(p, modifier) {
+  const box = el('div', 'media' + (modifier ? ' media--' + modifier : ''));
+  queueMicrotask(() => CatalogKit.mountMedia(box, mediaSet(p), { title: name(p), sku: p.code }, lang));
+  return box;
+}
+function nameBlock(p, size) {
+  const f = document.createDocumentFragment();
+  f.append(el('h3', 'name' + (size ? ' name--' + size : ''), name(p)), el('div', 'alt', alt(p)));
+  return f;
+}
+function priceEl(p) { const n = el('div', 'price'); n.append(document.createTextNode(money(p.price)), el('small', null, t().unit)); return n; }
+function rowEl(p) { const r = el('div', 'row'); r.append(priceEl(p), el('div', 'code', p.code)); return r; }
+function specList(p) {
+  const dl = el('dl', 'spec');
+  for (const [k, v] of specs(p)) { const d = el('div'); d.append(el('dt', null, k), el('dd', null, v)); dl.appendChild(d); }
+  return dl;
+}
+function addButton(p) {
+  const b = el('button', 'cat-btn cat-btn--ghost add'); b.type = 'button'; b.dataset.code = p.code; syncAdd(b);
+  b.addEventListener('click', () => { inquiry.has(p.code) ? inquiry.delete(p.code) : inquiry.add(p.code); syncInquiry(); });
+  return b;
+}
+function syncAdd(b) { const on = inquiry.has(b.dataset.code); b.setAttribute('aria-pressed', String(on)); b.textContent = on ? t().added : t().add; }
+function syncInquiry() {
+  for (const b of document.querySelectorAll('.add')) syncAdd(b);
+  document.getElementById('inq-n').textContent = inquiry.size ? num(inquiry.size) : '';
+  safeSet('avand-inquiry', JSON.stringify([...inquiry]));
+  if (document.getElementById('inq').open) renderInquiry();
+}
+function techRow(list) {
+  const row = el('div', 'tech');
+  row.appendChild(el('span', 'tech__k', t().tech));
+  for (const x of list) row.appendChild(el('code', null, x));
+  return row;
+}
+function head(sec, i) {
+  const h = el('div', 'sec__head rv');
+  h.append(el('div', 'sec__no', num(String(i + 1).padStart(2, '0'))), el('h2', 'sec__title', fa() ? sec.fa : sec.en), el('p', 'sec__lede', fa() ? sec.faLede : sec.enLede), techRow(sec.tech));
+  return h;
+}
+function stagger(nodes, cls) { let i = 0; for (const n of nodes) { n.classList.add('rv', cls || ''); n.style.setProperty('--i', Math.min(i++, 8)); } }
 
-  const type = document.createElement('div');
-  type.className = 'hub-prev__type';
-  type.textContent = v.fa;
-  prev.appendChild(type);
-
-  const mock = document.createElement('div');
-  mock.className = 'hub-prev__mock';
-  for (const row of MOCKS[v.mock]) {
-    const r = document.createElement('div');
-    r.className = 'hub-prev__row';
-    r.style.gridTemplateColumns = row.cols;
-    for (const kind of row.cells) {
-      const cell = document.createElement('div');
-      cell.className = 'hub-prev__cell' + (kind ? ' hub-prev__cell--' + kind : '');
-      r.appendChild(cell);
-    }
-    mock.appendChild(r);
+/* ── 01 grid with live filter ─────────────────────────────── */
+class CatalogCard extends HTMLElement {
+  connectedCallback() {
+    if (this.dataset.ready) return;
+    this.dataset.ready = '1';
+    const p = byCode(this.dataset.code);
+    const node = document.getElementById('card-tpl').content.cloneNode(true);
+    node.querySelector('.name').textContent = name(p);
+    node.querySelector('.alt').textContent = alt(p);
+    node.querySelector('.copy').textContent = copy(p);
+    node.querySelector('.price').replaceWith(priceEl(p));
+    node.querySelector('.code').textContent = p.code;
+    node.querySelector('.add').replaceWith(addButton(p));
+    const box = node.querySelector('.media');
+    this.appendChild(node);
+    CatalogKit.mountMedia(box, mediaSet(p), { title: name(p), sku: p.code }, lang);
   }
-  prev.appendChild(mock);
-  card.appendChild(prev);
+}
+if (!customElements.get('catalog-card')) customElements.define('catalog-card', CatalogCard);
 
-  const body = document.createElement('div');
-  body.className = 'hub-body';
-  const no = document.createElement('div');
-  no.className = 'hub-no';
-  no.textContent = v.no + ' · ' + v.theme;
-  const name = document.createElement('div');
-  name.className = 'hub-name';
-  name.textContent = v.fa;
-  const nameEn = document.createElement('div');
-  nameEn.className = 'hub-name-en';
-  nameEn.textContent = v.en;
-  const note = document.createElement('p');
-  note.className = 'hub-note';
-  note.textContent = v.note;
-  const tags = document.createElement('div');
-  tags.className = 'hub-tags';
-  for (const t of v.tags) {
-    const tag = document.createElement('span');
-    tag.className = 'cat-tag';
-    tag.textContent = t;
-    tags.appendChild(tag);
+function secFilter() {
+  const wrap = el('div');
+  const filters = el('div', 'filters');
+  const row1 = el('div', 'filters__row');
+  const chips = [{ id: 'all' }, ...CATEGORIES].map((c) => {
+    const b = el('button', 'cat-chip', c.id === 'all' ? t().all : catName(c.id)); b.type = 'button'; b.dataset.cat = c.id;
+    b.setAttribute('aria-pressed', String(c.id === 'all'));
+    b.addEventListener('click', () => { chips.forEach((x) => x.setAttribute('aria-pressed', String(x === b))); apply(); });
+    return b;
+  });
+  row1.append(...chips);
+  const row2 = el('div', 'filters__row');
+  const search = el('label', 'cat-search');
+  const input = el('input'); input.type = 'search'; input.placeholder = t().search; input.setAttribute('list', 'names'); input.setAttribute('aria-label', t().search);
+  const dl = el('datalist'); dl.id = 'names'; for (const p of PRODUCTS) { const o = el('option'); o.value = name(p); dl.appendChild(o); }
+  search.append(input, dl);
+  const sort = el('select'); sort.setAttribute('aria-label', t().sort);
+  for (const [v, l] of [['name', t().sortName], ['priceAsc', t().sortPriceAsc], ['priceDesc', t().sortPriceDesc], ['stock', t().sortStock]]) { const o = el('option', null, l); o.value = v; sort.appendChild(o); }
+  const clear = el('button', 'cat-btn cat-btn--quiet filters__clear', t().clear); clear.type = 'button';
+  const count = el('div', 'status'); count.setAttribute('aria-live', 'polite');
+  row2.append(search, sort, clear, count);
+  filters.append(row1, row2);
+
+  const grid = el('div', 'grid');
+  const cards = PRODUCTS.map((p) => { const c = document.createElement('catalog-card'); c.dataset.code = p.code; return c; });
+  grid.append(...cards);
+  const empty = el('div', 'empty'); empty.hidden = true;
+
+  const norm = (s) => String(s || '').replace(/[يﻱ]/g, 'ی').replace(/[كﻙ]/g, 'ک').replace(/[‌]/g, '').replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).toLowerCase().trim();
+  function apply() {
+    const cat = chips.find((c) => c.getAttribute('aria-pressed') === 'true').dataset.cat;
+    const q = norm(input.value);
+    const keep = PRODUCTS.filter((p) => (cat === 'all' || p.cat === cat) && (!q || [p.fa, p.en, p.code].some((f) => norm(f).includes(q))));
+    const cmp = { name: (a, b) => name(a).localeCompare(name(b), lang), priceAsc: (a, b) => a.price - b.price, priceDesc: (a, b) => b.price - a.price, stock: (a, b) => b.stock - a.stock }[sort.value];
+    keep.sort(cmp);
+    for (const c of cards) c.hidden = !keep.some((p) => p.code === c.dataset.code);
+    for (const p of keep) grid.appendChild(cards.find((c) => c.dataset.code === p.code));
+    count.textContent = t().results(keep.length);
+    empty.hidden = keep.length > 0; empty.textContent = t().results(0);
   }
-  body.append(no, name, nameEn, note, tags);
-  card.appendChild(body);
-  return card;
+  input.addEventListener('input', apply); sort.addEventListener('change', apply);
+  clear.addEventListener('click', () => { input.value = ''; chips.forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.cat === 'all'))); apply(); input.focus(); });
+  wrap.append(filters, grid, empty);
+  queueMicrotask(apply);
+  return wrap;
 }
 
-for (const v of STUDIES) document.getElementById('studies').appendChild(buildCard(v));
-for (const v of VARIANTS) grid.appendChild(buildCard(v));
+/* ── 02 close view ────────────────────────────────────────── */
+function secZoom() {
+  const p = PRODUCTS[0];
+  const wrap = el('div', 'study');
+  const frame = el('div', 'study__frame rv');
+  frame.appendChild(media(p));
+  const side = el('div', 'study__side');
+  side.append(nameBlock(p, 'xl'), el('p', 'copy', copy(p)));
+  const notes = el('div', 'notes');
+  const dots = [], noteEls = [];
+  const select = (i) => { dots.forEach((d, j) => d.setAttribute('aria-pressed', String(i === j))); noteEls.forEach((n, j) => n.setAttribute('aria-pressed', String(i === j))); };
+  p.hot.forEach((h, i) => {
+    const pair = fa() ? h.fa : h.en;
+    const n = el('button', 'note rv'); n.type = 'button'; n.setAttribute('aria-pressed', 'false'); n.style.setProperty('--i', i + 1);
+    n.append(el('span', 'note__n', num(i + 1)), el('span', 'note__t', pair[0]), el('p', 'note__b', pair[1]));
+    n.addEventListener('click', () => select(n.getAttribute('aria-pressed') === 'true' ? -1 : i));
+    noteEls.push(n); notes.appendChild(n);
+    const d = el('button', 'dot', num(i + 1)); d.type = 'button'; d.setAttribute('aria-pressed', 'false'); d.setAttribute('aria-label', pair[0]);
+    d.style.left = h.x + '%'; d.style.top = h.y + '%';
+    d.addEventListener('click', (e) => { e.stopPropagation(); select(d.getAttribute('aria-pressed') === 'true' ? -1 : i); });
+    dots.push(d); frame.appendChild(d);
+  });
+  const open = el('button', 'cat-btn', t().open); open.type = 'button';
+  open.addEventListener('click', () => CatalogKit.open(mediaSet(p), { title: name(p), sku: p.code }, lang, 0));
+  const actions = el('div', 'actions'); actions.append(open, addButton(p));
+  side.append(notes, actions);
+  wrap.append(frame, side);
+  return wrap;
+}
+
+/* ── 03 video and spin ────────────────────────────────────── */
+function secVideo() {
+  const wrap = el('div', 'pair');
+  [[PRODUCTS[3], 1, t().video], [PRODUCTS[11], 2, t().spin]].forEach(([p, index, label]) => {
+    const item = el('div', 'pair__item rv');
+    const set = mediaSet(p);
+    const box = el('div', 'media media--wide');
+    queueMicrotask(() => CatalogKit.mountMedia(box, [set[index], ...set.filter((m, i) => i !== index)], { title: name(p), sku: p.code }, lang));
+    const cap = el('div', 'row'); cap.append(el('h3', 'name', label + ': ' + name(p)), el('div', 'code', p.code));
+    const btn = el('button', 'cat-btn cat-btn--ghost', t().play); btn.type = 'button';
+    btn.addEventListener('click', () => CatalogKit.open(set, { title: name(p), sku: p.code }, lang, index));
+    item.append(box, cap, btn);
+    wrap.appendChild(item);
+  });
+  return wrap;
+}
+
+/* ── 04 before / after ────────────────────────────────────── */
+function secCompare() {
+  const p = PRODUCTS[0];
+  const wrap = el('div', 'rv');
+  const cmp = el('div', 'cmp');
+  const before = el('img', 'cmp__before'); before.alt = t().before; before.src = CatalogKit.image(p.code + '-a', { subject: p.subject, palette: 'stone', w: 1200, h: 900, ratio: 4 / 3 });
+  const after = el('img', 'cmp__after'); after.alt = t().after; after.src = CatalogKit.image(p.code + '-a', { subject: p.subject, palette: p.palette, w: 1200, h: 900, ratio: 4 / 3 });
+  const range = el('input', 'cmp__range'); range.type = 'range'; range.min = 0; range.max = 100; range.value = 50; range.setAttribute('aria-label', t().before + ' / ' + t().after);
+  const handle = el('div', 'cmp__handle');
+  const la = el('span', 'cmp__label cmp__label--a', t().before), lb = el('span', 'cmp__label cmp__label--b', t().after);
+  range.addEventListener('input', () => cmp.style.setProperty('--x', range.value + '%'));
+  cmp.append(before, after, range, handle, la, lb);
+  wrap.appendChild(cmp);
+  return wrap;
+}
+
+/* ── 05 variants ──────────────────────────────────────────── */
+const VARIANTS = [['sage', 'سبز خاکستر', 'Ash green'], ['stone', 'سنگی', 'Stone'], ['ink', 'دوده', 'Soot'], ['clay', 'رس', 'Clay'], ['indigo', 'نیل', 'Indigo'], ['amber', 'کهربا', 'Amber']];
+function secVariants() {
+  const p = PRODUCTS[1];
+  const wrap = el('div', 'sw');
+  const stage = el('div', 'sw__stage rv');
+  let current = el('img'); current.alt = name(p); current.src = art(p, { palette: VARIANTS[0][0] });
+  stage.appendChild(current);
+  const side = el('div', 'sw__side');
+  const title = el('div', 'sw__name'); const nm = el('h3', 'name name--xl', name(p)); const vn = el('span', 'sw__var', fa() ? VARIANTS[0][1] : VARIANTS[0][2]);
+  title.append(nm, vn);
+  const codeEl = el('div', 'code', p.code + '-' + VARIANTS[0][0].toUpperCase().slice(0, 3));
+  const swatches = el('div', 'cat-swatches');
+  VARIANTS.forEach(([pal, fName, eName], i) => {
+    const b = el('button', 'cat-swatch'); b.type = 'button'; b.setAttribute('aria-pressed', String(i === 0)); b.setAttribute('aria-label', fa() ? fName : eName); b.title = fa() ? fName : eName;
+    const chip = el('span'); chip.style.background = `url("${CatalogKit.image('sw-' + pal, { subject: 'textile', palette: pal, w: 60, h: 60, ratio: 1 })}") center/cover`;
+    b.appendChild(chip);
+    b.addEventListener('click', async () => {
+      for (const x of swatches.children) x.setAttribute('aria-pressed', String(x === b));
+      vn.textContent = fa() ? fName : eName; codeEl.textContent = p.code + '-' + pal.toUpperCase().slice(0, 3);
+      const next = el('img'); next.alt = name(p); next.src = art(p, { palette: pal }); next.setAttribute('data-out', '');
+      stage.appendChild(next);
+      try { await next.decode(); } catch (e) { /* draw anyway */ }
+      requestAnimationFrame(() => { next.removeAttribute('data-out'); current.setAttribute('data-out', ''); const old = current; current = next; setTimeout(() => old.remove(), 600); });
+    });
+    swatches.appendChild(b);
+  });
+  side.append(title, el('div', 'alt', alt(p)), el('p', 'copy', copy(p)), swatches, codeEl, priceEl(p), addButton(p));
+  wrap.append(stage, side);
+  return wrap;
+}
+
+/* ── 06 expanding card with view transitions ──────────────── */
+function secExpand() {
+  const items = PRODUCTS.slice(3, 7);
+  const grid = el('div', 'vt');
+  let openCode = null;
+  function render() {
+    grid.innerHTML = '';
+    if (openCode) {
+      const p = byCode(openCode);
+      const d = el('div', 'vt__detail');
+      const m = media(p, 'square'); m.style.viewTransitionName = 'vt-' + p.code.replace('-', '');
+      const text = el('div', 'vt__text');
+      const close = el('button', 'cat-btn cat-btn--ghost', t().back); close.type = 'button'; close.addEventListener('click', () => go(null));
+      text.append(nameBlock(p, 'xl'), el('p', 'copy', copy(p)), specList(p), rowEl(p), addButton(p), close);
+      d.append(m, text);
+      grid.appendChild(d);
+      queueMicrotask(() => close.focus({ preventScroll: true }));
+    }
+    for (const p of items) {
+      const b = el('button', 'vt__card'); b.type = 'button'; b.setAttribute('aria-expanded', String(openCode === p.code));
+      const m = el('div', 'media');
+      if (openCode !== p.code) m.style.viewTransitionName = 'vt-' + p.code.replace('-', '');
+      const img = el('img'); img.alt = ''; img.src = art(p); img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+      m.appendChild(img);
+      b.append(m, nameBlock(p), el('div', 'code', p.code));
+      b.addEventListener('click', () => go(openCode === p.code ? null : p.code));
+      grid.appendChild(b);
+    }
+  }
+  function go(code) {
+    const run = () => { openCode = code; render(); };
+    if (document.startViewTransition && root.dataset.motion !== 'reduce') document.startViewTransition(run); else run();
+  }
+  grid.addEventListener('keydown', (e) => { if (e.key === 'Escape' && openCode) go(null); });
+  render();
+  return grid;
+}
+
+/* ── 07 popover quick view ────────────────────────────────── */
+function secPopover() {
+  const wrap = el('div', 'qv-grid rv');
+  const pop = document.getElementById('qv');
+  for (const p of PRODUCTS.slice(0, 6)) {
+    const b = el('button', 'cat-btn cat-btn--ghost', t().quick + ': ' + name(p)); b.type = 'button';
+    b.setAttribute('popovertarget', 'qv');
+    b.addEventListener('click', () => { pop.dataset.code = p.code; });
+    wrap.appendChild(b);
+  }
+  if (!pop.dataset.bound) {
+    pop.dataset.bound = '1';
+    pop.addEventListener('beforetoggle', (e) => {
+      if (e.newState !== 'open') return;
+      const p = byCode(pop.dataset.code); if (!p) return;
+      pop.innerHTML = '';
+      const h = el('div', 'qv__head'); h.append(el('h2', 'name name--xl', name(p)));
+      const close = el('button', 'cat-btn cat-btn--ghost', t().close); close.type = 'button'; close.setAttribute('popovertarget', 'qv'); close.setAttribute('popovertargetaction', 'hide');
+      h.appendChild(close);
+      const g = el('div', 'qv__grid');
+      const text = el('div', 'qv__text'); text.append(el('div', 'alt', alt(p)), el('p', 'copy', copy(p)), specList(p), rowEl(p), addButton(p));
+      g.append(media(p), text);
+      pop.append(h, g);
+    });
+  }
+  return wrap;
+}
+
+/* ── 08 snap gallery ──────────────────────────────────────── */
+function secSnap() {
+  const wrap = el('div', 'snap rv');
+  const track = el('div', 'snap__track'); track.tabIndex = 0; track.setAttribute('aria-label', 'gallery');
+  const items = PRODUCTS.slice(6, 11);
+  const dots = el('div', 'snap__dots');
+  items.forEach((p, i) => {
+    const it = el('div', 'snap__item'); it.append(media(p, 'wide'), nameBlock(p), rowEl(p)); track.appendChild(it);
+    const d = el('button'); d.type = 'button'; d.setAttribute('aria-label', name(p)); d.setAttribute('aria-current', String(i === 0));
+    d.addEventListener('click', () => track.children[i].scrollIntoView({ behavior: root.dataset.motion === 'reduce' ? 'auto' : 'smooth', inline: 'center', block: 'nearest' }));
+    dots.appendChild(d);
+  });
+  const nav = el('div', 'snap__nav');
+  const step = (dir) => { const w = track.children[0].getBoundingClientRect().width + 24; track.scrollBy({ left: (fa() ? -dir : dir) * w, behavior: root.dataset.motion === 'reduce' ? 'auto' : 'smooth' }); };
+  const prev = el('button', 'cat-btn cat-btn--ghost', t().prev); prev.type = 'button'; prev.addEventListener('click', () => step(-1));
+  const next = el('button', 'cat-btn cat-btn--ghost', t().next); next.type = 'button'; next.addEventListener('click', () => step(1));
+  const btns = el('div', 'actions'); btns.append(prev, next);
+  nav.append(btns, dots);
+  wrap.append(track, nav);
+  track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') step(fa() ? -1 : 1); if (e.key === 'ArrowLeft') step(fa() ? 1 : -1); });
+  queueMicrotask(() => {
+    const io = new IntersectionObserver((ents) => { for (const en of ents) if (en.isIntersecting) { const i = [...track.children].indexOf(en.target); [...dots.children].forEach((d, j) => d.setAttribute('aria-current', String(i === j))); } }, { root: track, threshold: 0.6 });
+    for (const c of track.children) io.observe(c);
+  });
+  return wrap;
+}
+
+/* ── 09 the book ──────────────────────────────────────────── */
+function secBook() {
+  const wrap = el('div', 'rv');
+  const spreads = [[PRODUCTS[0], PRODUCTS[1]], [PRODUCTS[2], PRODUCTS[3]], [PRODUCTS[4], PRODUCTS[5]], [PRODUCTS[6], PRODUCTS[7]]];
+  let cur = 0, turning = false;
+  const book = el('div', 'book'); book.tabIndex = 0; book.setAttribute('aria-roledescription', 'book');
+  const pageEl = (p, folio) => {
+    const pg = el('div', 'book__page');
+    const h = el('div', 'code', t().running);
+    pg.append(h, media(p, null), nameBlock(p), el('div', 'book__folio', t().pageOf(folio, spreads.length * 2)));
+    return pg;
+  };
+  function renderSpread() {
+    for (const n of [...book.children]) if (!n.classList.contains('book__leaf')) n.remove();
+    const [a, b] = spreads[cur];
+    const first = pageEl(a, cur * 2 + 1), second = pageEl(b, cur * 2 + 2);
+    book.prepend(first, second);
+    count.textContent = t().pageOf(cur + 1, spreads.length);
+    prev.disabled = cur === 0; next.disabled = cur === spreads.length - 1;
+  }
+  function turn(dir) {
+    const target = cur + dir; if (turning || target < 0 || target >= spreads.length) return;
+    if (root.dataset.motion === 'reduce' || matchMedia('(prefers-reduced-motion: reduce)').matches || innerWidth <= 700) { cur = target; renderSpread(); return; }
+    turning = true;
+    /* In RTL the reader turns the left page to go forward; in LTR the right. */
+    const turnsLeft = fa() ? dir > 0 : dir < 0;
+    const leaf = el('div', 'book__leaf ' + (turnsLeft ? 'book__leaf--left' : 'book__leaf--right'));
+    const front = el('div', 'book__face'), back = el('div', 'book__face book__face--back');
+    const [ca, cb] = spreads[cur], [na, nb] = spreads[target];
+    /* Fresh page elements, appended while attached, so their media mounts
+       inside the leaf; a clone taken before the mount would turn blank. */
+    leaf.append(front, back);
+    book.appendChild(leaf);
+    /* The turning leaf carries the second page of this spread when the
+       reading direction turns that side, otherwise the first; its back
+       is the matching page of the next spread. */
+    const second = turnsLeft === fa();
+    front.appendChild(pageEl(second ? cb : ca, cur * 2 + (second ? 2 : 1)));
+    back.appendChild(pageEl(second ? na : nb, target * 2 + (second ? 1 : 2)));
+    requestAnimationFrame(() => requestAnimationFrame(() => leaf.classList.add('turn')));
+    leaf.addEventListener('transitionend', () => { cur = target; renderSpread(); leaf.remove(); turning = false; }, { once: true });
+  }
+  const nav = el('div', 'book__nav');
+  const prev = el('button', 'cat-btn cat-btn--ghost', t().prev); prev.type = 'button'; prev.addEventListener('click', () => turn(-1));
+  const next = el('button', 'cat-btn cat-btn--ghost', t().next); next.type = 'button'; next.addEventListener('click', () => turn(1));
+  const count = el('div', 'book__count');
+  nav.append(prev, count, next);
+  book.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') turn(fa() ? 1 : -1); if (e.key === 'ArrowRight') turn(fa() ? -1 : 1); });
+  renderSpread();
+  wrap.append(book, nav);
+  return wrap;
+}
+
+/* ── 10 scrollytelling ────────────────────────────────────── */
+function secStory() {
+  const p = PRODUCTS[6];
+  const wrap = el('div', 'story');
+  const stage = el('div', 'story__stage');
+  const frame = el('div', 'story__frame');
+  const pals = ['indigo', 'sage', 'stone', 'clay'];
+  const layers = pals.map((pal, i) => { const m = el('div', 'media' + (i === 0 ? ' is-active' : '')); queueMicrotask(() => CatalogKit.mountMedia(m, [{ type: 'photo', seed: p.code + '-s' + i, subject: p.subject, palette: pal, hotspots: hotspots(p) }], { title: name(p), sku: p.code }, lang)); frame.appendChild(m); return m; });
+  const bar = el('div', 'story__bar'); bar.appendChild(el('div'));
+  const cap = el('div', 'row'); cap.append(el('h3', 'name', name(p)), el('div', 'code', p.code));
+  stage.append(frame, bar, cap);
+  const steps = el('div', 'story__steps');
+  t().story.forEach((title, i) => {
+    const s = el('div', 'story__step' + (i === 0 ? ' is-active' : ''));
+    s.append(el('div', 'sec__no', num(i + 1)), el('h3', 'name name--xl', title), el('p', 'copy', t().storyText[i]));
+    steps.appendChild(s);
+  });
+  queueMicrotask(() => {
+    const io = new IntersectionObserver((ents) => {
+      for (const en of ents) if (en.isIntersecting) {
+        const i = [...steps.children].indexOf(en.target);
+        [...steps.children].forEach((s, j) => s.classList.toggle('is-active', i === j));
+        layers.forEach((m, j) => m.classList.toggle('is-active', i === j));
+        bar.style.setProperty('--p', ((i + 1) / layers.length * 100) + '%');
+      }
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    for (const s of steps.children) io.observe(s);
+  });
+  wrap.append(stage, steps);
+  return wrap;
+}
+
+/* ── 11 comparison table ──────────────────────────────────── */
+function secTable() {
+  const wrap = el('div');
+  const tw = el('div', 'tbl-wrap rv');
+  const table = el('table', 'tbl');
+  const cols = [['pick', t().thPick, null], ['name', t().thName, (p) => name(p)], ['material', t().thMaterial, (p) => fa() ? p.material[0] : p.material[1]], ['size', t().thSize, (p) => p.size], ['price', t().thPrice, (p) => p.price], ['stock', t().thStock, (p) => p.stock]];
+  let sortKey = 'name', dir = 1;
+  const thead = el('thead'), tr = el('tr');
+  for (const [k, label, get] of cols) {
+    const th = el('th'); th.scope = 'col';
+    if (get) { const b = el('button', null, label); b.type = 'button'; b.addEventListener('click', () => { dir = sortKey === k ? -dir : 1; sortKey = k; renderRows(); }); th.appendChild(b); th.dataset.key = k; } else th.textContent = label;
+    tr.appendChild(th);
+  }
+  thead.appendChild(tr); table.appendChild(thead);
+  const tbody = el('tbody'); table.appendChild(tbody);
+  const picked = new Set();
+  const tray = el('div', 'tray'); const trayN = el('span', 'tray__n'); const cmpBtn = el('button', 'cat-btn', t().compare); cmpBtn.type = 'button';
+  tray.append(trayN, el('span', 'bar__sep'), cmpBtn);
+  function renderRows() {
+    for (const th of thead.querySelectorAll('th[data-key]')) th.setAttribute('aria-sort', th.dataset.key === sortKey ? (dir > 0 ? 'ascending' : 'descending') : 'none');
+    const get = cols.find((c) => c[0] === sortKey)[2];
+    const rows = [...PRODUCTS].sort((a, b) => { const x = get(a), y = get(b); return (typeof x === 'number' ? x - y : String(x).localeCompare(String(y), lang)) * dir; });
+    tbody.innerHTML = '';
+    for (const p of rows) {
+      const r = el('tr');
+      const tdPick = el('td'); const cb = el('input'); cb.type = 'checkbox'; cb.checked = picked.has(p.code); cb.setAttribute('aria-label', t().thPick + ' ' + name(p));
+      cb.addEventListener('change', () => { if (cb.checked) { if (picked.size >= 3) { cb.checked = false; trayN.textContent = t().maxCompare; return; } picked.add(p.code); } else picked.delete(p.code); trayN.textContent = t().compareN(picked.size); });
+      tdPick.appendChild(cb);
+      const tdName = el('td'); const nm = el('div', 'tbl__name');
+      const label = el('div'); label.append(el('div', 'name', name(p)), el('div', 'code', p.code));
+      nm.append(media(p, 'square'), label);
+      tdName.appendChild(nm);
+      const tdMat = el('td', null, fa() ? p.material[0] : p.material[1]);
+      const tdSize = el('td', 'num', String(p.size));
+      const tdPrice = el('td', 'num', money(p.price));
+      const tdStock = el('td'); const meter = el('meter'); meter.min = 0; meter.max = 12; meter.low = 3; meter.high = 9; meter.optimum = 12; meter.value = p.stock; meter.setAttribute('aria-label', t().thStock + ' ' + num(p.stock)); tdStock.append(meter, el('span', 'code', ' ' + num(p.stock)));
+      r.append(tdPick, tdName, tdMat, tdSize, tdPrice, tdStock);
+      tbody.appendChild(r);
+    }
+  }
+  cmpBtn.addEventListener('click', () => openCompare([...picked]));
+  renderRows();
+  tw.appendChild(table);
+  wrap.append(tw, tray);
+  return wrap;
+}
+function openCompare(codes) {
+  const dlg = document.getElementById('cmpdlg');
+  const items = codes.map(byCode);
+  dlg.innerHTML = '';
+  const h = el('div', 'dlg__head'); h.append(el('h2', null, t().compare)); h.querySelector('h2').id = 'cmp-title';
+  const form = el('form'); form.method = 'dialog'; const close = el('button', 'cat-btn cat-btn--ghost', t().close); form.appendChild(close); h.appendChild(form);
+  const table = el('table', 'cmp-tbl');
+  /* Only attributes are compared; a name is not a difference, and each
+     piece's own spec lines are shown without highlighting. */
+  const rows = [
+    [t().thMaterial, (p) => fa() ? p.material[0] : p.material[1], 'text', true],
+    [t().thSize, (p) => num(p.size), 'num', true],
+    [t().thPrice, (p) => money(p.price), 'num', true],
+    [t().thStock, (p) => num(p.stock), 'num', true],
+    ...[0, 1, 2].map((i) => ['', (p) => specs(p)[i] ? specs(p)[i][0] + ': ' + specs(p)[i][1] : '', 'text', false])
+  ];
+  const thead = el('thead'); const hr = el('tr'); hr.appendChild(el('th'));
+  for (const p of items) { const th = el('th'); th.append(media(p, 'square'), el('div', 'name', name(p)), el('div', 'code', p.code)); hr.appendChild(th); }
+  thead.appendChild(hr); table.appendChild(thead);
+  const tbody = el('tbody');
+  for (const [label, get, kind, compare] of rows) {
+    const tr = el('tr'); tr.appendChild(el('th', null, label));
+    const vals = items.map(get); const differ = compare && new Set(vals).size > 1;
+    for (const v of vals) tr.appendChild(el('td', (kind === 'num' ? 'num' : '') + (differ ? ' diff' : ''), v));
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  dlg.append(h, table);
+  dlg.showModal();
+}
+
+/* ── 12 details ───────────────────────────────────────────── */
+function secDetails() {
+  const wrap = el('div', 'acc rv');
+  PRODUCTS.slice(9, 13).forEach((p, i) => {
+    const d = el('details'); d.name = 'spec'; if (i === 0) d.open = true;
+    const s = el('summary'); s.append(el('span', null, name(p)), el('span', 'code', p.code)); s.querySelector('.code').style.marginInlineStart = 'auto';
+    const body = el('div', 'acc__body'); const text = el('div'); text.style.display = 'grid'; text.style.gap = 'var(--s-3)';
+    text.append(el('p', 'copy copy--sm', copy(p)), specList(p), rowEl(p));
+    body.append(media(p, 'square'), text);
+    d.append(s, body); wrap.appendChild(d);
+  });
+  return wrap;
+}
+
+/* ── 13 dialog inquiry ────────────────────────────────────── */
+function secDialog() {
+  const wrap = el('div', 'inq-demo rv');
+  const open = el('button', 'cat-btn', t().inqTitle); open.type = 'button'; open.addEventListener('click', openInquiry);
+  wrap.append(open, el('span', 'status', t().persisted));
+  for (const p of PRODUCTS.slice(0, 3)) { const b = addButton(p); b.textContent = (inquiry.has(p.code) ? t().added : t().add) + ': ' + name(p); b.addEventListener('click', () => { b.textContent = (inquiry.has(p.code) ? t().added : t().add) + ': ' + name(p); }); wrap.appendChild(b); }
+  return wrap;
+}
+function openInquiry() { renderInquiry(); document.getElementById('inq').showModal(); }
+function renderInquiry() {
+  const dlg = document.getElementById('inq'); dlg.innerHTML = '';
+  const h = el('div', 'dlg__head'); const title = el('h2', null, t().inqTitle); title.id = 'inq-title'; h.appendChild(title);
+  const form = el('form'); form.method = 'dialog'; form.appendChild(el('button', 'cat-btn cat-btn--ghost', t().close)); h.appendChild(form);
+  dlg.appendChild(h);
+  const items = PRODUCTS.filter((p) => inquiry.has(p.code));
+  if (!items.length) { dlg.appendChild(el('div', 'cat-inquiry__empty', t().inqEmpty)); return; }
+  const list = el('div', 'cat-inquiry'); let total = 0;
+  for (const p of items) {
+    total += p.price;
+    const r = el('div', 'cat-inquiry__row dlg__row'); const n = el('div'); n.append(el('div', 'name', name(p)), el('div', 'code', p.code));
+    const rm = el('button', 'cat-btn cat-btn--quiet', t().remove); rm.type = 'button'; rm.setAttribute('aria-label', t().remove + ' ' + name(p)); rm.addEventListener('click', () => { inquiry.delete(p.code); syncInquiry(); });
+    r.append(media(p, 'square'), n, rm); list.appendChild(r);
+  }
+  const foot = el('div', 'dlg__foot'); const sum = el('div', 'dlg__total'); sum.append(document.createTextNode(t().total + ' ' + money(total)), el('small', null, t().unit));
+  const send = el('a', 'cat-btn', t().send); send.href = 'mailto:order@avand.example?subject=' + encodeURIComponent(t().inqTitle) + '&body=' + encodeURIComponent(items.map((p) => p.code + ' ' + name(p)).join('\n'));
+  foot.append(sum, send);
+  dlg.append(list, foot);
+}
+
+/* ── 14 picture and scheme ────────────────────────────────── */
+function secPicture() {
+  const p = PRODUCTS[9];
+  const wrap = el('div', 'pic rv');
+  const pic = el('picture');
+  const dark = el('source'); dark.media = '(prefers-color-scheme: dark)'; dark.srcset = CatalogKit.image(p.code + '-a', { subject: p.subject, palette: 'ink', w: 1200, h: 900, ratio: 4 / 3 });
+  const img = el('img'); img.alt = name(p);
+  img.srcset = [400, 800, 1200].map((w) => CatalogKit.image(p.code + '-a', { subject: p.subject, palette: p.palette, w, h: Math.round(w * 0.75), ratio: 4 / 3 }) + ' ' + w + 'w').join(', ');
+  img.sizes = '(max-width: 760px) 100vw, 50vw';
+  pic.append(dark, img);
+  const side = el('div', 'pic__side');
+  side.append(nameBlock(p, 'xl'), el('p', 'copy', copy(p)));
+  const kv = el('dl', 'kv');
+  const rowsDef = [[t().chosen, () => { const m = /width="(\d+)"/.exec(decodeURIComponent(img.currentSrc || '')); return m ? m[1] + 'w' : '…'; }], [t().scheme, () => matchMedia('(prefers-color-scheme: dark)').matches && root.dataset.scheme !== 'light' || root.dataset.scheme === 'dark' ? t().picDark : t().picLight], [t().viewport, () => innerWidth + 'px']];
+  const refresh = () => { kv.innerHTML = ''; for (const [k, v] of rowsDef) { const d = el('div'); d.append(el('dt', null, k), el('dd', null, v())); kv.appendChild(d); } };
+  img.addEventListener('load', refresh); addEventListener('resize', refresh);
+  document.addEventListener('click', (e) => { if (e.target.closest('button[data-scheme]')) setTimeout(refresh, 50); });
+  side.append(kv);
+  wrap.append(pic, side);
+  queueMicrotask(refresh);
+  return wrap;
+}
+
+/* ── 15 print and share ───────────────────────────────────── */
+function secPrint() {
+  const wrap = el('div', 'actions rv');
+  const pr = el('button', 'cat-btn', t().print); pr.type = 'button'; pr.addEventListener('click', () => window.print());
+  const sh = el('button', 'cat-btn cat-btn--ghost', t().share); sh.type = 'button';
+  const st = el('span', 'status'); st.setAttribute('aria-live', 'polite');
+  sh.addEventListener('click', async () => {
+    const data = { title: document.title, url: location.href };
+    try { if (navigator.share) { await navigator.share(data); st.textContent = t().shared; return; } } catch (e) { if (e.name === 'AbortError') return; }
+    try { await navigator.clipboard.writeText(location.href); st.textContent = navigator.share ? t().copied : t().shareFail; } catch (e) { st.textContent = location.href; }
+  });
+  wrap.append(pr, sh, st);
+  return wrap;
+}
+
+/* ── 16 access ────────────────────────────────────────────── */
+function secAccess() {
+  const wrap = el('div', 'keys rv');
+  for (const [k, d] of t().keys) { const row = el('div'); row.append(el('kbd', null, k), el('span', null, d)); wrap.appendChild(row); }
+  return wrap;
+}
+
+/* ── frame: toc, scrollspy, reveals, render ───────────────── */
+let spy = null, revealer = null;
+function buildToc() {
+  for (const list of [document.getElementById('toc-list'), document.getElementById('toc-list-narrow')]) {
+    list.innerHTML = '';
+    SECTIONS.forEach((s, i) => {
+      const li = el('li'); const a = el('a'); a.href = '#' + s.id;
+      a.append(el('span', 'n', num(String(i + 1).padStart(2, '0'))), el('span', null, fa() ? s.fa : s.en));
+      if (list.id === 'toc-list-narrow') a.setAttribute('popovertarget', 'menu');
+      li.appendChild(a); list.appendChild(li);
+    });
+  }
+}
+function scrollspy() {
+  if (spy) spy.disconnect();
+  spy = new IntersectionObserver((ents) => {
+    for (const en of ents) if (en.isIntersecting) for (const a of document.querySelectorAll('.toc a')) a.setAttribute('aria-current', String(a.getAttribute('href') === '#' + en.target.id));
+  }, { rootMargin: '-35% 0px -60% 0px', threshold: 0 });
+  for (const s of document.querySelectorAll('.sec')) spy.observe(s);
+}
+function reveals() {
+  if (revealer) revealer.disconnect();
+  revealer = new IntersectionObserver((ents) => { for (const en of ents) if (en.isIntersecting) { en.target.classList.add('in'); revealer.unobserve(en.target); } }, { rootMargin: '0px 0px -8% 0px', threshold: 0.04 });
+  for (const n of document.querySelectorAll('.rv')) revealer.observe(n);
+}
+function render() {
+  const host = document.getElementById('sections'); host.innerHTML = '';
+  SECTIONS.forEach((s, i) => {
+    const sec = el('section', 'sec'); sec.id = s.id;
+    sec.append(head(s, i), s.build());
+    host.appendChild(sec);
+  });
+  const meta = document.getElementById('hero-meta'); meta.innerHTML = '';
+  for (const x of ['HTML', 'CSS', 'JavaScript', 'no framework', '1 file']) meta.appendChild(el('code', null, x));
+  const foot = document.getElementById('foot'); foot.innerHTML = '';
+  const more = el('div'); more.appendChild(el('h3', null, t().fMore)); const ul = el('ul');
+  [['hub.html', 0], ['catalogs/compositions.html', 1], ['catalogs/avand.html', 2], ['catalogs/00-mechanisms.html', 3]].forEach(([href, i]) => { const li = el('li'); const a = el('a', null, t().fMoreV[i]); a.href = href; li.appendChild(a); ul.appendChild(li); });
+  more.appendChild(ul);
+  const built = el('div'); built.append(el('h3', null, t().fBuilt), el('p', null, t().fBuiltV));
+  const src = el('div'); src.appendChild(el('h3', null, t().fSource)); const a = el('a', 'code', t().fSourceV); a.href = 'https://github.com/Ali-Nourix/Temp'; src.appendChild(a);
+  foot.append(more, built, src);
+  for (const n of document.querySelectorAll('[data-t]')) { const v = t()[n.dataset.t]; if (typeof v === 'string') n.textContent = v; }
+  buildToc(); syncInquiry(); scrollspy(); reveals();
+}
+
+/* ── controls: one delegated handler for both sets ────────── */
+const pressAll = (sel, test) => { for (const b of document.querySelectorAll(sel)) b.setAttribute('aria-pressed', String(test(b))); };
+function setScheme(v) { root.dataset.scheme = v; pressAll('button[data-scheme]', (b) => b.dataset.scheme === v); safeSet('avand-scheme', v); }
+function setMotion(reduce) { root.dataset.motion = reduce ? 'reduce' : 'auto'; pressAll('button[data-motion]', () => reduce); safeSet('avand-motion', reduce ? '1' : '0'); if (reduce) for (const n of document.querySelectorAll('.rv')) n.classList.add('in'); }
+function setLang(v) {
+  lang = v; pressAll('button[data-lang]', (b) => b.dataset.lang === v);
+  root.lang = lang; root.dir = fa() ? 'rtl' : 'ltr'; document.title = fa() ? 'کاتالوگ دیجیتال با HTML: نمایش قابلیت‌ها' : 'A digital catalog in HTML: the capabilities';
+  render();
+}
+document.addEventListener('click', (e) => {
+  const sch = e.target.closest('button[data-scheme]'); if (sch) { setScheme(sch.dataset.scheme); return; }
+  if (e.target.closest('button[data-motion]')) { setMotion(root.dataset.motion !== 'reduce'); return; }
+  const lg = e.target.closest('button[data-lang]'); if (lg && lg.dataset.lang !== lang) setLang(lg.dataset.lang);
+});
+document.getElementById('inq-open').addEventListener('click', openInquiry);
+
+const savedScheme = safeGet('avand-scheme'); if (['auto', 'light', 'dark'].includes(savedScheme)) setScheme(savedScheme);
+if (safeGet('avand-motion') === '1') setMotion(true);
+render();
 </script>
 </body>
 </html>

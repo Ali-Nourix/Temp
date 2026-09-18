@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa" data-theme="editorial">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>هشت کاتالوگ دیجیتال — نمونه‌ها</title>
+<meta name="description" content="هشت نمونه‌ی کاتالوگ دیجیتال با چیدمان، تراکم، رنگ و حرکت متفاوت.">
+<style>
+/* inlined from shared/ds-core.css */
+/* ============================================================
+   Catalog Design System — core tokens, 8 themes, components
+   Extracted from "سیستم طراحی کاتالوگ دیجیتال v1".
+   Fonts load from Google Fonts; every family has a system fallback,
+   so the file still renders offline.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,300..600;1,300..600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Manrope:wght@400;500;700;800&family=Markazi+Text:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..700&family=Noto+Kufi+Arabic:wght@400;500;700&family=Noto+Naskh+Arabic:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Space+Grotesk:wght@400;500;700&family=Vazirmatn:wght@300;400;500;700;900&display=swap');
+
+:root {
+  /* خانواده‌های پایه — تم‌ها این‌ها را روی نقش‌ها می‌نشانند */
+  --fam-vazir: "Vazirmatn", system-ui, sans-serif;
+  --fam-naskh: "Noto Naskh Arabic", "Vazirmatn", serif;
+  --fam-kufi: "Noto Kufi Arabic", "Vazirmatn", sans-serif;
+  --fam-markazi: "Markazi Text", "Noto Naskh Arabic", serif;
+  --fam-newsreader: "Newsreader", Georgia, serif;
+  --fam-cormorant: "Cormorant Garamond", Georgia, serif;
+  --fam-grotesk: "Space Grotesk", "Helvetica Neue", sans-serif;
+  --fam-archivo: "Archivo", "Helvetica Neue", sans-serif;
+  --fam-manrope: "Manrope", "Helvetica Neue", sans-serif;
+  --fam-sourceserif: "Source Serif 4", Georgia, serif;
+  --fam-plex: "IBM Plex Sans", "Helvetica Neue", sans-serif;
+  --fam-plexmono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* پالت پایه و نام‌های معنایی. مقدارها با oklch نوشته شده‌اند تا هم‌خانواده بمانند.
+   قاعده: هیچ کامپوننتی رنگ خام ننویسد — فقط نام معنایی. */
+:root {
+  /* خنثی‌های گرم (پیش‌فرض ادیتوریال) */
+  --n-00: oklch(0.99 0.004 85);
+  --n-05: oklch(0.975 0.005 85);
+  --n-10: oklch(0.945 0.006 85);
+  --n-20: oklch(0.90 0.007 85);
+  --n-30: oklch(0.80 0.008 85);
+  --n-50: oklch(0.62 0.009 85);
+  --n-70: oklch(0.44 0.010 85);
+  --n-85: oklch(0.28 0.010 80);
+  --n-95: oklch(0.17 0.010 80);
+  --n-100: oklch(0.12 0.008 80);
+
+  /* نقش‌های معنایی — تم پیش‌فرض: editorial */
+  --bg: var(--n-05);
+  --bg-alt: var(--n-00);
+  --surface: var(--n-00);
+  --surface-alt: var(--n-10);
+  --ink: var(--n-95);
+  --ink-muted: var(--n-70);
+  --ink-faint: var(--n-50);
+  --line: oklch(0.88 0.006 85);
+  --line-strong: var(--n-85);
+  --accent: oklch(0.52 0.12 42);
+  --accent-soft: oklch(0.94 0.03 42);
+  --on-accent: oklch(0.99 0.004 85);
+  --focus: oklch(0.55 0.15 250);
+  --overlay: oklch(0.17 0.01 80 / 0.55);
+
+  /* وضعیت‌ها — فقط همین سه؛ رنگ‌های معنایی بیشتری اضافه نکن */
+  --ok: oklch(0.55 0.10 150);
+  --warn: oklch(0.70 0.13 75);
+  --danger: oklch(0.53 0.15 25);
+}
+
+/* تایپوگرافی دوزبانه. دو محور جدا: fa (فارسی/RTL) و en (لاتین/LTR).
+   قاعده‌ی سخت: line-height فارسی همیشه بلندتر از لاتین؛ letter-spacing روی فارسی صفر. */
+:root {
+  --font-fa-display: var(--fam-vazir);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-newsreader);
+  --font-en-ui: var(--fam-grotesk);
+  --font-num: var(--fam-plexmono);
+
+  /* مقیاس سیال — یک مقیاس برای هر دو زبان */
+  --t-xs: clamp(0.72rem, 0.70rem + 0.15vw, 0.80rem);
+  --t-sm: clamp(0.82rem, 0.79rem + 0.2vw, 0.92rem);
+  --t-base: clamp(0.95rem, 0.90rem + 0.25vw, 1.06rem);
+  --t-md: clamp(1.10rem, 1.02rem + 0.4vw, 1.30rem);
+  --t-lg: clamp(1.35rem, 1.18rem + 0.8vw, 1.75rem);
+  --t-xl: clamp(1.75rem, 1.40rem + 1.6vw, 2.60rem);
+  --t-2xl: clamp(2.30rem, 1.70rem + 2.8vw, 3.80rem);
+  --t-3xl: clamp(3.00rem, 2.00rem + 4.6vw, 5.60rem);
+
+  --lh-fa-tight: 1.42;
+  --lh-fa-body: 1.85;
+  --lh-en-tight: 1.10;
+  --lh-en-body: 1.55;
+
+  --w-light: 300;
+  --w-regular: 400;
+  --w-medium: 500;
+  --w-bold: 700;
+  --w-black: 900;
+
+  --tracking-fa: 0;
+  --tracking-en: 0.01em;
+  --tracking-en-caps: 0.10em;
+
+  /* حداکثر عرض خط خوانا */
+  --measure-fa: 62ch;
+  --measure-en: 70ch;
+}
+
+/* فاصله، شبکه، گوشه، خط. مقیاس ۴ پایه اما مقدارهای واقعی طراحی — گرد نکن. */
+:root {
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+
+  --gutter: var(--s-5);
+  --page-pad: clamp(20px, 4vw, 72px);
+  --page-max: 1360px;
+  --col-min: 268px;          /* حداقل عرض کارت محصول در شبکه‌ی سیال */
+
+  --radius-none: 0px;
+  --radius-media: 2px;
+  --radius-card: 4px;
+  --radius-control: 4px;
+  --radius-pill: 999px;
+
+  --border-w: 1px;
+  --border-w-strong: 2px;
+
+  --shadow-1: 0 1px 2px oklch(0.17 0.01 80 / 0.06);
+  --shadow-2: 0 10px 30px -12px oklch(0.17 0.01 80 / 0.18);
+  --shadow-lift: 0 18px 44px -18px oklch(0.17 0.01 80 / 0.28);
+
+  --ratio-media: 4 / 5;      /* نسبت پیش‌فرض عکس محصول */
+  --ratio-cover: 3 / 4;      /* کاور کاتالوگ */
+  --ratio-spread: 3 / 2;     /* صفحه‌ی باز کاتالوگ */
+  --tap-min: 44px;           /* حداقل هدف لمسی — هرگز کمتر */
+}
+
+/* حرکت. هر انیمیشنی که می‌سازی باید از همین توکن‌ها استفاده کند.
+   قاعده: فقط transform و opacity انیمیت می‌شوند. width/height/top/left هرگز. */
+:root {
+  --dur-instant: 90ms;
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 420ms;
+  --dur-page: 560ms;
+
+  --ease-out: cubic-bezier(0.20, 0.80, 0.25, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft: cubic-bezier(0.34, 1.12, 0.64, 1);
+
+  --hover-lift: -2px;
+  --hover-media-scale: 1.03;
+  --press-scale: 0.985;
+  --stagger: 45ms;           /* فاصله‌ی ورود کارت‌های پشت‌سرهم؛ حداکثر ۸ کارت */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 1ms;
+    --dur-fast: 1ms;
+    --dur-base: 1ms;
+    --dur-slow: 1ms;
+    --dur-page: 1ms;
+    --hover-lift: 0px;
+    --hover-media-scale: 1;
+    --press-scale: 1;
+    --stagger: 0ms;
+  }
+}
+
+/* ۸ تم. یک تم = یک بار عوض کردن data-theme روی ریشه. هیچ کامپوننتی تم‌آگاه نیست.
+   استفاده: <div data-theme="luxe"> … </div>  یا  <html data-theme="spec"> */
+
+/* ۱. editorial — مینیمال مجله‌ای؛ فضای سفید زیاد، تایپ سریف لاتین، شبکه‌ی نامتقارن */
+[data-theme="editorial"] {
+  --bg: oklch(0.975 0.005 85);
+  --bg-alt: oklch(0.99 0.004 85);
+  --surface: oklch(0.99 0.004 85);
+  --surface-alt: oklch(0.945 0.006 85);
+  --ink: oklch(0.17 0.010 80);
+  --ink-muted: oklch(0.44 0.010 85);
+  --ink-faint: oklch(0.62 0.009 85);
+  --line: oklch(0.88 0.006 85);
+  --line-strong: oklch(0.28 0.010 80);
+  --accent: oklch(0.52 0.12 42);
+  --accent-soft: oklch(0.94 0.03 42);
+  --on-accent: oklch(0.99 0.004 85);
+  --font-fa-display: var(--fam-vazir);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-newsreader);
+  --font-en-ui: var(--fam-grotesk);
+  --radius-media: 2px; --radius-card: 3px; --radius-control: 3px;
+  --border-w: 1px;
+  --shadow-1: 0 1px 2px oklch(0.17 0.01 80 / 0.05);
+  --shadow-2: 0 12px 34px -16px oklch(0.17 0.01 80 / 0.16);
+  --gutter: 28px;
+}
+
+/* ۲. luxe — تیره و طلایی؛ کم‌نور، فاصله‌ی زیاد، حرکت کند */
+[data-theme="luxe"] {
+  --bg: oklch(0.16 0.012 60);
+  --bg-alt: oklch(0.21 0.014 60);
+  --surface: oklch(0.21 0.014 60);
+  --surface-alt: oklch(0.26 0.016 60);
+  --ink: oklch(0.96 0.010 85);
+  --ink-muted: oklch(0.78 0.014 85);
+  --ink-faint: oklch(0.62 0.014 85);
+  --line: oklch(0.34 0.016 70);
+  --line-strong: oklch(0.72 0.070 85);
+  --accent: oklch(0.79 0.098 85);
+  --accent-soft: oklch(0.30 0.030 85);
+  --on-accent: oklch(0.16 0.012 60);
+  --overlay: oklch(0.10 0.01 60 / 0.72);
+  --font-fa-display: var(--fam-markazi);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-cormorant);
+  --font-en-ui: var(--fam-grotesk);
+  --radius-media: 0px; --radius-card: 0px; --radius-control: 0px;
+  --border-w: 1px;
+  --shadow-1: none;
+  --shadow-2: 0 24px 60px -28px oklch(0 0 0 / 0.6);
+  --shadow-lift: 0 30px 70px -30px oklch(0 0 0 / 0.7);
+  --dur-base: 340ms; --dur-slow: 620ms; --dur-page: 820ms;
+  --hover-media-scale: 1.045;
+  --gutter: 40px;
+  --tracking-en-caps: 0.18em;
+}
+
+/* ۳. brutal — نئوبروتال؛ کنتراست بیشینه، حاشیه‌ی ضخیم، سایه‌ی سخت، حرکت تند */
+[data-theme="brutal"] {
+  --bg: oklch(0.985 0 0);
+  --bg-alt: oklch(0.93 0.14 100);
+  --surface: oklch(1 0 0);
+  --surface-alt: oklch(0.95 0.16 100);
+  --ink: oklch(0.13 0 0);
+  --ink-muted: oklch(0.33 0 0);
+  --ink-faint: oklch(0.50 0 0);
+  --line: oklch(0.13 0 0);
+  --line-strong: oklch(0.13 0 0);
+  --accent: oklch(0.55 0.21 25);
+  --accent-soft: oklch(0.93 0.14 100);
+  --on-accent: oklch(1 0 0);
+  --font-fa-display: var(--fam-kufi);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-archivo);
+  --font-en-ui: var(--fam-archivo);
+  --radius-media: 0px; --radius-card: 0px; --radius-control: 0px;
+  --border-w: 2px; --border-w-strong: 3px;
+  --shadow-1: 3px 3px 0 oklch(0.13 0 0);
+  --shadow-2: 6px 6px 0 oklch(0.13 0 0);
+  --shadow-lift: 9px 9px 0 oklch(0.13 0 0);
+  --dur-fast: 100ms; --dur-base: 140ms; --dur-slow: 220ms; --dur-page: 300ms;
+  --ease-out: cubic-bezier(0.2, 1, 0.3, 1);
+  --hover-lift: -3px; --hover-media-scale: 1;
+  --gutter: 20px;
+}
+
+/* ۴. glass — شیشه‌ای نرم؛ blur، لایه‌های شفاف، گوشه‌های نرم. blur فقط روی چیزی که واقعاً روی محتوا شنا می‌کند */
+[data-theme="glass"] {
+  --bg: oklch(0.96 0.012 250);
+  --bg-alt: oklch(0.98 0.008 250);
+  --surface: oklch(1 0 0 / 0.72);
+  --surface-alt: oklch(1 0 0 / 0.45);
+  --ink: oklch(0.24 0.020 260);
+  --ink-muted: oklch(0.48 0.018 260);
+  --ink-faint: oklch(0.63 0.016 260);
+  --line: oklch(0.55 0.02 260 / 0.18);
+  --line-strong: oklch(0.45 0.03 260 / 0.35);
+  --accent: oklch(0.58 0.105 255);
+  --accent-soft: oklch(0.92 0.035 255);
+  --on-accent: oklch(0.99 0.005 255);
+  --overlay: oklch(0.30 0.02 260 / 0.35);
+  --font-fa-display: var(--fam-vazir);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-manrope);
+  --font-en-ui: var(--fam-manrope);
+  --radius-media: 14px; --radius-card: 18px; --radius-control: 12px;
+  --border-w: 1px;
+  --shadow-1: 0 2px 10px -4px oklch(0.30 0.02 260 / 0.18);
+  --shadow-2: 0 20px 50px -22px oklch(0.30 0.02 260 / 0.28);
+  --shadow-lift: 0 26px 60px -24px oklch(0.30 0.02 260 / 0.34);
+  --ease-out: cubic-bezier(0.22, 0.9, 0.24, 1);
+  --gutter: 26px;
+}
+
+/* ۵. press — کاتالوگ چاپی کلاسیک؛ شبکه‌ی سخت، خطوط جداکننده، سریف، بدون سایه */
+[data-theme="press"] {
+  --bg: oklch(0.965 0.008 92);
+  --bg-alt: oklch(0.985 0.006 92);
+  --surface: oklch(0.985 0.006 92);
+  --surface-alt: oklch(0.935 0.010 92);
+  --ink: oklch(0.22 0.014 60);
+  --ink-muted: oklch(0.45 0.014 60);
+  --ink-faint: oklch(0.60 0.012 60);
+  --line: oklch(0.22 0.014 60 / 0.28);
+  --line-strong: oklch(0.22 0.014 60);
+  --accent: oklch(0.46 0.13 26);
+  --accent-soft: oklch(0.92 0.035 26);
+  --on-accent: oklch(0.985 0.006 92);
+  --font-fa-display: var(--fam-naskh);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-sourceserif);
+  --font-en-ui: var(--fam-sourceserif);
+  --radius-media: 0px; --radius-card: 0px; --radius-control: 0px;
+  --border-w: 1px;
+  --shadow-1: none; --shadow-2: none; --shadow-lift: none;
+  --hover-lift: 0px; --hover-media-scale: 1;
+  --gutter: 0px;
+}
+
+/* ۶. spec — صنعتی و جدول‌محور؛ داده اول، مونواسپیس برای اعداد، رنگ هشدار صنعتی */
+[data-theme="spec"] {
+  --bg: oklch(0.955 0.004 230);
+  --bg-alt: oklch(0.98 0.003 230);
+  --surface: oklch(0.99 0.002 230);
+  --surface-alt: oklch(0.93 0.006 230);
+  --ink: oklch(0.21 0.012 245);
+  --ink-muted: oklch(0.44 0.012 245);
+  --ink-faint: oklch(0.60 0.010 245);
+  --line: oklch(0.80 0.010 245);
+  --line-strong: oklch(0.35 0.014 245);
+  --accent: oklch(0.52 0.135 248);
+  --accent-soft: oklch(0.93 0.030 248);
+  --on-accent: oklch(0.99 0.002 230);
+  --warn: oklch(0.66 0.165 48);
+  --font-fa-display: var(--fam-vazir);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-plex);
+  --font-en-ui: var(--fam-plex);
+  --font-num: var(--fam-plexmono);
+  --radius-media: 2px; --radius-card: 2px; --radius-control: 2px;
+  --border-w: 1px;
+  --shadow-1: 0 1px 0 oklch(0.35 0.014 245 / 0.10);
+  --shadow-2: 0 8px 24px -14px oklch(0.35 0.014 245 / 0.25);
+  --dur-base: 180ms;
+  --hover-media-scale: 1;
+  --gutter: 16px;
+}
+
+/* ۷. craft — گرم و خاکی؛ کاغذ کرم، رنگ خاک رس، تایپ نرم */
+[data-theme="craft"] {
+  --bg: oklch(0.935 0.022 78);
+  --bg-alt: oklch(0.965 0.018 78);
+  --surface: oklch(0.965 0.018 78);
+  --surface-alt: oklch(0.895 0.028 76);
+  --ink: oklch(0.27 0.030 52);
+  --ink-muted: oklch(0.47 0.030 52);
+  --ink-faint: oklch(0.62 0.026 52);
+  --line: oklch(0.78 0.030 70);
+  --line-strong: oklch(0.42 0.034 52);
+  --accent: oklch(0.52 0.095 45);
+  --accent-soft: oklch(0.90 0.040 45);
+  --on-accent: oklch(0.975 0.015 78);
+  --font-fa-display: var(--fam-vazir);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-newsreader);
+  --font-en-ui: var(--fam-newsreader);
+  --radius-media: 6px; --radius-card: 10px; --radius-control: 8px;
+  --border-w: 1px;
+  --shadow-1: 0 1px 2px oklch(0.27 0.03 52 / 0.08);
+  --shadow-2: 0 14px 32px -18px oklch(0.27 0.03 52 / 0.22);
+  --ease-out: cubic-bezier(0.25, 0.9, 0.3, 1);
+  --gutter: 24px;
+}
+
+/* ۸. mono — تک‌رنگ سیاه‌وسفید؛ تایپ بزرگ، بدون رنگ تزئینی، آکسان = مرکب */
+[data-theme="mono"] {
+  --bg: oklch(1 0 0);
+  --bg-alt: oklch(0.96 0 0);
+  --surface: oklch(1 0 0);
+  --surface-alt: oklch(0.94 0 0);
+  --ink: oklch(0.11 0 0);
+  --ink-muted: oklch(0.38 0 0);
+  --ink-faint: oklch(0.56 0 0);
+  --line: oklch(0.80 0 0);
+  --line-strong: oklch(0.11 0 0);
+  --accent: oklch(0.11 0 0);
+  --accent-soft: oklch(0.94 0 0);
+  --on-accent: oklch(1 0 0);
+  --overlay: oklch(0.11 0 0 / 0.80);
+  --font-fa-display: var(--fam-kufi);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-archivo);
+  --font-en-ui: var(--fam-archivo);
+  --radius-media: 0px; --radius-card: 0px; --radius-control: 0px;
+  --border-w: 1px;
+  --shadow-1: none; --shadow-2: none; --shadow-lift: none;
+  --hover-media-scale: 1.02;
+  --gutter: 2px;
+  --tracking-en-caps: 0.14em;
+}
+
+/* پایه‌ی سند. کامپوننت نیست — ریست و قواعد سراسری. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-fa-ui);
+  font-size: var(--t-base);
+  line-height: var(--lh-fa-body);
+  letter-spacing: var(--tracking-fa);
+  font-variant-numeric: tabular-nums;
+  text-wrap: pretty;
+}
+[dir="ltr"], .en { font-family: var(--font-en-ui); line-height: var(--lh-en-body); letter-spacing: var(--tracking-en); }
+h1, h2, h3, h4 { margin: 0; font-family: var(--font-fa-display); line-height: var(--lh-fa-tight); font-weight: var(--w-bold); }
+[dir="ltr"] h1, [dir="ltr"] h2, [dir="ltr"] h3, .en h1, .en h2, .en h3 { font-family: var(--font-en-display); line-height: var(--lh-en-tight); }
+p { margin: 0 0 var(--s-4); max-width: var(--measure-fa); }
+img, svg, video { display: block; max-width: 100%; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: color var(--dur-fast) var(--ease-out); }
+a:hover { color: var(--ink); }
+:where(button, a, input, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+
+/* چاپ: کاتالوگ باید قابل چاپ باشد */
+@media print {
+  :root { --bg: #fff; --surface: #fff; --ink: #111; }
+  .no-print, .cat-toolbar, .cat-pagenav { display: none !important; }
+  .cat-grid { grid-template-columns: repeat(3, 1fr) !important; }
+  .cat-card { break-inside: avoid; box-shadow: none !important; }
+}
+
+/* لایه‌ی کامپوننت کاتالوگ. همه‌ی مقدارها از توکن می‌آیند؛ هیچ رنگ خامی اینجا نیست.
+   هر کامپوننت با پیشوند cat- و با یک ساختار ثابت. تم را عوض کن، این‌ها عوض می‌شوند. */
+
+/* ── چیدمان صفحه ─────────────────────────────── */
+.cat-page { max-width: var(--page-max); margin-inline: auto; padding-inline: var(--page-pad); }
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--col-min), 1fr));
+  gap: var(--gutter);
+}
+.cat-grid--press { gap: 0; border-block-start: var(--border-w) solid var(--line); }
+.cat-grid--press > .cat-card { border-inline-start: var(--border-w) solid var(--line); border-block-end: var(--border-w) solid var(--line); }
+
+/* ── کاور کاتالوگ ────────────────────────────── */
+.cat-cover {
+  position: relative; display: grid; align-content: end; gap: var(--s-3);
+  aspect-ratio: var(--ratio-cover); padding: var(--s-6);
+  background: var(--surface-alt); color: var(--ink);
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-card);
+  cursor: pointer; overflow: hidden;
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.cat-cover:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--shadow-lift); }
+.cat-cover:active { transform: scale(var(--press-scale)); }
+.cat-cover__kicker { font-size: var(--t-xs); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; color: var(--ink-muted); }
+.cat-cover__title { font-family: var(--font-fa-display); font-size: var(--t-xl); }
+
+/* ── کارت محصول ──────────────────────────────── */
+.cat-card {
+  position: relative; display: flex; flex-direction: column; gap: var(--s-3);
+  padding: var(--s-4); background: var(--surface);
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-card);
+  box-shadow: var(--shadow-1);
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+.cat-card:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--shadow-2); border-color: var(--line-strong); }
+.cat-card:active { transform: scale(var(--press-scale)); }
+.cat-card__media { position: relative; aspect-ratio: var(--ratio-media); overflow: hidden; border-radius: var(--radius-media); background: var(--surface-alt); }
+.cat-card__media > img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-out); }
+.cat-card:hover .cat-card__media > img { transform: scale(var(--hover-media-scale)); }
+.cat-card__name { font-family: var(--font-fa-display); font-size: var(--t-md); line-height: var(--lh-fa-tight); }
+.cat-card__name-en { font-family: var(--font-en-ui); font-size: var(--t-sm); color: var(--ink-muted); letter-spacing: var(--tracking-en); direction: ltr; text-align: start; }
+.cat-card__meta { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); margin-block-start: auto; }
+.cat-card__actions { position: absolute; inset-block-end: var(--s-4); inset-inline-start: var(--s-4); inset-inline-end: var(--s-4);
+  display: flex; gap: var(--s-2); opacity: 0; transform: translateY(6px);
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-card__actions, .cat-card:focus-within .cat-card__actions { opacity: 1; transform: none; }
+@media (hover: none) { .cat-card__actions { position: static; opacity: 1; transform: none; } }
+
+/* ── قیمت و کد ───────────────────────────────── */
+.cat-price { display: flex; align-items: baseline; gap: var(--s-2); font-family: var(--font-num); font-size: var(--t-md); }
+.cat-price__unit { font-size: var(--t-xs); color: var(--ink-muted); }
+.cat-sku { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); direction: ltr; }
+
+/* ── برچسب و تگ ──────────────────────────────── */
+.cat-badge { display: inline-flex; align-items: center; gap: var(--s-1); padding: 2px var(--s-2);
+  font-size: var(--t-xs); background: var(--accent-soft); color: var(--accent); border-radius: var(--radius-pill); }
+.cat-tag { display: inline-flex; align-items: center; min-height: 28px; padding: 0 var(--s-3);
+  font-size: var(--t-xs); color: var(--ink-muted); border: var(--border-w) solid var(--line); border-radius: var(--radius-pill); }
+
+/* ── دکمه ────────────────────────────────────── */
+.cat-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  min-height: var(--tap-min); padding: 0 var(--s-5); font: inherit; font-family: var(--font-fa-ui);
+  background: var(--accent); color: var(--on-accent);
+  border: var(--border-w) solid transparent; border-radius: var(--radius-control);
+  box-shadow: var(--shadow-1); cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.cat-btn:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--shadow-2); }
+.cat-btn:active { transform: scale(var(--press-scale)); box-shadow: var(--shadow-1); }
+.cat-btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
+.cat-btn--ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); box-shadow: none; }
+.cat-btn--quiet { background: var(--surface-alt); color: var(--ink); box-shadow: none; }
+.cat-btn--icon { min-width: var(--tap-min); padding: 0; }
+
+/* ── نوار ابزار و سوییچ زبان ─────────────────── */
+.cat-toolbar { position: sticky; inset-block-start: 0; z-index: 20;
+  display: flex; align-items: center; gap: var(--s-4); padding: var(--s-3) var(--page-pad);
+  background: var(--bg); border-block-end: var(--border-w) solid var(--line); }
+.cat-lang { display: inline-flex; border: var(--border-w) solid var(--line-strong); border-radius: var(--radius-pill); overflow: hidden; }
+.cat-lang > button { min-height: 36px; padding: 0 var(--s-4); font: inherit; background: transparent; color: var(--ink-muted); border: 0; cursor: pointer; }
+.cat-lang > button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+/* ── فیلتر و جست‌وجو ─────────────────────────── */
+.cat-filters { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.cat-chip { min-height: 36px; padding: 0 var(--s-4); font: inherit; font-size: var(--t-sm);
+  background: transparent; color: var(--ink-muted); border: var(--border-w) solid var(--line);
+  border-radius: var(--radius-pill); cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.cat-chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.cat-search { display: flex; align-items: center; gap: var(--s-2); min-height: var(--tap-min); padding: 0 var(--s-4);
+  background: var(--surface); border: var(--border-w) solid var(--line); border-radius: var(--radius-control); }
+.cat-search > input { flex: 1; min-width: 0; font: inherit; background: none; border: 0; color: var(--ink); }
+.cat-search > input::placeholder { color: var(--ink-faint); }
+
+/* ── گالری و زوم ─────────────────────────────── */
+.cat-gallery { display: grid; gap: var(--s-3); }
+.cat-gallery__stage { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--surface-alt); border-radius: var(--radius-media); cursor: zoom-in; }
+.cat-gallery__stage[data-zoom="on"] { cursor: zoom-out; }
+.cat-gallery__stage > img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-out); will-change: transform; }
+.cat-gallery__stage[data-zoom="on"] > img { transition-duration: var(--dur-base); }
+.cat-gallery__thumbs { display: flex; gap: var(--s-2); }
+.cat-thumb { width: 64px; aspect-ratio: 1; padding: 0; overflow: hidden; background: var(--surface-alt);
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-media); cursor: pointer; }
+.cat-thumb[aria-current="true"] { border-color: var(--line-strong); border-width: var(--border-w-strong); }
+
+/* ── انتخاب رنگ و سایز ──────────────────────── */
+.cat-swatches { display: flex; gap: var(--s-2); }
+.cat-swatch { width: var(--tap-min); height: var(--tap-min); padding: 3px; background: none;
+  border: var(--border-w) solid var(--line); border-radius: var(--radius-pill); cursor: pointer; }
+.cat-swatch > span { display: block; width: 100%; height: 100%; border-radius: inherit; }
+.cat-swatch[aria-pressed="true"] { border-color: var(--line-strong); border-width: var(--border-w-strong); }
+.cat-sizes { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.cat-size { min-width: var(--tap-min); min-height: var(--tap-min); font: inherit; font-family: var(--font-num);
+  background: var(--surface); color: var(--ink); border: var(--border-w) solid var(--line);
+  border-radius: var(--radius-control); cursor: pointer; }
+.cat-size[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.cat-size[disabled] { color: var(--ink-faint); text-decoration: line-through; cursor: not-allowed; }
+
+/* ── جدول مشخصات ────────────────────────────── */
+.cat-specs { width: 100%; border-collapse: collapse; font-size: var(--t-sm); }
+.cat-specs th, .cat-specs td { padding: var(--s-3) var(--s-4); text-align: start; border-block-end: var(--border-w) solid var(--line); vertical-align: top; }
+.cat-specs th { width: 38%; color: var(--ink-muted); font-weight: var(--w-regular); }
+.cat-specs td { font-family: var(--font-num); }
+.cat-specs tr:hover { background: var(--surface-alt); }
+
+/* ── دیالوگ نمای سریع ───────────────────────── */
+.cat-scrim { position: fixed; inset: 0; z-index: 40; background: var(--overlay);
+  animation: cat-fade var(--dur-base) var(--ease-out) both; }
+.cat-dialog { position: fixed; z-index: 41; inset-inline: 0; inset-block-end: 0; max-height: 92vh; overflow: auto;
+  padding: var(--s-6); background: var(--surface); border-radius: var(--radius-card) var(--radius-card) 0 0;
+  animation: cat-sheet var(--dur-slow) var(--ease-out) both; }
+@media (min-width: 760px) {
+  .cat-dialog { inset: 50% auto auto 50%; translate: -50% -50%; width: min(1040px, 92vw);
+    border-radius: var(--radius-card); animation-name: cat-pop; }
+}
+
+/* ── لیست استعلام قیمت ──────────────────────── */
+.cat-inquiry { display: grid; gap: var(--s-3); }
+.cat-inquiry__row { display: grid; grid-template-columns: 56px 1fr auto; gap: var(--s-3); align-items: center;
+  padding: var(--s-3); background: var(--surface); border: var(--border-w) solid var(--line); border-radius: var(--radius-card); }
+.cat-inquiry__empty { padding: var(--s-7); text-align: center; color: var(--ink-faint);
+  border: var(--border-w) dashed var(--line); border-radius: var(--radius-card); }
+
+/* ── ورق‌زدن ────────────────────────────────── */
+.cat-pagenav { display: flex; align-items: center; justify-content: center; gap: var(--s-4); }
+.cat-pagenav__num { font-family: var(--font-num); font-size: var(--t-sm); color: var(--ink-muted); }
+.cat-spread { position: relative; aspect-ratio: var(--ratio-spread); overflow: hidden;
+  background: var(--surface); border: var(--border-w) solid var(--line); border-radius: var(--radius-card); perspective: 2000px; }
+
+/* ── جانگهدار عکس (وقتی عکس واقعی نیست) ─────── */
+.cat-ph { display: grid; place-items: center; width: 100%; height: 100%;
+  background-color: var(--surface-alt);
+  background-image: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 9px);
+  color: var(--ink-faint); font-family: var(--font-num); font-size: var(--t-xs); text-align: center; }
+
+/* ── اسکلت بارگذاری ────────────────────────── */
+.cat-skeleton { background: var(--surface-alt); border-radius: var(--radius-media);
+  animation: cat-pulse 1.4s var(--ease-inout) infinite; }
+
+/* انیمیشن‌های نام‌دار سیستم. هیچ انیمیشن تازه‌ای نساز — یکی از این‌ها را استفاده کن. */
+@keyframes cat-fade { from { opacity: 0; } to { opacity: 1; } }
+/* Centring belongs to .cat-dialog's `translate` property; the entrance only
+   scales. Carrying the offset here as well composed the two into a full
+   width-and-height shift once the animation filled forwards. */
+@keyframes cat-pop { from { opacity: 0; transform: scale(0.965); } to { opacity: 1; transform: scale(1); } }
+@keyframes cat-sheet { from { transform: translateY(14px); opacity: 0.6; } to { transform: none; opacity: 1; } }
+@keyframes cat-reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes cat-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+/* ورود پشت‌سرهم کارت‌ها: روی والد بگذار، حداکثر ۸ فرزند */
+.cat-stagger > * { animation: cat-reveal var(--dur-base) var(--ease-out) both; }
+.cat-stagger > *:nth-child(1) { animation-delay: calc(var(--stagger) * 0); }
+.cat-stagger > *:nth-child(2) { animation-delay: calc(var(--stagger) * 1); }
+.cat-stagger > *:nth-child(3) { animation-delay: calc(var(--stagger) * 2); }
+.cat-stagger > *:nth-child(4) { animation-delay: calc(var(--stagger) * 3); }
+.cat-stagger > *:nth-child(5) { animation-delay: calc(var(--stagger) * 4); }
+.cat-stagger > *:nth-child(6) { animation-delay: calc(var(--stagger) * 5); }
+.cat-stagger > *:nth-child(7) { animation-delay: calc(var(--stagger) * 6); }
+.cat-stagger > *:nth-child(8) { animation-delay: calc(var(--stagger) * 7); }
+.cat-stagger > *:nth-child(n + 9) { animation-delay: calc(var(--stagger) * 8); }
+
+/* ورق‌زدن: دو حالت. flip فقط در تم‌های press/luxe/editorial؛ در بقیه slide */
+.cat-flip-enter { animation: cat-flip-in var(--dur-page) var(--ease-inout) both; transform-origin: right center; }
+.cat-flip-exit { animation: cat-flip-out var(--dur-page) var(--ease-inout) both; transform-origin: right center; }
+[dir="ltr"] .cat-flip-enter, [dir="ltr"] .cat-flip-exit { transform-origin: left center; }
+@keyframes cat-flip-in { from { transform: rotateY(-38deg); opacity: 0.2; } to { transform: none; opacity: 1; } }
+@keyframes cat-flip-out { from { transform: none; opacity: 1; } to { transform: rotateY(38deg); opacity: 0; } }
+.cat-slide-enter { animation: cat-slide-in var(--dur-slow) var(--ease-out) both; }
+@keyframes cat-slide-in { from { transform: translateX(6%); opacity: 0; } to { transform: none; opacity: 1; } }
+[dir="ltr"] .cat-slide-enter { animation-name: cat-slide-in-ltr; }
+@keyframes cat-slide-in-ltr { from { transform: translateX(-6%); opacity: 0; } to { transform: none; opacity: 1; } }
+
+
+</style>
+<style>
+  /* Each card previews its variant in that variant's own theme, so the
+     page shows eight design languages rather than eight descriptions. */
+  .hub-head {
+    display: grid; gap: var(--s-5);
+    padding: var(--s-9) var(--page-pad) var(--s-7);
+    border-block-end: var(--border-w) solid var(--line);
+  }
+  .hub-kicker {
+    font-family: var(--font-num); font-size: var(--t-xs);
+    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .hub-head h1 { font-size: var(--t-3xl); max-width: 18ch; }
+  .hub-head p { font-size: var(--t-md); color: var(--ink-muted); max-width: var(--measure-fa); }
+
+  .hub-axes {
+    display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5);
+    font-size: var(--t-sm); color: var(--ink-muted);
+  }
+  .hub-axes b { color: var(--ink); font-weight: var(--w-medium); }
+
+  /* The Âvand catalog's own palette, so its preview is drawn in the real
+     colours rather than borrowed from the nearest system theme. */
+  [data-theme="avand"] {
+    --bg: #f2f4f1; --surface: #f8f9f7; --surface-alt: #e5e9e4;
+    --ink: #15181a; --ink-muted: #4c5358; --ink-faint: #5a6268;
+    --line: #c9cfcb; --accent: #2c3e78;
+    --font-fa-display: var(--fam-markazi);
+    --radius-card: 0px; --shadow-1: none;
+  }
+
+  .hub-section { max-width: var(--page-max); margin-inline: auto; padding: var(--s-7) var(--page-pad) var(--s-5); }
+  .hub-section:last-of-type { padding-block-end: var(--s-9); }
+  .hub-heading {
+    font-family: var(--font-num); font-size: var(--t-xs);
+    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+    font-weight: var(--w-regular); color: var(--ink-faint);
+    padding-block-end: var(--s-3); margin-block-end: var(--s-5);
+    border-block-end: var(--border-w) solid var(--line);
+  }
+
+  .hub-grid {
+    display: grid; gap: var(--s-6);
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+  /* The two studies carry the most weight, so they get the wider cells. */
+  .hub-grid--wide { grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); }
+  @media (max-width: 520px) { .hub-grid--wide { grid-template-columns: 1fr; } }
+
+  .hub-card {
+    display: flex; flex-direction: column;
+    border: var(--border-w) solid var(--line);
+    background: var(--surface);
+    text-decoration: none; color: inherit;
+    transition: transform var(--dur-base) var(--ease-out),
+                box-shadow var(--dur-base) var(--ease-out),
+                border-color var(--dur-base) var(--ease-out);
+  }
+  .hub-card:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--shadow-2); border-color: var(--line-strong); }
+  .hub-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+  /* The preview strip re-declares the variant's theme, so the swatches and
+     mock below are drawn with that variant's real tokens. */
+  .hub-prev {
+    position: relative; aspect-ratio: 16 / 10; overflow: hidden;
+    background: var(--bg); color: var(--ink);
+    border-block-end: var(--border-w) solid var(--line);
+    padding: var(--s-4);
+    display: grid; gap: var(--s-2); align-content: start;
+  }
+  .hub-prev__bar { display: flex; gap: 4px; align-items: center; }
+  .hub-prev__dot { width: 10px; height: 10px; border-radius: var(--radius-pill); background: var(--accent); }
+  .hub-prev__rule { flex: 1; height: var(--border-w); background: var(--line); }
+  .hub-prev__type { font-family: var(--font-fa-display); font-size: var(--t-md); line-height: var(--lh-fa-tight); }
+  .hub-prev__mock { display: grid; gap: 5px; margin-block-start: auto; }
+  .hub-prev__row { display: grid; gap: 5px; }
+  .hub-prev__cell {
+    background: var(--surface); border: var(--border-w) solid var(--line);
+    border-radius: var(--radius-card); box-shadow: var(--shadow-1);
+    min-height: 14px;
+  }
+  .hub-prev__cell--media { background: var(--surface-alt); aspect-ratio: 4 / 5; }
+  .hub-prev__cell--accent { background: var(--accent); border-color: var(--accent); }
+
+  .hub-body { display: grid; gap: var(--s-3); padding: var(--s-5); }
+  .hub-no { font-family: var(--font-num); font-size: var(--t-xs); color: var(--ink-faint); }
+  .hub-name { font-family: var(--font-fa-display); font-size: var(--t-lg); line-height: var(--lh-fa-tight); }
+  .hub-name-en {
+    font-family: var(--font-en-ui); font-size: var(--t-sm); color: var(--ink-muted);
+    direction: ltr; text-align: start; letter-spacing: var(--tracking-en);
+  }
+  .hub-note { font-size: var(--t-sm); color: var(--ink-muted); margin: 0; }
+  .hub-tags { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-block-start: auto; }
+
+  .hub-foot {
+    padding: var(--s-7) var(--page-pad) var(--s-9);
+    border-block-start: var(--border-w) solid var(--line);
+    background: var(--bg-alt);
+  }
+  .hub-foot > div { max-width: var(--page-max); margin-inline: auto; display: grid; gap: var(--s-4); }
+  .hub-foot h2 { font-size: var(--t-lg); }
+  .hub-foot ol { margin: 0; padding-inline-start: var(--s-5); display: grid; gap: var(--s-2); }
+  .hub-foot li { font-size: var(--t-sm); color: var(--ink-muted); max-width: var(--measure-fa); }
+  .hub-foot code {
+    font-family: var(--font-num); font-size: var(--t-xs);
+    background: var(--surface-alt); padding: 1px 6px; border-radius: var(--radius-control);
+  }
+</style>
+</head>
+<body>
+
+<header class="hub-head">
+  <div class="hub-kicker"><a href="index.html" style="color:inherit">صفحه‌ی اصلی: نمایش قابلیت‌ها</a></div>
+  <h1>هشت کاتالوگ دیجیتال، هشت زبان طراحی</h1>
+  <p>
+    همه روی یک سیستم طراحی و یک لایه‌ی تعامل مشترک ساخته شده‌اند. آنچه فرق می‌کند
+    چیدمان، تراکم، رنگ و حرکت است. هر نمونه یک فایل مستقل است — بازش کنید، بچرخید
+    در آن، و روی همان نمونه بازخورد بدهید.
+  </p>
+  <div class="hub-axes">
+    <span><b>چیدمان</b> تک‌ستونه · دوستونه · شبکه · اسپرد · تمام‌صفحه · بازشونده · روایی</span>
+    <span><b>تراکم</b> مینیمال تا ماکسیمال</span>
+    <span><b>رنگ</b> تک‌رنگ تا چندرنگ</span>
+    <span><b>حرکت</b> بی‌حرکت · ساده · نرم · سینمایی</span>
+  </div>
+  <p class="hub-note">
+    در هر هشت نمونه، روی هر تصویر محصول کلیک کنید: بزرگ‌نمایی روی همان نقطه، کشیدن
+    برای جابه‌جایی، نقطه‌های جزئیات روی خود تصویر، پخش ویدیو با نوار زمان واقعی، و
+    چرخش ۳۶۰ درجه با کشیدن. تصویرها فعلاً جانگهدارِ ساخته‌شده‌اند؛ مکانیزم‌ها واقعی‌اند.
+  </p>
+</header>
+
+<section class="hub-section">
+  <h2 class="hub-heading">شروع از اینجا</h2>
+  <div class="hub-grid hub-grid--wide" id="studies"></div>
+</section>
+
+<section class="hub-section">
+  <h2 class="hub-heading">هشت سبک</h2>
+  <div class="hub-grid" id="grid"></div>
+</section>
+
+<footer class="hub-foot">
+  <div>
+    <h2>بازخورد چطور اعمال می‌شود</h2>
+    <ol>
+      <li>نمونه‌ای را باز کنید و بگویید کدام‌ها را نگه داریم و کدام‌ها را کنار بگذاریم.</li>
+      <li>روی هر نمونه جداگانه بازخورد بدهید — چیدمان، تراکم، رنگ، سرعت حرکت، یا هر جزء.</li>
+      <li>می‌شود دو نمونه را ترکیب کرد: مثلاً چیدمان نمونه‌ی ۶ با حرکت و رنگ نمونه‌ی ۸.</li>
+      <li>برای جایگزینی عکس و ویدیوی واقعی، در توصیف‌گر رسانه <code>src</code> را بدهید؛ بقیه‌ی مکانیزم بدون تغییر کار می‌کند.</li>
+    </ol>
+  </div>
+</footer>
+
+<script>
+/* inlined from shared/catalog-kit.js */
+/* ============================================================
+   catalog-kit.js — mechanisms shared by every catalog variant.
+
+   Three things every variant gets, wired by one call to CatalogKit.mount():
+
+     1. Procedural placeholder artwork. Deterministic per seed, so a
+        product keeps its look across reloads and across variants. No
+        network, no stock photos. Swap in real photography by putting a
+        real URL in the media descriptor's `src`.
+
+     2. A detail viewer. Click any media and it opens: zoom to the point
+        you clicked, drag to pan, wheel/pinch to scale, numbered hotspots
+        that name the part you are looking at, a thumbnail strip, and
+        keyboard control throughout.
+
+     3. A video player. Give a media descriptor a real `src` and it plays
+        that file through a <video>. Give it none and it plays a
+        synthetic clip rendered to canvas on a real timeline — play,
+        pause, scrub, seek, mute and loop all behave exactly as they will
+        once the real footage lands.
+
+   Nothing here knows about themes. Colours come from the design-system
+   custom properties, so a catalog changes style by changing data-theme.
+   ============================================================ */
+(function (global) {
+  'use strict';
+
+  /* ── deterministic randomness ─────────────────────────────
+     Same seed, same artwork — on every reload, in every variant. */
+
+  function hash(str) {
+    var h = 2166136261;
+    str = String(str);
+    for (var i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function rng(seed) {
+    var a = hash(seed);
+    return function () {
+      a |= 0;
+      a = (a + 0x6d2b79f5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function pick(rand, list) {
+    return list[Math.floor(rand() * list.length) % list.length];
+  }
+
+  function round(n, places) {
+    var f = Math.pow(10, places == null ? 2 : places);
+    return Math.round(n * f) / f;
+  }
+
+  /* ── procedural artwork ───────────────────────────────────
+     A product shot is a lit backdrop, a subject, a contact shadow and
+     film grain. Each subject is drawn from primitives, so the result
+     reads as an object on a surface rather than as an abstract pattern. */
+
+  var PALETTES = {
+    warm:    { bg: ['#efe9df', '#e6ddcd'], sub: ['#b08256', '#8d6440', '#c99b6b'], acc: '#a8613a', deep: '#41342a' },
+    stone:   { bg: ['#e9e7e2', '#d9d6cf'], sub: ['#8e8d88', '#6f6e6a', '#a8a6a0'], acc: '#5d5c58', deep: '#33322f' },
+    ink:     { bg: ['#e8e8ea', '#d4d5d9'], sub: ['#3d4148', '#23262b', '#585d66'], acc: '#1a1c20', deep: '#111316' },
+    sage:    { bg: ['#e4e9e1', '#d3dbcf'], sub: ['#7d9070', '#5f7355', '#96a889'], acc: '#4f6347', deep: '#2c382a' },
+    clay:    { bg: ['#f0e4dd', '#e4d1c6'], sub: ['#c07a5e', '#a15c42', '#d59b80'], acc: '#8f4b31', deep: '#4a2a1e' },
+    indigo:  { bg: ['#e3e6ee', '#cfd5e4'], sub: ['#5a6b95', '#3f4d72', '#7887ac'], acc: '#33406a', deep: '#1c2440' },
+    amber:   { bg: ['#f4ead7', '#ecdcbc'], sub: ['#d0a558', '#b98c3f', '#e0bd86'], acc: '#96702c', deep: '#4c3a16' },
+    rose:    { bg: ['#f2e5e5', '#e6cfd0'], sub: ['#b87b81', '#9a5f65', '#cf989d'], acc: '#8a4f56', deep: '#472a2d' }
+  };
+
+  var PALETTE_NAMES = Object.keys(PALETTES);
+
+  var SUBJECTS = ['bottle', 'chair', 'lamp', 'vase', 'bag', 'watch', 'shoe', 'textile'];
+
+  /* Each subject returns SVG markup drawn inside a 0..1000 square. */
+  var draw = {
+    bottle: function (r, c) {
+      var w = 150 + r() * 70, neck = 46 + r() * 22, shoulder = 300 + r() * 70;
+      return (
+        '<path d="M' + (500 - neck) + ' 250 L' + (500 - neck) + ' ' + shoulder +
+        ' Q' + (500 - w) + ' ' + (shoulder + 70) + ' ' + (500 - w) + ' ' + (shoulder + 160) +
+        ' L' + (500 - w) + ' 790 Q' + (500 - w) + ' 840 ' + (500 - w + 50) + ' 840' +
+        ' L' + (500 + w - 50) + ' 840 Q' + (500 + w) + ' 840 ' + (500 + w) + ' 790' +
+        ' L' + (500 + w) + ' ' + (shoulder + 160) +
+        ' Q' + (500 + w) + ' ' + (shoulder + 70) + ' ' + (500 + neck) + ' ' + shoulder +
+        ' L' + (500 + neck) + ' 250 Z" fill="url(#body)"/>' +
+        '<rect x="' + (500 - neck - 8) + '" y="' + (200 + r() * 30) + '" width="' + (neck * 2 + 16) +
+        '" height="58" rx="6" fill="' + c.deep + '" opacity="0.85"/>' +
+        '<rect x="' + (500 - w * 0.62) + '" y="' + (shoulder + 230) + '" width="' + w * 1.24 +
+        '" height="' + (170 + r() * 60) + '" rx="4" fill="#fff" opacity="0.9"/>' +
+        '<rect x="' + (500 - w * 0.4) + '" y="' + (shoulder + 280) + '" width="' + w * 0.8 +
+        '" height="10" rx="5" fill="' + c.acc + '" opacity="0.8"/>'
+      );
+    },
+    chair: function (r, c) {
+      var seatY = 590 + r() * 40;        /* top of the seat slab */
+      var half = 165 + r() * 35;         /* seat half-width */
+      var backTop = 250 + r() * 70;
+      var backHalf = half * (0.62 + r() * 0.16);
+      var legH = 840 - seatY - 54;
+      /* Back legs read first, then the backrest, then the seat slab on
+         top of both — so the parts stack the way a chair actually does. */
+      return (
+        '<rect x="' + (500 - half + 26) + '" y="' + (seatY + 40) + '" width="20" height="' + legH +
+        '" rx="4" fill="' + c.deep + '" opacity="0.55"/>' +
+        '<rect x="' + (500 + half - 46) + '" y="' + (seatY + 40) + '" width="20" height="' + legH +
+        '" rx="4" fill="' + c.deep + '" opacity="0.55"/>' +
+        '<path d="M' + (500 - backHalf) + ' ' + (seatY + 10) +
+        ' L' + (500 - backHalf * 0.86) + ' ' + backTop +
+        ' Q500 ' + (backTop - 42) + ' ' + (500 + backHalf * 0.86) + ' ' + backTop +
+        ' L' + (500 + backHalf) + ' ' + (seatY + 10) + ' Z" fill="url(#body)"/>' +
+        '<rect x="' + (500 - half) + '" y="' + seatY + '" width="' + half * 2 +
+        '" height="54" rx="10" fill="url(#body)"/>' +
+        '<rect x="' + (500 - half) + '" y="' + (seatY + 44) + '" width="' + half * 2 +
+        '" height="10" rx="5" fill="' + c.deep + '" opacity="0.28"/>' +
+        '<rect x="' + (500 - half + 18) + '" y="' + (seatY + 54) + '" width="22" height="' + legH +
+        '" rx="5" fill="' + c.deep + '"/>' +
+        '<rect x="' + (500 + half - 40) + '" y="' + (seatY + 54) + '" width="22" height="' + legH +
+        '" rx="5" fill="' + c.deep + '"/>'
+      );
+    },
+    lamp: function (r, c) {
+      var shadeW = 180 + r() * 80, shadeY = 250 + r() * 60;
+      return (
+        '<path d="M' + (500 - shadeW * 0.55) + ' ' + shadeY + ' L' + (500 + shadeW * 0.55) + ' ' + shadeY +
+        ' L' + (500 + shadeW) + ' ' + (shadeY + 200) + ' L' + (500 - shadeW) + ' ' + (shadeY + 200) + ' Z" fill="url(#body)"/>' +
+        '<ellipse cx="500" cy="' + (shadeY + 200) + '" rx="' + shadeW + '" ry="22" fill="#fff" opacity="0.55"/>' +
+        '<rect x="494" y="' + (shadeY + 200) + '" width="12" height="' + (820 - shadeY - 200) + '" fill="' + c.deep + '"/>' +
+        '<ellipse cx="500" cy="828" rx="' + (110 + r() * 40) + '" ry="26" fill="' + c.deep + '"/>'
+      );
+    },
+    vase: function (r, c) {
+      var belly = 190 + r() * 80, mouth = 90 + r() * 50, top = 240 + r() * 50;
+      return (
+        '<path d="M' + (500 - mouth) + ' ' + top +
+        ' C' + (500 - belly) + ' ' + (top + 200) + ' ' + (500 - belly) + ' ' + (top + 320) + ' ' + (500 - belly * 0.6) + ' 820' +
+        ' L' + (500 + belly * 0.6) + ' 820' +
+        ' C' + (500 + belly) + ' ' + (top + 320) + ' ' + (500 + belly) + ' ' + (top + 200) + ' ' + (500 + mouth) + ' ' + top + ' Z" fill="url(#body)"/>' +
+        '<ellipse cx="500" cy="' + top + '" rx="' + mouth + '" ry="' + (mouth * 0.28) + '" fill="' + c.deep + '" opacity="0.7"/>' +
+        '<path d="M' + (500 - belly * 0.5) + ' ' + (top + 300) + ' Q500 ' + (top + 260) + ' ' + (500 + belly * 0.5) + ' ' + (top + 300) +
+        '" stroke="' + c.acc + '" stroke-width="' + (6 + r() * 8) + '" fill="none" opacity="0.75"/>'
+      );
+    },
+    bag: function (r, c) {
+      var w = 210 + r() * 70, top = 400 + r() * 50, h = 330 + r() * 60;
+      return (
+        '<path d="M' + (500 - w * 0.62) + ' ' + top + ' Q500 ' + (top - 190 - r() * 60) + ' ' + (500 + w * 0.62) + ' ' + top +
+        '" stroke="' + c.deep + '" stroke-width="' + (20 + r() * 12) + '" fill="none"/>' +
+        '<rect x="' + (500 - w) + '" y="' + top + '" width="' + w * 2 + '" height="' + h + '" rx="' + (10 + r() * 24) + '" fill="url(#body)"/>' +
+        '<rect x="' + (500 - w) + '" y="' + (top + h * 0.42) + '" width="' + w * 2 + '" height="' + (26 + r() * 18) + '" fill="' + c.deep + '" opacity="0.5"/>' +
+        '<circle cx="500" cy="' + (top + h * 0.42 + 20) + '" r="' + (16 + r() * 10) + '" fill="' + c.acc + '"/>'
+      );
+    },
+    watch: function (r, c) {
+      var rad = 150 + r() * 60;
+      return (
+        '<rect x="' + (500 - rad * 0.45) + '" y="' + (500 - rad - 210) + '" width="' + rad * 0.9 + '" height="240" rx="26" fill="' + c.deep + '"/>' +
+        '<rect x="' + (500 - rad * 0.45) + '" y="' + (500 + rad - 30) + '" width="' + rad * 0.9 + '" height="240" rx="26" fill="' + c.deep + '"/>' +
+        '<circle cx="500" cy="500" r="' + rad + '" fill="url(#body)"/>' +
+        '<circle cx="500" cy="500" r="' + rad * 0.78 + '" fill="#fff" opacity="0.92"/>' +
+        '<line x1="500" y1="500" x2="500" y2="' + (500 - rad * 0.55) + '" stroke="' + c.deep + '" stroke-width="12" stroke-linecap="round"/>' +
+        '<line x1="500" y1="500" x2="' + (500 + rad * 0.42) + '" y2="' + (500 + rad * 0.2) + '" stroke="' + c.acc + '" stroke-width="10" stroke-linecap="round"/>' +
+        '<circle cx="500" cy="500" r="12" fill="' + c.deep + '"/>'
+      );
+    },
+    shoe: function (r, c) {
+      var len = 320 + r() * 90, y = 640 + r() * 40;
+      return (
+        '<path d="M' + (500 - len) + ' ' + y + ' L' + (500 - len) + ' ' + (y - 150 - r() * 60) +
+        ' Q' + (500 - len * 0.2) + ' ' + (y - 120) + ' ' + (500 + len * 0.35) + ' ' + (y - 90) +
+        ' Q' + (500 + len) + ' ' + (y - 60) + ' ' + (500 + len) + ' ' + y + ' Z" fill="url(#body)"/>' +
+        '<rect x="' + (500 - len) + '" y="' + y + '" width="' + len * 2 + '" height="' + (34 + r() * 20) + '" rx="16" fill="' + c.deep + '"/>' +
+        '<path d="M' + (500 - len * 0.55) + ' ' + (y - 130) + ' L' + (500 - len * 0.1) + ' ' + (y - 60) +
+        ' M' + (500 - len * 0.3) + ' ' + (y - 150) + ' L' + (500 + len * 0.1) + ' ' + (y - 70) +
+        '" stroke="#fff" stroke-width="10" opacity="0.65" stroke-linecap="round"/>'
+      );
+    },
+    textile: function (r, c) {
+      var out = '<rect x="180" y="220" width="640" height="620" rx="8" fill="url(#body)"/>';
+      var step = 40 + r() * 50;
+      for (var y = 240; y < 840; y += step) {
+        out += '<path d="M180 ' + y + ' Q500 ' + (y + (r() - 0.5) * 60) + ' 820 ' + y +
+          '" stroke="' + (r() > 0.5 ? c.acc : c.deep) + '" stroke-width="' + round(3 + r() * 9) +
+          '" fill="none" opacity="' + round(0.25 + r() * 0.5) + '"/>';
+      }
+      return out;
+    }
+  };
+
+  /* Subjects are drawn in a fixed 1000-wide space, standing on a baseline
+     at y=845 and rising to about y=190. Keeping those constants here lets
+     a frame of any shape re-place the same drawing. */
+  var SUBJECT_BASE = 845;
+  var SUBJECT_RISE = 660;
+
+  /* Build one SVG frame. `t` (0..1) drives the synthetic video: the light
+     sweeps and the subject drifts, so successive frames read as footage.
+     The frame is composed for the requested aspect rather than cropped to
+     it — a wide box gets a small object in a wide room, not a portrait
+     shot with its top and bottom sliced off. */
+  function svgFrame(seed, opts) {
+    opts = opts || {};
+    var r = rng(seed);
+    var pal = PALETTES[opts.palette] || PALETTES[pick(r, PALETTE_NAMES)];
+    var subject = opts.subject || pick(r, SUBJECTS);
+    var t = opts.t || 0;
+    var spin = opts.spin || 0;
+    var w = opts.w || 1000, h = opts.h || 1250;
+    var ratio = opts.ratio || (w / h);
+    var vh = round(1000 / ratio, 1);
+    var id = 'g' + hash(seed + ':' + subject).toString(36);
+
+    /* Stand the subject on a baseline set below centre, scaled to leave
+       headroom. Capped at 1 so the default portrait frame is unchanged. */
+    var baseline = vh * 0.78;
+    var fit = Math.min(1, (vh * 0.60) / SUBJECT_RISE);
+
+    var lightX = 30 + Math.sin(t * Math.PI * 2) * 22;
+    var drift = Math.sin(t * Math.PI * 2) * 12 * fit;
+    var breathe = 1 + Math.sin(t * Math.PI * 2 + 1) * 0.02;
+    /* A 360 spin narrows the subject and shifts its highlight — enough to
+       read as rotation without pretending to be a real photogrammetry set. */
+    var spinSquash = 0.78 + Math.abs(Math.cos(spin * Math.PI / 180)) * 0.22;
+    var spinShade = 0.5 + Math.cos(spin * Math.PI / 180) * 0.5;
+
+    var body = draw[subject] ? draw[subject](r, pal) : draw.vase(r, pal);
+    var grain = '';
+    var gr = rng(seed + ':grain');
+    var grains = Math.round(90 * Math.min(1, vh / 1250));
+    for (var i = 0; i < grains; i++) {
+      grain += '<circle cx="' + round(gr() * 1000, 1) + '" cy="' + round(gr() * vh, 1) +
+        '" r="' + round(0.6 + gr() * 1.6, 2) + '" fill="#000" opacity="' + round(0.02 + gr() * 0.05, 3) + '"/>';
+    }
+
+    var sx = round(fit * spinSquash * breathe, 4);
+    var sy = round(fit * breathe, 4);
+
+    return (
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 ' + vh + '" width="' + w + '" height="' + h +
+      '" preserveAspectRatio="xMidYMid slice" role="img">' +
+      '<defs>' +
+      '<linearGradient id="bg' + id + '" x1="0" y1="0" x2="0.4" y2="1">' +
+      '<stop offset="0" stop-color="' + pal.bg[0] + '"/><stop offset="1" stop-color="' + pal.bg[1] + '"/></linearGradient>' +
+      '<radialGradient id="key' + id + '" cx="' + lightX + '%" cy="18%" r="78%">' +
+      '<stop offset="0" stop-color="#fff" stop-opacity="' + round(0.55 + t * 0.12, 3) + '"/>' +
+      '<stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>' +
+      '<linearGradient id="body" x1="0" y1="0" x2="1" y2="0.7">' +
+      '<stop offset="0" stop-color="' + pal.sub[0] + '" stop-opacity="' + round(0.75 + spinShade * 0.25, 3) + '"/>' +
+      '<stop offset="0.55" stop-color="' + pal.sub[1] + '"/>' +
+      '<stop offset="1" stop-color="' + pal.sub[2] + '"/></linearGradient>' +
+      '<radialGradient id="vig' + id + '" cx="50%" cy="46%" r="72%">' +
+      '<stop offset="0.55" stop-color="#000" stop-opacity="0"/>' +
+      '<stop offset="1" stop-color="#000" stop-opacity="0.22"/></radialGradient>' +
+      '</defs>' +
+      '<rect width="1000" height="' + vh + '" fill="url(#bg' + id + ')"/>' +
+      '<rect width="1000" height="' + vh + '" fill="url(#key' + id + ')"/>' +
+      /* the surface the object sits on */
+      '<rect y="' + round(baseline + 30 * fit, 1) + '" width="1000" height="' + vh + '" fill="' + pal.deep + '" opacity="0.07"/>' +
+      '<ellipse cx="500" cy="' + round(baseline + 24 * fit + drift * 0.4, 1) + '" rx="' + round(300 * spinSquash * fit, 1) +
+      '" ry="' + round(34 * fit, 1) + '" fill="' + pal.deep + '" opacity="0.2"/>' +
+      '<g transform="translate(0 ' + round(drift, 2) + ') translate(500 ' + round(baseline, 1) + ') scale(' + sx + ' ' + sy +
+      ') translate(-500 -' + SUBJECT_BASE + ')">' +
+      body + '</g>' +
+      '<rect width="1000" height="' + vh + '" fill="url(#vig' + id + ')"/>' +
+      grain +
+      '</svg>'
+    );
+  }
+
+  function svgUrl(seed, opts) {
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgFrame(seed, opts));
+  }
+
+  /* ── media descriptors ────────────────────────────────────
+     A descriptor is what a variant hands the kit for one piece of media:
+       { type: 'photo' | 'video' | 'spin', seed, src?, poster?, label?,
+         hotspots: [{ x, y, title, body }], duration? }
+     `src` wins whenever present: a real image or a real video file drops
+     straight in and every control keeps working. */
+
+  function normalise(media, seedBase) {
+    return (media || []).map(function (m, i) {
+      var d = Object.assign({ type: 'photo' }, m);
+      d.seed = d.seed || seedBase + '-' + i;
+      d.hotspots = d.hotspots || [];
+      d.duration = d.duration || 12;
+      return d;
+    });
+  }
+
+  function thumbUrl(d) {
+    if (d.poster) return d.poster;
+    if (d.src && d.type === 'photo') return d.src;
+    return svgUrl(d.seed, { w: 200, h: 250, palette: d.palette, subject: d.subject });
+  }
+
+  function fullUrl(d, t) {
+    if (d.src && d.type === 'photo') return d.src;
+    return svgUrl(d.seed, { w: 1000, h: 1250, palette: d.palette, subject: d.subject, t: t || 0 });
+  }
+
+  /* The poster a card shows is composed for that card's box, so a wide or
+     square slot gets artwork made for it rather than a portrait shot
+     cropped by object-fit. */
+  function posterUrl(d, ratio) {
+    if (d.poster) return d.poster;
+    if (d.src && d.type === 'photo') return d.src;
+    var h = Math.round(1000 / (ratio || 0.8));
+    return svgUrl(d.seed, { w: 1000, h: h, ratio: ratio || 0.8, palette: d.palette, subject: d.subject });
+  }
+
+  function boxRatio(node) {
+    var r = node.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 ? r.width / r.height : 0.8;
+  }
+
+  /* ── synthetic video ──────────────────────────────────────
+     No footage yet, but the transport must be real: play, pause, scrub,
+     seek, loop, mute, and a time readout that tracks the timeline. The
+     canvas renders frames of the procedural scene against a wall clock,
+     so swapping in <video src> later changes nothing above this layer. */
+
+  function SyntheticClip(canvas, descriptor, ratio) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.d = descriptor;
+    this.ratio = ratio || 0.8;
+    this.duration = descriptor.duration;
+    this.time = 0;
+    this.playing = false;
+    this.loop = true;
+    this.muted = true;
+    this._raf = 0;
+    this._last = 0;
+    this._frames = [];
+    this._onTick = null;
+    this._buildFrames();
+  }
+
+  SyntheticClip.FRAMES = 24;
+
+  SyntheticClip.prototype._buildFrames = function () {
+    var n = SyntheticClip.FRAMES;
+    var w = 800, h = Math.round(800 / this.ratio);
+    for (var i = 0; i < n; i++) {
+      var img = new Image();
+      img.src = svgUrl(this.d.seed, {
+        w: w, h: h, ratio: this.ratio,
+        palette: this.d.palette, subject: this.d.subject, t: i / n
+      });
+      this._frames.push(img);
+    }
+  };
+
+  SyntheticClip.prototype.render = function () {
+    var c = this.canvas, ctx = this.ctx;
+    var w = c.clientWidth || 800, h = c.clientHeight || 450;
+    var dpr = Math.min(global.devicePixelRatio || 1, 2);
+    if (c.width !== Math.round(w * dpr) || c.height !== Math.round(h * dpr)) {
+      c.width = Math.round(w * dpr);
+      c.height = Math.round(h * dpr);
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    var idx = Math.floor((this.time / this.duration) * SyntheticClip.FRAMES) % SyntheticClip.FRAMES;
+    var img = this._frames[idx];
+    ctx.fillStyle = '#0d0d0f';
+    ctx.fillRect(0, 0, w, h);
+    if (img && img.complete && img.naturalWidth) {
+      /* cover-fit, then a slow push-in so the frame breathes like footage */
+      var zoom = 1.06 + Math.sin((this.time / this.duration) * Math.PI * 2) * 0.05;
+      var ir = img.naturalWidth / img.naturalHeight, cr = w / h;
+      var dw, dh;
+      if (ir > cr) { dh = h * zoom; dw = dh * ir; } else { dw = w * zoom; dh = dw / ir; }
+      ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    }
+    /* a light sweep, so a paused frame still reads as a moving image */
+    var sweep = ctx.createLinearGradient(0, 0, w, h);
+    var p = (this.time / this.duration);
+    sweep.addColorStop(Math.max(0, p - 0.25), 'rgba(255,255,255,0)');
+    sweep.addColorStop(Math.min(1, p), 'rgba(255,255,255,0.07)');
+    sweep.addColorStop(Math.min(1, p + 0.25), 'rgba(255,255,255,0)');
+    ctx.fillStyle = sweep;
+    ctx.fillRect(0, 0, w, h);
+  };
+
+  SyntheticClip.prototype._loop = function () {
+    var self = this;
+    this._raf = global.requestAnimationFrame(function (now) {
+      if (!self.playing) return;
+      var dt = self._last ? (now - self._last) / 1000 : 0;
+      self._last = now;
+      self.time += dt;
+      if (self.time >= self.duration) {
+        if (self.loop) { self.time = self.time % self.duration; }
+        else { self.time = self.duration; self.pause(); }
+      }
+      self.render();
+      if (self._onTick) self._onTick(self.time, self.duration);
+      if (self.playing) self._loop();
+    });
+  };
+
+  SyntheticClip.prototype.play = function () {
+    if (this.playing) return;
+    this.playing = true;
+    this._last = 0;
+    this._loop();
+  };
+
+  SyntheticClip.prototype.pause = function () {
+    this.playing = false;
+    global.cancelAnimationFrame(this._raf);
+    this._last = 0;
+    if (this._onTick) this._onTick(this.time, this.duration);
+  };
+
+  SyntheticClip.prototype.seek = function (t) {
+    this.time = Math.max(0, Math.min(this.duration, t));
+    this.render();
+    if (this._onTick) this._onTick(this.time, this.duration);
+  };
+
+  SyntheticClip.prototype.destroy = function () { this.pause(); this._onTick = null; };
+
+  /* ── helpers ──────────────────────────────────────────────── */
+
+  function el(tag, cls, attrs) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    return n;
+  }
+
+  function fmtTime(s, fa) {
+    var m = Math.floor(s / 60), sec = Math.floor(s % 60);
+    var out = m + ':' + (sec < 10 ? '0' : '') + sec;
+    return fa ? toFa(out) : out;
+  }
+
+  var FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+  function toFa(str) {
+    return String(str).replace(/[0-9]/g, function (d) { return FA_DIGITS[+d]; });
+  }
+
+  function reduced() {
+    return global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  /* ── the detail viewer ────────────────────────────────────
+     One overlay, reused. Photo mode zooms and pans and shows hotspots;
+     video mode gives a full transport; spin mode turns the object under
+     the pointer. Arrow keys move between an item's media throughout. */
+
+  var VIEWER_CSS = [
+    '.ck-scrim{position:fixed;inset:0;z-index:2000;background:var(--overlay,rgba(12,12,14,.72));',
+    'backdrop-filter:blur(3px);animation:ck-fade var(--dur-base,240ms) var(--ease-out,ease) both}',
+    '.ck-viewer{position:fixed;inset:0;z-index:2001;display:grid;grid-template-rows:auto 1fr auto;',
+    'gap:var(--s-3,12px);padding:clamp(12px,2.4vw,28px);pointer-events:none}',
+    '.ck-viewer>*{pointer-events:auto}',
+    '.ck-vtop{display:flex;align-items:center;gap:var(--s-4,16px);color:var(--ink,#fff);',
+    'background:var(--surface,#fff);border:var(--border-w,1px) solid var(--line,#ddd);',
+    'border-radius:var(--radius-card,4px);padding:var(--s-3,12px) var(--s-4,16px)}',
+    '.ck-vtitle{font-family:var(--font-fa-display,inherit);font-size:var(--t-md,1.15rem);line-height:1.35}',
+    '.ck-vsub{font-family:var(--font-num,monospace);font-size:var(--t-xs,.78rem);color:var(--ink-faint,#888);direction:ltr}',
+    '.ck-vstage{position:relative;overflow:hidden;background:var(--surface-alt,#111);',
+    'border:var(--border-w,1px) solid var(--line,#333);border-radius:var(--radius-media,2px);display:grid;place-items:center}',
+    /* The frame hugs the artwork, so a hotspot placed at 50%/38% lands on
+       the same pixel of the object no matter how the stage is shaped.
+       Zoom and pan transform the frame, carrying the hotspots along.
+       Its pixel size is set by fitFrame() — percentage sizing on a grid
+       item resolved against the image's intrinsic size instead of the
+       stage, which blew the frame past the viewport. */
+    '.ck-frame{position:relative;transform-origin:50% 50%;will-change:transform}',
+    '.ck-vstage img{width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}',
+    '.ck-vstage[data-zoom="on"]{cursor:grab}.ck-vstage[data-zoom="on"].ck-drag{cursor:grabbing}',
+    '.ck-vstage[data-zoom="off"]{cursor:zoom-in}',
+    '.ck-vstage[data-mode="spin"]{cursor:ew-resize}',
+    '.ck-vstage canvas{width:100%;height:100%;display:block;object-fit:contain}',
+    '.ck-vstage video{width:100%;height:100%;object-fit:contain;background:#000}',
+    /* hotspots */
+    '.ck-hot{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;padding:0;border-radius:999px;',
+    'display:grid;place-items:center;font-family:var(--font-num,monospace);font-size:12px;cursor:pointer;',
+    'background:var(--accent,#a8613a);color:var(--on-accent,#fff);border:2px solid rgba(255,255,255,.9);',
+    'box-shadow:0 2px 10px rgba(0,0,0,.35);transition:transform var(--dur-fast,160ms) var(--ease-out,ease)}',
+    '.ck-hot::after{content:"";position:absolute;inset:-8px;border-radius:999px;border:2px solid var(--accent,#a8613a);',
+    'opacity:.55;animation:ck-ping 2.4s var(--ease-out,ease) infinite}',
+    '.ck-hot:hover,.ck-hot[aria-expanded="true"]{transform:scale(1.18)}',
+    '.ck-hot[aria-expanded="true"]::after{animation:none;opacity:1}',
+    '.ck-hotcard{position:absolute;z-index:5;width:min(280px,62vw);padding:var(--s-4,16px);',
+    'background:var(--surface,#fff);color:var(--ink,#222);border:var(--border-w,1px) solid var(--line-strong,#333);',
+    'border-radius:var(--radius-card,4px);box-shadow:var(--shadow-2,0 12px 34px rgba(0,0,0,.25));',
+    'animation:ck-pop-sm var(--dur-fast,160ms) var(--ease-out,ease) both}',
+    '.ck-hotcard h4{margin:0 0 6px;font-size:var(--t-sm,.9rem)}',
+    '.ck-hotcard p{margin:0;font-size:var(--t-xs,.8rem);color:var(--ink-muted,#666);line-height:1.7;max-width:none}',
+    /* transport */
+    '.ck-vbar{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-3,12px);',
+    'background:var(--surface,#fff);border:var(--border-w,1px) solid var(--line,#ddd);',
+    'border-radius:var(--radius-card,4px);padding:var(--s-3,12px) var(--s-4,16px)}',
+    /* A timeline reads left-to-right even on an RTL page. */
+    '.ck-scrub{flex:1;min-width:160px;height:28px;appearance:none;background:none;cursor:pointer;direction:ltr}',
+    '.ck-scrub::-webkit-slider-runnable-track{height:4px;border-radius:999px;',
+    'background:linear-gradient(to right,var(--accent,#a8613a) var(--p,0%),var(--line,#ddd) var(--p,0%))}',
+    '.ck-scrub::-moz-range-track{height:4px;border-radius:999px;background:var(--line,#ddd)}',
+    '.ck-scrub::-moz-range-progress{height:4px;border-radius:999px;background:var(--accent,#a8613a)}',
+    '.ck-scrub::-webkit-slider-thumb{appearance:none;width:14px;height:14px;margin-top:-5px;border-radius:999px;',
+    'background:var(--accent,#a8613a);border:2px solid var(--surface,#fff);box-shadow:0 1px 4px rgba(0,0,0,.3)}',
+    '.ck-scrub::-moz-range-thumb{width:14px;height:14px;border:2px solid var(--surface,#fff);border-radius:999px;background:var(--accent,#a8613a)}',
+    '.ck-time{font-family:var(--font-num,monospace);font-size:var(--t-xs,.78rem);color:var(--ink-muted,#666);',
+    'direction:ltr;min-width:84px;text-align:center}',
+    '.ck-thumbs{display:flex;gap:var(--s-2,8px);overflow-x:auto;padding:2px}',
+    '.ck-thumbs button{position:relative;flex:0 0 auto;width:58px;aspect-ratio:4/5;padding:0;overflow:hidden;cursor:pointer;',
+    'background:var(--surface-alt,#eee);border:var(--border-w,1px) solid var(--line,#ddd);border-radius:var(--radius-media,2px)}',
+    '.ck-thumbs button[aria-current="true"]{border-color:var(--accent,#a8613a);border-width:2px}',
+    '.ck-thumbs img{width:100%;height:100%;object-fit:cover}',
+    '.ck-tbadge{position:absolute;inset-block-end:2px;inset-inline-end:2px;width:16px;height:16px;border-radius:999px;',
+    'background:rgba(0,0,0,.65);color:#fff;font-size:9px;display:grid;place-items:center}',
+    /* inline card affordances */
+    '.ck-media{position:relative;display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:pointer;overflow:hidden}',
+    '.ck-media>img,.ck-media>canvas{width:100%;height:100%;object-fit:cover;display:block}',
+    '.ck-media>canvas{position:absolute;inset:0;opacity:0;transition:opacity var(--dur-base,240ms) var(--ease-out,ease)}',
+    '.ck-media.ck-previewing>canvas{opacity:1}',
+    '.ck-cue{position:absolute;inset-block-end:8px;inset-inline-start:8px;display:inline-flex;align-items:center;gap:6px;',
+    'padding:4px 9px;border-radius:999px;background:rgba(14,14,16,.72);color:#fff;',
+    'font-family:var(--font-num,monospace);font-size:11px;letter-spacing:.04em;pointer-events:none;',
+    'opacity:.92;transition:opacity var(--dur-fast,160ms) var(--ease-out,ease)}',
+    '.ck-cue svg{width:11px;height:11px;fill:currentColor}',
+    '.ck-media:hover .ck-cue{opacity:1}',
+    '.ck-bigplay{position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:999px;',
+    'display:grid;place-items:center;background:rgba(14,14,16,.6);color:#fff;pointer-events:none;',
+    'transition:transform var(--dur-base,240ms) var(--ease-out,ease),opacity var(--dur-base,240ms) var(--ease-out,ease)}',
+    '.ck-media:hover .ck-bigplay{transform:scale(1.08)}',
+    '.ck-media.ck-previewing .ck-bigplay{opacity:0}',
+    '@keyframes ck-fade{from{opacity:0}to{opacity:1}}',
+    '@keyframes ck-pop-sm{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}',
+    '@keyframes ck-ping{0%{transform:scale(.85);opacity:.6}70%{transform:scale(1.5);opacity:0}100%{opacity:0}}',
+    '@media (prefers-reduced-motion:reduce){.ck-hot::after{animation:none}.ck-scrim,.ck-hotcard{animation-duration:1ms}}'
+  ].join('');
+
+  var ICONS = {
+    play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+    pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>',
+    zoom: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2a8 8 0 105.3 14l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12zm-1 2v3H6v2h3v3h2v-3h3V9h-3V6z"/></svg>',
+    spin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1L8 5l4 4V6a6 6 0 11-6 6H4a8 8 0 108-8z"/></svg>',
+    sound: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 5V4L8 9H4z"/></svg>',
+    mute: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 5V4L8 9H4zm12.5 3l2.5-2.5-1-1L15.5 11 13 8.5l-1 1L14.5 12 12 14.5l1 1 2.5-2.5 2.5 2.5 1-1z"/></svg>',
+    close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 5.7l-1.4-1.4L12 9.2 7.1 4.3 5.7 5.7l4.9 4.9-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>',
+    prev: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 7.4L14 6l-6 6 6 6 1.4-1.4-4.6-4.6z"/></svg>',
+    next: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 16.6L10 18l6-6-6-6-1.4 1.4 4.6 4.6z"/></svg>'
+  };
+
+  var T = {
+    fa: {
+      close: 'بستن', prev: 'قبلی', next: 'بعدی', play: 'پخش', pause: 'مکث',
+      mute: 'بی‌صدا', unmute: 'صدادار', zoomIn: 'بزرگ‌نمایی', zoomOut: 'بازگشت',
+      detail: 'جزئیات', video: 'ویدیو', spin: 'چرخش ۳۶۰', photo: 'عکس',
+      hintPhoto: 'کلیک برای بزرگ‌نمایی · کشیدن برای جابه‌جایی',
+      hintSpin: 'بکشید تا بچرخد',
+      hintVideo: 'Space پخش/مکث · ←→ جابه‌جایی',
+      placeholder: 'جانگهدار — عکس واقعی جایگزین می‌شود',
+      of: 'از'
+    },
+    en: {
+      close: 'Close', prev: 'Previous', next: 'Next', play: 'Play', pause: 'Pause',
+      mute: 'Mute', unmute: 'Unmute', zoomIn: 'Zoom in', zoomOut: 'Reset zoom',
+      detail: 'Details', video: 'Video', spin: '360 spin', photo: 'Photo',
+      hintPhoto: 'Click to zoom · drag to pan',
+      hintSpin: 'Drag to rotate',
+      hintVideo: 'Space play/pause · arrows to seek',
+      placeholder: 'Placeholder — swap in the real shot',
+      of: 'of'
+    }
+  };
+
+  function Viewer(lang) {
+    this.lang = lang || 'fa';
+    this.t = T[this.lang] || T.fa;
+    this.open = false;
+    this.items = [];
+    this.index = 0;
+    this.zoom = 1;
+    this.ox = 0; this.oy = 0;
+    this.spin = 0;
+    this.clip = null;
+    this.video = null;
+    this._lastFocus = null;
+    this._build();
+  }
+
+  Viewer.prototype._build = function () {
+    var self = this;
+    var t = this.t;
+
+    this.scrim = el('div', 'ck-scrim');
+    this.root = el('div', 'ck-viewer', {
+      role: 'dialog', 'aria-modal': 'true', tabindex: '-1'
+    });
+
+    /* header: title, counter, close */
+    this.top = el('div', 'ck-vtop');
+    var titles = el('div');
+    this.title = el('div', 'ck-vtitle');
+    this.sub = el('div', 'ck-vsub');
+    titles.appendChild(this.title);
+    titles.appendChild(this.sub);
+    this.top.appendChild(titles);
+
+    var spacer = el('div');
+    spacer.style.flex = '1';
+    this.top.appendChild(spacer);
+
+    this.hint = el('div', 'ck-vsub');
+    this.top.appendChild(this.hint);
+
+    this.closeBtn = this._iconBtn(ICONS.close, t.close, function () { self.close(); });
+    this.top.appendChild(this.closeBtn);
+
+    /* stage */
+    this.stage = el('div', 'ck-vstage', { 'data-zoom': 'off', 'data-mode': 'photo' });
+
+    /* footer: transport / thumbs */
+    this.bar = el('div', 'ck-vbar');
+    this.prevBtn = this._iconBtn(ICONS.prev, t.prev, function () { self.step(-1); });
+    this.nextBtn = this._iconBtn(ICONS.next, t.next, function () { self.step(1); });
+    this.playBtn = this._iconBtn(ICONS.play, t.play, function () { self.togglePlay(); });
+    this.muteBtn = this._iconBtn(ICONS.mute, t.unmute, function () { self.toggleMute(); });
+    this.scrub = el('input', 'ck-scrub', { type: 'range', min: '0', max: '1000', value: '0', 'aria-label': 'timeline' });
+    this.timeEl = el('div', 'ck-time');
+    this.thumbs = el('div', 'ck-thumbs');
+
+    this.scrub.addEventListener('input', function () {
+      var frac = +self.scrub.value / 1000;
+      if (self.video) self.video.currentTime = frac * (self.video.duration || 0);
+      else if (self.clip) self.clip.seek(frac * self.clip.duration);
+    });
+
+    this.root.appendChild(this.top);
+    this.root.appendChild(this.stage);
+    this.root.appendChild(this.bar);
+
+    this.scrim.addEventListener('click', function () { self.close(); });
+
+    /* zoom + pan + spin on the stage */
+    this.stage.addEventListener('click', function (e) {
+      if (self.stage.dataset.mode !== 'photo') return;
+      if (e.target.closest('.ck-hot') || e.target.closest('.ck-hotcard')) return;
+      if (self._moved) { self._moved = false; return; }
+      if (self.zoom > 1) { self.setZoom(1, 0, 0); return; }
+      var r = self.stage.getBoundingClientRect();
+      /* zoom toward the point clicked, not the centre */
+      var px = (e.clientX - r.left) / r.width - 0.5;
+      var py = (e.clientY - r.top) / r.height - 0.5;
+      self.setZoom(2.4, -px * r.width * 1.4, -py * r.height * 1.4);
+    });
+
+    this.stage.addEventListener('wheel', function (e) {
+      if (self.stage.dataset.mode !== 'photo') return;
+      e.preventDefault();
+      self.setZoom(Math.max(1, Math.min(5, self.zoom * (e.deltaY < 0 ? 1.12 : 0.89))), self.ox, self.oy);
+    }, { passive: false });
+
+    var dragging = false, sx = 0, sy = 0, bx = 0, by = 0, spinStart = 0;
+    this.stage.addEventListener('pointerdown', function (e) {
+      var mode = self.stage.dataset.mode;
+      if (mode === 'video') return;
+      if (mode === 'photo' && self.zoom <= 1) return;
+      dragging = true; self._moved = false;
+      sx = e.clientX; sy = e.clientY; bx = self.ox; by = self.oy; spinStart = self.spin;
+      self.stage.classList.add('ck-drag');
+      self.stage.setPointerCapture(e.pointerId);
+    });
+    this.stage.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - sx, dy = e.clientY - sy;
+      if (Math.abs(dx) + Math.abs(dy) > 4) self._moved = true;
+      if (self.stage.dataset.mode === 'spin') {
+        self.spin = (spinStart + dx * 0.9) % 360;
+        self._renderSpin();
+      } else {
+        self.ox = bx + dx; self.oy = by + dy;
+        self._applyTransform(false);
+      }
+    });
+    function endDrag(e) {
+      if (!dragging) return;
+      dragging = false;
+      self.stage.classList.remove('ck-drag');
+      try { self.stage.releasePointerCapture(e.pointerId); } catch (err) { /* already released */ }
+    }
+    this.stage.addEventListener('pointerup', endDrag);
+    this.stage.addEventListener('pointercancel', endDrag);
+
+    this._onKey = function (e) {
+      if (!self.open) return;
+      if (e.key === 'Escape') { e.preventDefault(); self.close(); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); self._arrow(1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); self._arrow(-1); }
+      else if (e.key === ' ' && self.stage.dataset.mode === 'video') { e.preventDefault(); self.togglePlay(); }
+      else if (e.key === '+' || e.key === '=') { e.preventDefault(); self.setZoom(Math.min(5, self.zoom * 1.3), self.ox, self.oy); }
+      else if (e.key === '-') { e.preventDefault(); self.setZoom(Math.max(1, self.zoom / 1.3), 0, 0); }
+      else if (e.key === 'Tab') { self._trap(e); }
+    };
+  };
+
+  Viewer.prototype._arrow = function (dir) {
+    /* In video mode the arrows seek; elsewhere they move between media.
+       RTL flips the direction so "next" always means forward visually. */
+    if (this.stage.dataset.mode === 'video') {
+      var d = dir * 5;
+      if (this.video) this.video.currentTime = Math.max(0, Math.min(this.video.duration || 0, this.video.currentTime + d));
+      else if (this.clip) this.clip.seek(this.clip.time + d);
+      return;
+    }
+    var rtl = document.documentElement.dir === 'rtl' || document.body.dir === 'rtl';
+    this.step(rtl ? -dir : dir);
+  };
+
+  Viewer.prototype._iconBtn = function (svg, label, fn) {
+    var b = el('button', 'cat-btn cat-btn--ghost cat-btn--icon', { type: 'button', 'aria-label': label, title: label });
+    b.innerHTML = svg;
+    b.querySelector('svg').style.width = '18px';
+    b.querySelector('svg').style.height = '18px';
+    b.querySelector('svg').style.fill = 'currentColor';
+    b.addEventListener('click', fn);
+    return b;
+  };
+
+  Viewer.prototype._trap = function (e) {
+    var f = this.root.querySelectorAll('button,input,[tabindex]:not([tabindex="-1"])');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+
+  Viewer.prototype.show = function (items, index, meta) {
+    this.items = items;
+    this.index = index || 0;
+    this.meta = meta || {};
+    if (!this.open) {
+      this._lastFocus = document.activeElement;
+      document.body.appendChild(this.scrim);
+      document.body.appendChild(this.root);
+      document.addEventListener('keydown', this._onKey);
+      if (!this._onResize) {
+        var self = this;
+        this._onResize = function () { self.fitFrame(); };
+      }
+      global.addEventListener('resize', this._onResize);
+      this._prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      this.open = true;
+    }
+    this.root.setAttribute('aria-label', this.meta.title || this.t.detail);
+    this.render();
+    this.root.focus();
+  };
+
+  Viewer.prototype.close = function () {
+    if (!this.open) return;
+    this._teardownMedia();
+    document.removeEventListener('keydown', this._onKey);
+    if (this._onResize) global.removeEventListener('resize', this._onResize);
+    document.body.style.overflow = this._prevOverflow || '';
+    if (this.scrim.parentNode) this.scrim.parentNode.removeChild(this.scrim);
+    if (this.root.parentNode) this.root.parentNode.removeChild(this.root);
+    this.open = false;
+    if (this._lastFocus && this._lastFocus.focus) this._lastFocus.focus();
+  };
+
+  Viewer.prototype.step = function (dir) {
+    if (!this.items.length) return;
+    this.index = (this.index + dir + this.items.length) % this.items.length;
+    this.render();
+  };
+
+  Viewer.prototype._teardownMedia = function () {
+    if (this.clip) { this.clip.destroy(); this.clip = null; }
+    if (this.video) { this.video.pause(); this.video = null; }
+  };
+
+  Viewer.prototype.setZoom = function (z, ox, oy) {
+    /* An open hotspot card would scale with the frame and stop being
+       readable, so zooming dismisses it. */
+    if (z !== this.zoom) this._closeHot();
+    this.zoom = z;
+    this.ox = z <= 1 ? 0 : ox;
+    this.oy = z <= 1 ? 0 : oy;
+    this.stage.dataset.zoom = z > 1 ? 'on' : 'off';
+    this._applyTransform(true);
+  };
+
+  /* Size the frame to the largest box of the media's ratio that fits the
+     stage. Explicit pixels, so the result does not depend on how the
+     stage happens to be laid out. */
+  Viewer.prototype.fitFrame = function () {
+    if (!this.frame) return;
+    var sw = this.stage.clientWidth, sh = this.stage.clientHeight;
+    if (!sw || !sh) return;
+    var ar = this._ratio || 0.8;
+    var w = sw, h = sw / ar;
+    if (h > sh) { h = sh; w = sh * ar; }
+    this.frame.style.width = Math.round(w) + 'px';
+    this.frame.style.height = Math.round(h) + 'px';
+  };
+
+  Viewer.prototype._applyTransform = function (animate) {
+    if (!this.frame) return;
+    this.frame.style.transition = animate && !reduced()
+      ? 'transform var(--dur-base,240ms) var(--ease-out,ease)' : 'none';
+    this.frame.style.transform = 'translate(' + this.ox + 'px,' + this.oy + 'px) scale(' + this.zoom + ')';
+  };
+
+  Viewer.prototype._renderSpin = function () {
+    if (!this.img) return;
+    var d = this.items[this.index];
+    this.img.src = svgUrl(d.seed, { w: 1000, h: 1250, palette: d.palette, subject: d.subject, spin: this.spin });
+    if (this.spinRead) this.spinRead.textContent = (this.lang === 'fa' ? toFa(Math.round((this.spin + 360) % 360)) : Math.round((this.spin + 360) % 360)) + '°';
+  };
+
+  Viewer.prototype.render = function () {
+    var self = this, t = this.t;
+    var d = this.items[this.index];
+    if (!d) return;
+
+    this._teardownMedia();
+    this.stage.innerHTML = '';
+    this.bar.innerHTML = '';
+    this.zoom = 1; this.ox = 0; this.oy = 0; this.spin = 0;
+    this.stage.dataset.zoom = 'off';
+    this.stage.dataset.mode = d.type;
+    this.img = null; this.frame = null; this.hotLayer = null; this.spinRead = null;
+    this._ratio = null;
+
+    this.title.textContent = this.meta.title || d.label || '';
+    var kindLabel = t[d.type] || d.type;
+    this.sub.textContent = (this.meta.sku ? this.meta.sku + ' · ' : '') + kindLabel +
+      ' ' + (this.lang === 'fa' ? toFa(this.index + 1) : this.index + 1) + ' ' + t.of + ' ' +
+      (this.lang === 'fa' ? toFa(this.items.length) : this.items.length);
+    this.hint.textContent = d.type === 'video' ? t.hintVideo : d.type === 'spin' ? t.hintSpin : t.hintPhoto;
+
+    if (d.type === 'video') this._renderVideo(d);
+    else this._renderImage(d);
+
+    /* footer */
+    this.bar.appendChild(this.prevBtn);
+    this.bar.appendChild(this.nextBtn);
+    if (d.type === 'video') {
+      this.bar.appendChild(this.playBtn);
+      this.bar.appendChild(this.scrub);
+      this.bar.appendChild(this.timeEl);
+      this.bar.appendChild(this.muteBtn);
+    } else if (d.type === 'spin') {
+      var read = el('div', 'ck-time');
+      this.spinRead = read;
+      read.textContent = this.lang === 'fa' ? toFa('0') + '°' : '0°';
+      this.bar.appendChild(read);
+      var note = el('div', 'ck-vsub');
+      note.textContent = t.hintSpin;
+      this.bar.appendChild(note);
+    }
+    var flex = el('div'); flex.style.flex = '1';
+    this.bar.appendChild(flex);
+
+    /* thumbnail strip — only worth showing for more than one piece */
+    if (this.items.length > 1) {
+      this.thumbs.innerHTML = '';
+      this.items.forEach(function (m, i) {
+        var b = el('button', '', { type: 'button', 'aria-current': String(i === self.index), 'aria-label': (T[self.lang][m.type] || m.type) + ' ' + (i + 1) });
+        var im = el('img', '', { src: thumbUrl(m), alt: '' });
+        b.appendChild(im);
+        if (m.type !== 'photo') {
+          var badge = el('span', 'ck-tbadge');
+          badge.innerHTML = m.type === 'video' ? ICONS.play : ICONS.spin;
+          badge.querySelector('svg').style.width = '9px';
+          badge.querySelector('svg').style.height = '9px';
+          badge.querySelector('svg').style.fill = 'currentColor';
+          b.appendChild(badge);
+        }
+        b.addEventListener('click', function () { self.index = i; self.render(); });
+        self.thumbs.appendChild(b);
+      });
+      this.bar.appendChild(this.thumbs);
+    }
+  };
+
+  Viewer.prototype._renderImage = function (d) {
+    var self = this;
+    var frame = el('div', 'ck-frame');
+    this.frame = frame;
+
+    this.img = el('img', '', { alt: d.label || this.meta.title || '', draggable: 'false' });
+    this.img.addEventListener('load', function () {
+      /* A real photograph may be any shape; take the ratio from the file
+         itself so the hotspot coordinates stay true. */
+      if (self.img.naturalWidth && self.img.naturalHeight) {
+        self._ratio = self.img.naturalWidth / self.img.naturalHeight;
+        self.fitFrame();
+      }
+    });
+    this.img.src = d.type === 'spin'
+      ? svgUrl(d.seed, { w: 1000, h: 1250, palette: d.palette, subject: d.subject, spin: 0 })
+      : fullUrl(d);
+    frame.appendChild(this.img);
+
+    /* Hotspots live inside the frame, so they are pinned to the artwork
+       and inherit its zoom and pan for free. */
+    if (d.hotspots.length && d.type === 'photo') {
+      this.hotLayer = frame;
+      d.hotspots.forEach(function (h, i) {
+        var dot = el('button', 'ck-hot', {
+          type: 'button', 'aria-expanded': 'false',
+          'aria-label': h.title, title: h.title
+        });
+        dot.style.position = 'absolute';
+        dot.style.left = h.x + '%';
+        dot.style.top = h.y + '%';
+        dot.textContent = self.lang === 'fa' ? toFa(i + 1) : String(i + 1);
+        dot.addEventListener('click', function (e) {
+          e.stopPropagation();
+          self._toggleHot(dot, h);
+        });
+        frame.appendChild(dot);
+      });
+    }
+
+    this.stage.appendChild(frame);
+    this._ratio = this._ratio || 0.8;
+    this.fitFrame();
+
+    if (!d.src) {
+      var ph = el('div', 'ck-cue');
+      ph.textContent = this.t.placeholder;
+      ph.style.insetBlockEnd = '10px';
+      this.stage.appendChild(ph);
+    }
+
+    if (d.type === 'spin') this._renderSpin();
+  };
+
+  Viewer.prototype._closeHot = function () {
+    var existing = this.stage.querySelector('.ck-hotcard');
+    if (existing) existing.parentNode.removeChild(existing);
+    Array.prototype.forEach.call(this.stage.querySelectorAll('.ck-hot'), function (d2) {
+      d2.setAttribute('aria-expanded', 'false');
+    });
+  };
+
+  Viewer.prototype._toggleHot = function (dot, h) {
+    var open = dot.getAttribute('aria-expanded') === 'true';
+    this._closeHot();
+    if (open) return;
+    dot.setAttribute('aria-expanded', 'true');
+    var card = el('div', 'ck-hotcard');
+    card.innerHTML = '<h4></h4><p></p>';
+    card.querySelector('h4').textContent = h.title;
+    card.querySelector('p').textContent = h.body || '';
+    card.style.left = 'calc(' + h.x + '% + 24px)';
+    card.style.top = 'calc(' + h.y + '% + 10px)';
+    card.style.pointerEvents = 'auto';
+    if (h.x > 62) { card.style.left = 'auto'; card.style.right = 'calc(' + (100 - h.x) + '% + 24px)'; }
+    if (h.y > 68) { card.style.top = 'auto'; card.style.bottom = 'calc(' + (100 - h.y) + '% + 10px)'; }
+    this.hotLayer.appendChild(card);
+  };
+
+  Viewer.prototype._renderVideo = function (d) {
+    var self = this;
+    /* Same frame as a photo, so the clip is letterboxed rather than
+       cropped when the stage is wider than the footage. */
+    var frame = el('div', 'ck-frame');
+    this.frame = frame;
+    this.stage.appendChild(frame);
+
+    if (d.src) {
+      /* A real file: the browser's own pipeline, our chrome on top. */
+      var v = el('video', '', { playsinline: '', preload: 'metadata' });
+      v.src = d.src;
+      if (d.poster) v.poster = d.poster;
+      v.muted = true;
+      v.loop = true;
+      this.video = v;
+      v.addEventListener('timeupdate', function () { self._tick(v.currentTime, v.duration || 0); });
+      v.addEventListener('loadedmetadata', function () {
+        if (v.videoWidth && v.videoHeight) { self._ratio = v.videoWidth / v.videoHeight; self.fitFrame(); }
+        self._tick(0, v.duration || 0);
+      });
+      v.addEventListener('play', function () { self._setPlayIcon(true); });
+      v.addEventListener('pause', function () { self._setPlayIcon(false); });
+      frame.appendChild(v);
+      this._ratio = 16 / 9;
+      this.fitFrame();
+      v.play().catch(function () { /* autoplay refused — the button still works */ });
+    } else {
+      var c = el('canvas');
+      frame.appendChild(c);
+      this._ratio = 0.8;
+      this.fitFrame();
+      var clip = new SyntheticClip(c, d);
+      this.clip = clip;
+      clip._onTick = function (time, dur) { self._tick(time, dur); };
+      clip.render();
+      /* Give the first frames a moment to decode, then roll. */
+      setTimeout(function () { if (self.clip === clip) { clip.play(); self._setPlayIcon(true); } }, 120);
+      var cue = el('div', 'ck-cue');
+      cue.textContent = this.t.placeholder;
+      this.stage.appendChild(cue);
+    }
+  };
+
+  Viewer.prototype._tick = function (time, dur) {
+    var frac = dur ? time / dur : 0;
+    this.scrub.value = String(Math.round(frac * 1000));
+    this.scrub.style.setProperty('--p', (frac * 100) + '%');
+    this.timeEl.textContent = fmtTime(time, this.lang === 'fa') + ' / ' + fmtTime(dur, this.lang === 'fa');
+  };
+
+  Viewer.prototype._setPlayIcon = function (playing) {
+    this.playBtn.innerHTML = playing ? ICONS.pause : ICONS.play;
+    var s = this.playBtn.querySelector('svg');
+    s.style.width = '18px'; s.style.height = '18px'; s.style.fill = 'currentColor';
+    this.playBtn.setAttribute('aria-label', playing ? this.t.pause : this.t.play);
+  };
+
+  Viewer.prototype.togglePlay = function () {
+    if (this.video) {
+      if (this.video.paused) this.video.play(); else this.video.pause();
+    } else if (this.clip) {
+      if (this.clip.playing) { this.clip.pause(); this._setPlayIcon(false); }
+      else { this.clip.play(); this._setPlayIcon(true); }
+    }
+  };
+
+  Viewer.prototype.toggleMute = function () {
+    var muted;
+    if (this.video) { this.video.muted = !this.video.muted; muted = this.video.muted; }
+    else if (this.clip) { this.clip.muted = !this.clip.muted; muted = this.clip.muted; }
+    else return;
+    this.muteBtn.innerHTML = muted ? ICONS.mute : ICONS.sound;
+    var s = this.muteBtn.querySelector('svg');
+    s.style.width = '18px'; s.style.height = '18px'; s.style.fill = 'currentColor';
+    this.muteBtn.setAttribute('aria-label', muted ? this.t.unmute : this.t.mute);
+  };
+
+  /* ── inline media on a card ───────────────────────────────
+     Renders the poster, marks what the media is, and — for video —
+     runs a muted micro-preview on hover or focus so the motion is
+     visible without opening anything. */
+
+  function mountMedia(host, descriptors, meta, viewer, lang) {
+    var t = T[lang] || T.fa;
+    var d = descriptors[0];
+    host.classList.add('ck-media');
+    host.innerHTML = '';
+    if (host.tagName !== 'BUTTON') {
+      host.setAttribute('role', 'button');
+      host.setAttribute('tabindex', '0');
+    }
+    host.setAttribute('aria-label', (meta.title || '') + ' — ' + t.detail);
+
+    var ratio = boxRatio(host);
+    var src = posterUrl(d, ratio);
+    var img = el('img', '', { src: src, alt: meta.title || '' });
+    /* Deferring a data URI buys nothing — there is no request to save — and
+       it leaves artwork far down a long page unpainted in a static capture
+       or a print. Only a real file is worth deferring. */
+    if (src.slice(0, 5) !== 'data:') img.loading = 'lazy';
+    host.appendChild(img);
+
+    var cue = el('span', 'ck-cue');
+    if (d.type === 'video') cue.innerHTML = ICONS.play + '<span>' + t.video + '</span>';
+    else if (d.type === 'spin') cue.innerHTML = ICONS.spin + '<span>' + t.spin + '</span>';
+    else cue.innerHTML = ICONS.zoom + '<span>' + t.detail + '</span>';
+    host.appendChild(cue);
+
+    if (d.type === 'video') {
+      var big = el('span', 'ck-bigplay');
+      big.innerHTML = ICONS.play;
+      big.querySelector('svg').style.width = '22px';
+      big.querySelector('svg').style.height = '22px';
+      big.querySelector('svg').style.fill = 'currentColor';
+      host.appendChild(big);
+
+      /* The hover preview is built lazily — a grid of forty cards should
+         not allocate forty canvases before anyone points at one. */
+      var preview = null;
+      var start = function () {
+        if (reduced()) return;
+        if (!preview) {
+          var c = el('canvas');
+          host.appendChild(c);
+          preview = new SyntheticClip(c, d, boxRatio(host));
+          preview.duration = d.duration;
+        }
+        host.classList.add('ck-previewing');
+        preview.play();
+      };
+      var stop = function () {
+        host.classList.remove('ck-previewing');
+        if (preview) preview.pause();
+      };
+      host.addEventListener('pointerenter', start);
+      host.addEventListener('pointerleave', stop);
+      host.addEventListener('focus', start);
+      host.addEventListener('blur', stop);
+    }
+
+    function open() { viewer.show(descriptors, 0, meta); }
+    host.addEventListener('click', open);
+    host.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+  }
+
+  /* ── public surface ───────────────────────────────────── */
+
+  var injected = false;
+  function injectCss() {
+    if (injected) return;
+    injected = true;
+    var s = document.createElement('style');
+    s.id = 'ck-style';
+    s.textContent = VIEWER_CSS;
+    /* First in the head, not last: these are defaults a page is meant to
+       override. Appended, they would win every specificity tie against the
+       page's own rules — .ck-media's height beat a host's aspect-ratio and
+       squashed the artwork to a sliver. */
+    document.head.insertBefore(s, document.head.firstChild);
+  }
+
+  var CatalogKit = {
+    /* Artwork for a seed. `opts.t` animates it, `opts.spin` rotates it. */
+    image: svgUrl,
+    imageMarkup: svgFrame,
+    palettes: PALETTE_NAMES,
+    subjects: SUBJECTS,
+    toFa: toFa,
+    rng: rng,
+    hash: hash,
+    normalise: normalise,
+    thumb: thumbUrl,
+    SyntheticClip: SyntheticClip,
+
+    /* One viewer per page, created on demand. */
+    viewer: function (lang) {
+      injectCss();
+      if (!this._viewer || this._viewer.lang !== (lang || 'fa')) {
+        if (this._viewer) this._viewer.close();
+        this._viewer = new Viewer(lang);
+      }
+      return this._viewer;
+    },
+
+    /* Wire one element as a piece of a product's media. */
+    mountMedia: function (host, media, meta, lang) {
+      injectCss();
+      var descriptors = normalise(media, (meta && meta.sku) || 'm');
+      mountMedia(host, descriptors, meta || {}, this.viewer(lang), lang || 'fa');
+      return descriptors;
+    },
+
+    /* Open the viewer directly — for "view details" buttons. */
+    open: function (media, meta, lang, index) {
+      injectCss();
+      this.viewer(lang).show(normalise(media, (meta && meta.sku) || 'm'), index || 0, meta || {});
+    },
+
+    /* Give a product a sensible media set when a variant has no opinion:
+       one photo with hotspots, one clip, one spin. */
+    defaultMedia: function (seed, hotspots, opts) {
+      opts = opts || {};
+      return [
+        { type: 'photo', seed: seed + '-a', hotspots: hotspots || [], palette: opts.palette, subject: opts.subject },
+        { type: 'video', seed: seed + '-a', duration: opts.duration || 12, palette: opts.palette, subject: opts.subject },
+        { type: 'spin', seed: seed + '-a', palette: opts.palette, subject: opts.subject },
+        { type: 'photo', seed: seed + '-b', hotspots: [], palette: opts.palette, subject: opts.subject }
+      ];
+    }
+  };
+
+  global.CatalogKit = CatalogKit;
+})(window);
+
+</script>
+<script>
+/* This page is served from the repository root; the catalogs sit one
+   directory down. */
+const DIR = 'catalogs/';
+
+/* The two studies that stand apart from the eight style variants: one
+   varies only the arrangement, the other only demonstrates the shared
+   media mechanisms. */
+const STUDIES = [
+  {
+    no: '★', file: 'avand.html', theme: 'avand',
+    fa: 'آوند، کاتالوگ کامل', en: 'Âvand, the full catalog',
+    note: 'نسخه‌ی طراحی‌شده: نیل طبیعی روی سفیدِ لعاب، نمایش نسخ، و قطعه‌ی حاشیه‌نویسی‌شده روی کاور. همان چیدمان‌ها، این بار در خدمت یک کاتالوگ واقعی. حالت تیره و استعلام قیمت هم دارد.',
+    tags: ['کاتالوگ واقعی', 'نیل و لعاب', 'حالت تیره', 'استعلام'],
+    mock: 'study'
+  },
+  {
+    no: '◇', file: 'compositions.html', theme: 'editorial',
+    fa: 'چهارده ترکیب‌بندی', en: 'Fourteen compositions',
+    note: 'ورقِ نمونه: یک برند، چهارده چیدمان پشت سر هم روی همان محصولات؛ تنها متغیر، ترکیب‌بندی است. هر کدام انیمیشن ورود مخصوص خودش را دارد.',
+    tags: ['۱۴ چیدمان', 'یک برند', 'انیمیشن اسکرول', '۸ تم'],
+    mock: 'expand'
+  },
+  {
+    no: '◆', file: '00-mechanisms.html', theme: 'craft',
+    fa: 'مکانیزم‌های رسانه', en: 'Media mechanisms',
+    note: 'بزرگ‌نمایی روی نقطه، نقطه‌های جزئیات، پخش ویدیو با نوار زمان، و چرخش ۳۶۰ — همان رفتاری که در همه‌ی نمونه‌ها کار می‌کند.',
+    tags: ['زوم و جزئیات', 'ویدیو', 'چرخش ۳۶۰', 'صفحه‌کلید'],
+    mock: 'single'
+  }
+];
+
+/* One row per variant: the file, its theme, and where it sits on each of
+   the four axes the set is meant to explore. */
+const VARIANTS = [
+  {
+    no: '۰۱', file: '01-editorial-single.html', theme: 'editorial',
+    fa: 'ادیتوریال تک‌ستونه', en: 'Editorial — single column',
+    note: 'هر محصول یک بند تمام‌عرض. فضای سفید زیاد، خط‌های مویی، ورود نرم با اسکرول.',
+    tags: ['تک‌ستونه', 'مینیمال', 'دو-رنگ', 'حرکت نرم'],
+    mock: 'single'
+  },
+  {
+    no: '۰۲', file: '02-luxe-fullscreen.html', theme: 'luxe',
+    fa: 'لوکس تمام‌صفحه', en: 'Luxe — fullscreen',
+    note: 'هر محصول یک صفحه‌ی کامل با اسنپ عمودی. تیره و طلایی، حرکت کند و سینمایی.',
+    tags: ['تمام‌صفحه', 'ماکسیمال', 'تیره/طلایی', 'حرکت سینمایی'],
+    mock: 'full'
+  },
+  {
+    no: '۰۳', file: '03-brutal-duo.html', theme: 'brutal',
+    fa: 'بروتال دوستونه', en: 'Brutal — two column',
+    note: 'دو ستون با خطوط ضخیم و سایه‌ی سخت. پرترین حالت رنگی، حرکت تند و یک‌پله.',
+    tags: ['دوستونه', 'ماکسیمال', 'چندرنگ', 'حرکت ساده'],
+    mock: 'duo'
+  },
+  {
+    no: '۰۴', file: '04-glass-expand.html', theme: 'glass',
+    fa: 'شیشه‌ای بازشونده', en: 'Glass — expandable',
+    note: 'کاشی‌ها در جای خودشان باز می‌شوند و جزئیات را نشان می‌دهند؛ گذارِ عنصر مشترک.',
+    tags: ['بازشونده', 'متوسط', 'چندرنگ ملایم', 'حرکت نرم'],
+    mock: 'expand'
+  },
+  {
+    no: '۰۵', file: '05-press-spread.html', theme: 'press',
+    fa: 'مطبوعاتی، صفحه‌ی باز', en: 'Press — two-page spread',
+    note: 'کاتالوگ چاپی: دو صفحه‌ی روبه‌رو، ورق‌زدن واقعی، تراکم بالای روزنامه‌ای.',
+    tags: ['اسپرد', 'متراکم', 'تک‌رنگ', 'ورق‌زدن'],
+    mock: 'spread'
+  },
+  {
+    no: '۰۶', file: '06-mono-grid.html', theme: 'mono',
+    fa: 'تک‌رنگ شبکه‌ای', en: 'Mono — dense grid',
+    note: 'شبکه‌ی لبه‌تا‌لبه با چگالی قابل تنظیم. سیاه و سفید محض، کمینه‌ی حرکت.',
+    tags: ['شبکه', 'مینیمال', 'تک‌رنگ', 'کمینه‌ی حرکت'],
+    mock: 'grid'
+  },
+  {
+    no: '۰۷', file: '07-spec-sheet.html', theme: 'spec',
+    fa: 'فنی، جدول مشخصات', en: 'Spec — technical sheet',
+    note: 'جدول مرتب‌شونده، فیلتر، و مقایسه‌ی کنار‌هم تا سه محصول. رنگ فقط کارکردی.',
+    tags: ['جدول', 'متراکم', 'رنگ کارکردی', 'حرکت ساده'],
+    mock: 'table'
+  },
+  {
+    no: '۰۸', file: '08-craft-story.html', theme: 'craft',
+    fa: 'روایی، دست‌ساز', en: 'Craft — scrollytelling',
+    note: 'صحنه‌ی چسبان و متن روان: هر بخش محصول خودش را نشان می‌دهد. رنگ گرم و متغیر.',
+    tags: ['روایی', 'متوسط', 'چندرنگ گرم', 'حرکت نرم'],
+    mock: 'story'
+  }
+];
+
+/* Each mock is a few boxes arranged the way that variant arranges itself —
+   enough to recognise the layout at thumbnail size. */
+const MOCKS = {
+  single: [{ cols: '1fr', cells: ['media'] }, { cols: '2fr 1fr', cells: ['', ''] }],
+  full:   [{ cols: '1fr', cells: ['media'] }],
+  duo:    [{ cols: '1fr 1fr', cells: ['media', 'media'] }, { cols: '1fr 1fr', cells: ['accent', ''] }],
+  expand: [{ cols: '1fr 1fr 1fr', cells: ['', '', ''] }, { cols: '2fr 1fr', cells: ['media', ''] }],
+  spread: [{ cols: '1fr 1fr', cells: ['', ''] }, { cols: '1fr 1fr 1fr 1fr', cells: ['', '', '', ''] }],
+  grid:   [{ cols: 'repeat(5,1fr)', cells: ['', '', '', '', ''] }, { cols: 'repeat(5,1fr)', cells: ['', '', '', '', ''] }],
+  table:  [{ cols: '1fr', cells: [''] }, { cols: '1fr', cells: [''] }, { cols: '1fr', cells: [''] }, { cols: '1fr', cells: ['accent'] }],
+  story:  [{ cols: '1fr 1fr', cells: ['media', ''] }]
+};
+
+const grid = document.getElementById('grid');
+
+function buildCard(v) {
+  const card = document.createElement('a');
+  card.className = 'hub-card';
+  card.href = DIR + v.file;
+
+  const prev = document.createElement('div');
+  prev.className = 'hub-prev';
+  prev.setAttribute('data-theme', v.theme);
+
+  const bar = document.createElement('div');
+  bar.className = 'hub-prev__bar';
+  bar.innerHTML = '<span class="hub-prev__dot"></span><span class="hub-prev__rule"></span>';
+  prev.appendChild(bar);
+
+  const type = document.createElement('div');
+  type.className = 'hub-prev__type';
+  type.textContent = v.fa;
+  prev.appendChild(type);
+
+  const mock = document.createElement('div');
+  mock.className = 'hub-prev__mock';
+  for (const row of MOCKS[v.mock]) {
+    const r = document.createElement('div');
+    r.className = 'hub-prev__row';
+    r.style.gridTemplateColumns = row.cols;
+    for (const kind of row.cells) {
+      const cell = document.createElement('div');
+      cell.className = 'hub-prev__cell' + (kind ? ' hub-prev__cell--' + kind : '');
+      r.appendChild(cell);
+    }
+    mock.appendChild(r);
+  }
+  prev.appendChild(mock);
+  card.appendChild(prev);
+
+  const body = document.createElement('div');
+  body.className = 'hub-body';
+  const no = document.createElement('div');
+  no.className = 'hub-no';
+  no.textContent = v.no + ' · ' + v.theme;
+  const name = document.createElement('div');
+  name.className = 'hub-name';
+  name.textContent = v.fa;
+  const nameEn = document.createElement('div');
+  nameEn.className = 'hub-name-en';
+  nameEn.textContent = v.en;
+  const note = document.createElement('p');
+  note.className = 'hub-note';
+  note.textContent = v.note;
+  const tags = document.createElement('div');
+  tags.className = 'hub-tags';
+  for (const t of v.tags) {
+    const tag = document.createElement('span');
+    tag.className = 'cat-tag';
+    tag.textContent = t;
+    tags.appendChild(tag);
+  }
+  body.append(no, name, nameEn, note, tags);
+  card.appendChild(body);
+  return card;
+}
+
+for (const v of STUDIES) document.getElementById('studies').appendChild(buildCard(v));
+for (const v of VARIANTS) grid.appendChild(buildCard(v));
+</script>
+</body>
+</html>
