@@ -716,7 +716,7 @@ html, body { height: 100%; overflow: hidden; }
 .ps-page--verso .ps-folio, .ps-page--verso .ps-head { flex-direction: row-reverse; }
 .ps-folio__n { font-family: var(--font-num); font-size: var(--t-sm); color: var(--ink); }
 
-.ps-body { min-height: 0; display: flex; flex-direction: column; gap: var(--s-3); }
+.ps-body { min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: var(--s-3); }
 
 /* ── shared newsprint furniture ───────────────────────────── */
 .ps-h {
@@ -775,11 +775,12 @@ html, body { height: 100%; overflow: hidden; }
 
 .ps-front-foot {
   margin-block-start: auto;
-  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: var(--s-4);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: var(--s-4);
+  align-items: start;
   padding-block-start: var(--s-3);
   border-block-start: var(--border-w-strong) solid var(--line-strong);
 }
-.ps-contents { display: grid; gap: var(--s-1); font-size: var(--t-xs); }
+.ps-contents { display: grid; gap: var(--s-1); font-size: var(--t-xs); line-height: 1.6; }
 .ps-contents .ps-lead__n { font-family: var(--font-num); color: var(--ink); }
 
 .ps-key {
@@ -789,6 +790,7 @@ html, body { height: 100%; overflow: hidden; }
   font-size: var(--t-xs); line-height: var(--lh-fa-tight); color: var(--ink-muted);
 }
 .ps-key__row { display: flex; align-items: center; gap: var(--s-2); }
+.ps-key__row > :first-child { flex: none; }
 .ps-key svg { width: 13px; height: 13px; fill: currentColor; flex: none; }
 
 /* ── the sale mark: the only red on the page ──────────────── */
@@ -2063,7 +2065,12 @@ html, body { height: 100%; overflow: hidden; }
     host.setAttribute('aria-label', (meta.title || '') + ' — ' + t.detail);
 
     var ratio = boxRatio(host);
-    var img = el('img', '', { src: posterUrl(d, ratio), alt: meta.title || '', loading: 'lazy' });
+    var src = posterUrl(d, ratio);
+    var img = el('img', '', { src: src, alt: meta.title || '' });
+    /* Deferring a data URI buys nothing — there is no request to save — and
+       it leaves artwork far down a long page unpainted in a static capture
+       or a print. Only a real file is worth deferring. */
+    if (src.slice(0, 5) !== 'data:') img.loading = 'lazy';
     host.appendChild(img);
 
     var cue = el('span', 'ck-cue');
@@ -2120,7 +2127,11 @@ html, body { height: 100%; overflow: hidden; }
     var s = document.createElement('style');
     s.id = 'ck-style';
     s.textContent = VIEWER_CSS;
-    document.head.appendChild(s);
+    /* First in the head, not last: these are defaults a page is meant to
+       override. Appended, they would win every specificity tie against the
+       page's own rules — .ck-media's height beat a host's aspect-ratio and
+       squashed the artwork to a sliver. */
+    document.head.insertBefore(s, document.head.firstChild);
   }
 
   var CatalogKit = {
@@ -2211,14 +2222,14 @@ html, body { height: 100%; overflow: hidden; }
       nameplateOver: 'فهرست فصلی تجاری — پوشاک کار، ابزار دستی، لوازم ایمنی',
       masthead: [
         'این دفتر فهرست کامل پوشاک کار، ابزار دستی و لوازم ایمنی نیم‌سال دوم است. اقلام نشان‌دار با «حراج فصل» تا پایان آذر با بهای همین فهرست عرضه می‌شوند. بهای درج‌شده بهای فهرست است؛ بهای نهایی پس از استعلام و بر پایهٔ تیراژ سفارش اعلام می‌شود.',
-        'هر قلم با کد کالا، یک خط شرح و سه مشخصهٔ فنی آمده است. برای دیدن دوخت درز، نشان استاندارد و جزئیات قفل و بند، روی تصویر هر قلم بزنید؛ تصویر بزرگ، فیلم کوتاه و نمای چرخشی همان‌جا باز می‌شود.',
-        'سفارش کارگاهی از ده دست به بالا با تخفیف پلکانی و چاپ نشان سازمان روی کار انجام می‌شود. ارسال به سراسر کشور از انبار خیابان خیام، و تحویل تهران در همان روز کاری.'
+        'هر قلم با کد کالا، یک خط شرح و سه مشخصهٔ فنی آمده است. برای دیدن دوخت درز و نشان استاندارد، روی تصویر بزنید؛ تصویر بزرگ، فیلم کوتاه و نمای چرخشی همان‌جا باز می‌شود.',
+        'سفارش کارگاهی از ده دست به بالا با تخفیف پلکانی و چاپ نشان سازمان انجام می‌شود. ارسال از انبار خیابان خیام و تحویل تهران در همان روز کاری.'
       ],
       contentsTitle: 'فهرست مندرجات',
       keyTitle: 'کلید نشانه‌ها',
-      keySale: 'بها تا پایان آذر ثابت است',
-      keyMedia: 'روی تصویر بزنید: نمای نزدیک، فیلم و چرخش',
-      keyPage: 'ورق زدن با کلید پیکان چپ و راست',
+      keySale: 'بها ثابت تا پایان آذر',
+      keyMedia: 'تصویر: نمای نزدیک، فیلم، چرخش',
+      keyPage: 'ورق زدن با کلید پیکان',
 
       sections: {
         wear: { name: 'پوشاک کار', stand: 'سه پارچه برای سه کار: کردورای ضدآب برای بیرون، پنبهٔ ضد شعله برای جوشکاری و کتان کجراه برای کار عمومی. همه تا سایز ۶۰ و با چاپ نشان سازمان.' },
@@ -2297,14 +2308,14 @@ html, body { height: 100%; overflow: hidden; }
       nameplateOver: 'Seasonal trade list — workwear, hand tools, safety equipment',
       masthead: [
         'This book is the full list of workwear, hand tools and safety equipment for the second half of the year. Items carrying the season sale mark hold this price until the end of Azar. Prices shown are list prices; the final price follows an inquiry and depends on order size.',
-        'Every item carries a product code, one line of description and three technical specifications. To see the seam, the standard mark and the detail of a catch or a strap, tap the picture: the large image, a short clip and a turning view open there.',
-        'Workshop orders of ten sets and over take a stepped discount and can be printed with your own mark. Nationwide dispatch from the Khayyam Street warehouse; same working day delivery inside Tehran.'
+        'Every item carries a product code, one line of description and three specifications. To see the seam and the standard mark, tap the picture: the large image, a short clip and a turning view open there.',
+        'Workshop orders of ten sets and over take a stepped discount and can carry your own mark. Dispatch from the Khayyam Street warehouse, same working day inside Tehran.'
       ],
       contentsTitle: 'Contents',
       keyTitle: 'Key to the marks',
-      keySale: 'Price held until the end of Azar',
-      keyMedia: 'Tap a picture: close view, clip and turning view',
-      keyPage: 'Turn pages with the left and right arrow keys',
+      keySale: 'Price held to the end of Azar',
+      keyMedia: 'Picture: close view, clip, turn',
+      keyPage: 'Page with the arrow keys',
 
       sections: {
         wear: { name: 'Workwear', stand: 'Three cloths for three jobs: waterproof Cordura outdoors, flame-retardant cotton for welding, heavy twill for general work. All to size 60, all printable with your own mark.' },

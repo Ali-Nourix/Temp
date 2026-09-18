@@ -131,11 +131,9 @@ html { scroll-padding-block-start: var(--s-9); }
 }
 .ed-band--flip .ed-band__media { grid-column: 5 / 13; }
 .ed-band__drift { position: absolute; inset: 0; }
-.ed-band__frame { position: absolute; inset: 0; }
 /* The artwork is drawn 4:5; a wider crop plus a light bias keeps the whole
    object inside the band and leaves headroom for the parallax drift. */
-.ed-band__frame > img,
-.ed-band__frame > canvas {
+.ed-band__frame > img {
   object-position: 50% 33%;
   transform: translate3d(0, var(--ed-drift, 0px), 0) scale(1.04);
 }
@@ -291,6 +289,7 @@ html { scroll-padding-block-start: var(--s-9); }
   .ed-cover { min-height: 0; }
   .ed-band { break-inside: avoid; }
   .ed-band__media { aspect-ratio: 4 / 3; }
+  .ed-band__frame .ck-cue { display: none; }
   .ed-rise, .ed-band__drift { transform: none !important; }
   .ed-band__frame > img { transform: none !important; }
 }
@@ -886,6 +885,7 @@ html { scroll-padding-block-start: var(--s-9); }
   function toggleInquiry(p) {
     var at = inquiry.indexOf(p);
     if (at === -1) inquiry.push(p); else inquiry.splice(at, 1);
+    statusEl.textContent = '';
     paintAddButton(p);
     paintInquiry();
   }

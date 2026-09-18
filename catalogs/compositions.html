@@ -628,6 +628,7 @@ a:hover { color: var(--ink); }
 
 
 </style>
+<script>document.documentElement.classList.add('js');</script>
 <style>
 /* ─────────────────────────────────────────────────────────────
    Fourteen compositions, one catalog. Each band lays the same
@@ -805,7 +806,10 @@ a:hover { color: var(--ink); }
 
 /* ── 09 · full-bleed band ────────────────────────────────── */
 .c09 { position: relative; display: grid; align-items: center; gap: var(--s-6); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: var(--surface-alt); }
-.c09__media { aspect-ratio: 4 / 3; }
+/* The frame crops; the picture inside is overscanned so it has room to
+   drift against the text without ever showing an edge. */
+.c09__media { position: relative; overflow: hidden; aspect-ratio: 4 / 3; }
+.c09__media > .av-media { position: absolute; inset-inline: 0; inset-block: -7%; height: 114%; aspect-ratio: auto; border-radius: 0; }
 .c09__text { display: grid; gap: var(--s-4); padding: var(--s-8) var(--page-pad); }
 @media (max-width: 760px) { .c09 { grid-template-columns: 1fr; } }
 
@@ -884,9 +888,90 @@ a:hover { color: var(--ink); }
 .av-colophon h3 { font-size: var(--t-sm); color: var(--ink-faint); font-weight: var(--w-regular); letter-spacing: var(--tracking-en-caps); text-transform: uppercase; margin-block-end: var(--s-2); }
 .av-colophon p { font-size: var(--t-sm); color: var(--ink-muted); margin: 0; max-width: 34ch; }
 
+/* ─────────────────────────────────────────────────────────────
+   Scroll reveals. Each arrangement gets the entrance its own
+   structure implies: a wide band wipes open, a grid cascades, a
+   spread turns like a page. Durations and easings are the design
+   system's, so a theme change re-times every one of them.
+
+   Only under .js — without script the page renders finished, never
+   stuck at opacity 0.
+   ───────────────────────────────────────────────────────────── */
+.js .rv { opacity: 0; transition-delay: calc(var(--i, 0) * var(--stagger)); }
+.js .rv.in { opacity: 1; }
+
+.js .rv--rise { transform: translateY(20px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+.js .rv--rise.in { transform: none; }
+
+/* Overshoots slightly on the way in — the pop the dense grids want. */
+.js .rv--pop { transform: translateY(14px) scale(0.965); transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-slow) var(--ease-soft); }
+.js .rv--pop.in { transform: none; }
+
+/* Enters from the inline start, which flips with the writing direction. */
+.js .rv--side { transform: translateX(-28px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+[dir="rtl"] .js .rv--side, .js [dir="rtl"] .rv--side { transform: translateX(28px); }
+.js .rv--side.in { transform: none; }
+
+.js .rv--side-alt { transform: translateX(28px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+[dir="rtl"] .js .rv--side-alt, .js [dir="rtl"] .rv--side-alt { transform: translateX(-28px); }
+.js .rv--side-alt.in { transform: none; }
+
+/* Opens the way a printed panel is unveiled: a curtain in the page's own
+   colour retracts off the picture. Done with a covering pseudo-element
+   rather than clipping the element itself — a box clipped to zero area
+   has no intersection rectangle, so the observer would never fire and the
+   picture would stay hidden for good. */
+.js .rv--wipe, .js .rv--wipe-up { opacity: 1; }
+.js .rv--wipe::after, .js .rv--wipe-up::after {
+  content: ""; position: absolute; inset: 0; z-index: 3;
+  background: var(--bg); pointer-events: none;
+  transition: transform var(--dur-page) var(--ease-inout);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+.js .rv--wipe::after { transform-origin: left center; }
+[dir="ltr"] .js .rv--wipe::after, .js [dir="ltr"] .rv--wipe::after { transform-origin: right center; }
+.js .rv--wipe.in::after { transform: scaleX(0); }
+
+.js .rv--wipe-up::after { transform-origin: center top; }
+.js .rv--wipe-up.in::after { transform: scaleY(0); }
+
+/* The frame holds still while the picture inside settles out of a push-in. */
+.js .rv--zoom { transition: opacity var(--dur-base) var(--ease-out); }
+.js .rv--zoom > img, .js .rv--zoom > .ck-media > img {
+  transform: scale(1.07);
+  transition: transform var(--dur-page) var(--ease-out);
+}
+.js .rv--zoom.in > img, .js .rv--zoom.in > .ck-media > img { transform: none; }
+
+/* A leaf turning on its spine. The origin follows the gutter side. */
+.js .rv--page { transform: perspective(1800px) rotateY(-14deg); transform-origin: 100% 50%; transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-page) var(--ease-inout); }
+[dir="ltr"] .js .rv--page, .js [dir="ltr"] .rv--page { transform: perspective(1800px) rotateY(14deg); transform-origin: 0 50%; }
+.js .rv--page.in { transform: none; }
+
+/* Rules draw themselves rather than fading, so a list fills in. */
+.js .rv--line { opacity: 1; transform: scaleX(0); transform-origin: right center; transition: transform var(--dur-slow) var(--ease-out); }
+[dir="ltr"] .js .rv--line, .js [dir="ltr"] .rv--line { transform-origin: left center; }
+.js .rv--line.in { transform: none; }
+
+/* The one scroll-linked move: the band's picture drifts against its
+   text as it passes. Driven by rAF, not by a transition. */
+.js [data-parallax] > * { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .rv,
+  .js .rv--zoom > img,
+  .js .rv--zoom > .ck-media > img {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .js .rv--wipe::after, .js .rv--wipe-up::after { display: none; }
+}
+
 @media print {
   .av-bar { display: none; }
   .av-band { padding-block: var(--s-5); break-inside: avoid; }
+  .rv { opacity: 1 !important; transform: none !important; clip-path: none !important; }
 }
 </style>
 </head>
@@ -2010,7 +2095,12 @@ a:hover { color: var(--ink); }
     host.setAttribute('aria-label', (meta.title || '') + ' — ' + t.detail);
 
     var ratio = boxRatio(host);
-    var img = el('img', '', { src: posterUrl(d, ratio), alt: meta.title || '', loading: 'lazy' });
+    var src = posterUrl(d, ratio);
+    var img = el('img', '', { src: src, alt: meta.title || '' });
+    /* Deferring a data URI buys nothing — there is no request to save — and
+       it leaves artwork far down a long page unpainted in a static capture
+       or a print. Only a real file is worth deferring. */
+    if (src.slice(0, 5) !== 'data:') img.loading = 'lazy';
     host.appendChild(img);
 
     var cue = el('span', 'ck-cue');
@@ -2067,7 +2157,11 @@ a:hover { color: var(--ink); }
     var s = document.createElement('style');
     s.id = 'ck-style';
     s.textContent = VIEWER_CSS;
-    document.head.appendChild(s);
+    /* First in the head, not last: these are defaults a page is meant to
+       override. Appended, they would win every specificity tie against the
+       page's own rules — .ck-media's height beat a host's aspect-ratio and
+       squashed the artwork to a sliver. */
+    document.head.insertBefore(s, document.head.firstChild);
   }
 
   var CatalogKit = {
@@ -2580,11 +2674,13 @@ function c08() {
 function c09() {
   const p = PRODUCTS[9];
   const wrap = el('div', 'c09');
-  const m = media(p, null);
-  m.classList.add('c09__media');
+  /* The picture sits in a clipping frame it can drift inside. */
+  const frame = el('div', 'c09__media');
+  frame.dataset.parallax = '26';
+  frame.appendChild(media(p, null));
   const text = el('div', 'c09__text');
   text.append(nameBlock(p, 'xl'), el('p', 'av-copy', pCopy(p)), specList(p), priceLine(p));
-  wrap.append(m, text);
+  wrap.append(frame, text);
   return wrap;
 }
 
@@ -2683,6 +2779,109 @@ function c14() {
 
 /* ── render ──────────────────────────────────────────────── */
 
+/* ── scroll reveals ──────────────────────────────────────────
+   One plan per arrangement: which elements enter, how, and whether
+   they cascade. Written here rather than inside the builders so the
+   builders stay about layout. */
+const REVEALS = {
+  c01: [{ sel: '.c01__text', type: 'side', stagger: true }, { sel: '.c01__media', type: 'wipe', stagger: true }],
+  c02: [{ sel: '.c02__media', type: 'zoom' }, { sel: '.c02__item > :not(.c02__media)', type: 'rise', stagger: true, per: '.c02__item' }],
+  c03: [{ sel: '.c03__item:nth-child(odd) > .c03__media', type: 'side' },
+        { sel: '.c03__item:nth-child(even) > .c03__media', type: 'side-alt' },
+        { sel: '.c03__text > *', type: 'rise', stagger: true, per: '.c03__text' }],
+  c04: [{ sel: '.c04__item', type: 'pop', stagger: true }],
+  c05: [{ sel: '.c05__item', type: 'pop', stagger: true }],
+  c06: [{ sel: '.c06__hero', type: 'zoom' }, { sel: '.c06__small', type: 'side', stagger: true }],
+  c07: [{ sel: '.c07__item', type: 'side', stagger: true }],
+  c08: [{ sel: '.c08__item .av-media', type: 'wipe-up', stagger: true }, { sel: '.c08__over', type: 'rise', stagger: true }],
+  c09: [{ sel: '.c09__media', type: 'wipe' }, { sel: '.c09__text > *', type: 'rise', stagger: true }],
+  c10: [{ sel: '.c10__item', type: 'rise', stagger: true }],
+  c11: [{ sel: '.c11__item', type: 'pop', stagger: true }],
+  c12: [{ sel: '.c12__page', type: 'page', stagger: true }],
+  c13: [{ sel: '.c13 tbody tr', type: 'rise', stagger: true }],
+  c14: [{ sel: '.c14__media', type: 'wipe' }, { sel: '.c14__entry', type: 'rise', stagger: true }]
+};
+
+const MAX_STAGGER = 8;
+let observer = null;
+
+function reveals() {
+  if (!('IntersectionObserver' in window)) return;
+  if (observer) observer.disconnect();
+  observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('in');
+      observer.unobserve(entry.target);
+    }
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+
+  for (const node of document.querySelectorAll('.rv')) observer.observe(node);
+}
+
+/* Give a band its reveal classes and cascade indices. `per` restarts
+   the count inside each parent, so a two-column list cascades within a
+   row rather than counting across the whole section. */
+function plan(band, key) {
+  const steps = REVEALS[key];
+  if (!steps) return;
+  for (const step of steps) {
+    if (step.per) {
+      for (const parent of band.querySelectorAll(step.per)) {
+        assign(parent.querySelectorAll(step.sel.split(' ').pop()), step);
+      }
+    } else {
+      assign(band.querySelectorAll(step.sel), step);
+    }
+  }
+}
+
+function assign(nodes, step) {
+  let i = 0;
+  for (const node of nodes) {
+    node.classList.add('rv', 'rv--' + step.type);
+    if (step.stagger) node.style.setProperty('--i', Math.min(i, MAX_STAGGER));
+    i++;
+  }
+}
+
+/* The label of every band rises before its contents. */
+function planLabel(label) {
+  for (const [i, node] of [...label.children].entries()) {
+    node.classList.add('rv', 'rv--rise');
+    node.style.setProperty('--i', i);
+  }
+}
+
+/* The single scroll-linked move, on the full-bleed band only. */
+function parallax() {
+  const targets = [...document.querySelectorAll('[data-parallax]')];
+  if (!targets.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let ticking = false;
+  const step = () => {
+    ticking = false;
+    const vh = window.innerHeight;
+    for (const node of targets) {
+      const box = node.getBoundingClientRect();
+      if (box.bottom < 0 || box.top > vh) continue;
+      /* -1 well above the fold, +1 well below it. */
+      const progress = ((box.top + box.height / 2) / vh - 0.5) * 2;
+      const shift = progress * parseFloat(node.dataset.parallax);
+      const inner = node.firstElementChild;
+      if (inner) inner.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0)';
+    }
+  };
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(step);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  step();
+}
+
 function render() {
   main.innerHTML = '';
   for (const comp of COMPOSITIONS) {
@@ -2693,12 +2892,17 @@ function render() {
       el('h2', 'av-label__name', lang === 'fa' ? comp.fa : comp.en),
       el('p', 'av-label__use', lang === 'fa' ? comp.faUse : comp.enUse)
     );
-    band.append(label, comp.build());
+    const body = comp.build();
+    band.append(label, body);
     main.appendChild(band);
+    planLabel(label);
+    plan(band, comp.build.name);
   }
   for (const node of document.querySelectorAll('[data-t]')) {
     node.textContent = t()[node.dataset.t];
   }
+  reveals();
+  parallax();
 }
 
 const themeBar = document.getElementById('themes');

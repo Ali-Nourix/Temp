@@ -1819,7 +1819,12 @@ a:hover { color: var(--ink); }
     host.setAttribute('aria-label', (meta.title || '') + ' — ' + t.detail);
 
     var ratio = boxRatio(host);
-    var img = el('img', '', { src: posterUrl(d, ratio), alt: meta.title || '', loading: 'lazy' });
+    var src = posterUrl(d, ratio);
+    var img = el('img', '', { src: src, alt: meta.title || '' });
+    /* Deferring a data URI buys nothing — there is no request to save — and
+       it leaves artwork far down a long page unpainted in a static capture
+       or a print. Only a real file is worth deferring. */
+    if (src.slice(0, 5) !== 'data:') img.loading = 'lazy';
     host.appendChild(img);
 
     var cue = el('span', 'ck-cue');
@@ -1876,7 +1881,11 @@ a:hover { color: var(--ink); }
     var s = document.createElement('style');
     s.id = 'ck-style';
     s.textContent = VIEWER_CSS;
-    document.head.appendChild(s);
+    /* First in the head, not last: these are defaults a page is meant to
+       override. Appended, they would win every specificity tie against the
+       page's own rules — .ck-media's height beat a host's aspect-ratio and
+       squashed the artwork to a sliver. */
+    document.head.insertBefore(s, document.head.firstChild);
   }
 
   var CatalogKit = {

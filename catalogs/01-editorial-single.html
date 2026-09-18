@@ -753,11 +753,9 @@ html { scroll-padding-block-start: var(--s-9); }
 }
 .ed-band--flip .ed-band__media { grid-column: 5 / 13; }
 .ed-band__drift { position: absolute; inset: 0; }
-.ed-band__frame { position: absolute; inset: 0; }
 /* The artwork is drawn 4:5; a wider crop plus a light bias keeps the whole
    object inside the band and leaves headroom for the parallax drift. */
-.ed-band__frame > img,
-.ed-band__frame > canvas {
+.ed-band__frame > img {
   object-position: 50% 33%;
   transform: translate3d(0, var(--ed-drift, 0px), 0) scale(1.04);
 }
@@ -913,6 +911,7 @@ html { scroll-padding-block-start: var(--s-9); }
   .ed-cover { min-height: 0; }
   .ed-band { break-inside: avoid; }
   .ed-band__media { aspect-ratio: 4 / 3; }
+  .ed-band__frame .ck-cue { display: none; }
   .ed-rise, .ed-band__drift { transform: none !important; }
   .ed-band__frame > img { transform: none !important; }
 }
@@ -2088,7 +2087,12 @@ html { scroll-padding-block-start: var(--s-9); }
     host.setAttribute('aria-label', (meta.title || '') + ' — ' + t.detail);
 
     var ratio = boxRatio(host);
-    var img = el('img', '', { src: posterUrl(d, ratio), alt: meta.title || '', loading: 'lazy' });
+    var src = posterUrl(d, ratio);
+    var img = el('img', '', { src: src, alt: meta.title || '' });
+    /* Deferring a data URI buys nothing — there is no request to save — and
+       it leaves artwork far down a long page unpainted in a static capture
+       or a print. Only a real file is worth deferring. */
+    if (src.slice(0, 5) !== 'data:') img.loading = 'lazy';
     host.appendChild(img);
 
     var cue = el('span', 'ck-cue');
@@ -2145,7 +2149,11 @@ html { scroll-padding-block-start: var(--s-9); }
     var s = document.createElement('style');
     s.id = 'ck-style';
     s.textContent = VIEWER_CSS;
-    document.head.appendChild(s);
+    /* First in the head, not last: these are defaults a page is meant to
+       override. Appended, they would win every specificity tie against the
+       page's own rules — .ck-media's height beat a host's aspect-ratio and
+       squashed the artwork to a sliver. */
+    document.head.insertBefore(s, document.head.firstChild);
   }
 
   var CatalogKit = {
@@ -2690,6 +2698,7 @@ html { scroll-padding-block-start: var(--s-9); }
   function toggleInquiry(p) {
     var at = inquiry.indexOf(p);
     if (at === -1) inquiry.push(p); else inquiry.splice(at, 1);
+    statusEl.textContent = '';
     paintAddButton(p);
     paintInquiry();
   }

@@ -648,6 +648,9 @@ body { overflow-wrap: break-word; }
   font-family: var(--font-en-ui); line-height: var(--lh-en-body); letter-spacing: var(--tracking-en);
 }
 [dir="ltr"] h4 { font-family: var(--font-en-display); line-height: var(--lh-en-tight); }
+[dir="ltr"] .sp-bar__name, [dir="ltr"] .sp-cover__sub, [dir="ltr"] .sp-plate__name {
+  font-family: var(--font-en-display);
+}
 
 .sp-skip {
   position: fixed; z-index: 90; inset-block-start: var(--s-3); inset-inline-start: var(--s-4);
@@ -911,7 +914,6 @@ body { overflow-wrap: break-word; }
   padding: var(--s-3); background: var(--bg-alt);
   border: var(--border-w) solid var(--line); border-radius: var(--radius-card);
 }
-.sp-row + .sp-row { margin-block-start: var(--s-3); }
 .sp-row img { width: 56px; aspect-ratio: var(--ratio-media); object-fit: cover; border-radius: var(--radius-media); }
 .sp-row__name { font-size: var(--t-sm); }
 .sp-row__meta { display: flex; flex-wrap: wrap; gap: var(--s-2); font-size: var(--t-xs); color: var(--ink-muted); }
@@ -2130,7 +2132,12 @@ body { overflow-wrap: break-word; }
     host.setAttribute('aria-label', (meta.title || '') + ' — ' + t.detail);
 
     var ratio = boxRatio(host);
-    var img = el('img', '', { src: posterUrl(d, ratio), alt: meta.title || '', loading: 'lazy' });
+    var src = posterUrl(d, ratio);
+    var img = el('img', '', { src: src, alt: meta.title || '' });
+    /* Deferring a data URI buys nothing — there is no request to save — and
+       it leaves artwork far down a long page unpainted in a static capture
+       or a print. Only a real file is worth deferring. */
+    if (src.slice(0, 5) !== 'data:') img.loading = 'lazy';
     host.appendChild(img);
 
     var cue = el('span', 'ck-cue');
@@ -2187,7 +2194,11 @@ body { overflow-wrap: break-word; }
     var s = document.createElement('style');
     s.id = 'ck-style';
     s.textContent = VIEWER_CSS;
-    document.head.appendChild(s);
+    /* First in the head, not last: these are defaults a page is meant to
+       override. Appended, they would win every specificity tie against the
+       page's own rules — .ck-media's height beat a host's aspect-ratio and
+       squashed the artwork to a sliver. */
+    document.head.insertBefore(s, document.head.firstChild);
   }
 
   var CatalogKit = {
@@ -2730,17 +2741,16 @@ body { overflow-wrap: break-word; }
   }
 
   function setSheet(open) {
+    if (open) lastFocus = document.activeElement;
     sheet.dataset.open = open ? 'true' : 'false';
     scrim.dataset.open = open ? 'true' : 'false';
     sheet.setAttribute('aria-hidden', open ? 'false' : 'true');
+    /* the page keeps its scroll position; only the sheet scrolls while it is up */
+    document.documentElement.style.overflow = open ? 'hidden' : '';
     document.querySelectorAll('[data-region]').forEach(function (n) { n.inert = open; });
-    if (open) {
-      lastFocus = document.activeElement;
-      document.getElementById('sp-close-sheet').focus();
-    } else if (lastFocus) {
-      lastFocus.focus();
-      lastFocus = null;
-    }
+    /* the sheet is not focusable until the style change has been applied */
+    if (open) requestAnimationFrame(function () { document.getElementById('sp-close-sheet').focus(); });
+    else if (lastFocus) { lastFocus.focus(); lastFocus = null; }
   }
 
   openSheetBtn.addEventListener('click', function () { setSheet(true); });

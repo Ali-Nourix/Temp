@@ -10,15 +10,17 @@
    Four low-chroma hues, each mixed down from a system colour so the
    page never introduces a colour of its own. Text stays on --ink. */
 [data-cat] {
-  --cat-glass: color-mix(in oklab, var(--cat-src) 11%, var(--surface));
+  --cat-glass: color-mix(in oklab, var(--cat-src) var(--cat-mix), var(--surface));
   --cat-edge: color-mix(in oklab, var(--cat-src) 26%, var(--line));
   --cat-dot: color-mix(in oklab, var(--cat-src) 72%, var(--ink-faint));
 }
-[data-cat="all"] { --cat-src: var(--ink-faint); }
-[data-cat="scent"] { --cat-src: var(--danger); }
-[data-cat="skin"] { --cat-src: var(--warn); }
-[data-cat="bath"] { --cat-src: var(--ok); }
-[data-cat="home"] { --cat-src: var(--accent); }
+/* The four system colours differ in chroma, so each gets the share of the
+   surface that lands them at the same softness. */
+[data-cat="all"] { --cat-src: var(--ink-faint); --cat-mix: 10%; }
+[data-cat="scent"] { --cat-src: var(--danger); --cat-mix: 9%; }
+[data-cat="skin"] { --cat-src: var(--warn); --cat-mix: 12%; }
+[data-cat="bath"] { --cat-src: var(--ok); --cat-mix: 15%; }
+[data-cat="home"] { --cat-src: var(--accent); --cat-mix: 13%; }
 
 /* ── page frame ───────────────────────────────────────────
    The light field the glass sits on: decorative, generated, and the
@@ -163,7 +165,7 @@ body { position: relative; min-height: 100vh; }
   content: ""; width: 7px; height: 7px; border-radius: var(--radius-pill);
   background: var(--cat-dot); flex: none;
 }
-.gx-face__price { font-size: var(--t-sm); }
+.gx-face__price { display: inline-flex; align-items: baseline; gap: var(--s-1); font-size: var(--t-sm); }
 
 /* ── expanded panel ───────────────────────────────────── */
 .gx-panel { position: relative; padding: clamp(var(--s-4), 1.8vw, var(--s-6)); }
@@ -174,13 +176,13 @@ body { position: relative; min-height: 100vh; }
   box-shadow: var(--shadow-lift);
   animation: cat-fade var(--dur-base) var(--ease-out) both;
 }
-.gx-panel:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-card); }
 .gx-phead {
   position: relative; z-index: 1;
   display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--s-3) var(--s-5);
   padding-block-end: var(--s-4); margin-block-end: var(--s-5);
   border-block-end: var(--border-w) solid var(--cat-edge);
 }
+.gx-phead__titles { min-width: 0; }
 .gx-phead__meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-2) var(--s-3); margin-block-start: 2px; }
 .gx-phead .cat-price { align-self: center; margin-inline-start: auto; font-size: var(--t-lg); }
 .gx-panel__inner {
@@ -293,9 +295,8 @@ body { position: relative; min-height: 100vh; }
 }
 
 @media print {
-  .gx-aurora, .gx-sheet, .gx-scrim, .gx-skip, .gx-bar, .gx-filters { display: none !important; }
-  .gx-face, .gx-panel::before { box-shadow: none; backdrop-filter: none; }
-  .gx-face__cue { display: none; }
+  .gx-aurora, .gx-sheet, .gx-scrim, .gx-skip, .gx-filters, .gx-face__cue { display: none !important; }
+  .gx-face, .gx-panel::before { box-shadow: none; }
 }
 </style>
 </head>
@@ -426,7 +427,6 @@ body { position: relative; min-height: 100vh; }
       footValid: 'قیمت‌ها تا پایان آذر ۱۴۰۵ معتبر است.',
       all: 'همه',
       cats: { scent: 'عطر', skin: 'مراقبت پوست', bath: 'آیین حمام', home: 'عطر خانه' },
-      open: 'باز کردن',
       close: 'بستن',
       closeItem: 'بستن این محصول',
       gallery: 'تصویرهای محصول',
@@ -468,7 +468,6 @@ body { position: relative; min-height: 100vh; }
       footValid: 'Prices hold until the end of December 2026.',
       all: 'All',
       cats: { scent: 'Fragrance', skin: 'Skincare', bath: 'Bath ritual', home: 'Home scent' },
-      open: 'Open',
       close: 'Close',
       closeItem: 'Close this product',
       gallery: 'Product images',
@@ -869,7 +868,11 @@ body { position: relative; min-height: 100vh; }
     var meta = el('span', 'gx-face__meta');
     var sku = el('span', 'cat-sku gx-face__sku');
     sku.textContent = p.sku;
-    var price = el('span', 'gx-face__price gx-num');
+    var price = el('span', 'gx-face__price');
+    var priceFace = el('span', 'gx-num');
+    var unitFace = el('span', 'cat-price__unit');
+    price.appendChild(priceFace);
+    price.appendChild(unitFace);
     meta.appendChild(sku);
     meta.appendChild(price);
     body.appendChild(name);
@@ -951,7 +954,7 @@ body { position: relative; min-height: 100vh; }
 
     var actions = el('div', 'gx-actions');
     var add = el('button', 'cat-btn gx-add', { type: 'button', 'aria-pressed': 'false' });
-    var zoom = el('button', 'cat-btn cat-btn--ghost gx-zoom', { type: 'button' });
+    var zoom = el('button', 'cat-btn cat-btn--ghost', { type: 'button' });
     actions.appendChild(add);
     actions.appendChild(zoom);
 
@@ -970,10 +973,8 @@ body { position: relative; min-height: 100vh; }
     panel.appendChild(head);
     panel.appendChild(inner);
 
-    var tile = el('article', 'gx-tile');
-    tile.appendChild(face);
-    tile.appendChild(panel);
-    cell.appendChild(tile);
+    cell.appendChild(face);
+    cell.appendChild(panel);
     grid.appendChild(cell);
 
     face.addEventListener('click', function () { toggle(card); });
@@ -984,7 +985,8 @@ body { position: relative; min-height: 100vh; }
     });
 
     Object.assign(card, {
-      cell: cell, face: face, faceMedia: media, name: name, price: price,
+      cell: cell, face: face, faceMedia: media, name: name,
+      priceFace: priceFace, unitFace: unitFace,
       panel: panel, gallery: gallery, stage: stage, thumbs: thumbs,
       eyebrow: eyebrow, h3: h3, alt: alt, lede: lede, caption: caption, tbody: tbody,
       swLabel: swLabel, swBtns: swBtns, sizeLabel: sizeLabel, sizeBtns: sizeBtns,
@@ -1033,8 +1035,8 @@ body { position: relative; min-height: 100vh; }
   function paintCard(card) {
     var p = card.p, s = L(p);
     card.name.textContent = s.name;
-    card.price.textContent = money(p.price);
-    card.face.setAttribute('aria-label', s.name + ' — ' + (card.open ? t().closeItem : t().open));
+    card.priceFace.textContent = money(p.price);
+    card.unitFace.textContent = t().unit;
     card.eyebrow.textContent = t().cats[p.cat];
     card.h3.textContent = s.name;
     card.alt.textContent = s.alt;
@@ -1139,7 +1141,6 @@ body { position: relative; min-height: 100vh; }
     card.cell.toggleAttribute('data-open', open);
     card.panel.hidden = !open;
     card.face.setAttribute('aria-expanded', String(open));
-    card.face.setAttribute('aria-label', L(card.p).name + ' — ' + (open ? t().closeItem : t().open));
   }
 
   function toggle(card) {
@@ -1153,11 +1154,14 @@ body { position: relative; min-height: 100vh; }
     }
   }
 
+  /* Bring the expansion under the sticky bar, but never so far that its
+     own top scrolls away. */
   function keepInView(cell) {
+    var pad = 16;
     var bar = document.querySelector('.gx-bar').getBoundingClientRect().height;
     var r = cell.getBoundingClientRect();
-    var over = r.top - bar - 16;
-    var under = r.bottom - window.innerHeight + 16;
+    var over = r.top - bar - pad;
+    var under = r.bottom - window.innerHeight + pad;
     var by = over < 0 ? over : under > 0 ? Math.min(under, over) : 0;
     if (by) window.scrollBy({ top: by, behavior: reduced() ? 'auto' : 'smooth' });
   }

@@ -25,7 +25,15 @@
      used here as layout strips are not reading text. */
   .lx-mast__mark, .lx-corner, .lx-cue, .lx-eyebrow, .lx-num, .lx-foot,
   .lx-price, .lx-colophon, .lx-hero__kicker, .lx-hero__latin, .lx-hero__coll { max-width: none; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  /* The theme re-declares the duration tokens after the design system's
+     reduced-motion block, so they have to be collapsed again here. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    [data-theme="luxe"] {
+      --dur-base: 1ms; --dur-slow: 1ms; --dur-page: 1ms;
+      --stagger: 0ms; --hover-media-scale: 1;
+    }
+  }
 
   /* ── fixed chrome ───────────────────────────── */
 
@@ -73,9 +81,15 @@
   .lx-rail ol {
     position: relative; display: grid; margin: 0; padding: 0; list-style: none;
   }
-  .lx-rail ol::before {
-    content: ""; position: absolute; inset-block: 8px; inset-inline-end: 0;
-    width: 1px; background: color-mix(in oklab, var(--line) 80%, transparent);
+  .lx-rail ol::before, .lx-rail ol::after {
+    content: ""; position: absolute; inset-block-start: 8px; inset-inline-end: 0;
+    width: 1px; height: calc(100% - 16px);
+  }
+  .lx-rail ol::before { background: color-mix(in oklab, var(--line) 80%, transparent); }
+  .lx-rail ol::after {
+    background: var(--accent); transform-origin: 50% 0;
+    transform: scaleY(var(--progress, 0));
+    transition: transform var(--dur-slow) var(--ease-inout);
   }
   /* flex-end is the outer edge of the rail in both directions, so the ticks
      always grow inward from the spine. */
@@ -146,6 +160,10 @@
     font-family: var(--font-fa-ui); font-size: var(--t-xs); letter-spacing: var(--tracking-fa);
   }
   .lx-plate .ck-bigplay { border-radius: 0; background: color-mix(in oklab, var(--bg) 60%, transparent); }
+  /* Full-bleed on narrow screens, so the cue moves off the type. */
+  @media (max-width: 900px) {
+    .lx-plate .ck-cue { inset-block: calc(var(--lx-mast-h) + var(--s-4)) auto; }
+  }
 
   /* A watermark of the running index, cropped by two edges so it reads as a
      layer of the page rather than as stray type. */
@@ -187,7 +205,6 @@
   /* Without this the nowrap name would inflate the track and drag every
      other row out with it; instead it overflows the column on purpose. */
   .lx-body > * { min-width: 0; }
-  @media (max-width: 900px) { .lx-body { width: min(620px, 92vw); } }
 
   .lx-eyebrow {
     display: flex; align-items: center; gap: var(--s-3); margin: 0;
@@ -225,6 +242,22 @@
   .lx-lede {
     margin: 0; max-width: 46ch; color: var(--ink-muted); font-size: var(--t-md);
     text-shadow: 0 2px 18px color-mix(in oklab, var(--bg) 70%, transparent);
+  }
+
+  /* Narrow viewports put the media behind the whole column, so the veil has
+     to carry the type and the name can no longer afford to bleed. */
+  @media (max-width: 900px) {
+    .lx-body { width: 100%; }
+    .lx-head { gap: var(--s-3); }
+    .lx-name { white-space: normal; }
+    [dir="rtl"] .lx-name { font-size: clamp(2.4rem, 8.6vw, 4rem); }
+    [dir="ltr"] .lx-name { font-size: clamp(2rem, 7.4vw, 3.2rem); }
+    .lx-sect--product .lx-veil {
+      background:
+        linear-gradient(to bottom, color-mix(in oklab, var(--bg) 88%, transparent), transparent 24%),
+        linear-gradient(to top, color-mix(in oklab, var(--bg) 96%, transparent) 32%,
+          color-mix(in oklab, var(--bg) 58%, transparent) 64%, transparent 88%);
+    }
   }
 
   .lx-specs { max-width: 480px; }
@@ -456,7 +489,6 @@
     </div>
     <p class="lx-cue" aria-hidden="true">
       <span data-i18n="scrollHint">بچرخانید یا کلید ↓</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5v15M6.4 13.6 12 19.5l5.6-5.9"/></svg>
     </p>
   </section>
 
@@ -566,7 +598,6 @@
       look: 'نمای نزدیک',
       photo: 'عکس', video: 'ویدیو', spin: 'چرخش ۳۶۰',
       mediaGroup: 'رسانهٔ قطعه',
-      price: 'قیمت', sku: 'کد',
       dialogTitle: 'استعلام قیمت',
       dialogLede: 'قیمت و زمان تحویل را برایتان می‌فرستیم.',
       dialogLedeAll: 'قطعهٔ مورد نظرتان را در یادداشت بنویسید.',
@@ -614,7 +645,6 @@
       look: 'Look closer',
       photo: 'Still', video: 'Film', spin: '360 spin',
       mediaGroup: 'Piece media',
-      price: 'Price', sku: 'Reference',
       dialogTitle: 'Price request',
       dialogLede: 'We will send the price and the lead time.',
       dialogLedeAll: 'Name the piece you are after in the note.',
@@ -1152,6 +1182,7 @@
 
   function markCurrent(i) {
     current = i;
+    rail.style.setProperty('--progress', String(i / (sections.length - 1)));
     rail.querySelectorAll('.lx-rail__btn').forEach(function (b, j) {
       if (j === i) b.setAttribute('aria-current', 'true');
       else b.removeAttribute('aria-current');
@@ -1315,6 +1346,7 @@
   document.querySelectorAll('.cat-lang button').forEach(function (b) {
     b.addEventListener('click', function () { if (b.dataset.lang !== lang) applyLang(b.dataset.lang); });
   });
+  document.querySelector('.lx-cue').insertAdjacentHTML('beforeend', svg('down'));
   document.getElementById('enter').addEventListener('click', function () { go(1); });
   document.getElementById('ask-all').addEventListener('click', function () { openDialog(null); });
   document.getElementById('to-top').addEventListener('click', function () { go(0); });
