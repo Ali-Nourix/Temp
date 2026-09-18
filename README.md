@@ -7,7 +7,7 @@ shared design system and one shared interaction layer.
 
 **<https://ali-nourix.github.io/Temp/>**
 
-صفحه‌ی اول، نمایش قابلیت‌هاست: شانزده بخش، هر کدام یک قابلیت HTML، CSS یا
+صفحه‌ی اول، نمایش قابلیت‌هاست: هفده بخش، هر کدام یک قابلیت HTML، CSS یا
 JavaScript برای کاتالوگ دیجیتال، زنده و قابل امتحان. فهرست نمونه‌های دیگر در
 **<https://ali-nourix.github.io/Temp/hub.html>** است. اگر لینک باز نشد، یعنی
 GitHub Pages هنوز روشن نشده است:
@@ -26,7 +26,7 @@ GitHub Pages هنوز روشن نشده است:
 
 | | |
 |---|---|
-| [`index.html`](index.html) | نمایش قابلیت‌ها: ۱۶ بخش زنده، از فیلتر و زوم تا ورق‌زدن سه‌بعدی، View Transitions، Popover، dialog، حالت تیره و چاپ |
+| [`index.html`](index.html) | نمایش قابلیت‌ها: ۱۷ بخش زنده، از فیلتر و ده چیدمان روی شبکه‌ی مدولار ۱۲ ستونه تا زوم، ورق‌زدن سه‌بعدی، View Transitions، Popover، dialog، حالت تیره و چاپ |
 | [`hub.html`](hub.html) | فهرست همه‌ی نمونه‌ها با پیش‌نمایش هر کدام در تم خودش |
 | [`catalogs/avand.html`](catalogs/avand.html) | نسخه‌ی طراحی‌شده‌ی کاتالوگ آوند: پالت از خود محصول‌ها، نمایش نسخ، قطعه‌ی حاشیه‌نویسی‌شده، حالت تیره، استعلام قیمت |
 | [`catalogs/compositions.html`](catalogs/compositions.html) | ورقِ نمونه: یک برند، ۱۴ ترکیب‌بندی، هر کدام با انیمیشن ورود خودش |
