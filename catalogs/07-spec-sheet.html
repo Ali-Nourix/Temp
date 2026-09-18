@@ -597,7 +597,10 @@ a:hover { color: var(--ink); }
 
 /* انیمیشن‌های نام‌دار سیستم. هیچ انیمیشن تازه‌ای نساز — یکی از این‌ها را استفاده کن. */
 @keyframes cat-fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes cat-pop { from { opacity: 0; transform: translate(-50%, -50%) scale(0.965); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+/* Centring belongs to .cat-dialog's `translate` property; the entrance only
+   scales. Carrying the offset here as well composed the two into a full
+   width-and-height shift once the animation filled forwards. */
+@keyframes cat-pop { from { opacity: 0; transform: scale(0.965); } to { opacity: 1; transform: scale(1); } }
 @keyframes cat-sheet { from { transform: translateY(14px); opacity: 0.6; } to { transform: none; opacity: 1; } }
 @keyframes cat-reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @keyframes cat-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
@@ -927,12 +930,6 @@ body { font-size: var(--t-sm); }
 .sp-dlg {
   display: grid; grid-template-rows: auto minmax(0, 1fr); gap: var(--s-3);
   max-height: 86vh; padding: var(--s-5); overflow: hidden;
-}
-@media (min-width: 760px) {
-  /* ds-core centres .cat-dialog with the `translate` property *and* a
-     keyframe `transform`; the two compose, so the dialog lands a full
-     width and height off. Centring is left to the keyframe alone. */
-  .sp-dlg { translate: none; transform: translate(-50%, -50%); }
 }
 .sp-dlg__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
 .sp-dlg__title { font-size: var(--t-md); }

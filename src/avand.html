@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa" data-theme="avand">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>آوند، مجموعه‌ی پاییز ۱۴۰۴</title>
+<meta name="description" content="کاتالوگ مجموعه‌ی پاییز آوند: سرامیک، چوب، نساجی، روشنایی، چرم و برنج، ساخته در کارگاه‌های تهران، یزد و کاشان.">
+<link rel="stylesheet" href="../shared/ds-core.css">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+/* ─────────────────────────────────────────────────────────────
+   Âvand. A workshop catalog of ceramics, wood and textile.
+
+   The palette is taken from the pieces themselves: the natural
+   indigo of the dye lot the rug copy names, on the cool grey-white
+   of an ash glaze. One accent, used the same way everywhere. Display
+   type is a naskh (Markazi), the hand the manuscripts of Kashan and
+   Yazd were written in; the UI stays in Vazirmatn.
+
+   Shape rule: surfaces are square; the two toggles keep the design
+   system's pill. Nothing else is rounded.
+   ───────────────────────────────────────────────────────────── */
+[data-theme="avand"] {
+  --bg: #f2f4f1;
+  --bg-alt: #f8f9f7;
+  --surface: #f8f9f7;
+  --surface-alt: #e5e9e4;
+  --ink: #15181a;
+  --ink-muted: #4c5358;
+  --ink-faint: #5a6268;
+  --line: #c9cfcb;
+  --line-strong: #15181a;
+  --accent: #2c3e78;
+  --accent-soft: #dde2f1;
+  --on-accent: #f2f4f1;
+  --focus: #2c3e78;
+  --overlay: rgb(21 24 26 / 0.62);
+
+  --font-fa-display: var(--fam-markazi);
+  --font-fa-ui: var(--fam-vazir);
+  --font-en-display: var(--fam-cormorant);
+  --font-en-ui: var(--fam-manrope);
+  --font-num: var(--fam-plexmono);
+
+  --radius-media: 0px; --radius-card: 0px; --radius-control: 0px;
+  --border-w: 1px;
+  --shadow-1: none;
+  --shadow-2: 0 18px 44px -24px rgb(21 24 26 / 0.22);
+  --shadow-lift: 0 26px 60px -28px rgb(21 24 26 / 0.28);
+  --hover-media-scale: 1.02;
+  --gutter: 28px;
+  --lh-fa-tight: 1.25;
+}
+@media (prefers-color-scheme: dark) {
+  [data-theme="avand"] {
+    --bg: #161a1c;
+    --bg-alt: #1b2022;
+    --surface: #1b2022;
+    --surface-alt: #1f2427;
+    --ink: #eceeeb;
+    --ink-muted: #b4bab7;
+    --ink-faint: #9aa19e;
+    --line: #343b3f;
+    --line-strong: #eceeeb;
+    --accent: #9fb0e6;
+    --accent-soft: #263050;
+    --on-accent: #0f1320;
+    --focus: #9fb0e6;
+    --overlay: rgb(8 10 12 / 0.74);
+    --shadow-2: 0 18px 44px -24px rgb(0 0 0 / 0.6);
+    --shadow-lift: 0 26px 60px -28px rgb(0 0 0 / 0.7);
+  }
+}
+
+html, body { overflow-x: clip; }
+body { background: var(--bg); }
+
+.skip {
+  position: absolute; inset-block-start: -100%; inset-inline-start: var(--s-4);
+  padding: var(--s-3) var(--s-4); background: var(--accent); color: var(--on-accent);
+  z-index: 100;
+}
+.skip:focus { inset-block-start: var(--s-3); }
+
+/* ── shell ───────────────────────────────────────────────── */
+.av-wrap { max-width: var(--page-max); margin-inline: auto; padding-inline: var(--page-pad); }
+.av-section { padding-block: var(--s-9); }
+.av-section + .av-section { border-block-start: var(--border-w) solid var(--line); }
+.av-section--flush { padding-block: 0; border: 0; }
+
+/* Section header: the category name, in the display hand, and one
+   line about the material. No eyebrow, no number. */
+.av-head { display: grid; gap: var(--s-2); margin-block-end: var(--s-7); max-width: 60ch; }
+.av-head h2 { font-size: var(--t-2xl); font-weight: var(--w-regular); line-height: 1.1; }
+.av-head p { margin: 0; font-size: var(--t-base); color: var(--ink-muted); }
+
+/* The name of the arrangement each section uses. Hidden unless review
+   mode is on; then it sits as a small caption after the section. */
+.av-caption {
+  display: none; margin-block-start: var(--s-6);
+  font-family: var(--font-num); font-size: var(--t-sm); color: var(--ink-faint);
+  direction: ltr; text-align: start;
+}
+:root[data-review="on"] .av-caption { display: block; }
+
+/* ── toolbar ─────────────────────────────────────────────── */
+.av-bar {
+  position: sticky; inset-block-start: 0; z-index: 30;
+  display: flex; align-items: center; gap: var(--s-4);
+  min-height: 60px; padding: var(--s-2) var(--page-pad);
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-block-end: var(--border-w) solid var(--line);
+}
+@supports not (backdrop-filter: blur(1px)) { .av-bar { background: var(--bg); } }
+@media (prefers-reduced-transparency: reduce) { .av-bar { background: var(--bg); backdrop-filter: none; } }
+.av-bar__mark { font-family: var(--font-fa-display); font-size: var(--t-lg); line-height: 1; }
+[dir="ltr"] .av-bar__mark { font-family: var(--font-en-display); }
+.av-bar__sep { flex: 1; }
+.av-bar .cat-btn, .av-bar .cat-chip { white-space: nowrap; }
+.av-review { display: none; }
+@media (min-width: 720px) { .av-review { display: inline-flex; } }
+.av-review[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.av-inq { position: relative; }
+.av-inq__n {
+  display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding-inline: 6px;
+  font-family: var(--font-num); font-size: var(--t-xs); line-height: 1;
+  background: var(--accent); color: var(--on-accent); border-radius: var(--radius-pill);
+}
+.av-inq__n:empty { display: none; }
+
+/* ── cover: the annotated piece ──────────────────────────── */
+/* Wide: the piece holds the inline-start column for the full height, the
+   masthead and its notes stack beside it. Narrow: masthead, then the
+   piece, then the notes it refers to, in reading order. */
+.av-cover {
+  display: grid; gap: var(--s-6) var(--s-8);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "piece text" "piece notes";
+  align-items: start; padding-block: var(--s-8) var(--s-9);
+}
+.av-cover__text { grid-area: text; display: grid; gap: var(--s-5); align-content: start; }
+.av-piece { grid-area: piece; }
+.av-notes { grid-area: notes; }
+@media (max-width: 800px) {
+  .av-cover { grid-template-columns: 1fr; grid-template-rows: auto; grid-template-areas: "text" "piece" "notes"; }
+}
+.av-brand {
+  font-family: var(--font-fa-display); font-weight: var(--w-regular);
+  font-size: var(--t-3xl); line-height: 0.95; letter-spacing: -0.01em;
+}
+[dir="ltr"] .av-brand { font-family: var(--font-en-display); }
+.av-season { font-size: var(--t-md); color: var(--ink-muted); }
+.av-lede { margin: 0; font-size: var(--t-md); line-height: 1.8; color: var(--ink); max-width: 40ch; }
+
+/* The image is kept at the artwork's own 4:5 so the hotspot
+   coordinates, written for that frame, land on the parts they name. */
+.av-piece { display: grid; gap: var(--s-4); }
+.av-piece__frame { position: relative; aspect-ratio: var(--ratio-media); background: var(--surface-alt); }
+.av-piece__frame .av-media { position: absolute; inset: 0; aspect-ratio: auto; }
+.av-dot {
+  position: absolute; z-index: 2; width: 30px; height: 30px; margin: -15px 0 0 -15px; padding: 0;
+  display: grid; place-items: center; cursor: pointer;
+  font-family: var(--font-num); font-size: 12px;
+  background: var(--accent); color: var(--on-accent);
+  border: 2px solid var(--bg); border-radius: var(--radius-pill);
+  transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.av-dot::after {
+  content: ""; position: absolute; inset: -6px; border-radius: inherit;
+  border: 1px solid var(--accent); opacity: 0.5;
+  transition: inset var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+}
+.av-dot:hover, .av-dot[aria-pressed="true"] { transform: scale(1.12); }
+.av-dot[aria-pressed="true"]::after { inset: -10px; opacity: 1; }
+.av-dot:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+.av-notes { display: grid; gap: 0; border-block-start: var(--border-w) solid var(--line); }
+.av-note {
+  display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: var(--s-4); align-items: baseline;
+  padding-block: var(--s-4); border-block-end: var(--border-w) solid var(--line);
+  background: none; border-inline: 0; border-block-start: 0; text-align: start; font: inherit; color: inherit;
+  cursor: pointer; transition: background var(--dur-fast) var(--ease-out);
+}
+.av-note:hover { background: var(--surface-alt); }
+.av-note[aria-pressed="true"] { background: var(--accent-soft); }
+.av-note:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.av-note__n { font-family: var(--font-num); font-size: var(--t-sm); color: var(--accent); }
+.av-note__t { font-family: var(--font-fa-display); font-size: var(--t-lg); line-height: 1.2; }
+[dir="ltr"] .av-note__t { font-family: var(--font-en-display); }
+.av-note__b { grid-column: 2; margin: 0; font-size: var(--t-sm); color: var(--ink-muted); }
+.av-piece__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; }
+
+/* ── shared product atoms ────────────────────────────────── */
+.av-media {
+  position: relative; overflow: hidden;
+  aspect-ratio: var(--ratio-media);
+  background: var(--surface-alt);
+}
+.av-media--wide { aspect-ratio: 3 / 2; }
+.av-media--square { aspect-ratio: 1; }
+.av-media--tall { aspect-ratio: 2 / 3; }
+/* The kit's badge on every image is an affordance, not a label. On a
+   pointer device it waits for hover or focus; on touch it stays. */
+@media (hover: hover) {
+  .ck-cue { opacity: 0; }
+  .ck-media:hover .ck-cue, .ck-media:focus-visible .ck-cue { opacity: 1; }
+}
+
+.av-name { font-family: var(--font-fa-display); font-weight: var(--w-regular); font-size: var(--t-lg); line-height: 1.2; }
+[dir="ltr"] .av-name { font-family: var(--font-en-display); font-weight: var(--w-medium); }
+.av-name--xl { font-size: var(--t-2xl); }
+/* The other language's name runs in its own direction but lines up with
+   the page's start edge, not its own: start-aligned Latin in an RTL cell
+   would drift to the far left of the cell. */
+.av-alt {
+  font-family: var(--font-en-ui); font-size: var(--t-sm); color: var(--ink-muted);
+  letter-spacing: var(--tracking-en); direction: ltr; text-align: right;
+}
+[dir="ltr"] .av-alt { font-family: var(--font-fa-ui); direction: rtl; text-align: left; }
+.av-copy { margin: 0; font-size: var(--t-base); color: var(--ink-muted); line-height: var(--lh-fa-body); max-width: var(--measure-fa); }
+.av-copy--sm { font-size: var(--t-sm); }
+.av-line { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); padding-block-start: var(--s-3); }
+.av-price { font-family: var(--font-num); font-size: var(--t-md); color: var(--ink); }
+.av-price small { font-size: var(--t-xs); color: var(--ink-muted); margin-inline-start: var(--s-1); }
+.av-code { font-family: var(--font-num); font-size: var(--t-sm); color: var(--ink-faint); direction: ltr; }
+.av-spec { display: grid; gap: var(--s-1); font-size: var(--t-sm); color: var(--ink-muted); }
+.av-spec > div { display: flex; gap: var(--s-3); }
+.av-spec dt { min-width: 8ch; color: var(--ink-faint); }
+.av-spec dd { margin: 0; font-family: var(--font-num); color: var(--ink); }
+.av-add { min-height: 40px; padding-inline: var(--s-4); font-size: var(--t-sm); }
+.av-add[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+
+/* ── categories: single column bands ─────────────────────── */
+.c-cats { display: grid; }
+.c-cats__row {
+  display: grid; gap: var(--s-6); grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  align-items: center; padding-block: var(--s-6);
+  border-block-start: var(--border-w) solid var(--line);
+}
+.c-cats__row:first-child { border-block-start: 0; padding-block-start: 0; }
+.c-cats__text { display: grid; gap: var(--s-2); }
+.c-cats__title { font-family: var(--font-fa-display); font-weight: var(--w-regular); font-size: var(--t-xl); line-height: 1.15; }
+[dir="ltr"] .c-cats__title { font-family: var(--font-en-display); }
+.c-cats__media { aspect-ratio: 16 / 7; }
+.c-cats__link { font-size: var(--t-sm); }
+@media (max-width: 720px) { .c-cats__row { grid-template-columns: 1fr; } }
+
+/* ── grid of three ───────────────────────────────────────── */
+.c-grid { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.c-grid__item { display: grid; gap: var(--s-3); align-content: start; }
+
+/* ── image beside text, two rows ─────────────────────────── */
+.c-side { display: grid; gap: var(--s-8); }
+.c-side__item { display: grid; gap: var(--s-6); align-items: center; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.c-side__item:nth-child(even) > .c-side__media { order: 2; }
+.c-side__text { display: grid; gap: var(--s-4); }
+@media (max-width: 760px) {
+  .c-side__item { grid-template-columns: 1fr; }
+  .c-side__item:nth-child(even) > .c-side__media { order: 0; }
+}
+
+/* ── full-bleed band ─────────────────────────────────────── */
+.c-band { display: grid; align-items: center; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: var(--surface-alt); }
+.c-band__media { aspect-ratio: 4 / 3; }
+.c-band__text { display: grid; gap: var(--s-4); padding: var(--s-8) var(--page-pad); }
+@media (max-width: 760px) { .c-band { grid-template-columns: 1fr; } }
+
+/* ── large image with a notes column ─────────────────────── */
+.c-study { display: grid; gap: var(--s-7); grid-template-columns: minmax(0, 1fr) 30ch; align-items: start; }
+.c-study__media { aspect-ratio: 16 / 10; }
+.c-study__aside { display: grid; gap: var(--s-5); position: sticky; inset-block-start: calc(60px + var(--s-4)); }
+.c-study__list { display: grid; gap: var(--s-3); }
+.c-study__entry { display: grid; gap: 2px; }
+.c-study__entry + .c-study__entry { padding-block-start: var(--s-3); border-block-start: var(--border-w) solid var(--line); }
+@media (max-width: 860px) { .c-study { grid-template-columns: 1fr; } .c-study__aside { position: static; } }
+
+/* ── two column ──────────────────────────────────────────── */
+.c-duo { display: grid; gap: var(--gutter) var(--s-7); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.c-duo__item { display: grid; gap: var(--s-3); align-content: start; }
+@media (max-width: 620px) { .c-duo { grid-template-columns: 1fr; } }
+
+/* ── text over image ─────────────────────────────────────── */
+.c-over { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.c-over__item { position: relative; isolation: isolate; }
+.c-over__item .av-media { aspect-ratio: 3 / 4; }
+.c-over__text {
+  position: absolute; inset-inline: 0; inset-block-end: 0; z-index: 1; pointer-events: none;
+  display: grid; gap: var(--s-1); padding: var(--s-5);
+  color: #f2f4f1;
+  background: linear-gradient(to top, rgb(21 24 26 / 0.78), rgb(21 24 26 / 0) 90%);
+}
+.c-over__text .av-name, .c-over__text .av-price { color: inherit; }
+.c-over__text .av-alt, .c-over__text .av-price small { color: rgb(242 244 241 / 0.78); }
+
+/* ── image over text, single column ──────────────────────── */
+.c-read { display: grid; gap: var(--s-9); justify-items: center; }
+.c-read__item { display: grid; gap: var(--s-4); width: 100%; max-width: 64ch; }
+.c-read__media { aspect-ratio: 3 / 2; }
+
+/* ── two-page spread ─────────────────────────────────────── */
+.c-spread { display: grid; grid-template-columns: 1fr 1fr; border: var(--border-w) solid var(--line-strong); background: var(--surface); }
+.c-spread__page { padding: var(--s-6); display: grid; gap: var(--s-5); align-content: start; }
+.c-spread__page + .c-spread__page { border-inline-start: var(--border-w) solid var(--line-strong); }
+.c-spread__head { display: flex; justify-content: space-between; gap: var(--s-4); font-family: var(--font-num); font-size: var(--t-sm); color: var(--ink-faint); }
+.c-spread__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5); }
+.c-spread__cell { display: grid; gap: var(--s-2); }
+.c-spread__cell:first-child { grid-column: span 2; }
+.c-spread__cell:first-child .av-media { aspect-ratio: 3 / 2; }
+.c-spread__folio { font-family: var(--font-num); font-size: var(--t-sm); color: var(--ink-faint); text-align: center; padding-block-start: var(--s-3); border-block-start: var(--border-w) solid var(--line); }
+@media (max-width: 760px) {
+  .c-spread { grid-template-columns: 1fr; }
+  .c-spread__page + .c-spread__page { border-inline-start: 0; border-block-start: var(--border-w) solid var(--line-strong); }
+}
+
+/* ── horizontal strip ────────────────────────────────────── */
+.c-strip {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 22vw);
+  gap: var(--gutter); overflow-x: auto; scroll-snap-type: x proximity;
+  padding-block-end: var(--s-4); scrollbar-width: thin;
+}
+.c-strip__item { scroll-snap-align: start; display: grid; gap: var(--s-3); align-content: start; }
+
+/* ── index, grouped by category ──────────────────────────── */
+.c-index { display: grid; gap: var(--s-7); }
+.c-index__group { display: grid; gap: var(--s-3); }
+.c-index__cat { font-family: var(--font-fa-display); font-weight: var(--w-regular); font-size: var(--t-lg); padding-block-end: var(--s-2); border-block-end: var(--border-w) solid var(--line-strong); }
+[dir="ltr"] .c-index__cat { font-family: var(--font-en-display); }
+.c-index__row {
+  display: grid; grid-template-columns: 48px minmax(0, 1fr) auto auto; gap: var(--s-4); align-items: center;
+  padding-block: var(--s-2);
+}
+.c-index__row .av-media { aspect-ratio: 1; }
+.c-index__name { display: grid; gap: 1px; }
+.c-index__name .av-name { font-size: var(--t-base); }
+.c-index__name .av-alt { font-size: var(--t-xs); }
+@media (max-width: 600px) { .c-index__row { grid-template-columns: 48px minmax(0, 1fr) auto; } .c-index__row .av-code { display: none; } }
+
+/* ── order rows ──────────────────────────────────────────── */
+.c-order { display: grid; }
+.c-order__note { margin: 0 0 var(--s-6); font-size: var(--t-base); color: var(--ink-muted); max-width: 60ch; }
+.c-order__row {
+  display: grid; gap: var(--s-5); align-items: center;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
+  padding-block: var(--s-4);
+}
+.c-order__row + .c-order__row { border-block-start: var(--border-w) solid var(--line); }
+.c-order__row .av-media { aspect-ratio: 1; }
+.c-order__text { display: grid; gap: var(--s-1); }
+.c-order__end { display: grid; gap: var(--s-2); justify-items: end; }
+@media (max-width: 640px) {
+  .c-order__row { grid-template-columns: 72px minmax(0, 1fr); }
+  .c-order__end { grid-column: 2; justify-items: start; }
+}
+
+/* ── colophon ────────────────────────────────────────────── */
+.av-colophon { display: grid; gap: var(--s-6); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); padding-block: var(--s-8) var(--s-10); border-block-start: var(--border-w) solid var(--line); }
+.av-colophon h3 { font-family: var(--font-fa-display); font-weight: var(--w-regular); font-size: var(--t-md); margin-block-end: var(--s-2); }
+[dir="ltr"] .av-colophon h3 { font-family: var(--font-en-display); }
+.av-colophon p { margin: 0; font-size: var(--t-sm); color: var(--ink-muted); max-width: 36ch; }
+
+/* ── inquiry sheet ───────────────────────────────────────── */
+.av-sheet { display: grid; gap: var(--s-5); }
+.av-sheet__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); }
+.av-sheet__head h2 { font-size: var(--t-xl); font-weight: var(--w-regular); }
+.av-sheet__row { grid-template-columns: 56px minmax(0, 1fr) auto; }
+.av-sheet__row .av-media { aspect-ratio: 1; }
+.av-sheet__foot { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; justify-content: space-between; padding-block-start: var(--s-4); border-block-start: var(--border-w) solid var(--line); }
+.av-sheet__total { font-family: var(--font-num); font-size: var(--t-md); }
+.av-sheet__total small { font-size: var(--t-xs); color: var(--ink-muted); margin-inline-start: var(--s-1); }
+
+/* ─────────────────────────────────────────────────────────────
+   Motion. One quiet entrance for most things; three exceptions
+   the content asks for: the cover's notes arrive in order, the
+   spread turns on its spine, and a wide picture is unveiled rather
+   than faded. Only under .js, and gone under reduced motion.
+   ───────────────────────────────────────────────────────────── */
+.js .rv { opacity: 0; transition-delay: calc(var(--i, 0) * var(--stagger)); }
+.js .rv.in { opacity: 1; }
+
+.js .rv--rise { transform: translateY(16px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+.js .rv--rise.in { transform: none; }
+
+.js .rv--pop { transform: translateY(12px) scale(0.975); transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-slow) var(--ease-soft); }
+.js .rv--pop.in { transform: none; }
+
+/* Enters from the inline start. Both attributes live on <html>, so the
+   direction is read from the root itself. */
+.js .rv--side { transform: translateX(-22px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+html[dir="rtl"].js .rv--side { transform: translateX(22px); }
+.js .rv--side.in { transform: none; }
+
+.js .rv--wipe, .js .rv--wipe-up { opacity: 1; }
+.js .rv--wipe::after, .js .rv--wipe-up::after {
+  content: ""; position: absolute; inset: 0; z-index: 3; background: var(--bg); pointer-events: none;
+  transition: transform var(--dur-page) var(--ease-inout);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+.js .rv--wipe::after { transform-origin: left center; }
+html[dir="ltr"].js .rv--wipe::after { transform-origin: right center; }
+.js .rv--wipe.in::after { transform: scaleX(0); }
+.js .rv--wipe-up::after { transform-origin: center top; }
+.js .rv--wipe-up.in::after { transform: scaleY(0); }
+
+.js .rv--page { transform: perspective(1800px) rotateY(-12deg); transform-origin: 100% 50%; transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-page) var(--ease-inout); }
+html[dir="ltr"].js .rv--page { transform: perspective(1800px) rotateY(12deg); transform-origin: 0 50%; }
+.js .rv--page.in { transform: none; }
+
+/* The cover's dots and notes arrive in order, because the order is the
+   content: one, two, three, the way you would walk someone round a pot. */
+.js .rv--dot { transform: scale(0.4); transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-slow) var(--ease-soft); }
+.js .rv--dot.in { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .js .rv--wipe::after, .js .rv--wipe-up::after { display: none; }
+  .av-dot::after { transition: none; }
+}
+
+@media print {
+  .av-bar, .skip { display: none; }
+  .av-section { padding-block: var(--s-5); break-inside: avoid; }
+  .rv { opacity: 1 !important; transform: none !important; }
+  .av-caption { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main" data-t="skip">رفتن به محتوا</a>
+
+<div class="av-bar">
+  <span class="av-bar__mark" data-t="brand">آوند</span>
+  <span class="av-bar__sep"></span>
+  <button type="button" class="cat-chip av-review" id="review" aria-pressed="false" data-t="review">نام چیدمان‌ها</button>
+  <button type="button" class="cat-btn cat-btn--ghost av-inq" id="inq-open">
+    <span data-t="inquiry">استعلام</span>
+    <span class="av-inq__n" id="inq-n" aria-live="polite"></span>
+  </button>
+  <div class="cat-lang" id="lang">
+    <button type="button" data-lang="fa" aria-pressed="true">فارسی</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+</div>
+
+<main id="main"></main>
+
+<script src="../shared/catalog-kit.js"></script>
+<script>
+const CATEGORIES = [
+  { id: 'ceramic', fa: 'سرامیک', en: 'Ceramics',
+    faNote: 'لعاب خاکستر، پخت احیایی در کوره‌ی هیزمی یزد. رنگ هر دیگ با دیگ بعدی فرق دارد.',
+    enNote: 'Ash glaze, reduction fired in the Yazd wood kiln. No two firings come out the same colour.' },
+  { id: 'wood', fa: 'چوب', en: 'Wood',
+    faNote: 'گردو و بلوط خشک‌شده در هوا، اتصال بدون پیچ، روغن گیاهی به‌جای لاک.',
+    enNote: 'Air-dried walnut and oak, joined without fasteners, finished in oil rather than lacquer.' },
+  { id: 'textile', fa: 'نساجی', en: 'Textile',
+    faNote: 'پشم دست‌ریس و کتان شسته. رنگرزی گیاهی، دیگ‌به‌دیگ.',
+    enNote: 'Handspun wool and washed linen. Plant-dyed, lot by lot.' },
+  { id: 'light', fa: 'روشنایی', en: 'Lighting',
+    faNote: 'کاغذ دست‌ساز و مس چکش‌خورده روی فولاد پودری‌رنگ.',
+    enNote: 'Handmade paper and hammered copper over powder-coated steel.' },
+  { id: 'leather', fa: 'چرم و برنج', en: 'Leather and brass',
+    faNote: 'دباغی گیاهی و ریخته‌گری ماسه‌ای. هر دو با گذر زمان تیره می‌شوند.',
+    enNote: 'Vegetable tanning and sand casting. Both darken with time.' }
+];
+
+const PRODUCTS = [
+  { code: 'AV-101', cat: 'ceramic', subject: 'vase', palette: 'sage',
+    fa: 'گلدان لعاب خاکستر', en: 'Ash-glaze vessel',
+    faCopy: 'لعاب از خاکستر چوب انگور گرفته می‌شود و رنگ هر دیگ با دیگ بعدی فرق دارد: از سبز کم‌رنگ تا عسلی. هیچ دو قطعه‌ای یکی نیست.',
+    enCopy: 'The glaze is drawn from grapevine ash, so no two firings match. It runs from pale green to honey.',
+    price: '۲٬۴۸۰٬۰۰۰', priceEn: '2,480,000',
+    faSpec: [['ارتفاع', '۲۸ سانتی‌متر'], ['دهانه', '۱۱ سانتی‌متر'], ['پخت', '۱۲۸۰ درجه، احیایی']],
+    enSpec: [['Height', '28 cm'], ['Mouth', '11 cm'], ['Firing', '1280°C reduction']],
+    /* Measured against the artwork this seed draws: the points sit on the
+       rim, the widest part of the body and the foot, in the viewer and on
+       the cover alike. */
+    hot: [
+      { x: 50, y: 32, fa: ['لبه', 'لبه‌ی برگردان، ضخامت شش میلی‌متر. جایی که لعاب نازک می‌شود و رنگ خاک زیرش پیدا می‌شود.'], en: ['Rim', 'Rolled rim, six millimetres thick. Where the glaze thins and the clay shows through.'] },
+      { x: 65, y: 54, fa: ['لعاب', 'خاکستر چوب انگور، سه لایه. در پخت احیایی سبز می‌شود؛ در هوای آزاد به عسلی می‌زند.'], en: ['Glaze', 'Grapevine ash, three coats. Reduction turns it green; open air pulls it toward honey.'] },
+      { x: 46, y: 75, fa: ['پاخور', 'روی چرخ تراش خورده، قطر نه سانتی‌متر. زیرش بدون لعاب مانده تا شماره‌ی دیگ روی آن بنشیند.'], en: ['Foot', 'Turned on the wheel, nine centimetres across. Left bare underneath so the kiln number can be written on it.'] }
+    ] },
+  { code: 'AV-104', cat: 'ceramic', subject: 'vase', palette: 'stone',
+    fa: 'کاسه‌ی دست‌چرخ', en: 'Wheel-thrown bowl',
+    faCopy: 'برای برنج و خورش روزانه. رد انگشت سفالگر روی بدنه می‌ماند و بعد از لعاب هم دیده می‌شود.',
+    enCopy: 'Made for everyday rice and stew. The potter’s finger marks stay visible under the glaze.',
+    price: '۶۸۰٬۰۰۰', priceEn: '680,000',
+    faSpec: [['قطر', '۲۲ سانتی‌متر'], ['گنجایش', '۱٫۴ لیتر'], ['وزن', '۶۴۰ گرم']],
+    enSpec: [['Diameter', '22 cm'], ['Capacity', '1.4 L'], ['Weight', '640 g']],
+    hot: [
+      { x: 50, y: 34, fa: ['بدنه', 'رد چرخ دست‌نخورده مانده است.'], en: ['Body', 'Throwing rings left as they came.'] },
+      { x: 50, y: 72, fa: ['کف', 'بدون لعاب، تا روی میز نلغزد.'], en: ['Base', 'Left unglazed so it grips the table.'] }
+    ] },
+  { code: 'AV-107', cat: 'ceramic', subject: 'vase', palette: 'ink',
+    fa: 'بشقاب لبه‌خام', en: 'Raw-edge plate',
+    faCopy: 'لبه بدون لعاب رها شده تا خاک زیرش پیدا باشد. برای نان و پنیر و چیزهای خشک.',
+    enCopy: 'The rim is left bare so the clay body shows. For bread, cheese, dry things.',
+    price: '۴۲۰٬۰۰۰', priceEn: '420,000',
+    faSpec: [['قطر', '۲۶ سانتی‌متر'], ['ضخامت', '۸ میلی‌متر'], ['خاک', 'رس محلی کاشان']],
+    enSpec: [['Diameter', '26 cm'], ['Thickness', '8 mm'], ['Clay', 'Local Kashan body']],
+    hot: [
+      { x: 30, y: 44, fa: ['لبه', 'بدون لعاب؛ خاک خام دیده می‌شود.'], en: ['Rim', 'Unglazed; the raw body shows.'] },
+      { x: 56, y: 58, fa: ['مرکز', 'لعاب شفاف روی خاک روشن.'], en: ['Centre', 'Clear glaze over a pale body.'] }
+    ] },
+  { code: 'AV-201', cat: 'wood', subject: 'chair', palette: 'warm',
+    fa: 'صندلی گردو', en: 'Walnut side chair',
+    faCopy: 'پشتی با بخار خم شده و بدون یک پیچ به بدنه نشسته است. روغن گیاهی خورده، نه لاک.',
+    enCopy: 'The back is steam-bent and seated without a single screw. Finished in oil, not lacquer.',
+    price: '۸٬۹۵۰٬۰۰۰', priceEn: '8,950,000',
+    faSpec: [['ارتفاع', '۸۲ سانتی‌متر'], ['نشیمن', '۴۵ سانتی‌متر'], ['وزن', '۴٫۲ کیلوگرم']],
+    enSpec: [['Height', '82 cm'], ['Seat', '45 cm'], ['Weight', '4.2 kg']],
+    hot: [
+      { x: 50, y: 26, fa: ['پشتی', 'تخته‌ی خم‌شده با بخار، ضخامت دوازده میلی‌متر.'], en: ['Back', 'Steam-bent panel, twelve millimetres.'] },
+      { x: 34, y: 58, fa: ['اتصال', 'فاق و زبانه‌ی کور، بدون پیچ.'], en: ['Joint', 'Blind mortise and tenon.'] },
+      { x: 66, y: 84, fa: ['پایه', 'مقطع بیست‌ودو میلی‌متر، روغن‌خورده.'], en: ['Leg', 'Twenty-two millimetre section, oiled.'] }
+    ] },
+  { code: 'AV-205', cat: 'wood', subject: 'chair', palette: 'stone',
+    fa: 'میز کنار تخت', en: 'Bedside table',
+    faCopy: 'یک کشو و یک طبقه‌ی باز. کشو روی ریل چوبی می‌رود و صدایی ندارد.',
+    enCopy: 'One drawer, one open shelf. The drawer runs on a wooden slide and stays quiet.',
+    price: '۵٬۳۰۰٬۰۰۰', priceEn: '5,300,000',
+    faSpec: [['ارتفاع', '۵۶ سانتی‌متر'], ['عرض', '۴۰ سانتی‌متر'], ['عمق', '۳۵ سانتی‌متر']],
+    enSpec: [['Height', '56 cm'], ['Width', '40 cm'], ['Depth', '35 cm']],
+    hot: [
+      { x: 50, y: 40, fa: ['کشو', 'ریل چوبی، بدون یراق فلزی.'], en: ['Drawer', 'Wooden slide, no metal runner.'] },
+      { x: 50, y: 72, fa: ['طبقه', 'ارتفاع آزاد بیست سانتی‌متر.'], en: ['Shelf', 'Twenty centimetres clear.'] }
+    ] },
+  { code: 'AV-208', cat: 'wood', subject: 'textile', palette: 'amber',
+    fa: 'سینی بلوط', en: 'Oak tray',
+    faCopy: 'از یک تکه بلوط درآمده، بدون درز. لبه‌ها آن‌قدر بلند است که فنجان سُر نخورد.',
+    enCopy: 'Cut from a single piece of oak, no seam. The lip is high enough to hold a cup.',
+    price: '۱٬۱۵۰٬۰۰۰', priceEn: '1,150,000',
+    faSpec: [['اندازه', '۴۲ × ۲۸ سانتی‌متر'], ['ارتفاع لبه', '۲ سانتی‌متر'], ['وزن', '۹۲۰ گرم']],
+    enSpec: [['Size', '42 × 28 cm'], ['Lip', '2 cm'], ['Weight', '920 g']],
+    hot: [
+      { x: 50, y: 50, fa: ['سطح', 'یک‌تکه، بدون درز چسبی.'], en: ['Surface', 'One piece, no glue line.'] },
+      { x: 26, y: 66, fa: ['لبه', 'گود شده با اسکنه.'], en: ['Lip', 'Hollowed with a gouge.'] }
+    ] },
+  { code: 'AV-301', cat: 'textile', subject: 'textile', palette: 'indigo',
+    fa: 'قالیچه‌ی پشم دست‌ریس', en: 'Handspun wool rug',
+    faCopy: 'چهل رج در هر دسی‌متر، گره فارسی. نیل طبیعی است، پس سال اول کمی رنگ می‌دهد و بعد ثابت می‌شود.',
+    enCopy: 'Forty rows to the decimetre, Persian knot. Natural indigo, so it gives a little in the first year and then holds.',
+    price: '۱۸٬۹۰۰٬۰۰۰', priceEn: '18,900,000',
+    faSpec: [['اندازه', '۱۵۰ × ۲۰۰ سانتی‌متر'], ['رجشمار', '۴۰ در دسی‌متر'], ['مدت بافت', '۱۱ هفته']],
+    enSpec: [['Size', '150 × 200 cm'], ['Density', '40 rows/dm'], ['Loom time', '11 weeks']],
+    hot: [
+      { x: 38, y: 34, fa: ['گره', 'گره فارسی، چهل رج در دسی‌متر.'], en: ['Knot', 'Persian knot, forty rows to the decimetre.'] },
+      { x: 62, y: 60, fa: ['رنگرزی', 'نیل طبیعی، دیگ‌به‌دیگ. همین رنگِ این صفحه.'], en: ['Dye', 'Natural indigo, lot-dyed. The blue of this page.'] },
+      { x: 50, y: 86, fa: ['شیرازه', 'دست‌پیچ با پشم همان دیگ.'], en: ['Selvedge', 'Wrapped from the same lot.'] }
+    ] },
+  { code: 'AV-304', cat: 'textile', subject: 'textile', palette: 'stone',
+    fa: 'رومیزی کتان', en: 'Linen cloth',
+    faCopy: 'کتان شسته که از شست‌وشوی اول نرم می‌شود. لبه‌ها تا خورده و با دست دوخته شده‌اند.',
+    enCopy: 'Washed linen that softens from the first wash. The hems are folded and hand-sewn.',
+    price: '۱٬۸۴۰٬۰۰۰', priceEn: '1,840,000',
+    faSpec: [['اندازه', '۱۴۰ × ۲۴۰ سانتی‌متر'], ['وزن پارچه', '۱۹۰ گرم بر متر مربع'], ['جمع‌شدگی', 'از پیش شسته']],
+    enSpec: [['Size', '140 × 240 cm'], ['Weight', '190 gsm'], ['Shrinkage', 'Pre-washed']],
+    hot: [
+      { x: 44, y: 40, fa: ['بافت', 'کتان شسته، صد و نود گرم.'], en: ['Weave', 'Washed linen, 190 gsm.'] },
+      { x: 62, y: 74, fa: ['لبه', 'تای دوبل، دوخت دست.'], en: ['Hem', 'Double fold, hand-sewn.'] }
+    ] },
+  { code: 'AV-307', cat: 'textile', subject: 'textile', palette: 'clay',
+    fa: 'پتوی کرک بز', en: 'Goat-down throw',
+    faCopy: 'کرک از شانه‌کردن بهاره‌ی گله‌های کرمان می‌آید. سبک است اما گرم‌تر از پشم هم‌وزنش.',
+    enCopy: 'The down is combed from Kerman herds each spring. Light, and warmer than wool of the same weight.',
+    price: '۷٬۲۰۰٬۰۰۰', priceEn: '7,200,000',
+    faSpec: [['اندازه', '۱۳۰ × ۱۸۰ سانتی‌متر'], ['وزن', '۷۸۰ گرم'], ['شست‌وشو', 'با دست، آب سرد']],
+    enSpec: [['Size', '130 × 180 cm'], ['Weight', '780 g'], ['Care', 'Hand wash, cold']],
+    hot: [
+      { x: 40, y: 46, fa: ['کرک', 'شانه‌ی بهاره، بدون چیدن.'], en: ['Down', 'Spring-combed, never shorn.'] },
+      { x: 64, y: 70, fa: ['حاشیه', 'ریشه‌ی تابیده‌ی دست.'], en: ['Border', 'Hand-twisted fringe.'] }
+    ] },
+  { code: 'AV-401', cat: 'light', subject: 'lamp', palette: 'sage',
+    fa: 'چراغ رومیزی کاغذی', en: 'Paper table lamp',
+    faCopy: 'کاغذ دست‌ساز روی رینگ فولادی نشسته و نور را نرم پخش می‌کند. کلید روی سیم است.',
+    enCopy: 'Handmade paper over a steel ring spreads the light softly. The switch sits on the cord.',
+    price: '۳٬۷۴۰٬۰۰۰', priceEn: '3,740,000',
+    faSpec: [['ارتفاع', '۴۸ سانتی‌متر'], ['قطر حباب', '۳۲ سانتی‌متر'], ['لامپ', 'E27، حداکثر ۸ وات']],
+    enSpec: [['Height', '48 cm'], ['Shade', '32 cm'], ['Lamp', 'E27, 8 W max']],
+    hot: [
+      { x: 50, y: 30, fa: ['حباب', 'کاغذ دست‌ساز روی رینگ فولادی.'], en: ['Shade', 'Handmade paper on a steel ring.'] },
+      { x: 50, y: 68, fa: ['ساقه', 'فولاد پودری‌رنگ، قطر دوازده میلی‌متر.'], en: ['Stem', 'Powder-coated steel, twelve millimetres.'] }
+    ] },
+  { code: 'AV-404', cat: 'light', subject: 'lamp', palette: 'amber',
+    fa: 'آویز مسی', en: 'Copper pendant',
+    faCopy: 'مس چکش‌خورده که با گذر زمان تیره می‌شود. داخلش سفید رنگ شده تا نور را برگرداند.',
+    enCopy: 'Hammered copper that darkens with time. Painted white inside to throw the light back down.',
+    price: '۴٬۹۵۰٬۰۰۰', priceEn: '4,950,000',
+    faSpec: [['قطر', '۲۶ سانتی‌متر'], ['طول سیم', '۱۸۰ سانتی‌متر'], ['لامپ', 'E27، حداکثر ۱۰ وات']],
+    enSpec: [['Diameter', '26 cm'], ['Cord', '180 cm'], ['Lamp', 'E27, 10 W max']],
+    hot: [
+      { x: 50, y: 36, fa: ['بدنه', 'مس چکش‌خورده، بدون لاک.'], en: ['Body', 'Hammered copper, unlacquered.'] },
+      { x: 50, y: 62, fa: ['داخل', 'رنگ سفید مات برای بازتاب نور.'], en: ['Interior', 'Matt white for reflected light.'] }
+    ] },
+  { code: 'AV-501', cat: 'leather', subject: 'bag', palette: 'clay',
+    fa: 'کیف چرم گیاهی', en: 'Veg-tan satchel',
+    faCopy: 'چرم دباغی گیاهی که با آفتاب و دست تیره می‌شود. قفل برنجی است و آبکاری ندارد.',
+    enCopy: 'Vegetable-tanned leather that darkens with sun and handling. The clasp is brass, left unplated.',
+    price: '۶٬۲۰۰٬۰۰۰', priceEn: '6,200,000',
+    faSpec: [['اندازه', '۳۶ × ۲۸ × ۱۰ سانتی‌متر'], ['ضخامت چرم', '۲٫۲ میلی‌متر'], ['بند', 'قابل تنظیم، ۹۰ تا ۱۳۰']],
+    enSpec: [['Size', '36 × 28 × 10 cm'], ['Leather', '2.2 mm'], ['Strap', 'Adjustable, 90 to 130 cm']],
+    hot: [
+      { x: 50, y: 24, fa: ['دسته', 'دوخت زینی دست، نخ کتان موم‌زده.'], en: ['Handle', 'Hand saddle-stitched, waxed linen.'] },
+      { x: 50, y: 52, fa: ['قفل', 'برنج ریخته‌گری، بدون آبکاری.'], en: ['Clasp', 'Cast brass, unplated.'] },
+      { x: 30, y: 70, fa: ['چرم', 'دباغی گیاهی، دو و دو دهم میلی‌متر.'], en: ['Leather', 'Vegetable tanned, 2.2 millimetres.'] }
+    ] },
+  { code: 'AV-601', cat: 'leather', subject: 'watch', palette: 'amber',
+    fa: 'شمعدان برنجی', en: 'Brass candle holder',
+    faCopy: 'از برنج بازیافتی در ماسه ریخته شده. سطحش خط‌های ریز ریخته‌گری را نگه داشته است.',
+    enCopy: 'Sand-cast from reclaimed brass. The surface keeps the fine marks of the mould.',
+    price: '۱٬۳۸۰٬۰۰۰', priceEn: '1,380,000',
+    faSpec: [['ارتفاع', '۱۴ سانتی‌متر'], ['قطر پایه', '۹ سانتی‌متر'], ['شمع', 'قطر ۲٫۲ سانتی‌متر']],
+    enSpec: [['Height', '14 cm'], ['Base', '9 cm'], ['Candle', '2.2 cm taper']],
+    hot: [
+      { x: 50, y: 40, fa: ['کاسه', 'ریخته‌گری ماسه‌ای؛ خط‌های قالب مانده.'], en: ['Cup', 'Sand-cast; the mould marks are kept.'] },
+      { x: 50, y: 74, fa: ['پایه', 'وزن‌دار، تا شمع بلند نلرزد.'], en: ['Base', 'Weighted, so a tall taper stands still.'] }
+    ] }
+];
+
+const S = {
+  fa: {
+    brand: 'آوند', skip: 'رفتن به محتوا', review: 'نام چیدمان‌ها', inquiry: 'استعلام',
+    season: 'مجموعه‌ی پاییز ۱۴۰۴',
+    lede: 'سیزده قطعه از شش کارگاه در تهران، یزد و کاشان. هر قطعه با دست ساخته شده و شماره‌ی دیگ و تاریخ پخت زیرش نوشته است.',
+    pieceOf: 'قطعه‌ی شاخص',
+    open: 'نمای نزدیک، ویدیو و چرخش',
+    add: 'افزودن به استعلام', added: 'در استعلام', unit: 'تومان',
+    catsTitle: 'مجموعه', catsNote: 'پنج دسته. هر کدام از یک کارگاه.',
+    seeAll: 'دیدن دسته',
+    editionTitle: 'نسخه‌ی چاپی', editionNote: 'همین مجموعه، آذر ماه در دفتر چاپی منتشر می‌شود. دو صفحه از آن:',
+    running: 'آوند، پاییز ۱۴۰۴',
+    allTitle: 'همه‌ی مجموعه', allNote: 'سیزده قطعه در یک نگاه.',
+    indexTitle: 'فهرست', indexNote: 'کد و بها، به ترتیب دسته.',
+    orderTitle: 'سفارش', orderNote: 'قطعه‌ها را به استعلام بیفزایید و بفرستید. تحویل سه تا پنج هفته پس از تأیید؛ بها تا پایان آذر ثابت است.',
+    cMat: 'مواد', cMatV: 'خاک رس محلی، گردو و بلوط جنگل‌های شمال، پشم دست‌ریس، برنج بازیافتی.',
+    cCare: 'نگهداری', cCareV: 'سرامیک‌ها ماشین‌ظرفشویی‌پذیرند. چوب‌ها سالی یک بار روغن گیاهی بخورند.',
+    cShop: 'کارگاه', cShopV: 'تهران، خیابان سی‌تیر، کوچه‌ی مسعود، پلاک ۱۴. شنبه تا چهارشنبه.',
+    cLot: 'شماره‌ی دیگ', cLotV: 'زیر هر قطعه نوشته شده. با همان شماره می‌توانید قطعه‌ی هم‌دیگ سفارش دهید.',
+    sheetTitle: 'استعلام قیمت', sheetEmpty: 'هنوز چیزی اضافه نشده. از کنار هر قطعه «افزودن به استعلام» را بزنید.',
+    remove: 'حذف', total: 'جمع', send: 'فرستادن استعلام', close: 'بستن',
+    pageNo: 'صفحه'
+  },
+  en: {
+    brand: 'Âvand', skip: 'Skip to content', review: 'Arrangement names', inquiry: 'Inquiry',
+    season: 'Autumn 1404 collection',
+    lede: 'Thirteen pieces from six workshops in Tehran, Yazd and Kashan. Every piece is made by hand, with its kiln number and firing date written underneath.',
+    pieceOf: 'The featured piece',
+    open: 'Close view, video and spin',
+    add: 'Add to inquiry', added: 'In inquiry', unit: 'IRT',
+    catsTitle: 'The collection', catsNote: 'Five categories. Each from one workshop.',
+    seeAll: 'See the category',
+    editionTitle: 'Printed edition', editionNote: 'The same collection goes to print in Azar. Two pages from it:',
+    running: 'Âvand, Autumn 1404',
+    allTitle: 'Everything', allNote: 'Thirteen pieces at a glance.',
+    indexTitle: 'Index', indexNote: 'Code and price, by category.',
+    orderTitle: 'Ordering', orderNote: 'Add pieces to the inquiry and send it. Delivery three to five weeks after confirmation; prices hold to the end of Azar.',
+    cMat: 'Materials', cMatV: 'Local clay, northern walnut and oak, handspun wool, reclaimed brass.',
+    cCare: 'Care', cCareV: 'The ceramics take the dishwasher. Oil the wood once a year.',
+    cShop: 'Workshop', cShopV: '14 Masoud Lane, Si-e Tir Street, Tehran. Saturday to Wednesday.',
+    cLot: 'Kiln number', cLotV: 'Written under every piece. Quote it to order from the same firing.',
+    sheetTitle: 'Price inquiry', sheetEmpty: 'Nothing added yet. Use “Add to inquiry” beside any piece.',
+    remove: 'Remove', total: 'Total', send: 'Send inquiry', close: 'Close',
+    pageNo: 'Page'
+  }
+};
+
+let lang = 'fa';
+const root = document.documentElement;
+const main = document.getElementById('main');
+const inquiry = new Set();
+
+const t = () => S[lang];
+const fa = () => lang === 'fa';
+const name = (p) => fa() ? p.fa : p.en;
+const alt = (p) => fa() ? p.en : p.fa;
+const copy = (p) => fa() ? p.faCopy : p.enCopy;
+const price = (p) => fa() ? p.price : p.priceEn;
+const specs = (p) => fa() ? p.faSpec : p.enSpec;
+const num = (n) => fa() ? CatalogKit.toFa(String(n)) : String(n);
+const byCat = (id) => PRODUCTS.filter((p) => p.cat === id);
+
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text != null) n.textContent = text;
+  return n;
+}
+
+function hotspots(p) {
+  return p.hot.map((h) => ({ x: h.x, y: h.y, title: (fa() ? h.fa : h.en)[0], body: (fa() ? h.fa : h.en)[1] }));
+}
+
+function mediaSet(p) {
+  return CatalogKit.defaultMedia(p.code, hotspots(p), { subject: p.subject, palette: p.palette });
+}
+
+/* Every occurrence of a piece gets its own mount, so the same piece can
+   sit in several arrangements without them sharing state. */
+function media(p, modifier) {
+  const box = el('div', 'av-media' + (modifier ? ' av-media--' + modifier : ''));
+  queueMicrotask(() => CatalogKit.mountMedia(box, mediaSet(p), { title: name(p), sku: p.code }, lang));
+  return box;
+}
+
+function nameBlock(p, size) {
+  const frag = document.createDocumentFragment();
+  frag.append(el('h3', 'av-name' + (size ? ' av-name--' + size : ''), name(p)), el('div', 'av-alt', alt(p)));
+  return frag;
+}
+
+function priceEl(p) {
+  const n = el('div', 'av-price');
+  n.append(document.createTextNode(price(p)), el('small', null, t().unit));
+  return n;
+}
+
+function line(p) {
+  const n = el('div', 'av-line');
+  n.append(priceEl(p), el('div', 'av-code', p.code));
+  return n;
+}
+
+function specList(p) {
+  const dl = el('dl', 'av-spec');
+  for (const [k, v] of specs(p)) {
+    const row = el('div');
+    row.append(el('dt', null, k), el('dd', null, v));
+    dl.appendChild(row);
+  }
+  return dl;
+}
+
+function addButton(p) {
+  const b = el('button', 'cat-btn cat-btn--ghost av-add');
+  b.type = 'button';
+  b.dataset.code = p.code;
+  syncAdd(b);
+  b.addEventListener('click', () => {
+    if (inquiry.has(p.code)) inquiry.delete(p.code); else inquiry.add(p.code);
+    syncInquiry();
+  });
+  return b;
+}
+
+function syncAdd(b) {
+  const on = inquiry.has(b.dataset.code);
+  b.setAttribute('aria-pressed', String(on));
+  b.textContent = on ? t().added : t().add;
+}
+
+function syncInquiry() {
+  for (const b of document.querySelectorAll('.av-add')) syncAdd(b);
+  document.getElementById('inq-n').textContent = inquiry.size ? num(inquiry.size) : '';
+  if (sheet.open) renderSheet();
+}
+
+/* ── the cover ───────────────────────────────────────────── */
+function cover() {
+  const p = PRODUCTS[0];
+  const wrap = el('section', 'av-cover av-wrap');
+
+  const text = el('div', 'av-cover__text');
+  text.append(el('h1', 'av-brand', t().brand), el('div', 'av-season', t().season), el('p', 'av-lede', t().lede));
+
+  const notes = el('div', 'av-notes');
+  const dots = [];
+  const noteEls = [];
+  const select = (i) => {
+    for (const [j, d] of dots.entries()) d.setAttribute('aria-pressed', String(i === j));
+    for (const [j, n] of noteEls.entries()) n.setAttribute('aria-pressed', String(i === j));
+  };
+  p.hot.forEach((h, i) => {
+    const pair = fa() ? h.fa : h.en;
+    const n = el('button', 'av-note rv rv--rise');
+    n.type = 'button';
+    n.setAttribute('aria-pressed', 'false');
+    n.style.setProperty('--i', i + 2);
+    n.append(el('span', 'av-note__n', num(i + 1)), el('span', 'av-note__t', pair[0]), el('p', 'av-note__b', pair[1]));
+    n.addEventListener('click', () => select(n.getAttribute('aria-pressed') === 'true' ? -1 : i));
+    noteEls.push(n);
+    notes.appendChild(n);
+  });
+  text.append(el('div', 'av-code', t().pieceOf));
+
+  const piece = el('div', 'av-piece');
+  const frame = el('div', 'av-piece__frame rv rv--wipe');
+  frame.appendChild(media(p, null));
+  p.hot.forEach((h, i) => {
+    const d = el('button', 'av-dot rv rv--dot', num(i + 1));
+    d.type = 'button';
+    d.setAttribute('aria-pressed', 'false');
+    d.setAttribute('aria-label', (fa() ? h.fa : h.en)[0]);
+    d.style.left = h.x + '%';
+    d.style.top = h.y + '%';
+    d.style.setProperty('--i', i + 3);
+    d.addEventListener('click', (e) => { e.stopPropagation(); select(d.getAttribute('aria-pressed') === 'true' ? -1 : i); });
+    dots.push(d);
+    frame.appendChild(d);
+  });
+  const actions = el('div', 'av-piece__actions');
+  const open = el('button', 'cat-btn', t().open);
+  open.type = 'button';
+  open.addEventListener('click', () => CatalogKit.open(mediaSet(p), { title: name(p), sku: p.code }, lang, 0));
+  actions.append(open, addButton(p), el('span', 'av-code', p.code));
+  const caption = el('div', 'av-line');
+  caption.append(el('h2', 'av-name', name(p)), priceEl(p));
+  piece.append(frame, caption, actions);
+
+  wrap.append(text, piece, notes);
+  return wrap;
+}
+
+/* ── arrangements, each with the job it does here ────────── */
+function section(title, note, body, arrangement) {
+  const s = el('section', 'av-section av-wrap');
+  const head = el('div', 'av-head rv rv--rise');
+  head.appendChild(el('h2', null, title));
+  if (note) head.appendChild(el('p', null, note));
+  s.append(head, body, el('div', 'av-caption', arrangement));
+  return s;
+}
+
+function categories() {
+  const wrap = el('div', 'c-cats');
+  CATEGORIES.forEach((cat, i) => {
+    const row = el('div', 'c-cats__row');
+    const text = el('div', 'c-cats__text rv rv--side');
+    text.style.setProperty('--i', 0);
+    const a = el('a', 'c-cats__link', t().seeAll);
+    a.href = '#' + cat.id;
+    text.append(el('h3', 'c-cats__title', fa() ? cat.fa : cat.en), el('p', 'av-copy', fa() ? cat.faNote : cat.enNote), a);
+    const m = media(byCat(cat.id)[0], null);
+    m.classList.add('c-cats__media', 'rv', 'rv--wipe');
+    row.append(text, m);
+    wrap.appendChild(row);
+  });
+  return wrap;
+}
+
+function gridOf(items) {
+  const wrap = el('div', 'c-grid');
+  items.forEach((p, i) => {
+    const item = el('div', 'c-grid__item rv rv--pop');
+    item.style.setProperty('--i', i);
+    item.append(media(p), nameBlock(p), el('p', 'av-copy av-copy--sm', copy(p)), line(p), addButton(p));
+    wrap.appendChild(item);
+  });
+  return wrap;
+}
+
+function sideBySide(items) {
+  const wrap = el('div', 'c-side');
+  for (const p of items) {
+    const item = el('div', 'c-side__item');
+    const m = media(p, 'wide');
+    m.classList.add('c-side__media', 'rv', 'rv--rise');
+    const text = el('div', 'c-side__text');
+    text.append(nameBlock(p, 'xl'), el('p', 'av-copy', copy(p)), specList(p), line(p), addButton(p));
+    [...text.children].forEach((c, i) => { c.classList.add('rv', 'rv--rise'); c.style.setProperty('--i', i); });
+    item.append(m, text);
+    wrap.appendChild(item);
+  }
+  return wrap;
+}
+
+function band(p) {
+  const wrap = el('div', 'c-band');
+  const m = media(p, null);
+  m.classList.add('c-band__media', 'rv', 'rv--wipe');
+  const text = el('div', 'c-band__text');
+  text.append(nameBlock(p, 'xl'), el('p', 'av-copy', copy(p)), specList(p), line(p), addButton(p));
+  [...text.children].forEach((c, i) => { c.classList.add('rv', 'rv--rise'); c.style.setProperty('--i', i); });
+  wrap.append(m, text);
+  return wrap;
+}
+
+function study(p) {
+  const wrap = el('div', 'c-study');
+  const m = media(p, null);
+  m.classList.add('c-study__media', 'rv', 'rv--wipe');
+  const aside = el('div', 'c-study__aside');
+  aside.append(nameBlock(p), el('p', 'av-copy av-copy--sm', copy(p)));
+  const list = el('div', 'c-study__list');
+  specs(p).forEach(([k, v], i) => {
+    const entry = el('div', 'c-study__entry rv rv--rise');
+    entry.style.setProperty('--i', i + 1);
+    entry.append(el('div', 'av-code', k), el('div', null, v));
+    list.appendChild(entry);
+  });
+  aside.append(list, line(p), addButton(p));
+  wrap.append(m, aside);
+  return wrap;
+}
+
+function duo(items) {
+  const wrap = el('div', 'c-duo');
+  items.forEach((p, i) => {
+    const item = el('div', 'c-duo__item rv rv--pop');
+    item.style.setProperty('--i', i);
+    item.append(media(p, 'wide'), nameBlock(p), el('p', 'av-copy av-copy--sm', copy(p)), line(p), addButton(p));
+    wrap.appendChild(item);
+  });
+  return wrap;
+}
+
+function overlay(items) {
+  const wrap = el('div', 'c-over');
+  items.forEach((p, i) => {
+    const item = el('div', 'c-over__item');
+    const m = media(p, null);
+    m.classList.add('rv', 'rv--wipe-up');
+    m.style.setProperty('--i', i);
+    const text = el('div', 'c-over__text rv rv--rise');
+    text.style.setProperty('--i', i + 1);
+    text.append(nameBlock(p), priceEl(p));
+    item.append(m, text);
+    wrap.appendChild(item);
+  });
+  return wrap;
+}
+
+function reading(items) {
+  const wrap = el('div', 'c-read');
+  for (const p of items) {
+    const item = el('div', 'c-read__item');
+    const m = media(p, null);
+    m.classList.add('c-read__media', 'rv', 'rv--rise');
+    item.append(m, nameBlock(p, 'xl'), el('p', 'av-copy', copy(p)), specList(p), line(p), addButton(p));
+    [...item.children].slice(1).forEach((c, i) => { c.classList.add('rv', 'rv--rise'); c.style.setProperty('--i', i + 1); });
+    wrap.appendChild(item);
+  }
+  return wrap;
+}
+
+/* Two facing pages, one category each. Three pieces fill a page with the
+   first set wide, so no cell is ever empty. */
+function spread() {
+  const wrap = el('div', 'c-spread');
+  ['wood', 'textile'].forEach((id, i) => {
+    const items = byCat(id);
+    const cat = CATEGORIES.find((c) => c.id === id);
+    const page = el('div', 'c-spread__page rv rv--page');
+    page.style.setProperty('--i', i);
+    const head = el('div', 'c-spread__head');
+    head.append(el('span', null, t().running), el('span', null, fa() ? cat.fa : cat.en));
+    const grid = el('div', 'c-spread__grid');
+    for (const p of items) {
+      const cell = el('div', 'c-spread__cell');
+      cell.append(media(p), nameBlock(p), el('div', 'av-code', p.code));
+      grid.appendChild(cell);
+    }
+    page.append(head, grid, el('div', 'c-spread__folio', t().pageNo + ' ' + num(i + 12)));
+    wrap.appendChild(page);
+  });
+  return wrap;
+}
+
+function strip() {
+  const wrap = el('div', 'c-strip');
+  PRODUCTS.forEach((p, i) => {
+    const item = el('div', 'c-strip__item rv rv--side');
+    item.style.setProperty('--i', Math.min(i, 8));
+    item.append(media(p, 'tall'), nameBlock(p), line(p));
+    wrap.appendChild(item);
+  });
+  return wrap;
+}
+
+function index() {
+  const wrap = el('div', 'c-index');
+  for (const cat of CATEGORIES) {
+    const group = el('div', 'c-index__group rv rv--rise');
+    group.appendChild(el('h3', 'c-index__cat', fa() ? cat.fa : cat.en));
+    for (const p of byCat(cat.id)) {
+      const row = el('div', 'c-index__row');
+      const n = el('div', 'c-index__name');
+      n.append(el('div', 'av-name', name(p)), el('div', 'av-alt', alt(p)));
+      row.append(media(p, 'square'), n, el('div', 'av-code', p.code), priceEl(p));
+      group.appendChild(row);
+    }
+    wrap.appendChild(group);
+  }
+  return wrap;
+}
+
+function order() {
+  const wrap = el('div', 'c-order');
+  PRODUCTS.forEach((p, i) => {
+    const row = el('div', 'c-order__row rv rv--rise');
+    row.style.setProperty('--i', Math.min(i, 8));
+    const text = el('div', 'c-order__text');
+    text.append(nameBlock(p), el('div', 'av-code', p.code));
+    const end = el('div', 'c-order__end');
+    end.append(priceEl(p), addButton(p));
+    row.append(media(p, 'square'), text, end);
+    wrap.appendChild(row);
+  });
+  return wrap;
+}
+
+function colophon() {
+  const f = el('footer', 'av-colophon av-wrap');
+  for (const k of ['cMat', 'cCare', 'cLot', 'cShop']) {
+    const d = el('div', 'rv rv--rise');
+    d.append(el('h3', null, t()[k]), el('p', null, t()[k + 'V']));
+    f.appendChild(d);
+  }
+  return f;
+}
+
+/* ── inquiry sheet ───────────────────────────────────────── */
+const sheet = { open: false, scrim: null, box: null, lastFocus: null };
+
+function openSheet() {
+  if (sheet.open) return;
+  sheet.lastFocus = document.activeElement;
+  sheet.scrim = el('div', 'cat-scrim');
+  sheet.box = el('div', 'cat-dialog av-sheet');
+  sheet.box.setAttribute('role', 'dialog');
+  sheet.box.setAttribute('aria-modal', 'true');
+  sheet.box.setAttribute('aria-label', t().sheetTitle);
+  sheet.box.tabIndex = -1;
+  document.body.append(sheet.scrim, sheet.box);
+  sheet.scrim.addEventListener('click', closeSheet);
+  document.addEventListener('keydown', onSheetKey);
+  sheet.open = true;
+  renderSheet();
+  sheet.box.focus();
+}
+
+function closeSheet() {
+  if (!sheet.open) return;
+  sheet.scrim.remove(); sheet.box.remove();
+  document.removeEventListener('keydown', onSheetKey);
+  sheet.open = false;
+  if (sheet.lastFocus && sheet.lastFocus.focus) sheet.lastFocus.focus();
+}
+
+function onSheetKey(e) {
+  if (e.key === 'Escape') { e.preventDefault(); closeSheet(); return; }
+  if (e.key !== 'Tab') return;
+  const f = sheet.box.querySelectorAll('button');
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
+function renderSheet() {
+  const box = sheet.box;
+  box.innerHTML = '';
+  const head = el('div', 'av-sheet__head');
+  const close = el('button', 'cat-btn cat-btn--ghost', t().close);
+  close.type = 'button';
+  close.addEventListener('click', closeSheet);
+  head.append(el('h2', null, t().sheetTitle), close);
+  box.appendChild(head);
+
+  const items = PRODUCTS.filter((p) => inquiry.has(p.code));
+  if (!items.length) {
+    box.appendChild(el('div', 'cat-inquiry__empty', t().sheetEmpty));
+    return;
+  }
+  const list = el('div', 'cat-inquiry');
+  let total = 0;
+  for (const p of items) {
+    total += parseInt(p.priceEn.replace(/,/g, ''), 10);
+    const row = el('div', 'cat-inquiry__row av-sheet__row');
+    const n = el('div');
+    n.append(el('div', 'av-name', name(p)), el('div', 'av-code', p.code));
+    const rm = el('button', 'cat-btn cat-btn--quiet', t().remove);
+    rm.type = 'button';
+    rm.setAttribute('aria-label', t().remove + ' ' + name(p));
+    rm.addEventListener('click', () => { inquiry.delete(p.code); syncInquiry(); });
+    row.append(media(p, 'square'), n, rm);
+    list.appendChild(row);
+  }
+  box.appendChild(list);
+
+  const foot = el('div', 'av-sheet__foot');
+  const sum = el('div', 'av-sheet__total');
+  const formatted = total.toLocaleString('en-US');
+  sum.append(document.createTextNode(t().total + ' ' + (fa() ? CatalogKit.toFa(formatted).replace(/,/g, '٬') : formatted)), el('small', null, t().unit));
+  const send = el('a', 'cat-btn', t().send);
+  send.href = 'mailto:order@avand.example?subject=' + encodeURIComponent(t().sheetTitle) +
+    '&body=' + encodeURIComponent(items.map((p) => p.code + ' ' + name(p)).join('\n'));
+  foot.append(sum, send);
+  box.appendChild(foot);
+}
+
+/* ── reveals ─────────────────────────────────────────────── */
+let observer = null;
+function reveals() {
+  if (!('IntersectionObserver' in window)) return;
+  if (observer) observer.disconnect();
+  observer = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      e.target.classList.add('in');
+      observer.unobserve(e.target);
+    }
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+  for (const n of document.querySelectorAll('.rv')) observer.observe(n);
+}
+
+/* ── render ──────────────────────────────────────────────── */
+function render() {
+  main.innerHTML = '';
+  const tt = t();
+  const cat = (id) => CATEGORIES.find((c) => c.id === id);
+  const catTitle = (id) => fa() ? cat(id).fa : cat(id).en;
+  const catNote = (id) => fa() ? cat(id).faNote : cat(id).enNote;
+
+  main.appendChild(cover());
+  main.appendChild(section(tt.catsTitle, tt.catsNote, categories(), 'single column, category bands'));
+
+  const ceramics = section(catTitle('ceramic'), catNote('ceramic'), gridOf(byCat('ceramic')), 'three-column grid');
+  ceramics.id = 'ceramic';
+  main.appendChild(ceramics);
+
+  const wood = section(catTitle('wood'), catNote('wood'), sideBySide(byCat('wood').slice(0, 2)), 'image beside text, alternating');
+  wood.id = 'wood';
+  main.appendChild(wood);
+  const tray = el('section', 'av-section av-section--flush');
+  tray.append(band(byCat('wood')[2]), el('div', 'av-caption av-wrap', 'full-bleed band'));
+  main.appendChild(tray);
+
+  const textile = section(catTitle('textile'), catNote('textile'), study(byCat('textile')[0]), 'large image with notes column');
+  textile.id = 'textile';
+  main.appendChild(textile);
+  const moreTextile = el('section', 'av-section av-wrap');
+  moreTextile.append(duo(byCat('textile').slice(1)), el('div', 'av-caption', 'two column'));
+  main.appendChild(moreTextile);
+
+  const light = section(catTitle('light'), catNote('light'), overlay(byCat('light')), 'text over image');
+  light.id = 'light';
+  main.appendChild(light);
+
+  const leather = section(catTitle('leather'), catNote('leather'), reading(byCat('leather')), 'image over text, single column');
+  leather.id = 'leather';
+  main.appendChild(leather);
+
+  main.appendChild(section(tt.editionTitle, tt.editionNote, spread(), 'two-page spread'));
+  main.appendChild(section(tt.allTitle, tt.allNote, strip(), 'horizontal strip'));
+  main.appendChild(section(tt.indexTitle, tt.indexNote, index(), 'grouped index'));
+
+  const ord = section(tt.orderTitle, null, order(), 'rows with actions');
+  ord.querySelector('.av-head').appendChild(el('p', 'c-order__note', tt.orderNote));
+  main.appendChild(ord);
+
+  main.appendChild(colophon());
+
+  for (const node of document.querySelectorAll('[data-t]')) node.textContent = tt[node.dataset.t];
+  syncInquiry();
+  reveals();
+}
+
+document.getElementById('lang').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-lang]');
+  if (!btn || btn.dataset.lang === lang) return;
+  lang = btn.dataset.lang;
+  for (const other of btn.parentNode.children) other.setAttribute('aria-pressed', String(other === btn));
+  root.lang = lang;
+  root.dir = fa() ? 'rtl' : 'ltr';
+  document.title = fa() ? 'آوند، مجموعه‌ی پاییز ۱۴۰۴' : 'Âvand, Autumn 1404 collection';
+  render();
+});
+
+document.getElementById('inq-open').addEventListener('click', openSheet);
+
+/* Review mode names the arrangement under each section. Remembered per
+   browser so a reviewer does not re-enable it on every visit. */
+const review = document.getElementById('review');
+function setReview(on) {
+  root.dataset.review = on ? 'on' : 'off';
+  review.setAttribute('aria-pressed', String(on));
+  try { localStorage.setItem('avand-review', on ? '1' : '0'); } catch (err) { /* storage unavailable */ }
+}
+review.addEventListener('click', () => setReview(root.dataset.review !== 'on'));
+try { setReview(localStorage.getItem('avand-review') === '1'); } catch (err) { setReview(false); }
+
+render();
+</script>
+</body>
+</html>

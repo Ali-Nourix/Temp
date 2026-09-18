@@ -391,9 +391,8 @@
   /* ── inquiry dialog ─────────────────────────── */
 
   .lx-dialog { border: var(--border-w) solid var(--line-strong); }
-  /* cat-pop's keyframes re-apply the centring translate that .cat-dialog
-     already carries, which lands the sheet in the corner. A plain fade
-     keeps the centring and suits the slow motion of this theme. */
+  /* A plain fade rather than the system's scale-in: it suits the slow,
+     unhurried motion of this theme. */
   @media (min-width: 760px) {
     .lx-dialog { width: min(720px, 92vw); animation: cat-fade var(--dur-page) var(--ease-inout) both; }
   }

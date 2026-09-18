@@ -597,7 +597,10 @@ a:hover { color: var(--ink); }
 
 /* انیمیشن‌های نام‌دار سیستم. هیچ انیمیشن تازه‌ای نساز — یکی از این‌ها را استفاده کن. */
 @keyframes cat-fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes cat-pop { from { opacity: 0; transform: translate(-50%, -50%) scale(0.965); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+/* Centring belongs to .cat-dialog's `translate` property; the entrance only
+   scales. Carrying the offset here as well composed the two into a full
+   width-and-height shift once the animation filled forwards. */
+@keyframes cat-pop { from { opacity: 0; transform: scale(0.965); } to { opacity: 1; transform: scale(1); } }
 @keyframes cat-sheet { from { transform: translateY(14px); opacity: 0.6; } to { transform: none; opacity: 1; } }
 @keyframes cat-reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @keyframes cat-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
@@ -1013,9 +1016,8 @@ a:hover { color: var(--ink); }
   /* ── inquiry dialog ─────────────────────────── */
 
   .lx-dialog { border: var(--border-w) solid var(--line-strong); }
-  /* cat-pop's keyframes re-apply the centring translate that .cat-dialog
-     already carries, which lands the sheet in the corner. A plain fade
-     keeps the centring and suits the slow motion of this theme. */
+  /* A plain fade rather than the system's scale-in: it suits the slow,
+     unhurried motion of this theme. */
   @media (min-width: 760px) {
     .lx-dialog { width: min(720px, 92vw); animation: cat-fade var(--dur-page) var(--ease-inout) both; }
   }

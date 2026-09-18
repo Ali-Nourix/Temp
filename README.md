@@ -24,7 +24,8 @@ shared design system and one shared interaction layer.
 
 | | |
 |---|---|
-| [`catalogs/compositions.html`](catalogs/compositions.html) | یک برند، ۱۴ ترکیب‌بندی، هر کدام با انیمیشن ورود خودش |
+| [`catalogs/avand.html`](catalogs/avand.html) | نسخه‌ی طراحی‌شده‌ی کاتالوگ آوند: پالت از خود محصول‌ها، نمایش نسخ، قطعه‌ی حاشیه‌نویسی‌شده، حالت تیره، استعلام قیمت |
+| [`catalogs/compositions.html`](catalogs/compositions.html) | ورقِ نمونه: یک برند، ۱۴ ترکیب‌بندی، هر کدام با انیمیشن ورود خودش |
 | [`catalogs/00-mechanisms.html`](catalogs/00-mechanisms.html) | مکانیزم‌های رسانه به‌تنهایی: زوم، جزئیات، ویدیو، چرخش |
 | [`index.html`](index.html) | فهرست همه، با پیش‌نمایش هر نمونه در تم خودش |
 

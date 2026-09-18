@@ -598,7 +598,10 @@ a:hover { color: var(--ink); }
 
 /* انیمیشن‌های نام‌دار سیستم. هیچ انیمیشن تازه‌ای نساز — یکی از این‌ها را استفاده کن. */
 @keyframes cat-fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes cat-pop { from { opacity: 0; transform: translate(-50%, -50%) scale(0.965); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+/* Centring belongs to .cat-dialog's `translate` property; the entrance only
+   scales. Carrying the offset here as well composed the two into a full
+   width-and-height shift once the animation filled forwards. */
+@keyframes cat-pop { from { opacity: 0; transform: scale(0.965); } to { opacity: 1; transform: scale(1); } }
 @keyframes cat-sheet { from { transform: translateY(14px); opacity: 0.6; } to { transform: none; opacity: 1; } }
 @keyframes cat-reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @keyframes cat-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
@@ -649,6 +652,16 @@ a:hover { color: var(--ink); }
     font-size: var(--t-sm); color: var(--ink-muted);
   }
   .hub-axes b { color: var(--ink); font-weight: var(--w-medium); }
+
+  /* The Âvand catalog's own palette, so its preview is drawn in the real
+     colours rather than borrowed from the nearest system theme. */
+  [data-theme="avand"] {
+    --bg: #f2f4f1; --surface: #f8f9f7; --surface-alt: #e5e9e4;
+    --ink: #15181a; --ink-muted: #4c5358; --ink-faint: #5a6268;
+    --line: #c9cfcb; --accent: #2c3e78;
+    --font-fa-display: var(--fam-markazi);
+    --radius-card: 0px; --shadow-1: none;
+  }
 
   .hub-section { max-width: var(--page-max); margin-inline: auto; padding: var(--s-7) var(--page-pad) var(--s-5); }
   .hub-section:last-of-type { padding-block-end: var(--s-9); }
@@ -1975,9 +1988,16 @@ const DIR = 'catalogs/';
    media mechanisms. */
 const STUDIES = [
   {
-    no: '★', file: 'compositions.html', theme: 'editorial',
+    no: '★', file: 'avand.html', theme: 'avand',
+    fa: 'آوند، کاتالوگ کامل', en: 'Âvand, the full catalog',
+    note: 'نسخه‌ی طراحی‌شده: نیل طبیعی روی سفیدِ لعاب، نمایش نسخ، و قطعه‌ی حاشیه‌نویسی‌شده روی کاور. همان چیدمان‌ها، این بار در خدمت یک کاتالوگ واقعی. حالت تیره و استعلام قیمت هم دارد.',
+    tags: ['کاتالوگ واقعی', 'نیل و لعاب', 'حالت تیره', 'استعلام'],
+    mock: 'study'
+  },
+  {
+    no: '◇', file: 'compositions.html', theme: 'editorial',
     fa: 'چهارده ترکیب‌بندی', en: 'Fourteen compositions',
-    note: 'یک برند، چهارده چیدمان پشت سر هم روی همان محصولات — تنها متغیر، ترکیب‌بندی است. هر کدام انیمیشن ورود مخصوص خودش را دارد.',
+    note: 'ورقِ نمونه: یک برند، چهارده چیدمان پشت سر هم روی همان محصولات؛ تنها متغیر، ترکیب‌بندی است. هر کدام انیمیشن ورود مخصوص خودش را دارد.',
     tags: ['۱۴ چیدمان', 'یک برند', 'انیمیشن اسکرول', '۸ تم'],
     mock: 'expand'
   },

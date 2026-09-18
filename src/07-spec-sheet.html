@@ -306,12 +306,6 @@ body { font-size: var(--t-sm); }
   display: grid; grid-template-rows: auto minmax(0, 1fr); gap: var(--s-3);
   max-height: 86vh; padding: var(--s-5); overflow: hidden;
 }
-@media (min-width: 760px) {
-  /* ds-core centres .cat-dialog with the `translate` property *and* a
-     keyframe `transform`; the two compose, so the dialog lands a full
-     width and height off. Centring is left to the keyframe alone. */
-  .sp-dlg { translate: none; transform: translate(-50%, -50%); }
-}
 .sp-dlg__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
 .sp-dlg__title { font-size: var(--t-md); }
 .sp-dlg__sp { flex: 1; }

@@ -221,10 +221,6 @@ html { scroll-padding-block-start: var(--s-9); }
 
 /* ── price-inquiry sheet ────────────────────────────────── */
 .ed-sheet { width: min(680px, 92vw); max-height: 86vh; }
-/* .cat-dialog centres itself twice above 760px — once with the `translate`
-   property and again in the transform its entrance keyframe leaves behind.
-   Dropping the property leaves exactly one offset. */
-@media (min-width: 760px) { .ed-sheet { translate: none; } }
 .ed-sheet__head {
   display: flex; align-items: flex-start; gap: var(--s-4);
   padding-block-end: var(--s-4); border-block-end: var(--border-w) solid var(--line);
