@@ -64,8 +64,13 @@ def build(path: Path) -> Path:
     doc = LINK.sub(css, doc)
     doc = SCRIPT.sub(js, doc)
 
-    OUT.mkdir(exist_ok=True)
-    target = OUT / path.name
+    # The hub lands at the repository root, because that is what GitHub
+    # Pages serves at the site's own URL. Everything else sits in catalogs/.
+    if path.name == "index.html":
+        target = ROOT / "index.html"
+    else:
+        OUT.mkdir(exist_ok=True)
+        target = OUT / path.name
     target.write_text(doc, encoding="utf-8")
     return target
 

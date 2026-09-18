@@ -3,8 +3,30 @@
 Eight digital brand catalogs, each a different design language, built on one
 shared design system and one shared interaction layer.
 
-Start at **[`catalogs/index.html`](catalogs/index.html)** — it links all eight
-and says where each sits on the four axes.
+## لینک آنلاین
+
+**<https://ali-nourix.github.io/Temp/>**
+
+صفحه‌ی اول همه‌ی نمونه‌ها را فهرست می‌کند. اگر لینک باز نشد، یعنی GitHub Pages
+هنوز روشن نشده است:
+
+> Settings ← Pages ← زیر **Build and deployment**، در Source گزینه‌ی
+> **Deploy from a branch** و بعد برنچ `claude/vigilant-davinci-gomzs5` و
+> پوشه‌ی `/ (root)` ← Save
+
+یکی دو دقیقه بعد آدرس بالا بالا می‌آید. آدرس به برنچ بستگی ندارد؛ هر برنچی را
+که انتخاب کنید همین آدرس سرو می‌شود.
+
+بدون Pages هم می‌شود فایل‌ها را از `catalogs/` دانلود کرد و مستقیم باز کرد —
+هر کدام یک فایل کامل و مستقل است.
+
+## نقطه‌ی شروع
+
+| | |
+|---|---|
+| [`catalogs/compositions.html`](catalogs/compositions.html) | یک برند، ۱۴ ترکیب‌بندی، هر کدام با انیمیشن ورود خودش |
+| [`catalogs/00-mechanisms.html`](catalogs/00-mechanisms.html) | مکانیزم‌های رسانه به‌تنهایی: زوم، جزئیات، ویدیو، چرخش |
+| [`index.html`](index.html) | فهرست همه، با پیش‌نمایش هر نمونه در تم خودش |
 
 ## نمونه‌ها
 
@@ -51,12 +73,14 @@ and says where each sits on the four axes.
 ## ساختار
 
 ```
+index.html              فهرست — ساخته می‌شود، ریشه چون Pages همین را سرو می‌کند
+catalogs/*.html         خروجی — هر کدام یک فایل مستقل و کامل
 shared/ds-core.css      توکن‌ها، ۸ تم، و لایه‌ی کامپوننت‌های .cat-*
 shared/catalog-kit.js   تصویرسازی، نمایشگر جزئیات، پخش‌کننده، چرخش
 shared/BRIEF.md         قرارداد ساخت هر نمونه
 src/*.html              سورس هر نمونه (به فایل‌های مشترک لینک می‌دهد)
-catalogs/*.html         خروجی — هر کدام یک فایل مستقل و کامل
 build.py                فایل‌های مشترک را داخل هر سورس تزریق می‌کند
+.nojekyll               تا Pages فایل‌ها را همان‌طور که هستند سرو کند
 ```
 
 ```bash

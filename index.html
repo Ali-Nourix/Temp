@@ -650,12 +650,23 @@ a:hover { color: var(--ink); }
   }
   .hub-axes b { color: var(--ink); font-weight: var(--w-medium); }
 
+  .hub-section { max-width: var(--page-max); margin-inline: auto; padding: var(--s-7) var(--page-pad) var(--s-5); }
+  .hub-section:last-of-type { padding-block-end: var(--s-9); }
+  .hub-heading {
+    font-family: var(--font-num); font-size: var(--t-xs);
+    letter-spacing: var(--tracking-en-caps); text-transform: uppercase;
+    font-weight: var(--w-regular); color: var(--ink-faint);
+    padding-block-end: var(--s-3); margin-block-end: var(--s-5);
+    border-block-end: var(--border-w) solid var(--line);
+  }
+
   .hub-grid {
     display: grid; gap: var(--s-6);
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    padding: var(--s-7) var(--page-pad) var(--s-9);
-    max-width: var(--page-max); margin-inline: auto;
   }
+  /* The two studies carry the most weight, so they get the wider cells. */
+  .hub-grid--wide { grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); }
+  @media (max-width: 520px) { .hub-grid--wide { grid-template-columns: 1fr; } }
 
   .hub-card {
     display: flex; flex-direction: column;
@@ -740,7 +751,15 @@ a:hover { color: var(--ink); }
   </p>
 </header>
 
-<main class="hub-grid" id="grid"></main>
+<section class="hub-section">
+  <h2 class="hub-heading">شروع از اینجا</h2>
+  <div class="hub-grid hub-grid--wide" id="studies"></div>
+</section>
+
+<section class="hub-section">
+  <h2 class="hub-heading">هشت سبک</h2>
+  <div class="hub-grid" id="grid"></div>
+</section>
 
 <footer class="hub-foot">
   <div>
@@ -1947,6 +1966,30 @@ a:hover { color: var(--ink); }
 
 </script>
 <script>
+/* This page is served from the repository root; the catalogs sit one
+   directory down. */
+const DIR = 'catalogs/';
+
+/* The two studies that stand apart from the eight style variants: one
+   varies only the arrangement, the other only demonstrates the shared
+   media mechanisms. */
+const STUDIES = [
+  {
+    no: '★', file: 'compositions.html', theme: 'editorial',
+    fa: 'چهارده ترکیب‌بندی', en: 'Fourteen compositions',
+    note: 'یک برند، چهارده چیدمان پشت سر هم روی همان محصولات — تنها متغیر، ترکیب‌بندی است. هر کدام انیمیشن ورود مخصوص خودش را دارد.',
+    tags: ['۱۴ چیدمان', 'یک برند', 'انیمیشن اسکرول', '۸ تم'],
+    mock: 'expand'
+  },
+  {
+    no: '◆', file: '00-mechanisms.html', theme: 'craft',
+    fa: 'مکانیزم‌های رسانه', en: 'Media mechanisms',
+    note: 'بزرگ‌نمایی روی نقطه، نقطه‌های جزئیات، پخش ویدیو با نوار زمان، و چرخش ۳۶۰ — همان رفتاری که در همه‌ی نمونه‌ها کار می‌کند.',
+    tags: ['زوم و جزئیات', 'ویدیو', 'چرخش ۳۶۰', 'صفحه‌کلید'],
+    mock: 'single'
+  }
+];
+
 /* One row per variant: the file, its theme, and where it sits on each of
    the four axes the set is meant to explore. */
 const VARIANTS = [
@@ -2023,10 +2066,10 @@ const MOCKS = {
 
 const grid = document.getElementById('grid');
 
-for (const v of VARIANTS) {
+function buildCard(v) {
   const card = document.createElement('a');
   card.className = 'hub-card';
-  card.href = v.file;
+  card.href = DIR + v.file;
 
   const prev = document.createElement('div');
   prev.className = 'hub-prev';
@@ -2082,8 +2125,11 @@ for (const v of VARIANTS) {
   }
   body.append(no, name, nameEn, note, tags);
   card.appendChild(body);
-  grid.appendChild(card);
+  return card;
 }
+
+for (const v of STUDIES) document.getElementById('studies').appendChild(buildCard(v));
+for (const v of VARIANTS) grid.appendChild(buildCard(v));
 </script>
 </body>
 </html>
