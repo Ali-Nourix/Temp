@@ -1,0 +1,20 @@
+{
+  "name": "webp-convert",
+  "version": "1.0.0",
+  "description": "Convert very large TIFF/JPEG images into high-quality, web-ready WebP files.",
+  "type": "module",
+  "bin": {
+    "webp-convert": "./src/cli.js"
+  },
+  "scripts": {
+    "convert": "node src/cli.js",
+    "test": "node --test \"test/**/*.test.js\""
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "sharp": "^0.35.4"
+  }
+}
