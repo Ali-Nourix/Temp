@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+    <title>تبدیل عکس به WebP</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>تبدیل عکس به WebP</h1>
+      <p>عکس‌های حجیم TIFF و JPEG را با بالاترین کیفیت برای وب آماده می‌کند.</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>ورودی</h2>
+        <textarea
+          id="inputs"
+          rows="4"
+          spellcheck="false"
+          placeholder="مسیر پوشه‌ها یا فایل‌ها، هر کدام در یک خط. می‌توانید فایل یا پوشه را روی این پنجره بکشید و رها کنید."
+        ></textarea>
+        <div class="row">
+          <button type="button" id="pick-folder">انتخاب پوشه…</button>
+          <button type="button" id="pick-files">انتخاب فایل‌ها…</button>
+          <button type="button" id="clear-inputs" class="subtle">پاک کردن</button>
+        </div>
+        <p class="hint">پوشه‌ها همراه زیرپوشه‌هایشان برای فایل‌های tif، tiff، jpg و jpeg جست‌وجو می‌شوند.</p>
+      </section>
+
+      <section class="card">
+        <h2>خروجی</h2>
+        <div class="row">
+          <input id="out-dir" type="text" spellcheck="false" placeholder="خالی بگذارید تا کنار هر فایل اصلی ذخیره شود" />
+          <button type="button" id="pick-output">انتخاب پوشه…</button>
+        </div>
+        <label class="check"><input type="checkbox" id="force" /> فایل‌های WebP موجود را بازنویسی کن</label>
+      </section>
+
+      <section class="card">
+        <h2>کیفیت</h2>
+        <div class="field">
+          <label for="quality">کیفیت WebP: <output id="quality-value" for="quality"></output></label>
+          <input id="quality" type="range" min="1" max="100" step="1" />
+          <p class="hint">۱۰۰ بالاترین کیفیت است. برای فایل‌های کوچک‌تر ۸۵ تا ۹۰ برای وب معمول است.</p>
+        </div>
+        <label class="check">
+          <input type="checkbox" id="lossless" />
+          بی‌افت (Lossless): هیچ افتی ندارد ولی فایل‌ها چند برابر بزرگ‌تر می‌شوند؛ برای گرافیک، نه عکس
+        </label>
+        <div class="field">
+          <label for="max-size">بزرگ‌ترین ضلع تصویر</label>
+          <div class="row">
+            <select id="max-size">
+              <option value="1920">1920 پیکسل (Full HD)</option>
+              <option value="2560">2560 پیکسل (2K)</option>
+              <option value="3840">3840 پیکسل (4K)</option>
+              <option value="4096">4096 پیکسل</option>
+              <option value="0">اندازه‌ی اصلی (حداکثر 16383)</option>
+              <option value="custom">دلخواه…</option>
+            </select>
+            <input id="max-size-custom" type="number" min="1" max="16383" step="1" hidden />
+          </div>
+          <p class="hint">تصاویر هرگز بزرگ نمی‌شوند؛ فقط اگر از این حد بزرگ‌تر باشند کوچک می‌شوند.</p>
+        </div>
+      </section>
+
+      <section class="actions">
+        <button type="button" id="start" class="primary">شروع تبدیل</button>
+        <button type="button" id="cancel" hidden>لغو</button>
+        <button type="button" id="open-output" hidden>باز کردن پوشه‌ی خروجی</button>
+      </section>
+
+      <p id="message" class="message" hidden></p>
+
+      <section class="card" id="progress-card" hidden>
+        <div class="progress-head">
+          <h2>پیشرفت</h2>
+          <span id="progress-text"></span>
+        </div>
+        <progress id="progress" max="1" value="0"></progress>
+        <p id="summary" class="summary"></p>
+        <ol id="log" class="log"></ol>
+      </section>
+    </main>
+
+    <script type="module" src="renderer.js"></script>
+  </body>
+</html>

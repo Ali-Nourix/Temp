@@ -1,154 +1,130 @@
-# webp-convert
+# WebP Converter
 
-Command-line converter that turns very large TIFF/JPEG images (hundreds of
-megabytes to gigabytes) into high-quality WebP files that are suitable for the
-web.
+Windows desktop app (plus a command-line tool) that turns very large TIFF/JPEG
+images, from hundreds of megabytes to gigabytes, into high-quality WebP files
+that are suitable for the web.
 
 It is built on [sharp](https://sharp.pixelplumbing.com/) / libvips, which
 streams images strip by strip instead of decoding them whole, so a 1 GB scan
 converts in a few hundred megabytes of RAM.
 
-## What it does to each image
+## Building the Windows app
 
-- Applies the EXIF orientation, so the pixels are upright without relying on
-  browser support for the tag.
-- Downscales so the longest edge fits `--max-size` (default 3840 px, i.e. a
-  4K screen). Images are never enlarged. The WebP format cannot exceed
-  16383 px on either side, so `--max-size 0` ("keep the original size") is
-  still capped there.
-- Converts CMYK, 16-bit and ICC-profiled sources to 8-bit sRGB, the only
-  colour space browsers render predictably.
-- Encodes lossy WebP at quality 90 with the highest compression effort and
-  high-quality chroma subsampling, or lossless WebP with `--lossless`.
-- Strips EXIF/XMP/ICC metadata to keep files small.
+Requirements on the build machine: Windows, [Node.js](https://nodejs.org) LTS
+(18.17 or newer) and internet access (the build downloads Electron and the
+installer tooling on first run).
 
-## Requirements
+Double-click **`build.bat`**. It installs the dependencies, packages the app and
+leaves two files in `dist/`:
 
-Node.js 18.17 or newer. No system libraries are needed; sharp ships its own
-prebuilt libvips.
+| File | What it is |
+| --- | --- |
+| `WebP-Converter-1.0.0-setup.exe` | Installer; adds a Start menu entry. |
+| `WebP-Converter-1.0.0-portable.exe` | Single executable, no installation. |
 
-## Install
+Neither needs Node.js on the machine where it runs. The same thing from a
+terminal is `npm install` followed by `npm run build`.
+
+If the Electron download is blocked in your region, set a mirror before
+building, for example:
+
+```bat
+set ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
+build.bat
+```
+
+## Using the app
+
+1. **ورودی / Input**: pick a folder, pick files, or drag files and folders onto
+   the window. Folders are searched recursively for `.tif .tiff .jpg .jpeg`.
+2. **خروجی / Output**: pick an output folder, or leave it empty to write each
+   `.webp` next to its source. Tick *overwrite* to replace existing `.webp`
+   files; otherwise they are skipped.
+3. **کیفیت / Quality**: the slider defaults to 100, the highest lossy WebP
+   quality. 85 to 90 gives much smaller files for ordinary web use. *Lossless*
+   produces pixel-identical files that are several times larger; it is meant
+   for graphics, not photos.
+4. **بزرگ‌ترین ضلع / Longest edge**: the output is downscaled so its longest
+   edge fits this value (default 3840 px, a 4K screen). Images are never
+   enlarged. "Original size" keeps the source dimensions, capped at the WebP
+   format limit of 16383 px.
+5. Press **شروع تبدیل** (Start). Each file is listed as it finishes with its
+   old and new dimensions and sizes; a summary follows, and *Open output
+   folder* opens the result in Explorer. *Cancel* stops after the current file.
+
+## What happens to each image
+
+- The EXIF orientation is applied, so the pixels are upright without relying
+  on browser support for the tag.
+- The image is downscaled so its longest edge fits the chosen limit.
+- CMYK, 16-bit and ICC-profiled sources become 8-bit sRGB, the only colour
+  space browsers render predictably.
+- Lossy output uses the chosen quality with the highest compression effort
+  and high-quality chroma subsampling; lossless output is exact.
+- EXIF/XMP/ICC metadata is dropped to keep files small.
+
+## Command line
+
+The same engine is available as a CLI for scripts and servers:
 
 ```sh
 npm install
-```
-
-## Usage
-
-```sh
-# Convert one file; photo.webp is written next to photo.tif
-node src/cli.js photo.tif
-
-# Convert every .tif/.tiff/.jpg/.jpeg under a folder (recursively),
-# mirroring the folder structure into ./web
-node src/cli.js --out web scans/
-
-# Smaller files for a gallery: 2560 px long edge, quality 85
+node src/cli.js photo.tif                                   # photo.webp next to photo.tif
+node src/cli.js --out web scans/                            # whole folder tree into ./web
 node src/cli.js --out web --max-size 2560 --quality 85 scans/
-
-# Keep the full resolution (capped at 16383 px) and overwrite existing outputs
-node src/cli.js --max-size 0 --force poster.tif
+node src/cli.js --help                                      # all options
 ```
 
-`npm run convert -- <args>` and, after `npm link`, plain `webp-convert <args>`
-do the same thing.
-
-### Options
-
-| Option | Default | Meaning |
-| --- | --- | --- |
-| `-o, --out <dir>` | next to source | Output folder; input folder structure is mirrored beneath it. |
-| `-s, --max-size <px>` | `3840` | Longest edge of the output. `0` keeps the original size (capped at 16383). |
-| `-q, --quality <n>` | `90` | WebP quality, 1-100. |
-| `-e, --effort <n>` | `6` | Compression effort, 0-6. 6 is slowest and produces the smallest files. |
-| `--lossless` | off | Lossless WebP. Files get much larger; for graphics and line art, not photos. |
-| `-f, --force` | off | Overwrite existing `.webp` files instead of skipping them. |
-
-Folders are filtered to `.tif .tiff .jpg .jpeg` (any case). A file named
-explicitly on the command line is converted whatever its extension. When two
-sources in one folder would produce the same name (`photo.tif` and
-`photo.jpg`), the outputs keep the source extension: `photo.tif.webp` and
-`photo.jpg.webp`.
-
-Each conversion prints one line with the source and output dimensions, file
-sizes and the saving; a summary follows at the end. The exit code is `0` when
-everything succeeded or was skipped, `1` when at least one file failed and
-`2` for a usage error.
-
-## Build a portable release
-
-```sh
-npm run build
-```
-
-This writes `dist/webp-convert/` and `dist/webp-convert-<version>.zip`. The
-release contains the source, its dependencies and sharp's native binaries for
-Windows x64, macOS (Apple Silicon and Intel) and Linux x64, plus a
-WebAssembly fallback for other platforms. Building downloads those binaries,
-so it needs network access.
-
-For a smaller archive that targets one operating system, pass `--platform`
-with `windows`, `mac` or `linux`; the zip is then named after it:
-
-```sh
-npm run build -- --platform windows   # dist/webp-convert-<version>-windows.zip
-```
-
-Unzip the release on any machine that has Node.js 18.17 or newer installed and
-run it from the unzipped folder; no `npm install` is needed there:
-
-```sh
-webp-convert.cmd --out web scans\     # Windows
-./webp-convert --out web scans/       # macOS / Linux
-```
+Options mirror the app: `--out`, `--max-size` (default 3840; 0 = original
+size), `--quality` (default 100), `--effort` (0-6, default 6), `--lossless`,
+`--force`. Exit code `0` means every file succeeded or was skipped, `1` that at
+least one failed, `2` a usage error.
 
 ## Development
 
 ```sh
-npm test
+npm install
+npm start      # run the desktop app from source
+npm test       # unit tests for the conversion engine
 ```
 
 ## راهنمای فارسی
 
-این ابزار عکس‌های حجیم TIFF و JPEG (حتی چند گیگابایتی) را به WebP باکیفیت و
+این برنامه عکس‌های حجیم TIFF و JPEG (حتی چند گیگابایتی) را به WebP باکیفیت و
 مناسب وب تبدیل می‌کند. تصویر به‌صورت نواری پردازش می‌شود و کامل در RAM بار
 نمی‌شود.
 
-روی هر عکس این کارها انجام می‌شود: چرخش EXIF اعمال می‌شود، ضلع بزرگ‌تر به
-`--max-size` (پیش‌فرض ۳۸۴۰ پیکسل) کوچک می‌شود و هیچ‌وقت بزرگ نمی‌شود، رنگ به
-sRGB هشت‌بیتی تبدیل می‌شود، با کیفیت ۹۰ و بیشترین فشرده‌سازی به WebP رمزگذاری
-می‌شود و متادیتا حذف می‌شود. سقف فرمت WebP در هر بُعد ۱۶۳۸۳ پیکسل است، پس حتی
-با `--max-size 0` بیشتر از آن نمی‌شود.
+### ساخت برنامه‌ی ویندوز
 
-```sh
-npm install
+روی سیستم ویندوزی باید [Node.js](https://nodejs.org) نسخه‌ی LTS نصب باشد و
+اینترنت وصل باشد (بار اول Electron دانلود می‌شود). بعد روی **`build.bat`** دوبار
+کلیک کنید. در پایان دو فایل در پوشه‌ی `dist` ساخته می‌شود:
 
-# یک فایل؛ خروجی کنار خودش با پسوند .webp ساخته می‌شود
-node src/cli.js photo.tif
+- `WebP-Converter-1.0.0-setup.exe`: نصب‌کننده، با میان‌بر در منوی Start.
+- `WebP-Converter-1.0.0-portable.exe`: نسخه‌ی قابل‌حمل، بدون نصب.
 
-# همه‌ی عکس‌های یک پوشه (و زیرپوشه‌ها) با همان ساختار در پوشه‌ی web
-node src/cli.js --out web scans/
+هیچ‌کدام برای اجرا به Node.js نیاز ندارند؛ فقط برای ساختن لازم است.
 
-# فایل کوچک‌تر برای گالری
-node src/cli.js --out web --max-size 2560 --quality 85 scans/
+اگر دانلود Electron مسدود بود، قبل از اجرای `build.bat` در همان پنجره‌ی cmd
+این را بزنید:
+
+```bat
+set ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 ```
 
-فایل‌هایی که خروجی‌شان از قبل وجود دارد رد می‌شوند؛ برای بازنویسی از
-`--force` استفاده کنید.
+### کار با برنامه
 
-### ساخت نسخه‌ی قابل‌حمل
-
-```sh
-npm run build
-```
-
-خروجی در `dist/webp-convert-<version>.zip` ساخته می‌شود و باینری‌های ویندوز
-x64، مک (Intel و Apple Silicon) و لینوکس x64 را در خود دارد. برای بسته‌ی
-کوچک‌تر مخصوص یک سیستم‌عامل از `--platform windows` یا `mac` یا `linux`
-استفاده کنید. این zip را روی هر سیستمی که Node.js 18.17 یا جدیدتر دارد باز
-کنید و بدون `npm install` اجرا کنید:
-
-```sh
-webp-convert.cmd --out web scans\     # ویندوز
-./webp-convert --out web scans/       # مک / لینوکس
-```
+1. **ورودی**: پوشه یا فایل‌ها را انتخاب کنید یا روی پنجره بکشید. پوشه‌ها همراه
+   زیرپوشه‌هایشان برای فایل‌های tif، tiff، jpg و jpeg جست‌وجو می‌شوند.
+2. **خروجی**: پوشه‌ی خروجی را انتخاب کنید یا خالی بگذارید تا هر `.webp` کنار
+   فایل اصلی‌اش ذخیره شود. فایل‌های موجود رد می‌شوند مگر «بازنویسی» را تیک
+   بزنید.
+3. **کیفیت**: پیش‌فرض ۱۰۰ یعنی بالاترین کیفیت. برای فایل کوچک‌تر ۸۵ تا ۹۰ برای
+   وب معمول است. گزینه‌ی «بی‌افت» فایل دقیقاً بدون افت می‌سازد ولی چند برابر
+   بزرگ‌تر است و برای گرافیک مناسب است، نه عکس.
+4. **بزرگ‌ترین ضلع**: پیش‌فرض ۳۸۴۰ پیکسل (اندازه‌ی ۴K). تصاویر هرگز بزرگ
+   نمی‌شوند. «اندازه‌ی اصلی» ابعاد را نگه می‌دارد، تا سقف ۱۶۳۸۳ پیکسل که حد
+   خودِ فرمت WebP است.
+5. **شروع تبدیل** را بزنید. هر فایل بعد از تبدیل با ابعاد و حجم قبل و بعد در
+   فهرست می‌آید و در پایان خلاصه نشان داده می‌شود. «باز کردن پوشه‌ی خروجی»
+   نتیجه را در Explorer باز می‌کند و «لغو» بعد از فایل جاری متوقف می‌شود.

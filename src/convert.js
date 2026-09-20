@@ -6,10 +6,26 @@ export const WEBP_MAX_DIMENSION = 16383;
 
 export const DEFAULTS = Object.freeze({
   maxSize: 3840,
-  quality: 90,
+  quality: 100,
   effort: 6,
   lossless: false,
 });
+
+export const RANGES = Object.freeze({
+  maxSize: [0, WEBP_MAX_DIMENSION],
+  quality: [1, 100],
+  effort: [0, 6],
+});
+
+/** Throws a RangeError naming the first numeric option outside its range. */
+export function assertValidOptions(options) {
+  for (const [name, [min, max]] of Object.entries(RANGES)) {
+    const value = options[name];
+    if (!Number.isInteger(value) || value < min || value > max) {
+      throw new RangeError(`${name} must be a whole number between ${min} and ${max}, got ${value}`);
+    }
+  }
+}
 
 /**
  * Longest edge the output may have. A maxSize of 0 means "keep the original
@@ -25,7 +41,9 @@ export function targetEdge(maxSize) {
  * sources to 8-bit sRGB, and drops metadata.
  */
 export async function convertToWebp(inputPath, outputPath, options = {}) {
-  const { maxSize, quality, effort, lossless } = { ...DEFAULTS, ...options };
+  const settings = { ...DEFAULTS, ...options };
+  assertValidOptions(settings);
+  const { maxSize, quality, effort, lossless } = settings;
   const edge = targetEdge(maxSize);
 
   // Gigapixel-class scans exceed sharp's default pixel limit. libvips streams

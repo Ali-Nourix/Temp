@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-import { access, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
-import { convertToWebp, DEFAULTS, WEBP_MAX_DIMENSION } from './convert.js';
+import { DEFAULTS, RANGES, WEBP_MAX_DIMENSION } from './convert.js';
+import { formatBytes, formatDuration, formatSavings } from './format.js';
 import { collectJobs, SUPPORTED_EXTENSIONS } from './jobs.js';
+import { runJobs } from './run.js';
 
 const USAGE = `Usage: webp-convert [options] <file or folder>...
 
@@ -52,29 +53,20 @@ function parseCommandLine(argv) {
     outDir: values.out,
     force: values.force,
     conversion: {
-      maxSize: integerOption(values['max-size'], '--max-size', 0, WEBP_MAX_DIMENSION),
-      quality: integerOption(values.quality, '--quality', 1, 100),
-      effort: integerOption(values.effort, '--effort', 0, 6),
+      maxSize: integerOption(values['max-size'], '--max-size', RANGES.maxSize),
+      quality: integerOption(values.quality, '--quality', RANGES.quality),
+      effort: integerOption(values.effort, '--effort', RANGES.effort),
       lossless: values.lossless,
     },
   };
 }
 
-function integerOption(raw, name, min, max) {
+function integerOption(raw, flag, [min, max]) {
   const value = Number(raw);
   if (!Number.isInteger(value) || value < min || value > max) {
-    throw new UsageError(`${name} must be a whole number between ${min} and ${max}, got "${raw}".`);
+    throw new UsageError(`${flag} must be a whole number between ${min} and ${max}, got "${raw}".`);
   }
   return value;
-}
-
-async function exists(filePath) {
-  try {
-    await access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
 }
 
 function displayPath(filePath) {
@@ -82,63 +74,24 @@ function displayPath(filePath) {
   return relative.startsWith('..') ? filePath : relative;
 }
 
-function formatBytes(bytes) {
-  const units = ['B', 'KB', 'MB', 'GB'];
-  let value = bytes;
-  let unit = 0;
-  while (value >= 1024 && unit < units.length - 1) {
-    value /= 1024;
-    unit += 1;
-  }
-  return `${unit === 0 ? value : value.toFixed(1)} ${units[unit]}`;
-}
-
-function formatSavings(before, after) {
-  if (before === 0) return '';
-  const percent = ((after - before) / before) * 100;
-  return `(${percent > 0 ? '+' : ''}${percent.toFixed(1)}%)`;
-}
-
-function formatDuration(ms) {
-  return ms < 1000 ? `${Math.round(ms)} ms` : `${(ms / 1000).toFixed(1)} s`;
-}
-
-async function runJobs(jobs, { force, conversion }) {
-  const totals = { converted: 0, skipped: 0, failed: 0, sourceBytes: 0, outputBytes: 0 };
-
-  for (const { inputPath, outputPath } of jobs) {
-    const label = `${displayPath(inputPath)} -> ${displayPath(outputPath)}`;
-
-    if (outputPath === inputPath) {
-      totals.failed += 1;
-      console.error(`FAIL  ${label}: output would overwrite the input`);
-      continue;
-    }
-    if (!force && (await exists(outputPath))) {
-      totals.skipped += 1;
-      console.log(`SKIP  ${label}: already exists (use --force to overwrite)`);
-      continue;
-    }
-
-    const started = performance.now();
-    try {
-      await mkdir(path.dirname(outputPath), { recursive: true });
-      const { source, output } = await convertToWebp(inputPath, outputPath, conversion);
-      totals.converted += 1;
-      totals.sourceBytes += source.bytes;
-      totals.outputBytes += output.bytes;
+function printResult(outcome) {
+  const label = `${displayPath(outcome.inputPath)} -> ${displayPath(outcome.outputPath)}`;
+  switch (outcome.status) {
+    case 'converted': {
+      const { source, output, durationMs } = outcome;
       console.log(
         `OK    ${label}  ${source.width}x${source.height} ${formatBytes(source.bytes)}` +
           ` -> ${output.width}x${output.height} ${formatBytes(output.bytes)}` +
-          ` ${formatSavings(source.bytes, output.bytes)}  ${formatDuration(performance.now() - started)}`,
+          ` ${formatSavings(source.bytes, output.bytes)}  ${formatDuration(durationMs)}`,
       );
-    } catch (error) {
-      totals.failed += 1;
-      console.error(`FAIL  ${label}: ${error.message}`);
+      break;
     }
+    case 'skipped':
+      console.log(`SKIP  ${label}: ${outcome.reason} (use --force to overwrite)`);
+      break;
+    default:
+      console.error(`FAIL  ${label}: ${outcome.reason}`);
   }
-
-  return totals;
 }
 
 function printSummary(totals, elapsedMs) {
@@ -180,7 +133,7 @@ async function main(argv) {
   }
 
   const started = performance.now();
-  const totals = await runJobs(jobs, args);
+  const totals = await runJobs(jobs, { force: args.force, conversion: args.conversion, onResult: printResult });
   printSummary(totals, performance.now() - started);
   return totals.failed > 0 ? 1 : 0;
 }
