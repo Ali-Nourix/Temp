@@ -48,7 +48,10 @@ export async function convertToWebp(inputPath, outputPath, options = {}) {
 
   // Gigapixel-class scans exceed sharp's default pixel limit. libvips streams
   // them strip by strip, so lifting the limit does not load them whole.
-  const image = sharp(inputPath, { limitInputPixels: false });
+  // `unlimited` lifts libvips's 50 MiB cap on libtiff tag memory, which
+  // layered Photoshop TIFFs blow through: their layer data lives in a single
+  // tag that is often larger than the flattened image itself.
+  const image = sharp(inputPath, { limitInputPixels: false, unlimited: true });
   const [source, sourceFile] = await Promise.all([image.metadata(), stat(inputPath)]);
 
   const output = await image

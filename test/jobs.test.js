@@ -29,27 +29,35 @@ test('isSupported matches TIFF and JPEG extensions case-insensitively', () => {
   assert.ok(!isSupported('done.webp'));
 });
 
-test('walks folders recursively, filters by extension and writes next to the source', async () => {
+test('walks folders recursively, filters by extension and writes into a webp folder inside the input', async () => {
   const jobs = await collectJobs([inDir]);
   assert.deepEqual(relativePairs(jobs), [
-    ['in/a.tif', 'in/a.webp'],
-    ['in/sub/b.JPG', 'in/sub/b.webp'],
-    ['in/twin.jpg', 'in/twin.jpg.webp'],
-    ['in/twin.tif', 'in/twin.tif.webp'],
+    ['in/a.tif', 'in/webp/a.webp'],
+    ['in/sub/b.JPG', 'in/webp/sub/b.webp'],
+    ['in/twin.jpg', 'in/webp/twin.jpg.webp'],
+    ['in/twin.tif', 'in/webp/twin.tif.webp'],
   ]);
+  assert.ok(jobs.every((job) => job.outputRoot === path.join(inDir, 'webp')));
 });
 
 test('mirrors the folder structure under outDir', async () => {
-  const jobs = await collectJobs([inDir], { outDir: path.join(root, 'out') });
+  const outDir = path.join(root, 'out');
+  const jobs = await collectJobs([inDir], { outDir });
   assert.deepEqual(relativePairs(jobs), [
     ['in/a.tif', 'out/a.webp'],
     ['in/sub/b.JPG', 'out/sub/b.webp'],
     ['in/twin.jpg', 'out/twin.jpg.webp'],
     ['in/twin.tif', 'out/twin.tif.webp'],
   ]);
+  assert.ok(jobs.every((job) => job.outputRoot === outDir));
 });
 
-test('an explicit file lands directly in outDir regardless of its extension', async () => {
+test('an explicit file goes into a webp folder next to it, whatever its extension', async () => {
+  const jobs = await collectJobs([path.join(inDir, 'sub/c.png')]);
+  assert.deepEqual(relativePairs(jobs), [['in/sub/c.png', 'in/sub/webp/c.webp']]);
+});
+
+test('an explicit file lands directly in outDir', async () => {
   const jobs = await collectJobs([path.join(inDir, 'sub/c.png')], { outDir: path.join(root, 'out') });
   assert.deepEqual(relativePairs(jobs), [['in/sub/c.png', 'out/c.webp']]);
 });

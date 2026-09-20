@@ -3,17 +3,20 @@ import path from 'node:path';
 
 export const SUPPORTED_EXTENSIONS = new Set(['.tif', '.tiff', '.jpg', '.jpeg']);
 
+/** Folder created inside each input folder when no output folder is given. */
+export const DEFAULT_OUTPUT_FOLDER = 'webp';
+
 export function isSupported(filePath) {
   return SUPPORTED_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 }
 
 /**
- * Expands files and folders into `{ inputPath, outputPath }` jobs.
+ * Expands files and folders into `{ inputPath, outputPath, outputRoot }` jobs.
  *
  * Folders are walked recursively and filtered to SUPPORTED_EXTENSIONS; files
- * named explicitly are always included. Outputs land next to their source
- * unless `outDir` is given, in which case the folder structure beneath each
- * input root is mirrored under `outDir`.
+ * named explicitly are always included. The folder structure beneath each
+ * input root is mirrored under `outDir`, or, when none is given, under a
+ * DEFAULT_OUTPUT_FOLDER inside that root (next to a file given directly).
  */
 export async function collectJobs(inputs, { outDir } = {}) {
   const jobs = new Map();
@@ -21,15 +24,17 @@ export async function collectJobs(inputs, { outDir } = {}) {
   for (const input of inputs) {
     const inputPath = path.resolve(input);
     const info = await stat(inputPath);
+    const rootDir = info.isDirectory() ? inputPath : path.dirname(inputPath);
+    const outputRoot = outDir ? path.resolve(outDir) : path.join(rootDir, DEFAULT_OUTPUT_FOLDER);
+    const add = (filePath) =>
+      jobs.set(filePath, { inputPath: filePath, outputPath: outputFor(filePath, rootDir, outputRoot), outputRoot });
 
     if (info.isDirectory()) {
       for await (const filePath of walk(inputPath)) {
-        if (isSupported(filePath)) {
-          jobs.set(filePath, { inputPath: filePath, outputPath: outputFor(filePath, inputPath, outDir) });
-        }
+        if (isSupported(filePath)) add(filePath);
       }
     } else {
-      jobs.set(inputPath, { inputPath, outputPath: outputFor(inputPath, path.dirname(inputPath), outDir) });
+      add(inputPath);
     }
   }
 
@@ -49,10 +54,9 @@ async function* walk(dir) {
   }
 }
 
-function outputFor(filePath, rootDir, outDir) {
-  const sourceDir = path.dirname(filePath);
-  const targetDir = outDir ? path.join(path.resolve(outDir), path.relative(rootDir, sourceDir)) : sourceDir;
-  return path.join(targetDir, `${path.basename(filePath, path.extname(filePath))}.webp`);
+function outputFor(filePath, rootDir, outputRoot) {
+  const relativeDir = path.relative(rootDir, path.dirname(filePath));
+  return path.join(outputRoot, relativeDir, `${path.basename(filePath, path.extname(filePath))}.webp`);
 }
 
 /**

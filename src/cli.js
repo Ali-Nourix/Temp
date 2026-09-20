@@ -3,7 +3,7 @@ import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { DEFAULTS, RANGES, WEBP_MAX_DIMENSION } from './convert.js';
 import { formatBytes, formatDuration, formatSavings } from './format.js';
-import { collectJobs, SUPPORTED_EXTENSIONS } from './jobs.js';
+import { collectJobs, DEFAULT_OUTPUT_FOLDER, SUPPORTED_EXTENSIONS } from './jobs.js';
 import { runJobs } from './run.js';
 
 const USAGE = `Usage: webp-convert [options] <file or folder>...
@@ -14,7 +14,8 @@ files named explicitly are converted whatever their extension.
 
 Options:
   -o, --out <dir>       Write outputs under <dir>, mirroring the input folder
-                        structure. Default: next to each source file.
+                        structure. Default: a "${DEFAULT_OUTPUT_FOLDER}" folder inside each
+                        input folder (or next to a file given directly).
   -s, --max-size <px>   Longest edge of the output in pixels (default ${DEFAULTS.maxSize}).
                         Images are never enlarged. 0 keeps the original size,
                         capped at the WebP limit of ${WEBP_MAX_DIMENSION} px.

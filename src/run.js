@@ -11,6 +11,15 @@ async function exists(filePath) {
   }
 }
 
+/** libvips reports the same underlying error once per retry; keep each line once. */
+function describeError(error) {
+  const lines = error.message
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean);
+  return [...new Set(lines)].join(' ');
+}
+
 async function runJob({ inputPath, outputPath }, { force, conversion }) {
   if (outputPath === inputPath) {
     return { inputPath, outputPath, status: 'failed', reason: 'output would overwrite the input' };
@@ -25,7 +34,7 @@ async function runJob({ inputPath, outputPath }, { force, conversion }) {
     const { source, output } = await convertToWebp(inputPath, outputPath, conversion);
     return { inputPath, outputPath, status: 'converted', source, output, durationMs: performance.now() - started };
   } catch (error) {
-    return { inputPath, outputPath, status: 'failed', reason: error.message };
+    return { inputPath, outputPath, status: 'failed', reason: describeError(error) };
   }
 }
 

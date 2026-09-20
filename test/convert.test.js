@@ -1,6 +1,6 @@
 import { after, before, test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -21,6 +21,36 @@ function blank(width, height) {
 async function fixture(name, image) {
   const file = path.join(dir, name);
   await image.toFile(file);
+  return file;
+}
+
+/**
+ * Layered Photoshop TIFFs keep their layer data in one private tag that is
+ * often larger than the flattened image. This bolts such a tag onto a plain
+ * little-endian TIFF so the loader's tag-memory cap gets exercised.
+ */
+async function tiffWithHugeTag(name, tagBytes) {
+  const base = await blank(600, 400).tiff({ compression: 'none' }).toBuffer();
+  assert.equal(base.toString('latin1', 0, 2), 'II');
+  const ifdOffset = base.readUInt32LE(4);
+  const count = base.readUInt16LE(ifdOffset);
+  const entries = base.subarray(ifdOffset + 2, ifdOffset + 2 + count * 12);
+
+  const padding = base.length % 2;
+  const blobOffset = base.length + padding;
+  const ifd = Buffer.alloc(2 + (count + 1) * 12 + 4);
+  ifd.writeUInt16LE(count + 1, 0);
+  entries.copy(ifd, 2);
+  const entry = 2 + count * 12;
+  ifd.writeUInt16LE(37724, entry); // ImageSourceData
+  ifd.writeUInt16LE(7, entry + 2); // UNDEFINED
+  ifd.writeUInt32LE(tagBytes, entry + 4);
+  ifd.writeUInt32LE(blobOffset, entry + 8);
+
+  const header = Buffer.from(base.subarray(0, 8));
+  header.writeUInt32LE(blobOffset + tagBytes, 4);
+  const file = path.join(dir, name);
+  await writeFile(file, Buffer.concat([header, base.subarray(8), Buffer.alloc(padding + tagBytes), ifd]));
   return file;
 }
 
@@ -80,6 +110,12 @@ test('converts a 16-bit TIFF to 8-bit', async () => {
   const { meta } = await convert(input);
   assert.equal(meta.depth, 'uchar');
   assert.deepEqual([meta.width, meta.height], [400, 300]);
+});
+
+test('reads a TIFF whose metadata tags exceed the default 50 MiB libtiff cap', async () => {
+  const input = await tiffWithHugeTag('layered.tif', 64 * 1024 * 1024);
+  const { meta } = await convert(input, { maxSize: 300 });
+  assert.deepEqual([meta.width, meta.height], [300, 200]);
 });
 
 test('lossless output reproduces the source pixels exactly', async () => {

@@ -79,8 +79,7 @@ ipcMain.handle('convert', async (event, { inputs, outDir, force, conversion }) =
       signal: activeRun.signal,
       onResult: (outcome) => sendTo(event.sender, 'run-progress', outcome),
     });
-    const outputFolder = outDir || (jobs.length > 0 ? path.dirname(jobs[0].outputPath) : null);
-    return { ok: true, totals, outputFolder };
+    return { ok: true, totals, outputFolder: jobs[0]?.outputRoot ?? null };
   } finally {
     activeRun = null;
   }

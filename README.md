@@ -37,8 +37,9 @@ build.bat
 
 1. **ورودی / Input**: pick a folder, pick files, or drag files and folders onto
    the window. Folders are searched recursively for `.tif .tiff .jpg .jpeg`.
-2. **خروجی / Output**: pick an output folder, or leave it empty to write each
-   `.webp` next to its source. Tick *overwrite* to replace existing `.webp`
+2. **خروجی / Output**: pick an output folder, or leave it empty and a `webp`
+   folder is created inside the input folder (next to a file given directly),
+   mirroring any subfolders. Tick *overwrite* to replace existing `.webp`
    files; otherwise they are skipped.
 3. **کیفیت / Quality**: the slider defaults to 100, the highest lossy WebP
    quality. 85 to 90 gives much smaller files for ordinary web use. *Lossless*
@@ -62,6 +63,10 @@ build.bat
 - Lossy output uses the chosen quality with the highest compression effort
   and high-quality chroma subsampling; lossless output is exact.
 - EXIF/XMP/ICC metadata is dropped to keep files small.
+- Layered Photoshop TIFFs convert like any other TIFF. Their layer data sits
+  in one tag that is often larger than the image, and libvips normally stops
+  libtiff at 50 MiB of tag memory; that cap is lifted here and the flattened
+  composite is used.
 
 ## Command line
 
@@ -69,15 +74,16 @@ The same engine is available as a CLI for scripts and servers:
 
 ```sh
 npm install
-node src/cli.js photo.tif                                   # photo.webp next to photo.tif
+node src/cli.js photo.tif                                   # webp/photo.webp next to photo.tif
+node src/cli.js scans/                                      # whole folder tree into scans/webp
 node src/cli.js --out web scans/                            # whole folder tree into ./web
 node src/cli.js --out web --max-size 2560 --quality 85 scans/
 node src/cli.js --help                                      # all options
 ```
 
-Options mirror the app: `--out`, `--max-size` (default 3840; 0 = original
-size), `--quality` (default 100), `--effort` (0-6, default 6), `--lossless`,
-`--force`. Exit code `0` means every file succeeded or was skipped, `1` that at
+Options mirror the app: `--out` (default: a `webp` folder inside the input
+folder), `--max-size` (default 3840; 0 = original size), `--quality` (default
+100), `--effort` (0-6, default 6), `--lossless`, `--force`. Exit code `0` means every file succeeded or was skipped, `1` that at
 least one failed, `2` a usage error.
 
 ## Development
@@ -116,9 +122,9 @@ set ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 
 1. **ورودی**: پوشه یا فایل‌ها را انتخاب کنید یا روی پنجره بکشید. پوشه‌ها همراه
    زیرپوشه‌هایشان برای فایل‌های tif، tiff، jpg و jpeg جست‌وجو می‌شوند.
-2. **خروجی**: پوشه‌ی خروجی را انتخاب کنید یا خالی بگذارید تا هر `.webp` کنار
-   فایل اصلی‌اش ذخیره شود. فایل‌های موجود رد می‌شوند مگر «بازنویسی» را تیک
-   بزنید.
+2. **خروجی**: پوشه‌ی خروجی را انتخاب کنید یا خالی بگذارید تا خودکار پوشه‌ای به
+   نام `webp` داخل پوشه‌ی ورودی ساخته شود (با همان زیرپوشه‌ها). فایل‌های موجود
+   رد می‌شوند مگر «بازنویسی» را تیک بزنید.
 3. **کیفیت**: پیش‌فرض ۱۰۰ یعنی بالاترین کیفیت. برای فایل کوچک‌تر ۸۵ تا ۹۰ برای
    وب معمول است. گزینه‌ی «بی‌افت» فایل دقیقاً بدون افت می‌سازد ولی چند برابر
    بزرگ‌تر است و برای گرافیک مناسب است، نه عکس.
