@@ -4,27 +4,38 @@ import { createWriteStream } from 'node:fs';
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseArgs } from 'node:util';
 import { ZipArchive } from 'archiver';
 
 /**
- * Platforms that get a native libvips binary in the release. Anything else
- * (e.g. Windows on ARM) runs on the WebAssembly build that sharp installs
- * unconditionally.
+ * Platforms that get a native libvips binary. Anything else (e.g. Windows on
+ * ARM) runs on the WebAssembly build that sharp installs unconditionally.
  */
-const TARGETS = [
-  { os: 'win32', cpu: 'x64' },
-  { os: 'darwin', cpu: 'arm64' },
-  { os: 'darwin', cpu: 'x64' },
-  { os: 'linux', cpu: 'x64' },
-];
+const PLATFORMS = {
+  windows: [{ os: 'win32', cpu: 'x64' }],
+  mac: [
+    { os: 'darwin', cpu: 'arm64' },
+    { os: 'darwin', cpu: 'x64' },
+  ],
+  linux: [{ os: 'linux', cpu: 'x64' }],
+};
+PLATFORMS.all = Object.values(PLATFORMS).flat();
 
 const NPM_FLAGS = ['--omit=dev', '--no-package-lock', '--no-fund', '--no-audit', '--loglevel=error'];
+
+const { values } = parseArgs({ options: { platform: { type: 'string', default: 'all' } } });
+const targets = PLATFORMS[values.platform];
+if (!targets) {
+  console.error(`Unknown --platform "${values.platform}"; use one of ${Object.keys(PLATFORMS).join(', ')}.`);
+  process.exit(2);
+}
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const pkg = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
 const distDir = path.join(root, 'dist');
 const stageDir = path.join(distDir, pkg.name);
-const zipPath = path.join(distDir, `${pkg.name}-${pkg.version}.zip`);
+const zipSuffix = values.platform === 'all' ? '' : `-${values.platform}`;
+const zipPath = path.join(distDir, `${pkg.name}-${pkg.version}${zipSuffix}.zip`);
 
 function npm(args, cwd) {
   // Under `npm run` reuse the running npm; it avoids PATH and .cmd lookup issues on Windows.
@@ -52,9 +63,9 @@ async function stageSources() {
 }
 
 function installDependencies() {
-  npm(['install', ...NPM_FLAGS], stageDir);
-  for (const { os, cpu } of TARGETS) {
-    console.log(`Adding sharp binaries for ${os}-${cpu}`);
+  // Naming sharp makes npm add that platform's optional binaries instead of the host's.
+  for (const { os, cpu } of targets) {
+    console.log(`Installing dependencies with sharp binaries for ${os}-${cpu}`);
     npm(['install', ...NPM_FLAGS, `--os=${os}`, `--cpu=${cpu}`, 'sharp'], stageDir);
   }
 }
@@ -71,10 +82,11 @@ function zipDirectory(sourceDir, destination, folderName) {
   });
 }
 
-await rm(distDir, { recursive: true, force: true });
+await rm(stageDir, { recursive: true, force: true });
+await rm(zipPath, { force: true });
 await mkdir(stageDir, { recursive: true });
 
-console.log(`Staging ${pkg.name} ${pkg.version} in ${path.relative(root, stageDir)}`);
+console.log(`Staging ${pkg.name} ${pkg.version} (${values.platform}) in ${path.relative(root, stageDir)}`);
 await stageSources();
 installDependencies();
 

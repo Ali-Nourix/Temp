@@ -87,6 +87,13 @@ Windows x64, macOS (Apple Silicon and Intel) and Linux x64, plus a
 WebAssembly fallback for other platforms. Building downloads those binaries,
 so it needs network access.
 
+For a smaller archive that targets one operating system, pass `--platform`
+with `windows`, `mac` or `linux`; the zip is then named after it:
+
+```sh
+npm run build -- --platform windows   # dist/webp-convert-<version>-windows.zip
+```
+
 Unzip the release on any machine that has Node.js 18.17 or newer installed and
 run it from the unzipped folder; no `npm install` is needed there:
 
@@ -136,8 +143,10 @@ npm run build
 ```
 
 خروجی در `dist/webp-convert-<version>.zip` ساخته می‌شود و باینری‌های ویندوز
-x64، مک (Intel و Apple Silicon) و لینوکس x64 را در خود دارد. این zip را روی هر
-سیستمی که Node.js 18.17 یا جدیدتر دارد باز کنید و بدون `npm install` اجرا کنید:
+x64، مک (Intel و Apple Silicon) و لینوکس x64 را در خود دارد. برای بسته‌ی
+کوچک‌تر مخصوص یک سیستم‌عامل از `--platform windows` یا `mac` یا `linux`
+استفاده کنید. این zip را روی هر سیستمی که Node.js 18.17 یا جدیدتر دارد باز
+کنید و بدون `npm install` اجرا کنید:
 
 ```sh
 webp-convert.cmd --out web scans\     # ویندوز
