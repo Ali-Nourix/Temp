@@ -75,6 +75,26 @@ sizes and the saving; a summary follows at the end. The exit code is `0` when
 everything succeeded or was skipped, `1` when at least one file failed and
 `2` for a usage error.
 
+## Build a portable release
+
+```sh
+npm run build
+```
+
+This writes `dist/webp-convert/` and `dist/webp-convert-<version>.zip`. The
+release contains the source, its dependencies and sharp's native binaries for
+Windows x64, macOS (Apple Silicon and Intel) and Linux x64, plus a
+WebAssembly fallback for other platforms. Building downloads those binaries,
+so it needs network access.
+
+Unzip the release on any machine that has Node.js 18.17 or newer installed and
+run it from the unzipped folder; no `npm install` is needed there:
+
+```sh
+webp-convert.cmd --out web scans\     # Windows
+./webp-convert --out web scans/       # macOS / Linux
+```
+
 ## Development
 
 ```sh
@@ -108,3 +128,18 @@ node src/cli.js --out web --max-size 2560 --quality 85 scans/
 
 فایل‌هایی که خروجی‌شان از قبل وجود دارد رد می‌شوند؛ برای بازنویسی از
 `--force` استفاده کنید.
+
+### ساخت نسخه‌ی قابل‌حمل
+
+```sh
+npm run build
+```
+
+خروجی در `dist/webp-convert-<version>.zip` ساخته می‌شود و باینری‌های ویندوز
+x64، مک (Intel و Apple Silicon) و لینوکس x64 را در خود دارد. این zip را روی هر
+سیستمی که Node.js 18.17 یا جدیدتر دارد باز کنید و بدون `npm install` اجرا کنید:
+
+```sh
+webp-convert.cmd --out web scans\     # ویندوز
+./webp-convert --out web scans/       # مک / لینوکس
+```

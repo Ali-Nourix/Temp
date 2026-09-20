@@ -8,6 +8,7 @@
   },
   "scripts": {
     "convert": "node src/cli.js",
+    "build": "node scripts/build.mjs",
     "test": "node --test \"test/**/*.test.js\""
   },
   "engines": {
@@ -16,5 +17,8 @@
   "license": "MIT",
   "dependencies": {
     "sharp": "^0.35.4"
+  },
+  "devDependencies": {
+    "archiver": "^8.0.0"
   }
 }
